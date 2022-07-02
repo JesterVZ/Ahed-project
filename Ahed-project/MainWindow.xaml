@@ -39,42 +39,42 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <TabControl VerticalAlignment="Stretch" TabStripPlacement="Left" HorizontalAlignment="Stretch">
+        <TabControl VerticalAlignment="Stretch" TabStripPlacement="Left" HorizontalAlignment="Stretch" FontSize="20">
             <TabItem Header="Project">
                 <Grid Background="#FFE5E5E5"></Grid>
             </TabItem>
-            <TabItem Header="Tubes fluid">
+            <TabItem Header="Tubes fluid" IsEnabled="False">
                 <Grid Background="#FFE5E5E5">
                 </Grid>
             </TabItem>
-            <TabItem Header="Shell fluid">
+            <TabItem Header="Shell fluid" IsEnabled="False">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Header="Heat Balance">
+            <TabItem Header="Heat Balance" IsEnabled="False">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Header="Geometry">
+            <TabItem Header="Geometry" IsEnabled="False">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Header="Baffles">
+            <TabItem Header="Baffles" IsEnabled="False">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Header="Overall Calculation">
+            <TabItem Header="Overall Calculation" IsEnabled="False">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Header="Batch">
+            <TabItem Header="Batch" IsEnabled="False">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Header="Graphs">
+            <TabItem Header="Graphs" IsEnabled="False">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Header="Reports">
+            <TabItem Header="Reports" IsEnabled="False">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Header="Quote">
+            <TabItem Header="Quote" IsEnabled="False">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Header="3D">
+            <TabItem Header="3D" IsEnabled="False">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>
