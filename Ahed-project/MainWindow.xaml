@@ -6,25 +6,46 @@
         xmlns:local="clr-namespace:Ahed_project"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Grid>
+                            <Border  Name="Border">
+                                <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" RecognizesAccessKey="True"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="DarkOrange" />
+                            </Trigger>
+
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter TargetName="Border" Property="Background">
+                                    <Setter.Value>
+                                        <LinearGradientBrush>
+                                            <GradientStop Color="White" Offset="1"/>
+                                            <GradientStop Color="DarkOrange" Offset="0"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <TabControl HorizontalAlignment="Left" Height="425" Margin="0,-6,0,0" VerticalAlignment="Top" Width="792" TabStripPlacement="Left">
+        <TabControl VerticalAlignment="Stretch" TabStripPlacement="Left" HorizontalAlignment="Stretch">
             <TabItem Header="Project">
-                <TabItem.Style>
-                    <Style TargetType="TabItem">
-                        <Setter Property="Background">
-                        <Setter.Value>
-                            <LinearGradientBrush>
-                                <GradientStop Color="AliceBlue" Offset="1"/>
-                                <GradientStop Color="DarkSalmon" Offset="0"/>
-                            </LinearGradientBrush>
-                        </Setter.Value>
-                    </Setter>
-                    </Style>
-                </TabItem.Style>
                 <Grid Background="#FFE5E5E5"></Grid>
             </TabItem>
             <TabItem Header="Tubes fluid">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#FFE5E5E5">
+                </Grid>
             </TabItem>
             <TabItem Header="Shell fluid">
                 <Grid Background="#FFE5E5E5"/>
@@ -57,6 +78,5 @@
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>
-
     </Grid>
 </Window>
