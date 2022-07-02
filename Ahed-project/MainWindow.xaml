@@ -9,6 +9,18 @@
     <Grid>
         <TabControl HorizontalAlignment="Left" Height="425" Margin="0,-6,0,0" VerticalAlignment="Top" Width="792" TabStripPlacement="Left">
             <TabItem Header="Project">
+                <TabItem.Style>
+                    <Style TargetType="TabItem">
+                        <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush>
+                                <GradientStop Color="AliceBlue" Offset="1"/>
+                                <GradientStop Color="DarkSalmon" Offset="0"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                    </Style>
+                </TabItem.Style>
                 <Grid Background="#FFE5E5E5"></Grid>
             </TabItem>
             <TabItem Header="Tubes fluid">
