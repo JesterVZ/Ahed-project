@@ -7,6 +7,44 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <TabControl HorizontalAlignment="Left" Height="425" Margin="0,-6,0,0" VerticalAlignment="Top" Width="792" TabStripPlacement="Left">
+            <TabItem Header="Project">
+                <Grid Background="#FFE5E5E5"></Grid>
+            </TabItem>
+            <TabItem Header="Tubes fluid">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Shell fluid">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Heat Balance">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Geometry">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Baffles">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Overall Calculation">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Batch">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Graphs">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Reports">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Quote">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="3D">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
+
     </Grid>
 </Window>
