@@ -23,6 +23,7 @@ namespace Ahed_project
     public partial class MainWindow : Window
     {
         private ObservableCollection<LoggerMessage> _logs;
+        private bool _isMaximized = true;
 
         public MainWindow()
         {
@@ -38,23 +39,41 @@ namespace Ahed_project
             {
                 LogData.ItemsSource = _logs.OrderByDescending(x => x.DateTime);
             });
-            _logs.Add(new LoggerMessage()
-            {
-                DateTime = DateTime.Now,
-                Severity = "Test",
-                Message = "Проверка лог мессейдж"
-            });
-            _logs.Add(new LoggerMessage()
-            {
-                DateTime = DateTime.Now,
-                Severity = "Test",
-                Message = "Проверка сорта даты"
-            });
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            LogData.Width = e.NewSize.Width-10;
+            Tabs.Height = e.NewSize.Height - 160;
+        }
+
+        private void ClearLogs(object sender, RoutedEventArgs e)
+        {
+            _logs.Clear();
+        }
+
+        private void Close(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+        private void Minimize(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+        private void Maximize(object sender, RoutedEventArgs e)
+        {
+            WindowState = _isMaximized ? WindowState.Normal : WindowState.Maximized;
+            _isMaximized = !_isMaximized;
+        }
+
+        private void LogData_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            LogData.Columns[2].Width = e.NewSize.Width - 360;
         }
     }
 }
