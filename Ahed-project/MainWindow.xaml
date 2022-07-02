@@ -38,7 +38,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid>
+    <StackPanel>
         <TabControl VerticalAlignment="Stretch" TabStripPlacement="Left" HorizontalAlignment="Stretch" FontSize="20">
             <TabItem Header="Project">
                 <Grid Background="#FFE5E5E5"></Grid>
@@ -51,7 +51,10 @@
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
             <TabItem Header="Heat Balance" IsEnabled="False">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="White">
+                    <Button x:Name="button" Content="Calculate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Click="button_Click"/>
+                    <Button x:Name="button1" Content="Swap Fluids" HorizontalAlignment="Left" Margin="125,0,0,0" VerticalAlignment="Top" Width="152"/>
+                </Grid>
             </TabItem>
             <TabItem Header="Geometry" IsEnabled="False">
                 <Grid Background="#FFE5E5E5"/>
@@ -78,5 +81,8 @@
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>
-    </Grid>
+        <DataGrid x:Name="LogData">
+            
+        </DataGrid>
+    </StackPanel>
 </Window>

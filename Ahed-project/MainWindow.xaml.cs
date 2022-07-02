@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Ahed_project.MasterData;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +22,39 @@ namespace Ahed_project
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ObservableCollection<LoggerMessage> _logs;
+
         public MainWindow()
         {
             InitializeComponent();
+            PrepareLogs();
+        }
+
+        private void PrepareLogs()
+        {
+            _logs = new ObservableCollection<LoggerMessage>();
+            _logs.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(
+            delegate (object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+            {
+                LogData.ItemsSource = _logs.OrderByDescending(x => x.DateTime);
+            });
+            _logs.Add(new LoggerMessage()
+            {
+                DateTime = DateTime.Now,
+                Severity = "Test",
+                Message = "Проверка лог мессейдж"
+            });
+            _logs.Add(new LoggerMessage()
+            {
+                DateTime = DateTime.Now,
+                Severity = "Test",
+                Message = "Проверка сорта даты"
+            });
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
