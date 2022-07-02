@@ -1,0 +1,15 @@
+C:\Users\Alexander\Source\Repos\Ahed-project\Ahed-project\bin\Debug\Ahed-project.exe.config
+C:\Users\Alexander\Source\Repos\Ahed-project\Ahed-project\bin\Debug\Ahed-project.exe
+C:\Users\Alexander\Source\Repos\Ahed-project\Ahed-project\bin\Debug\Ahed-project.pdb
+C:\Users\Alexander\Source\Repos\Ahed-project\Ahed-project\obj\Debug\Ahed-project.csproj.AssemblyReference.cache
+C:\Users\Alexander\Source\Repos\Ahed-project\Ahed-project\obj\Debug\MainWindow.g.cs
+C:\Users\Alexander\Source\Repos\Ahed-project\Ahed-project\obj\Debug\App.g.cs
+C:\Users\Alexander\Source\Repos\Ahed-project\Ahed-project\obj\Debug\Ahed-project_MarkupCompile.cache
+C:\Users\Alexander\Source\Repos\Ahed-project\Ahed-project\obj\Debug\Ahed-project_MarkupCompile.lref
+C:\Users\Alexander\Source\Repos\Ahed-project\Ahed-project\obj\Debug\MainWindow.baml
+C:\Users\Alexander\Source\Repos\Ahed-project\Ahed-project\obj\Debug\Ahed-project.g.resources
+C:\Users\Alexander\Source\Repos\Ahed-project\Ahed-project\obj\Debug\Ahed_project.Properties.Resources.resources
+C:\Users\Alexander\Source\Repos\Ahed-project\Ahed-project\obj\Debug\Ahed-project.csproj.GenerateResource.cache
+C:\Users\Alexander\Source\Repos\Ahed-project\Ahed-project\obj\Debug\Ahed-project.csproj.CoreCompileInputs.cache
+C:\Users\Alexander\Source\Repos\Ahed-project\Ahed-project\obj\Debug\Ahed-project.exe
+C:\Users\Alexander\Source\Repos\Ahed-project\Ahed-project\obj\Debug\Ahed-project.pdb
