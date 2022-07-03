@@ -63,9 +63,9 @@
             <TabItem Header="Shell fluid" IsEnabled="False">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem IsEnabled="True" FontSize="12">
+            <TabItem IsEnabled="False" FontSize="12">
                 <TabItem.Header>
-                    <Label FontSize="20">Heat Balance</Label>
+                    <Label FontSize="20" IsEnabled="False" Foreground="#FF0E0D0D">Heat Balance</Label>
                 </TabItem.Header>
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
@@ -399,8 +399,84 @@
             <TabItem Header="Baffles" IsEnabled="False">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Header="Overall Calculation" IsEnabled="False">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem FontSize="12">
+                <TabItem.Header>
+                    <Label FontSize="20" IsEnabled="False" Foreground="#FF0E0D0D">Overall Calculation</Label>
+                </TabItem.Header>
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Calculate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Click="button_Click" Background="#fc6"/>
+                        <Button Content="Swap Fluids" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="152" Background="#fc6"/>
+                        <TextBox Margin="10,0,0,0" IsEnabled="False" Background="Gray" Width="400"></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Width="250">
+                            <StackPanel.Resources>
+                                <Style TargetType="Label" x:Key="Left">
+                                    <Setter Property="Height" Value="30"/>
+                                    <Setter Property="Width" Value="170"/>
+                                </Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource Left}" x:Key="LeftWM">
+                                    <Setter Property="Margin" Value="5,0,0,0"/>
+                                </Style>
+                                <Style TargetType="Label" x:Key="Headers">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </Style>
+                            </StackPanel.Resources>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Width="160">
+                                    <StackPanel.Resources>
+                                        <Style TargetType="Label">
+                                            <Setter Property="Height" Value="30"/>
+                                        </Style>
+                                    </StackPanel.Resources>
+                                    <Label>Shear rate</Label>
+                                    <Label>Flow type</Label>
+                                    <Label Style="{StaticResource Headers}">Liquid phase</Label>
+                                    <Label Style="{StaticResource LeftWM}">App. Viscosity</Label>
+                                    <Label Style="{StaticResource LeftWM}">Reynolds</Label>
+                                    <Label Style="{StaticResource LeftWM}">Prandtl</Label>
+                                    <Label Style="{StaticResource Headers}">Gas phase</Label>
+                                    <Label Style="{StaticResource LeftWM}">Dynamic viscosity gas</Label>
+                                    <Label Style="{StaticResource LeftWM}">Reynolds</Label>
+                                    <Label Style="{StaticResource LeftWM}">Prandtl</Label>
+                                    <Label Style="{StaticResource Headers}" Margin="0,30,0,0">Heat Transfer Data</Label>
+                                    <Label>Wall temperature</Label>
+                                    <Label>Wall Consistency Index</Label>
+                                    <Label>Nusselt</Label>
+                                    <Label>K Side</Label>
+                                    <Label>Fouling Factor</Label>
+                                    <Label>K Unfouled</Label>
+                                    <Label>K Fouled</Label>
+                                    <Label>K Global Fouled</Label>
+                                    <Label>K Effective</Label>
+                                    <Label Style="{StaticResource Headers}" Margin="0,100,0,0">Areas</Label>
+                                    <Label Style="{StaticResource LeftWM}">Surface Area Required</Label>
+                                    <Label Style="{StaticResource LeftWM}">Area / Module</Label>
+                                    <Label Style="{StaticResource LeftWM}">Nr. Modules</Label>
+                                    <Label Style="{StaticResource LeftWM}">Area Fitted</Label>
+                                    <Label Style="{StaticResource LeftWM}">Excess Area</Label>
+                                </StackPanel>
+                                <StackPanel Width="90">
+                                    <StackPanel.Resources>
+                                        <Style TargetType="Label">
+                                            <Setter Property="Height" Value="30"/>
+                                            <Setter Property="HorizontalAlignment" Value="Right"/>
+                                            <Setter Property="Padding" Value="0"/>
+                                        </Style>
+                                    </StackPanel.Resources>
+                                    <Label>1/s</Label>
+                                    <Label Margin="0,60,0,0">cP</Label>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Width="250"></StackPanel>
+                        <StackPanel Width="250" Margin="10,0,0,0"></StackPanel>
+                        <StackPanel Width="500" Margin="10,0,0,0">
+                            
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
             </TabItem>
             <TabItem Header="Batch" IsEnabled="False">
                 <Grid Background="#FFE5E5E5"/>
