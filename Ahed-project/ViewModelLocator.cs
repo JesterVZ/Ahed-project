@@ -18,6 +18,7 @@ namespace Ahed_project
             var services = new ServiceCollection();
             services.AddTransient<MainViewModel>();
             services.AddTransient<LoginPageViewModel>();
+            services.AddTransient<ContentPageViewModel>();
             services.AddSingleton<PageService>();
 
             _provider = services.BuildServiceProvider();
