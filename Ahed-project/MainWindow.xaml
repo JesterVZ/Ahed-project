@@ -4,9 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ahed_project"
+        xmlns:viewmodels="clr-namespace:Ahed_project.ViewModel"
+        DataContext="{Binding MainViewModel, Source={StaticResource ViewModelLocator}}"
         mc:Ignorable="d"
         x:Name="AheadWindow"
         Title="MainWindow" WindowState="Maximized"
         Height="795">
-    <Frame Name="MainFrame" Background="White" NavigationUIVisibility="Hidden"/>
+    <Frame Name="MainFrame" Content="{Binding PageSource}" Background="White" NavigationUIVisibility="Hidden"/>
 </Window>

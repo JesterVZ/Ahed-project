@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:Ahed_project.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      DataContext="{Binding LoginPageViewModel, Source={StaticResource ViewModelLocator}}"
       Title="LoginPage">
 
     <Grid>
@@ -43,7 +44,7 @@
                 <TextBlock Text="password"/>
                 <PasswordBox Style="{StaticResource PasswordDefault}"/>
             </StackPanel>
-            <Button Click="Button_Click" Grid.Row="3" Background="#fc6">Login</Button>
+            <Button Grid.Row="3" Command="{Binding GoToContent}" Background="#fc6">Login</Button>
         </Grid>
     </Grid>
 </Page>

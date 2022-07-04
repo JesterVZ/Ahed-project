@@ -26,7 +26,6 @@ namespace Ahed_project
         public MainWindow()
         {
             InitializeComponent();
-            MainFrame.Content = new LoginPage();
         }
         
     }
