@@ -196,6 +196,7 @@
                 <TabItem.Header>
                     <Label FontSize="20">Heat Balance</Label>
                 </TabItem.Header>
+                <ScrollViewer>
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Button x:Name="button" Content="Calculate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Background="#fc6"/>
@@ -521,6 +522,7 @@
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="Geometry" IsEnabled="False">
                 <Grid Background="#FFE5E5E5"/>

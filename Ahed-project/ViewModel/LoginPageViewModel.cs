@@ -13,14 +13,16 @@ namespace Ahed_project.ViewModel
     public class LoginPageViewModel : BindableBase
     {
         private readonly PageService _pageService;
+        private readonly Logs _logs;
 
-        public LoginPageViewModel(PageService pageService)
+        public LoginPageViewModel(PageService pageService, Logs logs)
         {
             _pageService = pageService;
+            _logs = logs;
         }
 
         public ICommand GoToContent => new AsyncCommand(async () => {
-            _pageService.ChangePage(new ContentPage());
+            _pageService.ChangePage(new ContentPage(_logs));
         });
     }
 }

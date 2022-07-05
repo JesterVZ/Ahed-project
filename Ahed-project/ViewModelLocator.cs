@@ -20,6 +20,7 @@ namespace Ahed_project
             services.AddTransient<LoginPageViewModel>();
             services.AddTransient<ContentPageViewModel>();
             services.AddSingleton<PageService>();
+            services.AddSingleton<Logs>();
 
             _provider = services.BuildServiceProvider();
 

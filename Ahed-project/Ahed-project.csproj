@@ -101,6 +101,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Services\Logs.cs" />
     <Compile Include="Services\PageService.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModel\ContentPageViewModel.cs" />

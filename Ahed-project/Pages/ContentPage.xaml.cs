@@ -1,4 +1,5 @@
 ﻿using Ahed_project.MasterData;
+using Ahed_project.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,31 +23,25 @@ namespace Ahed_project.Pages
     /// </summary>
     public partial class ContentPage : Page
     {
-        private ObservableCollection<LoggerMessage> _logs;
-        private bool _isMaximized = true;
-        public ContentPage()
+        private Logs _logs;
+        public ContentPage(Logs logs)
         {
             InitializeComponent();
+            _logs = logs;
             PrepareLogs();
         }
         private void PrepareLogs()
         {
-            _logs = new ObservableCollection<LoggerMessage>();
-            _logs.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(
+            _logs.logs.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(
             delegate (object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
             {
-                LogData.ItemsSource = _logs.OrderByDescending(x => x.DateTime);
+                LogData.ItemsSource = _logs.logs.OrderByDescending(x => x.DateTime);
             });
-        }
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            LogData.Width = e.NewSize.Width - 10;
-            Tabs.Height = e.NewSize.Height - 160;
         }
 
         private void ClearLogs(object sender, RoutedEventArgs e)
         {
-            _logs.Clear();
+            _logs.logs.Clear();
         }
 
         private void LogData_SizeChanged(object sender, SizeChangedEventArgs e)
