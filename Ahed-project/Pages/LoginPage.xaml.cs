@@ -24,5 +24,11 @@ namespace Ahed_project.Pages
         {
             InitializeComponent();
         }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (DataContext != null)
+            { ((dynamic)DataContext).Pass = ((PasswordBox)sender).Password; }
+        }
     }
 }

@@ -37,12 +37,12 @@
             </Grid.RowDefinitions>
             <TextBlock Text="Welcome!" HorizontalAlignment="Center" Style="{StaticResource Header}"/>
             <StackPanel Grid.Row="1">
-                <TextBlock Text="login"/>
-                <TextBox Style="{StaticResource Default}"/>
+                <TextBlock Text="email"/>
+                <TextBox Text="{Binding Email,  UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Default}"/>
             </StackPanel>
             <StackPanel Grid.Row="2">
                 <TextBlock Text="password"/>
-                <PasswordBox Style="{StaticResource PasswordDefault}"/>
+                <PasswordBox  Style="{StaticResource PasswordDefault}" PasswordChanged="PasswordBox_PasswordChanged"/>
             </StackPanel>
             <Button Grid.Row="3" Command="{Binding GoToContent}" Background="#fc6">Login</Button>
         </Grid>

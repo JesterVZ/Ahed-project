@@ -6,12 +6,39 @@ using System.Threading.Tasks;
 
 namespace Ahed_project.MasterData
 {
+    /// <summary>
+    /// Пользователь
+    /// </summary>
     public class User
     {
-        public int Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string access_token { get; set; }
+        /// <summary>
+        /// id
+        /// </summary>
+        public int user_id { get; set; }
+        /// <summary>
+        /// email
+        /// </summary>
+        public string email { get; set; }
+        /// <summary>
+        /// TO DO понять зачем
+        /// </summary>
+        public int rool_id { get; set; }
+        /// <summary>
+        /// Имя
+        /// </summary>
+        public string name { get; set; }
+        /// <summary>
+        /// Занимаемая должность
+        /// </summary>
+        public string post { get; set; }
+        /// <summary>
+        /// TO DO понять зачем
+        /// </summary>
+        public int iat { get; set; }
+        /// <summary>
+        /// TO DO понять зачем
+        /// </summary>
+        public int exp { get; set; }
 
     }
 }
