@@ -7,10 +7,10 @@ using System.Text;
 
 namespace Ahed_project.Logic
 {
-    public class ApiOperations
+    public class JWT
     {
         private string baseUrl;
-        public ApiOperations()
+        public JWT()
         {
             baseUrl = "http://localhost:5000/api";
         }
