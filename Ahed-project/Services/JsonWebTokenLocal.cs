@@ -11,10 +11,10 @@ namespace Ahed_project.Services
 {
     public class JsonWebTokenLocal
     {
-        private string baseUrl = "https://auth.ezmaquotes.ru/api/user/login";
-        public JsonWebTokenLocal()
+        private string baseUrl;
+        public JsonWebTokenLocal(ServiceConfig serviceConfig)
         {
-
+            baseUrl = serviceConfig.LoginLink;
         }
 
         /// <summary>

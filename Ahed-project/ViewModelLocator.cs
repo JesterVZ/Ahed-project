@@ -21,7 +21,7 @@ namespace Ahed_project
             services.AddTransient<ContentPageViewModel>();
             services.AddSingleton<PageService>();
             services.AddSingleton<Logs>();
-            services.AddSingleton<JsonWebTokenLocal>();
+            services.AddSingleton(x=>new JsonWebTokenLocal(ServiceConfig.GetServiceConfig()));
 
             _provider = services.BuildServiceProvider();
 
