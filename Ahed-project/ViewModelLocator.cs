@@ -33,5 +33,7 @@ namespace Ahed_project
 
         public LoginPageViewModel LoginPageViewModel => _provider.GetRequiredService<LoginPageViewModel>();
 
+        public ContentPageViewModel ContentPageViewModel => _provider.GetRequiredService<ContentPageViewModel>();
+
     }
 }
