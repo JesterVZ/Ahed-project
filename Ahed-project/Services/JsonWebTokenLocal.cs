@@ -1,4 +1,4 @@
-﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Newtonsoft.Json;
 using System;
@@ -6,15 +6,17 @@ using System.IdentityModel.Tokens;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Ahed_project.Services
 {
     public class JsonWebTokenLocal
     {
-        private string baseUrl;
-        public JsonWebTokenLocal(ServiceConfig serviceConfig)
+        private string baseUrl = "https://auth.ezmaquotes.ru/api/user/login";
+        private string authUrl = "https://auth.ezmaquotes.ru/api/user/auth";
+        public JsonWebTokenLocal()
         {
-            baseUrl = serviceConfig.LoginLink;
+
         }
 
         /// <summary>
@@ -23,7 +25,7 @@ namespace Ahed_project.Services
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public User AuthenticateUser(string email, string password)
+        public async Task<object> AuthenticateUser(string email, string password)
         {
             string method = "POST";
             string json = JsonConvert.SerializeObject(new
@@ -57,7 +59,7 @@ namespace Ahed_project.Services
             }
             catch (Exception e)
             {
-                return null;
+                return e;
             }
         }
     }

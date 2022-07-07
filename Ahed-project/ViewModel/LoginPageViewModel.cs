@@ -1,4 +1,5 @@
-﻿using Ahed_project.Pages;
+﻿using Ahed_project.MasterData;
+using Ahed_project.Pages;
 using Ahed_project.Services;
 using DevExpress.Mvvm;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Ahed_project.ViewModel
@@ -25,8 +27,16 @@ namespace Ahed_project.ViewModel
 
         public ICommand GoToContent => new AsyncCommand(async () => {
             {
-                _jwt.AuthenticateUser(email, pass);
-                _pageService.ChangePage(new ContentPage(_logs));
+                var result = await Task.Factory.StartNew(()=> _jwt.AuthenticateUser(email, pass));
+                
+                if (result.Result is User)
+                {
+                    _pageService.ChangePage(new ContentPage(_logs));
+                } else if(result.Result is Exception)
+                {
+                    MessageBox.Show(result.ToString());
+                }
+                
             }
         });
 
