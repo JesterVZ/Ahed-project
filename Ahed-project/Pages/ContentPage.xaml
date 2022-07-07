@@ -54,10 +54,23 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="18"/>
             <RowDefinition/>
             <RowDefinition Height="150"/>
         </Grid.RowDefinitions>
-        <TabControl Grid.Row="0" x:Name="Tabs" VerticalAlignment="Stretch" TabStripPlacement="Left" HorizontalAlignment="Stretch" FontSize="20">
+        <Menu Grid.Row="0" VerticalAlignment="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="New"></MenuItem>
+                <MenuItem Header="Manage"></MenuItem>
+                <MenuItem Header="Save"></MenuItem>
+                <MenuItem Header="Save as"></MenuItem>
+                <MenuItem Header="Recent projects"></MenuItem>
+                <MenuItem Header="Exit"></MenuItem>
+            </MenuItem>
+                <MenuItem Header="Tools"/>
+            <MenuItem Header="Help"/>
+        </Menu>
+        <TabControl Grid.Row="1" x:Name="Tabs" VerticalAlignment="Stretch" TabStripPlacement="Left" HorizontalAlignment="Stretch" FontSize="20">
             <TabItem FontSize="12">
                 <TabItem.Header>
                     <Label FontSize="20">Project</Label>
@@ -549,7 +562,7 @@
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>
-        <DataGrid x:Name="LogData" Grid.Row="1" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" SizeChanged="LogData_SizeChanged">
+        <DataGrid x:Name="LogData" Grid.Row="2" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" SizeChanged="LogData_SizeChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="DateTime" Binding="{Binding Path=DateTime, StringFormat='yyyy-MM-dd HH:mm:ss' }" Width="150"/>
                 <DataGridTextColumn Header="Severity" Binding="{Binding Path=Severity}" Width="100"/>

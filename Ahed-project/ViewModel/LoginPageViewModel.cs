@@ -4,7 +4,9 @@ using Ahed_project.Services;
 using DevExpress.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,17 +29,32 @@ namespace Ahed_project.ViewModel
 
         public ICommand GoToContent => new AsyncCommand(async () => {
             {
-                var result = await Task.Factory.StartNew(()=> _jwt.AuthenticateUser(email, pass));
-                
-                if (result.Result is User)
-                {
-                    _pageService.ChangePage(new ContentPage(_logs));
-                } else if(result.Result is Exception)
-                {
-                    MessageBox.Show(result.ToString());
-                }
-                
+                Auth();
             }
+        });
+
+        private async void Auth()
+        {
+            var result = await Task.Factory.StartNew(() => _jwt.AuthenticateUser(email, pass));
+
+            if (result.Result is User)
+            {
+                _pageService.ChangePage(new ContentPage(_logs));
+            }
+            else if (result.Result is Exception)
+            {
+                MessageBox.Show(result.ToString());
+            }
+        }
+
+        public ICommand CheckAuth => new AsyncCommand(async () =>
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            if (File.Exists(Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt"))
+            {
+                Auth();
+            }
+
         });
 
         private string pass;

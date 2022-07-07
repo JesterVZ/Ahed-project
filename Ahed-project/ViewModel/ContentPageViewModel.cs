@@ -17,7 +17,5 @@ namespace Ahed_project.ViewModel
             _pageService = pageService;
         }
 
-        
-
     }
 }

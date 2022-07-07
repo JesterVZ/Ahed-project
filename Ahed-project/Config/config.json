@@ -1,3 +1,4 @@
 ﻿{
-	"LoginLink": "https://auth.ezmaquotes.ru/api/user/login"
+	"LoginLink": "https://auth.ezmaquotes.ru/api/user/login",
+	"AuthLink": "https://auth.ezmaquotes.ru/api/user/auth"
 }
