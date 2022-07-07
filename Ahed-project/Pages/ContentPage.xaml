@@ -65,7 +65,7 @@
                 <MenuItem Header="Save"></MenuItem>
                 <MenuItem Header="Save as"></MenuItem>
                 <MenuItem Header="Recent projects"></MenuItem>
-                <MenuItem Header="Exit"></MenuItem>
+                <MenuItem Header="Exit" Command="{Binding Logout}"></MenuItem>
             </MenuItem>
                 <MenuItem Header="Tools"/>
             <MenuItem Header="Help"/>
