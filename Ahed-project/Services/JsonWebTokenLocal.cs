@@ -1,4 +1,4 @@
-﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Newtonsoft.Json;
 using System;
