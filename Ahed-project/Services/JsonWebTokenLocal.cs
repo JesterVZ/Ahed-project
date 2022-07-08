@@ -48,6 +48,7 @@ namespace Ahed_project.Services
 
                     string token = stream.ReadToEnd();
                     wc.Headers.Add("Authorization", $"Bearer {token}");
+                    stream.Close();
                 }
                 
             }
@@ -75,7 +76,7 @@ namespace Ahed_project.Services
             }
             catch (Exception e)
             {
-                return e;
+                return e.Message;
             }
         }
     }

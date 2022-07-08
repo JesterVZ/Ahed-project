@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Ahed_project.Services
 {
@@ -15,20 +16,15 @@ namespace Ahed_project.Services
 
         public async Task SaveToken(string token)
         {
+            var assembly = Assembly.GetExecutingAssembly();
+            string filepath = Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt";
             try
             {
-                var assembly = Assembly.GetExecutingAssembly();
-                if(File.Exists(Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt"))
+                using (FileStream fstream = new FileStream(filepath, FileMode.OpenOrCreate))
                 {
-                    File.WriteAllText(Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt", string.Empty);
-                    File.WriteAllText(Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt", token);
-                } else
-                {
-                    using (Stream stream = File.Create(Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt"))
-                    {
-                        StreamWriter streamWriter = new StreamWriter(stream);
-                        await streamWriter.WriteAsync(token);
-                    }
+                    byte[] buffer = Encoding.Default.GetBytes(token);
+                    await fstream.WriteAsync(buffer, 0, buffer.Length);
+                    fstream.Close();
                 }
             }
             catch(Exception e)

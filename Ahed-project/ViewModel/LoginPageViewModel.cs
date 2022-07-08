@@ -41,7 +41,7 @@ namespace Ahed_project.ViewModel
             {
                 _pageService.ChangePage(new ContentPage(_logs));
             }
-            else if (result.Result is Exception)
+            else if (result.Result is Exception || result.Result is string)
             {
                 MessageBox.Show(result.ToString());
             }
@@ -53,6 +53,7 @@ namespace Ahed_project.ViewModel
             if (File.Exists(Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt"))
             {
                 Auth();
+
             }
 
         });
