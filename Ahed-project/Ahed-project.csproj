@@ -121,11 +121,16 @@
     <Compile Include="MasterData\Token.cs" />
     <Compile Include="Services\Logs.cs" />
     <Compile Include="Services\PageService.cs" />
+    <Compile Include="Services\WindowService.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModel\ContentPageViewModel.cs" />
     <Compile Include="ViewModel\LoginPageViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Page Include="MainWindow.xaml">
+    <Compile Include="ViewModel\PresetsWindowViewModel.cs" />
+    <Compile Include="Windows\Presets.xaml.cs">
+      <DependentUpon>Presets.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -134,7 +139,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Services\JsonWebTokenLocal.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -143,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Presets.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -188,7 +197,9 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Visual\arrow.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Visual\loading.gif" />
   </ItemGroup>

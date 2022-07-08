@@ -19,8 +19,10 @@ namespace Ahed_project
             services.AddTransient<MainViewModel>();
             services.AddTransient<LoginPageViewModel>();
             services.AddTransient<ContentPageViewModel>();
+            services.AddTransient<PresetsWindowViewModel>();
             services.AddSingleton<PageService>();
             services.AddSingleton<Logs>();
+            services.AddSingleton<WindowService>();
             services.AddSingleton(x=>new JsonWebTokenLocal(ServiceConfig.GetServiceConfig()));
 
             _provider = services.BuildServiceProvider();
@@ -36,6 +38,8 @@ namespace Ahed_project
         public LoginPageViewModel LoginPageViewModel => _provider.GetRequiredService<LoginPageViewModel>();
 
         public ContentPageViewModel ContentPageViewModel => _provider.GetRequiredService<ContentPageViewModel>();
+
+        public PresetsWindowViewModel PresetsWindowViewModel => _provider.GetRequiredService<PresetsWindowViewModel>();
 
     }
 }
