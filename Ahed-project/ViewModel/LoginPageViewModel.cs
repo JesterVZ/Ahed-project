@@ -35,20 +35,22 @@ namespace Ahed_project.ViewModel
 
         private async void Auth()
         {
+            Loading = Visibility.Visible;
             var result = await Task.Factory.StartNew(() => _jwt.AuthenticateUser(email, pass));
-
+            Loading = Visibility.Hidden;
             if (result.Result is User)
             {
                 _pageService.ChangePage(new ContentPage(_logs));
             }
             else if (result.Result is Exception || result.Result is string)
             {
-                MessageBox.Show(result.ToString());
+                MessageBox.Show(result.Result.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         public ICommand CheckAuth => new AsyncCommand(async () =>
         {
+            
             var assembly = Assembly.GetExecutingAssembly();
             if (File.Exists(Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt"))
             {
@@ -65,5 +67,9 @@ namespace Ahed_project.ViewModel
         private string email;
 
         public string Email { get => email; set => SetValue(ref email, value); }
+
+        private Visibility loadind = Visibility.Hidden;
+
+        public Visibility Loading { get => loadind; set => SetValue(ref loadind, value); }
     }
 }
