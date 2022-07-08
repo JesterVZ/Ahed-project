@@ -61,20 +61,46 @@
         <Menu Grid.Row="0" VerticalAlignment="Top">
             <MenuItem Header="File">
                 <MenuItem Header="New"></MenuItem>
-                <MenuItem Header="Manage"></MenuItem>
-                <MenuItem Header="Save"></MenuItem>
-                <MenuItem Header="Save as"></MenuItem>
+                <MenuItem Header="Manage">
+                    <MenuItem Header="Project"></MenuItem>
+                    <MenuItem Header="Fluid"></MenuItem>
+                    <MenuItem Header="Geometry"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Save">
+                    <MenuItem Header="Project"></MenuItem>
+                    <MenuItem Header="Fluid"></MenuItem>
+                    <MenuItem Header="Geometry"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Save as">
+                    <MenuItem Header="Save project as"></MenuItem>
+                    <MenuItem Header="Save fluid as"></MenuItem>
+                    <MenuItem Header="Save geometry as"></MenuItem>
+                </MenuItem>
                 <MenuItem Header="Recent projects"></MenuItem>
-                <MenuItem Header="Exit" Command="{Binding Logout}"></MenuItem>
+                <MenuItem Header="Logout" Command="{Binding Logout}"></MenuItem>
+                <MenuItem Header="Exit" Command="{Binding Exit}"></MenuItem>
             </MenuItem>
-                <MenuItem Header="Tools"/>
-            <MenuItem Header="Help"/>
+            <MenuItem Header="Tools">
+                <MenuItem Header="Select presets">
+                    <MenuItem Header="Material presets"></MenuItem>
+                    <MenuItem Header="Fluid presets"></MenuItem>
+                    <MenuItem Header="Geomery presets"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Options"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="Manual"></MenuItem>
+                <MenuItem Header="Report problem"></MenuItem>
+                <MenuItem Header="About"></MenuItem>
+                <MenuItem Header="Release Notes"></MenuItem>
+            </MenuItem>
         </Menu>
         <TabControl Grid.Row="1" x:Name="Tabs" VerticalAlignment="Stretch" TabStripPlacement="Left" HorizontalAlignment="Stretch" FontSize="20">
             <TabItem FontSize="12">
                 <TabItem.Header>
                     <Label FontSize="20">Project</Label>
                 </TabItem.Header>
+                <ScrollViewer>
                 <StackPanel>
 
                     <Grid>
@@ -196,6 +222,7 @@
                     </Grid>
 
                 </StackPanel>
+                </ScrollViewer>
             </TabItem>
 
             <TabItem Header="Tubes fluid" IsEnabled="False">
@@ -543,7 +570,7 @@
             <TabItem Header="Baffles" IsEnabled="False">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Header="Overall Calculation" IsEnabled="False">
+            <TabItem Header="Overall Calculation">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
             <TabItem Header="Batch" IsEnabled="False">
@@ -562,7 +589,7 @@
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>
-        <DataGrid x:Name="LogData" Grid.Row="2" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" SizeChanged="LogData_SizeChanged">
+        <DataGrid x:Name="LogData" Grid.Row="2" ItemsSource="{Binding LogCollection}" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" SizeChanged="LogData_SizeChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="DateTime" Binding="{Binding Path=DateTime, StringFormat='yyyy-MM-dd HH:mm:ss' }" Width="150"/>
                 <DataGridTextColumn Header="Severity" Binding="{Binding Path=Severity}" Width="100"/>
