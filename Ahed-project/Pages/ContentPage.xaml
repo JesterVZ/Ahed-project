@@ -581,8 +581,10 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="Geometry" IsEnabled="False">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem Header="Geometry">
+                <ScrollViewer>
+                    
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="Baffles" IsEnabled="False">
                 <Grid Background="#FFE5E5E5"/>
