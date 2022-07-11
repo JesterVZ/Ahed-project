@@ -51,11 +51,14 @@
             </Setter>
         </Style>
     </Page.Resources>
+    <Page.InputBindings>
+        <KeyBinding Key="S" Command="{Binding SaveComand}" Modifiers="Ctrl"/>
+    </Page.InputBindings>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="18"/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="150"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" VerticalAlignment="Top">
@@ -610,7 +613,8 @@
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>
-        <DataGrid x:Name="LogData" Grid.Row="2" ItemsSource="{Binding LogCollection}" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" SizeChanged="LogData_SizeChanged">
+        <GridSplitter Grid.Row="1" VerticalAlignment="Bottom" Height="5" HorizontalAlignment="Stretch" />
+        <DataGrid x:Name="LogData" Grid.Row="3" ItemsSource="{Binding LogCollection}" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" SizeChanged="LogData_SizeChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="DateTime" Binding="{Binding Path=DateTime, StringFormat='yyyy-MM-dd HH:mm:ss' }" Width="150"/>
                 <DataGridTextColumn Header="Severity" Binding="{Binding Path=Severity}" Width="100"/>

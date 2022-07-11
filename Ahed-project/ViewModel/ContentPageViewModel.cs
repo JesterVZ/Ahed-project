@@ -72,6 +72,10 @@ namespace Ahed_project.ViewModel
 
             string json = JsonConvert.SerializeObject(ProjectInfo);
             var result = await Task.Factory.StartNew(() => _sendDataService.SendToServer(json));
+            if(result.Result is string)
+            {
+                _logs.AddMessage("Error", $"{result.Result}");
+            }
         });
 
         private Visibility projectInfoVisibility = Visibility.Hidden;
