@@ -615,6 +615,18 @@
         </TabControl>
         <GridSplitter Grid.Row="1" VerticalAlignment="Bottom" Height="5" HorizontalAlignment="Stretch" />
         <DataGrid x:Name="LogData" Grid.Row="3" ItemsSource="{Binding LogCollection}" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" SizeChanged="LogData_SizeChanged">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Severity}" Value="Error">
+                            <Setter Property="Background" Value="Red"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Severity}" Value="Info">
+                            <Setter Property="Background" Value="Yellow"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="DateTime" Binding="{Binding Path=DateTime, StringFormat='yyyy-MM-dd HH:mm:ss' }" Width="150"/>
                 <DataGridTextColumn Header="Severity" Binding="{Binding Path=Severity}" Width="100"/>
