@@ -24,6 +24,7 @@ namespace Ahed_project
             services.AddSingleton<Logs>();
             services.AddSingleton<WindowService>();
             services.AddSingleton(x=>new JsonWebTokenLocal(ServiceConfig.GetServiceConfig()));
+            services.AddSingleton(x => new SendDataService(ServiceConfig.GetServiceConfig()));
 
             _provider = services.BuildServiceProvider();
 

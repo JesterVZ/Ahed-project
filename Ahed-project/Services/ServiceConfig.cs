@@ -48,5 +48,6 @@ namespace Ahed_project.Services
         }
         public string LoginLink { get;set;}
         public string AuthLink { get; set; }
+        public string UploadLink { get; set; }
     }
 }

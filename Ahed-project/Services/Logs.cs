@@ -12,11 +12,6 @@ namespace Ahed_project.Services
     {
         public ObservableCollection<LoggerMessage> logs = new ObservableCollection<LoggerMessage>();
 
-        public Logs()
-        {
-
-        }
-
         public void AddMessage(string level, string message)
         {
             logs.Add(new LoggerMessage(level, message));

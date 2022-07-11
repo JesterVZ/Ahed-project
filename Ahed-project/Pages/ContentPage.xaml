@@ -60,14 +60,14 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" VerticalAlignment="Top">
             <MenuItem Header="File">
-                <MenuItem Header="New"></MenuItem>
+                <MenuItem Header="New" InputGestureText="Ctrl + N"></MenuItem>
                 <MenuItem Header="Manage">
                     <MenuItem Header="Project"></MenuItem>
                     <MenuItem Header="Fluid"></MenuItem>
                     <MenuItem Header="Geometry"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Save">
-                    <MenuItem Header="Project"></MenuItem>
+                    <MenuItem Header="Project" InputGestureText="Ctrl + S" Command="{Binding SaveComand}"></MenuItem>
                     <MenuItem Header="Fluid"></MenuItem>
                     <MenuItem Header="Geometry"></MenuItem>
                 </MenuItem>
@@ -76,6 +76,7 @@
                     <MenuItem Header="Save fluid as"></MenuItem>
                     <MenuItem Header="Save geometry as"></MenuItem>
                 </MenuItem>
+                <Separator HorizontalAlignment="Left" Height="1" Width="140"/>
                 <MenuItem Header="Recent projects"></MenuItem>
                 <MenuItem Header="Logout" Command="{Binding Logout}"></MenuItem>
                 <MenuItem Header="Exit" Command="{Binding Exit}"></MenuItem>
@@ -101,7 +102,7 @@
                     <Label FontSize="20">Project</Label>
                 </TabItem.Header>
                 <ScrollViewer>
-                    <StackPanel>
+                    <StackPanel DataContext="{Binding ProjectInfo}">
 
                         <Grid>
                             <Grid.Resources>
@@ -114,6 +115,7 @@
                                 </Style>
                                 <Style BasedOn="{StaticResource Default}" TargetType="TextBox" x:Key="Colored">
                                     <Setter Property="Background" Value="#f9efe5"/>
+                                    <Setter Property="IsEnabled" Value="False"/>
                                 </Style>
                             </Grid.Resources>
                             <Grid.ColumnDefinitions>
@@ -147,15 +149,15 @@
                                 <TextBlock VerticalAlignment="Top" Text="Description" Grid.Column="0" Grid.Row="5"/>
                                 <TextBlock Style="{StaticResource DefaultText}" Text="Units" Grid.Column="0" Grid.Row="6"/>
 
-                                <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="1"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Id, UpdateSourceTrigger=LostFocus}" Grid.Column="1" Grid.Row="1"/>
                                 <TextBlock Style="{StaticResource DefaultText}" Text="Revision" Grid.Column="2" Grid.Row="1"/>
-                                <TextBox Style="{StaticResource Default}" Grid.Column="3" Grid.Row="1"/>
-                                <TextBox Style="{StaticResource Default}" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1"/>
-                                <TextBox Style="{StaticResource Default}" Grid.ColumnSpan="3" Grid.Row="3" Grid.Column="1"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding Revision, UpdateSourceTrigger=LostFocus}" Grid.Column="3" Grid.Row="1"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding Name, UpdateSourceTrigger=LostFocus}" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding Customer, UpdateSourceTrigger=LostFocus}" Grid.ColumnSpan="3" Grid.Row="3" Grid.Column="1"/>
 
-                                <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="4"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding Contact, UpdateSourceTrigger=LostFocus}" Grid.Column="1" Grid.Row="4"/>
                                 <TextBlock Style="{StaticResource DefaultText}" Text="Customer reference" Grid.Column="2"  Grid.Row="4"/>
-                                <TextBox Style="{StaticResource Default}" Grid.Column="3"  Grid.Row="4"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding CustomerReference, UpdateSourceTrigger=LostFocus}" Grid.Column="3"  Grid.Row="4"/>
 
                                 <TextBox TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3"/>
                                 <ComboBox Grid.Row="6" Grid.Column="1">
@@ -164,10 +166,10 @@
                                     </ComboBoxItem>
                                 </ComboBox>
                                 <TextBlock Style="{StaticResource DefaultText}" Text="Number of decimals" Grid.Row="6" Grid.Column="2"/>
-                                <TextBox Style="{StaticResource Default}" Grid.Column="3" Grid.Row="6"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding NumberOfDecimals, UpdateSourceTrigger=LostFocus}" Grid.Column="3" Grid.Row="6"/>
                                 <TextBlock Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="4" FontWeight="Bold">Project Processes</TextBlock>
                                 <ListView Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3">
-
+                                    
                                 </ListView>
                                 <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="9">
                                     <TextBlock Grid.ColumnSpan="4" FontWeight="Bold" Margin="0 0 9 0">Advanced Properties</TextBlock>

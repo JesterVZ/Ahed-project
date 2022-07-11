@@ -3,6 +3,7 @@ using Ahed_project.Pages;
 using Ahed_project.Services;
 using Ahed_project.Windows;
 using DevExpress.Mvvm;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,15 +22,21 @@ namespace Ahed_project.ViewModel
         private readonly PageService _pageService;
         private readonly WindowService _windowServise;
         private readonly Logs _logs;
+        private readonly SendDataService _sendDataService;
 
         public ObservableCollection<LoggerMessage> LogCollection { get; set; }
 
-        public ContentPageViewModel(PageService pageService, WindowService windowService, Logs logs)
+        private ProjectInfo projectInfo = new ProjectInfo();
+        public ProjectInfo ProjectInfo { get => projectInfo; set => SetValue(ref projectInfo, value); }
+
+
+        public ContentPageViewModel(PageService pageService, WindowService windowService, Logs logs, SendDataService sendDataService)
         {
             _pageService = pageService;
             _windowServise = windowService;
             _logs = logs;
-            for(int i = 0; i < 10; i++)
+            _sendDataService = sendDataService;
+            for (int i = 0; i < 10; i++)
             {
                 _logs.AddMessage("Info", $"Log {i}");
             }
@@ -59,6 +66,12 @@ namespace Ahed_project.ViewModel
             {
                 ProjectInfoVisibility = Visibility.Hidden;
             }
+        });
+
+        public ICommand SaveComand => new AsyncCommand(async () => {
+
+            string json = JsonConvert.SerializeObject(ProjectInfo);
+            var result = await Task.Factory.StartNew(() => _sendDataService.SendToServer(json));
         });
 
         private Visibility projectInfoVisibility = Visibility.Hidden;

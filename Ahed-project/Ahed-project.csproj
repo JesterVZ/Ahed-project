@@ -116,11 +116,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MasterData\ProjectInfo.cs" />
     <Compile Include="Services\MyAttachedBehaviors.cs" />
     <Compile Include="Services\ServiceConfig.cs" />
     <Compile Include="MasterData\Token.cs" />
     <Compile Include="Services\Logs.cs" />
     <Compile Include="Services\PageService.cs" />
+    <Compile Include="Services\SendDataService.cs" />
     <Compile Include="Services\WindowService.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModel\ContentPageViewModel.cs" />
