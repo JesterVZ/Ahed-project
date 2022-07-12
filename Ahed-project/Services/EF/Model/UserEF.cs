@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Ahed_project.Services.EF.Model
+{
+    /// <summary>
+    /// Пользователь для БД
+    /// </summary>
+    public class UserEF
+    {
+        /// <summary>
+        /// Уникальный идентификатор
+        /// </summary>
+        [Key]
+        public int Id { get; set; }
+
+        /// <summary>
+        /// Email/логин
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
+        /// Пароль
+        /// </summary>
+        public string Password { get; set; }
+
+        /// <summary>
+        /// JWT
+        /// </summary>
+        public string Token { get; set; }
+    }
+}

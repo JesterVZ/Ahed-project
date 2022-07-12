@@ -36,9 +36,11 @@ namespace Ahed_project.Services
             });
             WebClient wc = new WebClient();
             wc.Headers["Content-Type"] = "application/json";
+            string authToken = "";
             if (File.Exists(Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt"))
             {
-                var token = await Task.Factory.StartNew(Auth);
+                var token= await Task.Factory.StartNew(Auth);
+
             }
             try
             {

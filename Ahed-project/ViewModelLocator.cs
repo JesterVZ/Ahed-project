@@ -1,11 +1,6 @@
 ﻿using Ahed_project.Services;
 using Ahed_project.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ahed_project
 {
