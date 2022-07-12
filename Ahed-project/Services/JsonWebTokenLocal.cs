@@ -14,18 +14,15 @@ namespace Ahed_project.Services
 {
     public class JsonWebTokenLocal
     {
-        private string baseUrl;
         private ServiceConfig _serviceConfig;
         public JsonWebTokenLocal(ServiceConfig serviceConfig)
         {
             _serviceConfig = serviceConfig;
-            baseUrl = serviceConfig.LoginLink;
         }
 
         /// <summary>
         /// Отправляем пост запрос и получаем данные пользователя
         /// </summary>
-        /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
         public async Task<object> AuthenticateUser(string email, string password)
@@ -37,47 +34,73 @@ namespace Ahed_project.Services
                 email = email,
                 pass = password
             });
-
             WebClient wc = new WebClient();
             wc.Headers["Content-Type"] = "application/json";
             if (File.Exists(Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt"))
             {
-                baseUrl = _serviceConfig.AuthLink;
-                using (StreamReader stream = new StreamReader(Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt"))
-                {
-
-                    string token = stream.ReadToEnd();
-                    wc.Headers.Add("Authorization", $"Bearer {token}");
-                    stream.Close();
-                }
-                
+                var token = await Task.Factory.StartNew(Auth);
             }
             try
             {
-                string response = wc.UploadString(baseUrl, method, json);
+                string response = wc.UploadString(_serviceConfig.LoginLink, method, json);
                 var token = JsonConvert.DeserializeObject<Token>(response);
-                var wt = new JsonWebToken(token.token);
-                await _serviceConfig.SaveToken(token.token.ToString());
-                var user = new User();
-                foreach (var element in wt.Claims)
-                {
-                    var field = typeof(User).GetProperty(element.Type);
-                    if (field!=null)
-                    {
-                        dynamic value = element.Value;
-                        if (field.PropertyType == typeof(int))
-                        {
-                            value = Convert.ToInt32(value);
-                        }
-                        field.SetValue(user, value);
-                    }
-                }
-                return user;
+                var newToken = await Task.Factory.StartNew(Auth);
+                return GetUserData(newToken.Result.ToString());
             }
             catch (Exception e)
             {
                 return e.Message;
             }
+        }
+
+        /// <summary>
+        /// Вызов метода Auth
+        /// </summary>
+        /// <returns></returns>
+        public async Task<object> Auth()
+        {
+            try
+            {
+                var assembly = Assembly.GetExecutingAssembly();
+                string response = "";
+                using (StreamReader stream = new StreamReader(Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt"))
+                {
+                    WebClient wc = new WebClient();
+                    string token = stream.ReadToEnd();
+                    wc.Headers.Add("Authorization", $"Bearer {token}");
+                    response = wc.DownloadString(_serviceConfig.AuthLink);
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+        }
+
+        /// <summary>
+        /// Получение данных пользователя по токену
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public User GetUserData(string token)
+        {
+            var wt = new JsonWebToken(token);
+            var user = new User();
+            foreach (var element in wt.Claims)
+            {
+                var field = typeof(User).GetProperty(element.Type);
+                if (field != null)
+                {
+                    dynamic value = element.Value;
+                    if (field.PropertyType == typeof(int))
+                    {
+                        value = Convert.ToInt32(value);
+                    }
+                    field.SetValue(user, value);
+                }
+            }
+            return user;
         }
     }
 }
