@@ -8,21 +8,6 @@ namespace Ahed_project.MasterData
 {
     public class ProjectInfo
     {
-        public ProjectInfo()
-        {
-            
-        }
-        /*
-        private int NewProjectId(int length)
-        {
-            string result = "";
-            Random r = new Random();
-            for(int i = 0; i < length; i++)
-            {
-                result += r.Next(0, 9).ToString();
-            }
-        }
-        */
         public int Id { get; set; }
         public int Revision { get; set; }
         public string Name { get; set; }
@@ -32,6 +17,9 @@ namespace Ahed_project.MasterData
         public string Description { get; set; }
         public string Units { get; set; }
         public int NumberOfDecimals { get; set; }
+        public string Category { get; set; }
+        public string Keywords { get; set; }
+        public string Comments { get; set; }
 
     }
 }

@@ -1,5 +1,5 @@
 ﻿{
-	"LoginLink": "https://auth.ezmaquotes.ru/api/user/login",
-	"AuthLink": "https://auth.ezmaquotes.ru/api/user/auth",
-	"UploadLink": "https://yandex.ru"
+	"LoginLink": "https://ahead-api.ru/api/user/login",
+	"AuthLink": "https://ahead-api.ru/api/user/auth",
+	"UploadLink": "https://ahead-api.ru/api/he/project/create"
 }

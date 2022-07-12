@@ -35,6 +35,7 @@ namespace Ahed_project.ViewModel
 
         private async void Auth()
         {
+            var assembly = Assembly.GetExecutingAssembly();
             Loading = Visibility.Visible;
             var result = await Task.Factory.StartNew(() => _jwt.AuthenticateUser(email, pass));
             Loading = Visibility.Hidden;
@@ -45,6 +46,7 @@ namespace Ahed_project.ViewModel
             else if (result.Result is Exception || result.Result is string)
             {
                 MessageBox.Show(result.Result.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                File.Delete(Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt");
             }
         }
 
