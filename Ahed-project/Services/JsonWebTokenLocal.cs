@@ -36,9 +36,15 @@ namespace Ahed_project.Services
             var user = _context.Users.FirstOrDefault(x => x.Password == password && x.Email == email);
             if (user == null)
             {
-                var login = await Task.Factory.StartNew(() => Login(email, password));
+                string json = JsonConvert.SerializeObject(new
+                {
+                    email = email,
+                    pass = password
+                });
+                var login = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.LOGIN, json));
                 var token = JsonConvert.DeserializeObject<Token>(login.Result.ToString());
-                var auth = await Task.Factory.StartNew(() => Auth(token.token));
+                await Task.Factory.StartNew(()=>_sendDataService.AddHeader(token.token));
+                var auth = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.AUTH));
                 token = JsonConvert.DeserializeObject<Token>(auth.Result.ToString());
                 user = new UserEF()
                 {
@@ -51,61 +57,13 @@ namespace Ahed_project.Services
                 _context.SaveChanges();
             }
             else
-                    {
-                        user.IsActive = true;
-                        _context.Users.Add(user);
-                        _context.SaveChanges();
-                        _context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
-                    }
+            {
+                user.IsActive = true;
+                _context.Users.Update(user);
+                _context.SaveChanges();
+                _context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+            }
             return GetUserData(user.Token);
-        }
-
-        /// <summary>
-        /// Вызов метода Auth
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public async Task<object> Auth(string token)
-        {
-            try
-            {
-                WebClient wc = new WebClient();
-                wc.Headers.Add("Authorization", $"Bearer {token}");
-                string response = wc.DownloadString(_serviceConfig.AuthLink);
-                return response;
-            }
-            catch (Exception e)
-            {
-                return e.Message;
-            }
-        }
-
-        /// <summary>
-        /// Для вызова логина
-        /// </summary>
-        /// <param name="email"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public async Task<object> Login(string email,string password)
-        {
-            try
-            {
-                string method = "POST";
-                var assembly = Assembly.GetExecutingAssembly();
-                string json = JsonConvert.SerializeObject(new
-                {
-                    email = email,
-                    pass = password
-                });
-                WebClient wc = new WebClient();
-                wc.Headers["Content-Type"] = "application/json";
-                string response = wc.UploadString(_serviceConfig.LoginLink, method, json);
-                return response;
-            }
-            catch (Exception e)
-            {
-                return e.Message;
-            }
         }
 
         /// <summary>

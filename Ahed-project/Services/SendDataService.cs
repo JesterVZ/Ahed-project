@@ -1,4 +1,5 @@
 ﻿using Ahed_project.MasterData;
+using Ahed_project.Services.EF;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,9 +18,9 @@ namespace Ahed_project.Services
         public SendDataService(ServiceConfig serviceConfig)
         {
             _serviceConfig = serviceConfig;
-            
+            AddHeader();
         }
-        public async Task<object> SendToServer(ProjectMethods projectMethod, object body)
+        public async Task<object> SendToServer(ProjectMethods projectMethod, object body =null)
         {
             _webClient.Headers["Content-Type"] = "application/json";
             _webClient.Encoding = System.Text.Encoding.UTF8;
@@ -36,28 +37,23 @@ namespace Ahed_project.Services
                         break;
                     case ProjectMethods.AUTH:
                         url = _serviceConfig.AuthLink;
-                        SetTokenInHeaders();
                         response = _webClient.DownloadString(url);
                         break;
                     case ProjectMethods.CREATE:
                         url = _serviceConfig.CreateLink;
-                        SetTokenInHeaders();
                         response = _webClient.UploadString(url, SendMethods.POST.ToString(), (string)body);
                         break;
                     case ProjectMethods.GET:
                         url = _serviceConfig.GetLink;
-                        SetTokenInHeaders();
                         response = _webClient.UploadString(url, SendMethods.POST.ToString(), (string)body);
                         break;
                     case ProjectMethods.UPDATE:
                         url = _serviceConfig.UpdateLink;
                         url += "/1";
-                        SetTokenInHeaders();
                         response = _webClient.UploadString(url, SendMethods.POST.ToString(), (string)body);
                         break;
                     case ProjectMethods.GET_PROJECTS:
                         url = _serviceConfig.GetProjectsLink;
-                        SetTokenInHeaders();
                         response = _webClient.UploadString(url, SendMethods.POST.ToString(), (string)body);
                         break;
                 }
@@ -66,18 +62,14 @@ namespace Ahed_project.Services
             {
                 return e;
             }
-            
         }
-        private void SetTokenInHeaders()
+
+        public async Task AddHeader(string token=null)
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            using (StreamReader stream = new StreamReader(Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt"))
+            using (EFContext context = new EFContext())
             {
-                string token = stream.ReadToEnd();
-                if(_webClient.Headers["Authorization"] == null){
-                    _webClient.Headers.Add("Authorization", $"Bearer {token}");
-                }
-                
+                var active = context.Users.FirstOrDefault(x => x.IsActive);
+                _webClient.Headers["Authorization"] = $"Bearer {token??active?.Token}";
             }
         }
     }
