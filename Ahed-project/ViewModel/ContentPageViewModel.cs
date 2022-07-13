@@ -71,11 +71,15 @@ namespace Ahed_project.ViewModel
         public ICommand SaveComand => new AsyncCommand(async () => {
 
             string json = JsonConvert.SerializeObject(ProjectInfo);
-            var result = await Task.Factory.StartNew(() => _sendDataService.SendToServer(json));
+            var result = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE, json));
             if(result.Result is string)
             {
                 _logs.AddMessage("Error", $"{result.Result}");
             }
+        });
+
+        public ICommand NewProjectCommand => new AsyncCommand(async () => { 
+            
         });
 
         private Visibility projectInfoVisibility = Visibility.Hidden;

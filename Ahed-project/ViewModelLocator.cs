@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,8 +21,10 @@ namespace Ahed_project
             services.AddTransient<LoginPageViewModel>();
             services.AddTransient<ContentPageViewModel>();
             services.AddTransient<PresetsWindowViewModel>();
+            services.AddTransient<SendDataService>();
             services.AddSingleton<PageService>();
             services.AddSingleton<Logs>();
+            services.AddSingleton<WebClient>();
             services.AddSingleton<WindowService>();
             services.AddSingleton(x=>new JsonWebTokenLocal(ServiceConfig.GetServiceConfig()));
             services.AddSingleton(x => new SendDataService(ServiceConfig.GetServiceConfig()));

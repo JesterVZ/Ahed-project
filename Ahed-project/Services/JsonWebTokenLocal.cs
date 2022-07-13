@@ -15,9 +15,11 @@ namespace Ahed_project.Services
     public class JsonWebTokenLocal
     {
         private ServiceConfig _serviceConfig;
+        private SendDataService _sendDataService;
         public JsonWebTokenLocal(ServiceConfig serviceConfig)
         {
             _serviceConfig = serviceConfig;
+            _sendDataService = new SendDataService(_serviceConfig);
         }
 
         /// <summary>
@@ -27,50 +29,24 @@ namespace Ahed_project.Services
         /// <returns></returns>
         public async Task<object> AuthenticateUser(string email, string password)
         {
-            string method = "POST";
             var assembly = Assembly.GetExecutingAssembly();
             string json = JsonConvert.SerializeObject(new
             {
                 email = email,
                 pass = password
             });
-            WebClient wc = new WebClient();
-            wc.Headers["Content-Type"] = "application/json";
             if (File.Exists(Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt"))
             {
-                var token = await Task.Factory.StartNew(Auth);
+                var getNewToken = await Task.Factory.StartNew(()=> _sendDataService.SendToServer(ProjectMethods.AUTH, json));
+                var token = JsonConvert.DeserializeObject<Token>(getNewToken.Result.ToString());
+                return GetUserData(token.token.ToString());
             }
             try
             {
-                string response = wc.UploadString(_serviceConfig.LoginLink, method, json);
-                var token = JsonConvert.DeserializeObject<Token>(response);
-                var newToken = await Task.Factory.StartNew(Auth);
-                return GetUserData(newToken.Result.ToString());
-            }
-            catch (Exception e)
-            {
-                return e.Message;
-            }
-        }
-
-        /// <summary>
-        /// Вызов метода Auth
-        /// </summary>
-        /// <returns></returns>
-        public async Task<object> Auth()
-        {
-            try
-            {
-                var assembly = Assembly.GetExecutingAssembly();
-                string response = "";
-                using (StreamReader stream = new StreamReader(Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt"))
-                {
-                    WebClient wc = new WebClient();
-                    string token = stream.ReadToEnd();
-                    wc.Headers.Add("Authorization", $"Bearer {token}");
-                    response = wc.DownloadString(_serviceConfig.AuthLink);
-                }
-                return response;
+                var response = await Task.Factory.StartNew(()=>_sendDataService.SendToServer(ProjectMethods.LOGIN, json));
+                var token = JsonConvert.DeserializeObject<Token>(response.Result.ToString());
+                await Task.Factory.StartNew(()=>_serviceConfig.SaveToken(token.token));
+                return GetUserData(token.token.ToString());
             }
             catch (Exception e)
             {
