@@ -19,9 +19,11 @@ namespace Ahed_project.Services
     {
         private ServiceConfig _serviceConfig;
         EFContext _context = new EFContext();
+        private SendDataService _sendDataService;
         public JsonWebTokenLocal(ServiceConfig serviceConfig)
         {
             _serviceConfig = serviceConfig;
+            _sendDataService = new SendDataService(_serviceConfig);
         }
 
         /// <summary>

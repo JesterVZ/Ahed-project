@@ -36,10 +36,6 @@ namespace Ahed_project.ViewModel
             _windowServise = windowService;
             _logs = logs;
             _sendDataService = sendDataService;
-            for (int i = 0; i < 10; i++)
-            {
-                _logs.AddMessage("Info", $"Log {i}");
-            }
             LogCollection = _logs.logs;
 
         }
@@ -69,13 +65,50 @@ namespace Ahed_project.ViewModel
         });
 
         public ICommand SaveComand => new AsyncCommand(async () => {
-
+            _logs.AddMessage("Info", "Идет сохранение проекта...");
             string json = JsonConvert.SerializeObject(ProjectInfo);
-            var result = await Task.Factory.StartNew(() => _sendDataService.SendToServer(json));
-            if(result.Result is string)
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE, json));
+            if(response.Result is string)
             {
-                _logs.AddMessage("Error", $"{result.Result}");
+                try
+                {
+                    Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
+                    for (int i = 0; i < result.logs.Count; i++)
+                    {
+                        _logs.AddMessage(result.logs[i].type, result.logs[i].message);
+                    }
+                    _logs.AddMessage("success", "Сохранение выполнено успешно!");
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
+        });
+
+        public ICommand NewProjectCommand => new AsyncCommand(async () => {
+            _logs.AddMessage("Info", "Начало создания проекта...");
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CREATE, ""));
+            if(response.Result is string)
+            {
+                try
+                {
+                    Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
+                    for (int i = 0; i < result.logs.Count; i++)
+                    {
+                        _logs.AddMessage(result.logs[i].type, result.logs[i].message);
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            } else if(response.Result is Exception)
+            {
+                MessageBox.Show(response.Result.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            
         });
 
         private Visibility projectInfoVisibility = Visibility.Hidden;

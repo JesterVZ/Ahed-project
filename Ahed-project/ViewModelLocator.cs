@@ -3,6 +3,12 @@ using Ahed_project.Services.EF;
 using Ahed_project.ViewModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Ahed_project
 {
@@ -19,8 +25,11 @@ namespace Ahed_project
             services.AddTransient<LoginPageViewModel>();
             services.AddTransient<ContentPageViewModel>();
             services.AddTransient<PresetsWindowViewModel>();
+            services.AddTransient<ProjectsWindowViewModel>();
+            services.AddTransient<SendDataService>();
             services.AddSingleton<PageService>();
             services.AddSingleton<Logs>();
+            services.AddSingleton<WebClient>();
             services.AddSingleton<WindowService>();
             services.AddSingleton(x=>new JsonWebTokenLocal(ServiceConfig.GetServiceConfig()));
             services.AddSingleton(x => new SendDataService(ServiceConfig.GetServiceConfig()));
@@ -40,6 +49,7 @@ namespace Ahed_project
         public ContentPageViewModel ContentPageViewModel => _provider.GetRequiredService<ContentPageViewModel>();
 
         public PresetsWindowViewModel PresetsWindowViewModel => _provider.GetRequiredService<PresetsWindowViewModel>();
+        public ProjectsWindowViewModel ProjectsWindowViewModel => _provider.GetRequiredService<ProjectsWindowViewModel>();
 
     }
 }
