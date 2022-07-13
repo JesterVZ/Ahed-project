@@ -40,6 +40,7 @@ namespace Ahed_project.Services
                         break;
                     case ProjectMethods.CREATE:
                         url = _serviceConfig.CreateLink;
+                        SetTokenInHeaders();
                         response = _webClient.UploadString(url, SendMethods.POST.ToString(), (string)body);
                         break;
                     case ProjectMethods.GET:

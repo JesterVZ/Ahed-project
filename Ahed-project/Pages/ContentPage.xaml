@@ -53,6 +53,7 @@
     </Page.Resources>
     <Page.InputBindings>
         <KeyBinding Key="S" Command="{Binding SaveComand}" Modifiers="Ctrl"/>
+        <KeyBinding Key="N" Command="{Binding NewProjectCommand}" Modifiers="Ctrl"/>
     </Page.InputBindings>
 
     <Grid>
@@ -63,7 +64,7 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" VerticalAlignment="Top">
             <MenuItem Header="File">
-                <MenuItem Header="New" InputGestureText="Ctrl + N"></MenuItem>
+                <MenuItem Header="New" InputGestureText="Ctrl + N" Command="{Binding NewProjectCommand}"></MenuItem>
                 <MenuItem Header="Manage">
                     <MenuItem Header="Project"></MenuItem>
                     <MenuItem Header="Fluid"></MenuItem>

@@ -78,7 +78,17 @@ namespace Ahed_project.ViewModel
             }
         });
 
-        public ICommand NewProjectCommand => new AsyncCommand(async () => { 
+        public ICommand NewProjectCommand => new AsyncCommand(async () => {
+            _logs.AddMessage("Info", "Начало создания проекта...");
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CREATE, ""));
+            try
+            {
+                var result = JsonConvert.DeserializeObject(response.Result.ToString());
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             
         });
 

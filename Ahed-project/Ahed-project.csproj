@@ -117,6 +117,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="MasterData\ProjectMethods.cs" />
+    <Compile Include="MasterData\Responce.cs" />
     <Compile Include="MasterData\SendMethods.cs" />
     <Compile Include="MasterData\ProjectInfo.cs" />
     <Compile Include="Services\MyAttachedBehaviors.cs" />
