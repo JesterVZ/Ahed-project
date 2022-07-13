@@ -18,12 +18,15 @@ namespace Ahed_project.Services
         public SendDataService(ServiceConfig serviceConfig)
         {
             _serviceConfig = serviceConfig;
-            AddHeader();
-        }
-        public async Task<object> SendToServer(ProjectMethods projectMethod, object body =null)
-        {
             _webClient.Headers["Content-Type"] = "application/json";
+        }
+        public async Task<object> SendToServer(ProjectMethods projectMethod, object body =null,string token = null)
+        {
             _webClient.Encoding = System.Text.Encoding.UTF8;
+            if (projectMethod != ProjectMethods.LOGIN && (_webClient.Headers["Authtorization"]==null|| _webClient.Headers["Authtorization"].Trim().ToLower()=="Bearer"))
+            {
+                AddHeader(token);
+            }
             string response = "";
             try
             {

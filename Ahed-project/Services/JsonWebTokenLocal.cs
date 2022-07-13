@@ -43,8 +43,7 @@ namespace Ahed_project.Services
                 });
                 var login = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.LOGIN, json));
                 var token = JsonConvert.DeserializeObject<Token>(login.Result.ToString());
-                await Task.Factory.StartNew(()=>_sendDataService.AddHeader(token.token));
-                var auth = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.AUTH));
+                var auth = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.AUTH,null,token.token));
                 token = JsonConvert.DeserializeObject<Token>(auth.Result.ToString());
                 user = new UserEF()
                 {
@@ -62,6 +61,7 @@ namespace Ahed_project.Services
                 _context.Users.Update(user);
                 _context.SaveChanges();
                 _context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+                await Task.Factory.StartNew(() => _sendDataService.AddHeader(user.Token));
             }
             return GetUserData(user.Token);
         }

@@ -26,7 +26,7 @@ namespace Ahed_project
             services.AddTransient<ContentPageViewModel>();
             services.AddTransient<PresetsWindowViewModel>();
             services.AddTransient<ProjectsWindowViewModel>();
-            services.AddTransient<SendDataService>();
+            services.AddSingleton<SendDataService>();
             services.AddSingleton<PageService>();
             services.AddSingleton<Logs>();
             services.AddSingleton<WebClient>();
