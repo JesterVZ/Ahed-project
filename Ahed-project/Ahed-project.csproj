@@ -132,8 +132,12 @@
     <Compile Include="ViewModel\LoginPageViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\PresetsWindowViewModel.cs" />
+    <Compile Include="ViewModel\ProjectsWindowViewModel.cs" />
     <Compile Include="Windows\Presets.xaml.cs">
       <DependentUpon>Presets.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ProjectsWindow.xaml.cs">
+      <DependentUpon>ProjectsWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -157,6 +161,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Presets.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ProjectsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

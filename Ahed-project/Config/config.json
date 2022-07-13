@@ -3,5 +3,6 @@
 	"AuthLink": "https://ahead-api.ru/api/user/auth",
 	"CreateLink": "https://ahead-api.ru/api/he/project/create",
 	"GetLink": "https://ahead-api.ru/api/he/project/get",
-	"UpdateLink": "https://ahead-api.ru/api/he/project/update"
+	"UpdateLink": "https://ahead-api.ru/api/he/project/update",
+	"GetProjectsLink": "https://ahead-api.ru/api/he/project/list"
 }

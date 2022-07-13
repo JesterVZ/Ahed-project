@@ -51,5 +51,6 @@ namespace Ahed_project.Services
         public string CreateLink { get; set; }
         public string GetLink { get; set; }
         public string UpdateLink { get; set; }
+        public string GetProjectsLink { get; set; }
     }
 }

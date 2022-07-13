@@ -21,6 +21,7 @@ namespace Ahed_project
             services.AddTransient<LoginPageViewModel>();
             services.AddTransient<ContentPageViewModel>();
             services.AddTransient<PresetsWindowViewModel>();
+            services.AddTransient<ProjectsWindowViewModel>();
             services.AddTransient<SendDataService>();
             services.AddSingleton<PageService>();
             services.AddSingleton<Logs>();
@@ -44,6 +45,7 @@ namespace Ahed_project
         public ContentPageViewModel ContentPageViewModel => _provider.GetRequiredService<ContentPageViewModel>();
 
         public PresetsWindowViewModel PresetsWindowViewModel => _provider.GetRequiredService<PresetsWindowViewModel>();
+        public ProjectsWindowViewModel ProjectsWindowViewModel => _provider.GetRequiredService<ProjectsWindowViewModel>();
 
     }
 }

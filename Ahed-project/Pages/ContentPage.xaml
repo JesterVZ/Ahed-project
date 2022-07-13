@@ -621,10 +621,13 @@
                 <Style TargetType="DataGridRow">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Severity}" Value="Error">
-                            <Setter Property="Background" Value="Red"/>
+                            <Setter Property="Background" Value="#FFFF8E8E"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Severity}" Value="Info">
-                            <Setter Property="Background" Value="Yellow"/>
+                        <DataTrigger Binding="{Binding Severity}" Value="warning">
+                            <Setter Property="Background" Value="#FFFFFFA7"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Severity}" Value="success">
+                            <Setter Property="Background" Value="#FF04F973"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

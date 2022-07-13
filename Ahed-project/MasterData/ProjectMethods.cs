@@ -12,6 +12,7 @@ namespace Ahed_project.MasterData
         GET,
         UPDATE,
         LOGIN,
-        AUTH
+        AUTH,
+        GET_PROJECTS
     }
 }

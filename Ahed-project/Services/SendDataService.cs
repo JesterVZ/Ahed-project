@@ -22,6 +22,7 @@ namespace Ahed_project.Services
         public async Task<object> SendToServer(ProjectMethods projectMethod, object body)
         {
             _webClient.Headers["Content-Type"] = "application/json";
+            _webClient.Encoding = System.Text.Encoding.UTF8;
             string response = "";
             try
             {
@@ -52,14 +53,18 @@ namespace Ahed_project.Services
                         url = _serviceConfig.UpdateLink;
                         url += "/1";
                         SetTokenInHeaders();
-
+                        response = _webClient.UploadString(url, SendMethods.POST.ToString(), (string)body);
+                        break;
+                    case ProjectMethods.GET_PROJECTS:
+                        url = _serviceConfig.GetProjectsLink;
+                        SetTokenInHeaders();
                         response = _webClient.UploadString(url, SendMethods.POST.ToString(), (string)body);
                         break;
                 }
                 return response;
             }catch(Exception e)
             {
-                return e.Message;
+                return e;
             }
             
         }
@@ -69,7 +74,10 @@ namespace Ahed_project.Services
             using (StreamReader stream = new StreamReader(Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt"))
             {
                 string token = stream.ReadToEnd();
-                _webClient.Headers.Add("Authorization", $"Bearer {token}");
+                if(_webClient.Headers["Authorization"] == null){
+                    _webClient.Headers.Add("Authorization", $"Bearer {token}");
+                }
+                
             }
         }
     }
