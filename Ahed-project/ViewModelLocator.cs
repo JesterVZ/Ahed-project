@@ -1,5 +1,7 @@
 ﻿using Ahed_project.Services;
+using Ahed_project.Services.EF;
 using Ahed_project.ViewModel;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Ahed_project
@@ -10,6 +12,8 @@ namespace Ahed_project
 
         public static void Init()
         {
+            var db = new EFContext();
+            db.Database.Migrate();
             var services = new ServiceCollection();
             services.AddTransient<MainViewModel>();
             services.AddTransient<LoginPageViewModel>();

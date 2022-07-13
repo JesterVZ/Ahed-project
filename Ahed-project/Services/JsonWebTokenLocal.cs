@@ -42,11 +42,19 @@ namespace Ahed_project.Services
                 {
                     Email = email,
                     Password = password,
-                    Token = token.token
+                    Token = token.token,
+                    IsActive = true
                 };
                 _context.Users.Add(user);
                 _context.SaveChanges();
             }
+            else
+                    {
+                        user.IsActive = true;
+                        _context.Users.Add(user);
+                        _context.SaveChanges();
+                        _context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+                    }
             return GetUserData(user.Token);
         }
 

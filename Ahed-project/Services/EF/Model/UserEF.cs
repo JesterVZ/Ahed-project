@@ -32,5 +32,10 @@ namespace Ahed_project.Services.EF.Model
         /// JWT
         /// </summary>
         public string Token { get; set; }
+
+        /// <summary>
+        /// Зайдено или нет
+        /// </summary>
+        public bool IsActive { get; set; }
     }
 }

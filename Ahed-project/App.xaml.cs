@@ -18,8 +18,6 @@ namespace Ahed_project
         protected override void OnStartup(StartupEventArgs e)
         {
             ViewModelLocator.Init();
-            var db = new EFContext();
-            db.Database.Migrate();
             base.OnStartup(e);
         }
     }
