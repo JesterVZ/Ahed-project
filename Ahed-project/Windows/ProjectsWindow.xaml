@@ -4,28 +4,26 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ahed_project.Windows"
+        xmlns:attach="clr-namespace:Ahed_project.Services"
         DataContext="{Binding ProjectsWindowViewModel, Source={StaticResource ViewModelLocator}}"
         mc:Ignorable="d"
+        attach:MyAttachedBehaviors.LoadedCommand="{Binding GetProjectsCommand}"
         Title="ProjectsWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <DataGrid ItemsSource="{Binding ProjectsCollection}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Id"/>
-                <DataGridTextColumn Header="UserId"/>
-                <DataGridTextColumn Header="Name"/>
-                <DataGridTextColumn Header="Сustomer"/>
-                <DataGridTextColumn Header="Сontact"/>
-                <DataGridTextColumn Header="Сustomer reference"/>
-                <DataGridTextColumn Header="Description"/>
-                <DataGridTextColumn Header="Category"/>
-                <DataGridTextColumn Header="Keywords"/>
-                <DataGridTextColumn Header="Comments"/>
-            </DataGrid.Columns>
-            
+        <DataGrid ItemsSource="{Binding ProjectsCollection}" Margin="5 5 5 5">
+
         </DataGrid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" Margin="5 5 5 5"/>
+            <Button Grid.Column="1" Margin="5 5 5 5">Select</Button>
+        </Grid>
     </Grid>
 </Window>

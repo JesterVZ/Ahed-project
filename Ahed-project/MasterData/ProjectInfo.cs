@@ -8,18 +8,20 @@ namespace Ahed_project.MasterData
 {
     public class ProjectInfo
     {
-        public int Id { get; set; }
-        public int Revision { get; set; }
-        public string Name { get; set; }
-        public string Customer { get; set; }
-        public string Contact { get; set; }
-        public string CustomerReference { get; set; }
-        public string Description { get; set; }
-        public string Units { get; set; }
-        public int NumberOfDecimals { get; set; }
-        public string Category { get; set; }
-        public string Keywords { get; set; }
-        public string Comments { get; set; }
+        public int project_id { get; set; }
+        public int? revision { get; set; }
+        public string? name { get; set; }
+        public string? customer { get; set; }
+        public string? contact { get; set; }
+        public string? customer_reference { get; set; }
+        public string? description { get; set; }
+        public string? units { get; set; }
+        public int? number_of_decimals { get; set; }
+        public string? category { get; set; }
+        public string? keywords { get; set; }
+        public string? comments { get; set; }
+        public string createdAt { get; set; }
+        public string updatedAt { get; set; }
 
     }
 }

@@ -25,7 +25,7 @@ namespace Ahed_project.Services
             _webClient.Encoding = System.Text.Encoding.UTF8;
             if (projectMethod != ProjectMethods.LOGIN && (_webClient.Headers["Authtorization"]==null|| _webClient.Headers["Authtorization"].Trim().ToLower()=="Bearer"))
             {
-                AddHeader(token);
+                await AddHeader(token);
             }
             string response = "";
             try

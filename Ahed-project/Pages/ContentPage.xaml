@@ -81,7 +81,7 @@
                     <MenuItem Header="Save geometry as"></MenuItem>
                 </MenuItem>
                 <Separator HorizontalAlignment="Left" Height="1" Width="140"/>
-                <MenuItem Header="Recent projects"></MenuItem>
+                <MenuItem Header="Recent projects" Command="{Binding OpenProjectsWindow}"></MenuItem>
                 <MenuItem Header="Logout" Command="{Binding Logout}"></MenuItem>
                 <MenuItem Header="Exit" Command="{Binding Exit}"></MenuItem>
             </MenuItem>
@@ -153,24 +153,24 @@
                                 <TextBlock VerticalAlignment="Top" Text="Description" Grid.Column="0" Grid.Row="5"/>
                                 <TextBlock Style="{StaticResource DefaultText}" Text="Units" Grid.Column="0" Grid.Row="6"/>
 
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Id, UpdateSourceTrigger=LostFocus}" Grid.Column="1" Grid.Row="1"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding project_id, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1"/>
                                 <TextBlock Style="{StaticResource DefaultText}" Text="Revision" Grid.Column="2" Grid.Row="1"/>
-                                <TextBox Style="{StaticResource Default}" Text="{Binding Revision, UpdateSourceTrigger=LostFocus}" Grid.Column="3" Grid.Row="1"/>
-                                <TextBox Style="{StaticResource Default}" Text="{Binding Name, UpdateSourceTrigger=LostFocus}" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1"/>
-                                <TextBox Style="{StaticResource Default}" Text="{Binding Customer, UpdateSourceTrigger=LostFocus}" Grid.ColumnSpan="3" Grid.Row="3" Grid.Column="1"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding revision, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="1"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding name, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding customer, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="3" Grid.Row="3" Grid.Column="1"/>
 
-                                <TextBox Style="{StaticResource Default}" Text="{Binding Contact, UpdateSourceTrigger=LostFocus}" Grid.Column="1" Grid.Row="4"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding contact, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
                                 <TextBlock Style="{StaticResource DefaultText}" Text="Customer reference" Grid.Column="2"  Grid.Row="4"/>
-                                <TextBox Style="{StaticResource Default}" Text="{Binding CustomerReference, UpdateSourceTrigger=LostFocus}" Grid.Column="3"  Grid.Row="4"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding customer_reference, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3"  Grid.Row="4"/>
 
-                                <TextBox TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3"/>
+                                <TextBox TextWrapping="Wrap" Text="{Binding description, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3"/>
                                 <ComboBox Grid.Row="6" Grid.Column="1">
                                     <ComboBoxItem IsSelected="True" IsEnabled="False">
                                         <Label>Metric</Label>
                                     </ComboBoxItem>
                                 </ComboBox>
                                 <TextBlock Style="{StaticResource DefaultText}" Text="Number of decimals" Grid.Row="6" Grid.Column="2"/>
-                                <TextBox Style="{StaticResource Default}" Text="{Binding NumberOfDecimals, UpdateSourceTrigger=LostFocus}" Grid.Column="3" Grid.Row="6"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding NumberOfDecimals, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="6"/>
                                 <TextBlock Grid.Column="0" Grid.Row="7" FontWeight="Bold">Project Processes</TextBlock>
                                 <TextBox Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2"/>
                                 <ListView Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3">
@@ -179,16 +179,7 @@
                                 <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="9">
                                     <TextBlock Grid.ColumnSpan="4" FontWeight="Bold" Margin="0 0 9 0">Advanced Properties</TextBlock>
                                     <Button Width="15" Height="15" Command="{Binding ShowProjectInfo}">
-                                        <Button.Template>
-                                            <ControlTemplate TargetType="Button">
-                                                <Grid>
-                                                    <Ellipse Stroke="Black">
-
-                                                    </Ellipse>
-                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                </Grid>
-                                            </ControlTemplate>
-                                        </Button.Template>
+                                        
                                         <materialDesign:PackIcon Kind="ChevronDown"/>
                                     </Button>
                                 </StackPanel>
@@ -225,9 +216,9 @@
                                     <TextBox Style="{StaticResource Colored}" Grid.Column="4" Grid.Row="3"/>
 
                                     <TextBlock Style="{StaticResource DefaultText}" Text="Date"  Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="0,7"/>
-                                    <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="4"/>
+                                    <TextBox Style="{StaticResource Colored}" Text="{Binding createdAt, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4"/>
                                     <TextBlock Style="{StaticResource DefaultText}" Text="Date"  Grid.Column="3" Grid.Row="4" Margin="0,7"/>
-                                    <TextBox Style="{StaticResource Colored}" Grid.Column="4" Grid.Row="4"/>
+                                    <TextBox Style="{StaticResource Colored}" Text="{Binding updatedAt, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="4"/>
 
                                     <TextBlock Style="{StaticResource DefaultText}" Text="Number of saves"  Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Margin="0,7"/>
                                     <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="5"/>
