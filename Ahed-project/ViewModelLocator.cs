@@ -28,6 +28,7 @@ namespace Ahed_project
             services.AddTransient<ProjectsWindowViewModel>();
             services.AddSingleton<SendDataService>();
             services.AddSingleton<PageService>();
+            services.AddSingleton<SelectProjectService>();
             services.AddSingleton<Logs>();
             services.AddSingleton<WebClient>();
             services.AddSingleton<WindowService>();

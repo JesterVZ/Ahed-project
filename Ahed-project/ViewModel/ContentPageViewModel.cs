@@ -23,6 +23,7 @@ namespace Ahed_project.ViewModel
         private readonly WindowService _windowServise;
         private readonly Logs _logs;
         private readonly SendDataService _sendDataService;
+        private readonly SelectProjectService _selectProjectService;
 
         public ObservableCollection<LoggerMessage> LogCollection { get; set; }
 
@@ -30,12 +31,14 @@ namespace Ahed_project.ViewModel
         public ProjectInfo ProjectInfo { get => projectInfo; set => SetValue(ref projectInfo, value); }
 
 
-        public ContentPageViewModel(PageService pageService, WindowService windowService, Logs logs, SendDataService sendDataService)
+        public ContentPageViewModel(PageService pageService, WindowService windowService, Logs logs, SendDataService sendDataService, SelectProjectService selectProjectService)
         {
             _pageService = pageService;
             _windowServise = windowService;
             _logs = logs;
             _sendDataService = sendDataService;
+            _selectProjectService = selectProjectService;
+            _selectProjectService.ProjectSelected += (project) => ProjectInfo = project;
             LogCollection = _logs.logs;
 
         }

@@ -16,10 +16,12 @@ namespace Ahed_project.ViewModel
     public class ProjectsWindowViewModel : BindableBase
     {
         private readonly SendDataService _sendDataService;
+        private readonly SelectProjectService _selectProjectService;
         public ObservableCollection<ProjectInfo> ProjectsCollection { get; set; }
-        public ProjectsWindowViewModel(SendDataService sendDataService)
+        public ProjectsWindowViewModel(SendDataService sendDataService, SelectProjectService selectProjectService)
         {
             _sendDataService = sendDataService;
+            _selectProjectService = selectProjectService;
             ProjectsCollection = new ObservableCollection<ProjectInfo>();
         }
 
@@ -50,6 +52,13 @@ namespace Ahed_project.ViewModel
                 MessageBox.Show(response.Result.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         });
+
+        public ICommand SelectProject => new DelegateCommand(() => {
+            ProjectInfo selectefProject = SelectedProject;
+            _selectProjectService.SelectProject(selectefProject);
+        });
+
+        public ProjectInfo SelectedProject { get; set; }
         
     }
 }

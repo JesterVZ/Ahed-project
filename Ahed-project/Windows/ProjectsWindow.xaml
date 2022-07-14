@@ -14,8 +14,10 @@
             <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <DataGrid ItemsSource="{Binding ProjectsCollection}" Margin="5 5 5 5">
-
+        <DataGrid ItemsSource="{Binding ProjectsCollection}" Margin="5 5 5 5" IsReadOnly="True" AllowDrop="False" SelectedItem="{Binding SelectedProject, Mode=TwoWay}">
+            <DataGrid.InputBindings>
+                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SelectProject}"/>
+            </DataGrid.InputBindings>
         </DataGrid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
