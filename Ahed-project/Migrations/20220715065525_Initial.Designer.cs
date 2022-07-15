@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ahed_project.Migrations
 {
     [DbContext(typeof(EFContext))]
-    [Migration("20220713120025_UserEF_IsActive")]
-    partial class UserEF_IsActive
+    [Migration("20220715065525_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,9 +30,6 @@ namespace Ahed_project.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Password")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Token")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

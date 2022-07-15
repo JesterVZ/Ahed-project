@@ -19,14 +19,11 @@ namespace Ahed_project.Services
         {
             _serviceConfig = serviceConfig;
             _webClient.Headers["Content-Type"] = "application/json";
+
         }
-        public async Task<object> SendToServer(ProjectMethods projectMethod, object body =null,string token = null)
+        public async Task<object> SendToServer(ProjectMethods projectMethod, string body = null)
         {
             _webClient.Encoding = System.Text.Encoding.UTF8;
-            if (projectMethod != ProjectMethods.LOGIN && (_webClient.Headers["Authtorization"]==null|| _webClient.Headers["Authtorization"].Trim().ToLower()=="Bearer"))
-            {
-                await AddHeader(token);
-            }
             string response = "";
             try
             {
@@ -66,14 +63,9 @@ namespace Ahed_project.Services
                 return e;
             }
         }
-
-        public async Task AddHeader(string token=null)
+        public void AddHeader(string token)
         {
-            using (EFContext context = new EFContext())
-            {
-                var active = context.Users.FirstOrDefault(x => x.IsActive);
-                _webClient.Headers["Authorization"] = $"Bearer {token??active?.Token}";
-            }
+            _webClient.Headers["Authorization"] = $"Bearer {token}";
         }
     }
 }

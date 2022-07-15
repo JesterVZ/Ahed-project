@@ -18,9 +18,10 @@ namespace Ahed_project
 
         public static void Init()
         {
-            var db = new EFContext();
-            db.Database.Migrate();
+            using (var db = new EFContext())
+                db.Database.Migrate();
             var services = new ServiceCollection();
+            services.AddSingleton(x => ServiceConfig.GetServiceConfig());
             services.AddTransient<MainViewModel>();
             services.AddTransient<LoginPageViewModel>();
             services.AddTransient<ContentPageViewModel>();
@@ -32,12 +33,12 @@ namespace Ahed_project
             services.AddSingleton<Logs>();
             services.AddSingleton<WebClient>();
             services.AddSingleton<WindowService>();
-            services.AddSingleton(x=>new JsonWebTokenLocal(ServiceConfig.GetServiceConfig()));
-            services.AddSingleton(x => new SendDataService(ServiceConfig.GetServiceConfig()));
+            services.AddSingleton(x => new JsonWebTokenLocal(_provider.GetRequiredService<ServiceConfig>(), _provider.GetRequiredService<SendDataService>()));
+            services.AddSingleton(x => new SendDataService(_provider.GetRequiredService<ServiceConfig>()));
 
             _provider = services.BuildServiceProvider();
 
-            foreach(var item in services)
+            foreach (var item in services)
             {
                 _provider.GetRequiredService(item.ServiceType);
             }

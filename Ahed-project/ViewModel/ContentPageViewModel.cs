@@ -1,6 +1,7 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.Pages;
 using Ahed_project.Services;
+using Ahed_project.Services.EF;
 using Ahed_project.Windows;
 using DevExpress.Mvvm;
 using Newtonsoft.Json;
@@ -44,8 +45,13 @@ namespace Ahed_project.ViewModel
         }
 
         public ICommand Logout => new AsyncCommand(async () => {
-            var assembly = Assembly.GetExecutingAssembly();
-            File.Delete(Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt");
+            using (var context = new EFContext())
+            {
+                var active = context.Users.FirstOrDefault(x => x.IsActive);
+                active.IsActive = false;
+                context.Update(active);
+                context.SaveChanges();
+            }
             _pageService.ChangePage(new LoginPage());
         });
 

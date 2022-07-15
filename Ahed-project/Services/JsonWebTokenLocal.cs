@@ -18,12 +18,11 @@ namespace Ahed_project.Services
     public class JsonWebTokenLocal
     {
         private ServiceConfig _serviceConfig;
-        EFContext _context = new EFContext();
         private SendDataService _sendDataService;
-        public JsonWebTokenLocal(ServiceConfig serviceConfig)
+        public JsonWebTokenLocal(ServiceConfig serviceConfig, SendDataService sendDataService)
         {
             _serviceConfig = serviceConfig;
-            _sendDataService = new SendDataService(_serviceConfig);
+            _sendDataService = sendDataService;
         }
 
         /// <summary>
@@ -33,37 +32,41 @@ namespace Ahed_project.Services
         /// <returns></returns>
         public async Task<object> AuthenticateUser(string email, string password)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Password == password && x.Email == email);
-            if (user == null)
+            using (var context = new EFContext())
             {
+                var user = context.Users.FirstOrDefault(x => x.Password == password && x.Email == email);
                 string json = JsonConvert.SerializeObject(new
                 {
                     email = email,
                     pass = password
                 });
+                Token token = null;
                 var login = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.LOGIN, json));
-                var token = JsonConvert.DeserializeObject<Token>(login.Result.ToString());
-                var auth = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.AUTH,null,token.token));
+                token = JsonConvert.DeserializeObject<Token>(login.Result.ToString());
+                _sendDataService.AddHeader(token.token);
+                var auth = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.AUTH));
                 token = JsonConvert.DeserializeObject<Token>(auth.Result.ToString());
-                user = new UserEF()
+                _sendDataService.AddHeader(token.token);
+                if (user == null)
                 {
-                    Email = email,
-                    Password = password,
-                    Token = token.token,
-                    IsActive = true
-                };
-                _context.Users.Add(user);
-                _context.SaveChanges();
+                    user = new UserEF()
+                    {
+                        Email = email,
+                        Password = password,
+                        IsActive = true
+                    };
+                    context.Users.Add(user);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    user.IsActive = true;
+                    context.Users.Update(user);
+                    context.SaveChanges();
+                    context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+                }
+                return GetUserData(token.token);
             }
-            else
-            {
-                user.IsActive = true;
-                _context.Users.Update(user);
-                _context.SaveChanges();
-                _context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
-                await Task.Factory.StartNew(() => _sendDataService.AddHeader(user.Token));
-            }
-            return GetUserData(user.Token);
         }
 
         /// <summary>

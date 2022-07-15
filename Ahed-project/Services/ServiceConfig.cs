@@ -14,24 +14,6 @@ namespace Ahed_project.Services
     {
         private static ServiceConfig _serviceConfig = null;
 
-        public async Task SaveToken(string token)
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            string filepath = Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt";
-            try
-            {
-                using (FileStream fstream = new FileStream(filepath, FileMode.OpenOrCreate))
-                {
-                    byte[] buffer = Encoding.Default.GetBytes(token);
-                    await fstream.WriteAsync(buffer, 0, buffer.Length);
-                    fstream.Close();
-                }
-            }
-            catch(Exception e)
-            {
-                throw e;
-            }
-        }
         public static ServiceConfig GetServiceConfig()
         {
             try

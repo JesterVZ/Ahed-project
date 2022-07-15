@@ -1,6 +1,7 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.Pages;
 using Ahed_project.Services;
+using Ahed_project.Services.EF;
 using DevExpress.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,16 @@ namespace Ahed_project.ViewModel
             _pageService = pageService;
             _logs = logs;
             _jwt = jwt;
+            using (var context = new EFContext())
+            {
+                var active = context.Users.FirstOrDefault(x => x.IsActive);
+                if(active!=null)
+                {
+                    email = active.Email;
+                    pass = active.Password;
+                    Auth();
+                }
+            }
         }
 
         public ICommand GoToContent => new AsyncCommand(async () => {
@@ -46,21 +57,8 @@ namespace Ahed_project.ViewModel
             else if (result.Result is Exception || result.Result is string)
             {
                 MessageBox.Show(result.Result.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                File.Delete(Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt");
             }
         }
-
-        public ICommand CheckAuth => new AsyncCommand(async () =>
-        {
-            
-            var assembly = Assembly.GetExecutingAssembly();
-            if (File.Exists(Path.GetDirectoryName(assembly.Location) + "\\Config\\token.txt"))
-            {
-                Auth();
-
-            }
-
-        });
 
         private string pass;
 

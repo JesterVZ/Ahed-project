@@ -14,22 +14,13 @@ namespace Ahed_project.ViewModel
     public class MainViewModel : BindableBase
     {
         private readonly PageService _pageService;
-        private EFContext _context = new EFContext();
         public Page PageSource { get; set; }
 
         public MainViewModel(PageService pageService, Logs logs)
         {
             _pageService = pageService;
             _pageService.OnPageChanged += (page) => PageSource = page;
-            var active = _context.Users.FirstOrDefault(x => x.IsActive);
-            if (active == null)
-            {
-                _pageService.ChangePage(new LoginPage());
-            }
-            else
-            {
-                _pageService.ChangePage(new ContentPage(logs));
-            }
+            _pageService.ChangePage(new LoginPage());
         }
     }
 }
