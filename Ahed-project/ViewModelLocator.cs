@@ -33,8 +33,7 @@ namespace Ahed_project
             services.AddSingleton<Logs>();
             services.AddSingleton<WebClient>();
             services.AddSingleton<WindowService>();
-            services.AddSingleton(x => new JsonWebTokenLocal(_provider.GetRequiredService<ServiceConfig>(), _provider.GetRequiredService<SendDataService>()));
-            services.AddSingleton(x => new SendDataService(_provider.GetRequiredService<ServiceConfig>()));
+            services.AddSingleton<JsonWebTokenLocal>();
 
             _provider = services.BuildServiceProvider();
 
