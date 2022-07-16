@@ -1,4 +1,5 @@
 ﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services.EF;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace Ahed_project.Services
         {
             _serviceConfig = serviceConfig;
         }
-        public async Task<object> SendToServer(ProjectMethods projectMethod, string body = null)
+        public async Task<object> SendToServer(ProjectMethods projectMethod, string body = null, ProjectInfoGet projectInfo = null)
         {
             WebClient _webClient = new WebClient();
             if (Headers.GetValues("Content-Type") is null)
@@ -51,7 +52,7 @@ namespace Ahed_project.Services
                         response = _webClient.UploadString(_serviceConfig.GetLink, SendMethods.POST.ToString(), body);
                         break;
                     case ProjectMethods.UPDATE:
-                        response = _webClient.UploadString(_serviceConfig.UpdateLink+"/1", SendMethods.POST.ToString(), body);
+                        response = _webClient.UploadString(_serviceConfig.UpdateLink+$"/{projectInfo.project_id}", SendMethods.POST.ToString(), body);
                         break;
                     case ProjectMethods.GET_PROJECTS:
                         response = _webClient.UploadString(_serviceConfig.GetProjectsLink, SendMethods.POST.ToString(), body);

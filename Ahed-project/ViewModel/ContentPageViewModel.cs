@@ -85,7 +85,7 @@ namespace Ahed_project.ViewModel
             _logs.AddMessage("Info", "Идет сохранение проекта...");
             var projectInfoSend = _mapper.Map<ProjectInfoSend>(ProjectInfo);
             string json = JsonConvert.SerializeObject(projectInfoSend);
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE, json));
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE, json, ProjectInfo));
             if(response.Result is string)
             {
                 try
