@@ -41,6 +41,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="6.21.0" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.1" />
+    <PackageReference Include="RestSharp" Version="108.0.1" />
     <PackageReference Include="SQLite" Version="3.13.0" />
     <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.0" />
     <PackageReference Include="SQLitePCLRaw.bundle_green" Version="1.1.11" />

@@ -14,16 +14,19 @@ namespace Ahed_project.Services
     public class SendDataService
     {
         private readonly ServiceConfig _serviceConfig;
-        private WebClient _webClient = new WebClient();
+        WebHeaderCollection Headers = new WebHeaderCollection();
+
         public SendDataService(ServiceConfig serviceConfig)
         {
             _serviceConfig = serviceConfig;
-            _webClient.Headers["Content-Type"] = "application/json";
-
         }
         public async Task<object> SendToServer(ProjectMethods projectMethod, string body = null)
         {
+            WebClient _webClient = new WebClient();
+            if (Headers.GetValues("Content-Type") is null)
+                Headers.Add("Content-Type", "application/json");
             _webClient.Encoding = System.Text.Encoding.UTF8;
+            _webClient.Headers = Headers;
             string response = "";
             try
             {
@@ -31,30 +34,27 @@ namespace Ahed_project.Services
                 switch (projectMethod)
                 {
                     case ProjectMethods.LOGIN:
-                        url = _serviceConfig.LoginLink;
-                        _webClient.Headers.Remove("Authorization");
-                        response = _webClient.UploadString(url, SendMethods.POST.ToString(), (string)body);
+                        var authorizationHeader = _webClient.Headers["Authorization"];
+                        if (authorizationHeader != null)
+                            _webClient.Headers.Remove("Authorization");
+                        response = _webClient.UploadString(_serviceConfig.LoginLink, SendMethods.POST.ToString(), body);
+                        if (authorizationHeader!=null)     
+                            AddHeader(authorizationHeader.Split(' ').LastOrDefault());     
                         break;
                     case ProjectMethods.AUTH:
-                        url = _serviceConfig.AuthLink;
-                        response = _webClient.DownloadString(url);
+                        response = _webClient.DownloadString(_serviceConfig.AuthLink);
                         break;
                     case ProjectMethods.CREATE:
-                        url = _serviceConfig.CreateLink;
-                        response = _webClient.UploadString(url, SendMethods.POST.ToString(), (string)body);
+                        response = _webClient.UploadString(_serviceConfig.CreateLink, SendMethods.POST.ToString(), body);
                         break;
                     case ProjectMethods.GET:
-                        url = _serviceConfig.GetLink;
-                        response = _webClient.UploadString(url, SendMethods.POST.ToString(), (string)body);
+                        response = _webClient.UploadString(_serviceConfig.GetLink, SendMethods.POST.ToString(), body);
                         break;
                     case ProjectMethods.UPDATE:
-                        url = _serviceConfig.UpdateLink;
-                        url += "/1";
-                        response = _webClient.UploadString(url, SendMethods.POST.ToString(), (string)body);
+                        response = _webClient.UploadString(_serviceConfig.UpdateLink+"/1", SendMethods.POST.ToString(), body);
                         break;
                     case ProjectMethods.GET_PROJECTS:
-                        url = _serviceConfig.GetProjectsLink;
-                        response = _webClient.UploadString(url, SendMethods.POST.ToString(), (string)body);
+                        response = _webClient.UploadString(_serviceConfig.GetProjectsLink, SendMethods.POST.ToString(), body);
                         break;
                 }
                 return response;
@@ -65,7 +65,10 @@ namespace Ahed_project.Services
         }
         public void AddHeader(string token)
         {
-            _webClient.Headers["Authorization"] = $"Bearer {token}";
+            if (Headers.GetValues("Authorization") != null)
+                Headers["Authorization"] = $"Bearer {token}";
+            else
+                Headers.Add("Authorization", $"Bearer {token}");
         }
     }
 }
