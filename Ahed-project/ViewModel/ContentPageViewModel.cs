@@ -1,8 +1,10 @@
 ﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Pages;
 using Ahed_project.Services;
 using Ahed_project.Services.EF;
 using Ahed_project.Windows;
+using AutoMapper;
 using DevExpress.Mvvm;
 using Newtonsoft.Json;
 using System;
@@ -25,14 +27,16 @@ namespace Ahed_project.ViewModel
         private readonly Logs _logs;
         private readonly SendDataService _sendDataService;
         private readonly SelectProjectService _selectProjectService;
+        private readonly IMapper _mapper;
 
         public ObservableCollection<LoggerMessage> LogCollection { get; set; }
 
-        private ProjectInfo projectInfo = new ProjectInfo();
-        public ProjectInfo ProjectInfo { get => projectInfo; set => SetValue(ref projectInfo, value); }
+        private ProjectInfoGet projectInfo = new ProjectInfoGet();
+        public ProjectInfoGet ProjectInfo { get => projectInfo; set => SetValue(ref projectInfo, value); }
 
 
-        public ContentPageViewModel(PageService pageService, WindowService windowService, Logs logs, SendDataService sendDataService, SelectProjectService selectProjectService)
+        public ContentPageViewModel(PageService pageService, WindowService windowService, Logs logs,
+            SendDataService sendDataService, SelectProjectService selectProjectService, IMapper mapper)
         {
             _pageService = pageService;
             _windowServise = windowService;
@@ -41,7 +45,7 @@ namespace Ahed_project.ViewModel
             _selectProjectService = selectProjectService;
             _selectProjectService.ProjectSelected += (project) => ProjectInfo = project;
             LogCollection = _logs.logs;
-
+            _mapper = mapper;
         }
 
         public ICommand Logout => new AsyncCommand(async () => {
@@ -79,7 +83,8 @@ namespace Ahed_project.ViewModel
 
         public ICommand SaveComand => new AsyncCommand(async () => {
             _logs.AddMessage("Info", "Идет сохранение проекта...");
-            string json = JsonConvert.SerializeObject(ProjectInfo);
+            var projectInfoSend = _mapper.Map<ProjectInfoSend>(ProjectInfo);
+            string json = JsonConvert.SerializeObject(projectInfoSend);
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE, json));
             if(response.Result is string)
             {

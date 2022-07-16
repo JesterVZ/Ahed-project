@@ -1,6 +1,8 @@
-﻿using Ahed_project.Services;
+﻿using Ahed_project.MasterData.ProjectClasses;
+using Ahed_project.Services;
 using Ahed_project.Services.EF;
 using Ahed_project.ViewModel;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -34,6 +36,26 @@ namespace Ahed_project
             services.AddSingleton<WebClient>();
             services.AddSingleton<WindowService>();
             services.AddSingleton<JsonWebTokenLocal>();
+
+            //Маппер
+            var configuration = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<ProjectInfoGet, ProjectInfoSend>()
+                .ForMember(x => x.Id, s => s.MapFrom(o => o.project_id))
+                .ForMember(x => x.CustomerReference, s => s.MapFrom(o => o.customer_reference))
+                .ForMember(x => x.Customer, s => s.MapFrom(o => o.customer))
+                .ForMember(x => x.Name, s => s.MapFrom(o => o.name))
+                .ForMember(x => x.NumberOfDecimals, s => s.MapFrom(o => o.number_of_decimals))
+                .ForMember(x => x.Revision, s => s.MapFrom(o => o.revision))
+                .ForMember(x => x.Category, s => s.MapFrom(o => o.category))
+                .ForMember(x => x.Comments, s => s.MapFrom(o => o.comments))
+                .ForMember(x => x.Contact, s => s.MapFrom(o => o.contact))
+                .ForMember(x => x.Description, s => s.MapFrom(o => o.description))
+                .ForMember(x => x.Keywords, s => s.MapFrom(o => o.keywords))
+                .ForMember(x => x.Units, s => s.MapFrom(o => o.units));
+            });
+            IMapper mapper = configuration.CreateMapper();
+            services.AddSingleton(mapper);
 
             _provider = services.BuildServiceProvider();
 

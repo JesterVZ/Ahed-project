@@ -1,4 +1,5 @@
 ﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services;
 using DevExpress.Mvvm;
 using Newtonsoft.Json;
@@ -17,12 +18,12 @@ namespace Ahed_project.ViewModel
     {
         private readonly SendDataService _sendDataService;
         private readonly SelectProjectService _selectProjectService;
-        public ObservableCollection<ProjectInfo> ProjectsCollection { get; set; }
+        public ObservableCollection<ProjectInfoGet> ProjectsCollection { get; set; }
         public ProjectsWindowViewModel(SendDataService sendDataService, SelectProjectService selectProjectService)
         {
             _sendDataService = sendDataService;
             _selectProjectService = selectProjectService;
-            ProjectsCollection = new ObservableCollection<ProjectInfo>();
+            ProjectsCollection = new ObservableCollection<ProjectInfoGet>();
         }
 
         public ICommand GetProjectsCommand => new AsyncCommand(async () => {
@@ -33,7 +34,7 @@ namespace Ahed_project.ViewModel
                 try
                 {
                     Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
-                    List<ProjectInfo> projects = JsonConvert.DeserializeObject<List<ProjectInfo>>(result.data.ToString());
+                    List<ProjectInfoGet> projects = JsonConvert.DeserializeObject<List<ProjectInfoGet>>(result.data.ToString());
                     if(projects.Count > 0)
                     {
                         for(int i = 0; i < projects.Count; i++)
@@ -54,11 +55,11 @@ namespace Ahed_project.ViewModel
         });
 
         public ICommand SelectProject => new DelegateCommand(() => {
-            ProjectInfo selectefProject = SelectedProject;
+            ProjectInfoGet selectefProject = SelectedProject;
             _selectProjectService.SelectProject(selectefProject);
         });
 
-        public ProjectInfo SelectedProject { get; set; }
+        public ProjectInfoGet SelectedProject { get; set; }
         
     }
 }

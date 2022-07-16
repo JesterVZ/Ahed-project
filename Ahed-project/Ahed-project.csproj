@@ -30,6 +30,8 @@
     <Resource Include="Visual\loading.gif" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="DevExpressMvvm" Version="21.1.5" />
     <PackageReference Include="EFCore.DbContextFactory" Version="2.0.0" />
     <PackageReference Include="JWT" Version="9.0.3" />

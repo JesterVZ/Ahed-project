@@ -1,4 +1,4 @@
-﻿using Ahed_project.MasterData;
+﻿using Ahed_project.MasterData.ProjectClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace Ahed_project.Services
 {
     public class SelectProjectService
     {
-        public event Action<ProjectInfo> ProjectSelected;
-        public void SelectProject(ProjectInfo project) => ProjectSelected?.Invoke(project);
+        public event Action<ProjectInfoGet> ProjectSelected;
+        public void SelectProject(ProjectInfoGet project) => ProjectSelected?.Invoke(project);
     }
 }
