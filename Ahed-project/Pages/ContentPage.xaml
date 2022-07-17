@@ -87,6 +87,7 @@
             </MenuItem>
             <MenuItem Header="Tools">
                 <MenuItem Header="Select presets">
+                    <MenuItem Header="Products" Command="{Binding OpenProductsWindow}"></MenuItem>
                     <MenuItem Header="Material presets" Command="{Binding OpenPresetWindow}"></MenuItem>
                     <MenuItem Header="Fluid presets" Command="{Binding OpenPresetWindow}"></MenuItem>
                     <MenuItem Header="Geomery presets" Command="{Binding OpenPresetWindow}"></MenuItem>

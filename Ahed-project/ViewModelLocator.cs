@@ -29,6 +29,7 @@ namespace Ahed_project
             services.AddTransient<ContentPageViewModel>();
             services.AddTransient<PresetsWindowViewModel>();
             services.AddTransient<ProjectsWindowViewModel>();
+            services.AddTransient<ProductsViewModel>();
             services.AddSingleton<SendDataService>();
             services.AddSingleton<PageService>();
             services.AddSingleton<SelectProjectService>();
@@ -66,13 +67,11 @@ namespace Ahed_project
         }
 
         public MainViewModel MainViewModel => _provider.GetRequiredService<MainViewModel>();
-
         public LoginPageViewModel LoginPageViewModel => _provider.GetRequiredService<LoginPageViewModel>();
-
         public ContentPageViewModel ContentPageViewModel => _provider.GetRequiredService<ContentPageViewModel>();
-
         public PresetsWindowViewModel PresetsWindowViewModel => _provider.GetRequiredService<PresetsWindowViewModel>();
         public ProjectsWindowViewModel ProjectsWindowViewModel => _provider.GetRequiredService<ProjectsWindowViewModel>();
+        public ProductsViewModel ProductsViewModel => _provider.GetRequiredService<ProductsViewModel>();
 
     }
 }

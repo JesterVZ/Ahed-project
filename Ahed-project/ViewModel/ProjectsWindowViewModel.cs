@@ -45,7 +45,7 @@ namespace Ahed_project.ViewModel
                 }
                 catch(Exception e)
                 {
-                    MessageBox.Show(response.Result.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else if(response.Result is Exception)

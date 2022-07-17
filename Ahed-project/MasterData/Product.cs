@@ -6,14 +6,9 @@ using System.Threading.Tasks;
 
 namespace Ahed_project.MasterData
 {
-    public enum ProjectMethods
+    public class Product
     {
-        CREATE,
-        GET,
-        UPDATE,
-        LOGIN,
-        AUTH,
-        GET_PROJECTS,
-        GET_PRODUCTS
+        public string name { get; set; }
+        public string product_id { get; set; }
     }
 }

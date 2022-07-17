@@ -31,7 +31,6 @@ namespace Ahed_project.Services
             string response = "";
             try
             {
-                string url;
                 switch (projectMethod)
                 {
                     case ProjectMethods.LOGIN:
@@ -56,6 +55,9 @@ namespace Ahed_project.Services
                         break;
                     case ProjectMethods.GET_PROJECTS:
                         response = _webClient.UploadString(_serviceConfig.GetProjectsLink, SendMethods.POST.ToString(), body);
+                        break;
+                    case ProjectMethods.GET_PRODUCTS:
+                        response = _webClient.DownloadString(_serviceConfig.GetProductsList);
                         break;
                 }
                 return response;

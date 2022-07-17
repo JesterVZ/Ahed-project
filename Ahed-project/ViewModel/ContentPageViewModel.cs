@@ -66,6 +66,9 @@ namespace Ahed_project.ViewModel
         public ICommand OpenPresetWindow => new DelegateCommand(() => {
             _windowServise.OpenModalWindow(new Presets());
         });
+        public ICommand OpenProductsWindow => new DelegateCommand(() => {
+            _windowServise.OpenModalWindow(new ProductsWindow());
+        });
 
         public ICommand OpenProjectsWindow => new DelegateCommand(() => {
             _windowServise.OpenModalWindow(new ProjectsWindow());
