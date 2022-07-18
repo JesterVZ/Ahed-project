@@ -18,11 +18,11 @@ namespace Ahed_project.ViewModel
     {
         private readonly SendDataService _sendDataService;
 
-        public ObservableCollection<JToken> Nodes { get; set; }
+        public ObservableCollection<Node> Nodes { get; set; }
         public ProductsViewModel(SendDataService sendDataService)
         {
             _sendDataService = sendDataService;
-            Nodes = new ObservableCollection<JToken>();
+            Nodes = new ObservableCollection<Node>();
         }
 
         public ICommand GetProductsCommand => new AsyncCommand(async () => {
@@ -31,15 +31,11 @@ namespace Ahed_project.ViewModel
             {
                 try
                 {
-                    JToken token = JToken.Parse(response.Result.ToString());
-
-                    if (token != null)
-                    {
-                        Nodes.Add(token);
-                    }
+                    JToken children = JToken.Parse(response.Result.ToString());
+                    AddNewNode(children);
 
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
@@ -49,5 +45,36 @@ namespace Ahed_project.ViewModel
                 MessageBox.Show(response.Result.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         });
+
+        private void AddNewNode(JToken token, Node node = null)
+        {
+            foreach (JToken child in token.Children())
+            {
+                if (token != null)
+                {
+                    if(token is JValue)
+                    {
+                        node = new Node
+                        {
+                            Name = token.ToString()
+                        };
+                        Nodes.Add(node);
+
+                    } else if(token is JObject)
+                    {
+                        var obj = (JObject)token;
+                        foreach (var property in obj.Properties())
+                        {
+                            Node childNode = new Node
+                            {
+                                Name=property.Name
+                            };
+                            Nodes.Add(childNode);
+                            AddNewNode(property.Value, childNode);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
