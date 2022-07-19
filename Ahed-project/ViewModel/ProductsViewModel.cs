@@ -1,4 +1,5 @@
 ﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData.Products;
 using Ahed_project.Services;
 using DevExpress.Mvvm;
 using Newtonsoft.Json;
@@ -18,6 +19,7 @@ namespace Ahed_project.ViewModel
     {
         private readonly SendDataService _sendDataService;
 
+        private List<Year> Years = null;
         public ObservableCollection<Node> Nodes { get; set; }
         public ProductsViewModel(SendDataService sendDataService)
         {
@@ -25,56 +27,34 @@ namespace Ahed_project.ViewModel
             Nodes = new ObservableCollection<Node>();
         }
 
-        public ICommand GetProductsCommand => new AsyncCommand(async () => {
+        public ICommand GetProductsCommand => new AsyncCommand(async () =>
+        {
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCTS, ""));
-            if(response.Result is string)
-            {
-                try
-                {
-                    JToken children = JToken.Parse(response.Result.ToString());
-                    AddNewNode(children);
-
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-            else if (response.Result is Exception)
-            {
-                MessageBox.Show(response.Result.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            Years = JsonConvert.DeserializeObject<List<Year>>(response.Result.ToString());
+            DoNodes();
         });
 
-        private void AddNewNode(JToken token, Node node = null)
+        private void DoNodes()
         {
-            foreach (JToken child in token.Children())
+            Nodes.Clear();
+            foreach (var year in Years)
             {
-                if (token != null)
+                var node = new Node();
+                node.Name = year.year_number.ToString();
+                node.Nodes = new ObservableCollection<Node>();
+                foreach(var month in year.months)
                 {
-                    if(token is JValue)
-                    {
-                        node = new Node
-                        {
-                            Name = token.ToString()
-                        };
-                        Nodes.Add(node);
-
-                    } else if(token is JObject)
-                    {
-                        var obj = (JObject)token;
-                        foreach (var property in obj.Properties())
-                        {
-                            Node childNode = new Node
-                            {
-                                Name=property.Name
-                            };
-                            Nodes.Add(childNode);
-                            AddNewNode(property.Value, childNode);
-                        }
-                    }
+                    var monthNode = new Node();
+                    monthNode.Name = month.month_number.ToString();
+                    node.Nodes.Add(monthNode);
                 }
+                Nodes.Add(node);
             }
         }
+
+        public ICommand GetProducts => new AsyncCommand(async () =>
+        {
+            
+        });
     }
 }

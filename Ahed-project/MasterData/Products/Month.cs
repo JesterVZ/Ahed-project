@@ -8,6 +8,7 @@ namespace Ahed_project.MasterData.Products
 {
     public class Month
     {
-        public List<ProductGet> Products { get; set; }
+        public int month_number { get; set; }
+        public IEnumerable<ProductGet> products { get; set; }
     }
 }
