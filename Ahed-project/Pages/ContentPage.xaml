@@ -5,9 +5,9 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Ahed_project.Pages"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      mc:Ignorable="d" d:DesignWidth="800"
+      mc:Ignorable="d"
       DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}"
-      Title="ContentPage">
+      Title="ContentPage" >
     <Page.Resources>
         <Style TargetType="{x:Type TabItem}">
             <Setter Property="Template">
@@ -175,12 +175,12 @@
                                 <TextBlock Grid.Column="0" Grid.Row="7" FontWeight="Bold">Project Processes</TextBlock>
                                 <TextBox Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2"/>
                                 <ListView Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3">
-                                    
+
                                 </ListView>
                                 <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="9">
                                     <TextBlock Grid.ColumnSpan="4" FontWeight="Bold" Margin="0 0 9 0">Advanced Properties</TextBlock>
                                     <Button Width="15" Height="15" Command="{Binding ShowProjectInfo}">
-                                        
+
                                         <materialDesign:PackIcon Kind="ChevronDown"/>
                                     </Button>
                                 </StackPanel>
@@ -241,9 +241,20 @@
                 </ScrollViewer>
             </TabItem>
 
-            <TabItem Header="Tubes fluid" IsEnabled="False">
-                <Grid Background="#FFE5E5E5">
-                </Grid>
+            <TabItem Header="Tubes fluid">
+                <ScrollViewer>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="New Fluid" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Background="#fc6" Margin="0 0 40 0"/>
+                            <TextBlock Text="Fluid presets" VerticalAlignment="Center" Margin="0 0 40 0"/>
+                            <ComboBox Width="300">
+                                <ComboBoxItem IsSelected="True" IsEnabled="False" >
+                                    <Label>--Select Fluid--</Label>
+                                </ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="Shell fluid" IsEnabled="False">
                 <Grid Background="#FFE5E5E5"/>
@@ -582,7 +593,7 @@
             </TabItem>
             <TabItem Header="Geometry">
                 <ScrollViewer>
-                    
+
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="Baffles" IsEnabled="False">
