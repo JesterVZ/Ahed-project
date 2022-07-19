@@ -241,10 +241,33 @@
                 </ScrollViewer>
             </TabItem>
 
-            <TabItem Header="Tubes fluid">
+            <TabItem FontSize="12">
+                <TabItem.Header>
+                    <Label FontSize="20">Tubes fluid</Label>
+                </TabItem.Header>
                 <ScrollViewer>
                     <StackPanel>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel.Resources>
+                            <Style TargetType="StackPanel" x:Key="Child">
+                                <Setter Property="Width" Value="250"/>
+                                <Setter Property="Height" Value="30"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="Orientation" Value="Horizontal"/>
+                            </Style>
+                            <Style TargetType="Label" x:Key="Left">
+                                <Setter Property="Width" Value="170"/>
+                                <Setter Property="HorizontalAlignment" Value="Left"/>
+                            </Style>
+                            <Style TargetType="Label" x:Key="Right">
+                                <Setter Property="Width" Value="80"/>
+                                <Setter Property="HorizontalAlignment" Value="Right"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Right"/>
+                            </Style>
+                            <Style TargetType="Label" BasedOn="{StaticResource Left}" x:Key="LeftWMargin">
+                                <Setter Property="Margin" Value="5,0,0,0"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <StackPanel Orientation="Horizontal" Height="30">
                             <Button Content="New Fluid" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Background="#fc6" Margin="0 0 40 0"/>
                             <TextBlock Text="Fluid presets" VerticalAlignment="Center" Margin="0 0 40 0"/>
                             <ComboBox Width="300">
@@ -253,6 +276,59 @@
                                 </ComboBoxItem>
                             </ComboBox>
                         </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Width="600">
+                                <TextBlock Text="Tubes fluid" FontWeight="Bold"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.5*"/>
+                                        <ColumnDefinition Width="0.5*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="Name" Grid.Column="0" Grid.Row="0"/>
+                                    <TextBox Grid.Column="3" Grid.Row="0"/>
+                                    <TextBlock Text="Description" Grid.Column="0" Grid.Row="1"/>
+                                    <TextBox Grid.Column="3" Grid.Row="1"/>
+                                    <TextBlock Text="Molar mass" Grid.Column="0" Grid.Row="2"/>
+                                    <TextBox Width="100" HorizontalAlignment="Left" Grid.Column="3" Grid.Row="2"/>
+                                    <TextBlock Text="kg/rmol" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="2"/>
+                                    <TextBlock Text="Saturated" Grid.Column="0" Grid.Row="3"/>
+                                    <CheckBox Grid.Column="2" Grid.Row="3"/>
+                                </Grid>
+                                <TabControl>
+                                    <TabItem Header="Liquid Phase">
+                                        <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" Height="500">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Temp °C" Width="150"/>
+                                                <DataGridTextColumn Header="Dens kg/m3" Width="100"/>
+                                                <DataGridTextColumn Header="Sp.Heat kcal/kg°C"/>
+                                                <DataGridTextColumn Header="Th.Cond kcal/mr*hr°C"/>
+                                                <DataGridTextColumn Header="C.ind.cP"/>
+                                                <DataGridTextColumn Header="F.ind"/>
+                                                <DataGridTextColumn Header="dH kcal/kg"/>
+                                                
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </TabItem>
+                                    <TabItem Header="Gas Phase">
+
+                                    </TabItem>
+                                    <TabItem Header="Mixing Assistant">
+
+                                    </TabItem>
+                                </TabControl>
+                            </StackPanel>
+                            <StackPanel Width="600">
+
+                            </StackPanel>
+                        </StackPanel>
+
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

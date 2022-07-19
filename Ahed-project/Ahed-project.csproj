@@ -35,6 +35,7 @@
     <PackageReference Include="DevExpressMvvm" Version="21.1.5" />
     <PackageReference Include="EFCore.DbContextFactory" Version="2.0.0" />
     <PackageReference Include="JWT" Version="9.0.3" />
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.7" />
     <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.3.330701" />
