@@ -59,6 +59,9 @@ namespace Ahed_project.Services
                     case ProjectMethods.GET_PRODUCTS:
                         response = _webClient.DownloadString(_serviceConfig.GetProductsList);
                         break;
+                    case ProjectMethods.GET_PRODUCT:
+                        response = _webClient.DownloadString(_serviceConfig.GetProduct+body);
+                        break;
                 }
                 return response;
             }catch(Exception e)

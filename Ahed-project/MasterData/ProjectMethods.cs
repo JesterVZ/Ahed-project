@@ -14,6 +14,7 @@ namespace Ahed_project.MasterData
         LOGIN,
         AUTH,
         GET_PROJECTS,
-        GET_PRODUCTS
+        GET_PRODUCTS,
+        GET_PRODUCT
     }
 }

@@ -180,13 +180,13 @@
                                 </ListView>
                                 <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="9">
                                     <TextBlock Grid.ColumnSpan="4" FontWeight="Bold" Margin="0 0 9 0">Advanced Properties</TextBlock>
-                                    <Button Width="15" Height="15" Command="{Binding ShowProjectInfo}">
+                                    <Button Width="15" Height="15">
 
                                         <materialDesign:PackIcon Kind="ChevronDown"/>
                                     </Button>
                                 </StackPanel>
 
-                                <Grid Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="4" Visibility="{Binding ProjectInfoVisibility, UpdateSourceTrigger=PropertyChanged}">
+                                <Grid Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="4">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="133"/>
                                         <ColumnDefinition Width="67"/>
