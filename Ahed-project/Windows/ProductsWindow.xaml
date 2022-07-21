@@ -6,6 +6,7 @@
         xmlns:attach="clr-namespace:Ahed_project.Services"
         DataContext="{Binding ProductsViewModel, Source={StaticResource ViewModelLocator}}"
         xmlns:local="clr-namespace:Ahed_project.Windows"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         attach:MyAttachedBehaviors.LoadedCommand="{Binding GetProductsCommand}"
         mc:Ignorable="d"
         Title="ProductsWindow" Height="450" Width="800">
@@ -23,7 +24,12 @@
             <ComboBoxItem IsSelected="True">Date Created</ComboBoxItem>
             <ComboBoxItem>Date Modified</ComboBoxItem>
         </ComboBox>
-        <TreeView Grid.Column="0" Grid.Row="1" Margin="4" ItemsSource="{Binding Nodes, UpdateSourceTrigger=PropertyChanged}">
+        <TreeView x:Name="ProductTreeView" Grid.Column="0" Grid.Row="1" Margin="4" ItemsSource="{Binding Nodes, UpdateSourceTrigger=PropertyChanged}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectedItemChanged">
+                    <i:InvokeCommandAction Command="{Binding SelectProductCommand}" CommandParameter="{Binding ElementName=ProductTreeView, Path=SelectedItem}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Path=Nodes}">
                     <TextBlock Text="{Binding Name}" />

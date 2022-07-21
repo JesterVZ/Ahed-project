@@ -9,6 +9,7 @@
         mc:Ignorable="d"
         x:Name="AheadWindow"
         Title="MainWindow" WindowState="Maximized"
-        Height="795">
+        Height="795"
+        Width="795">
     <Frame Name="MainFrame" Content="{Binding PageSource}" Background="White" NavigationUIVisibility="Hidden"/>
 </Window>

@@ -45,16 +45,52 @@ namespace Ahed_project.ViewModel
                 foreach(var month in year.months)
                 {
                     var monthNode = new Node();
-                    monthNode.Name = month.month_number.ToString();
+                    monthNode.Name = NumberToText(month.month_number.ToString());
                     node.Nodes.Add(monthNode);
+                    foreach(var product in month.products)
+                    {
+
+                    }
                 }
                 Nodes.Add(node);
             }
         }
 
-        public ICommand GetProducts => new AsyncCommand(async () =>
+        private static string NumberToText(string value)
         {
-            
+            switch (value)
+            {
+                case "1":
+                    return "Январь";
+                case "2":
+                    return "Февраль";
+                case "3":
+                    return "Март";
+                case "4":
+                    return "Апрель";
+                case "5":
+                    return "Май";
+                case "6":
+                    return "Июнь";
+                case "7":
+                    return "Июль";
+                case "8":
+                    return "Август";
+                case "9":
+                    return "Сентярь";
+                case "10":
+                    return "Октябрь";
+                case "11":
+                    return "Ноябрь";
+                case "12":
+                    return "Декабрь";
+
+            }
+            return value;
+        }
+
+        public ICommand SelectProductCommand => new DelegateCommand<object>((val) => {
+            var result = val;
         });
     }
 }
