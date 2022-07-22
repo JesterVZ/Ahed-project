@@ -128,5 +128,10 @@ namespace Ahed_project.ViewModel
                 }
             }
         });
+
+        public ICommand OpenInTubesCommand => new DelegateCommand(() => { });
+        public ICommand OpenInShellCommand => new DelegateCommand(() => { });
+        public ICommand NewfluidCommand => new DelegateCommand(() => { });
+        public ICommand EditfluidCommand => new DelegateCommand(() => { });
     }
 }
