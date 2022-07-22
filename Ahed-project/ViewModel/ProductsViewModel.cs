@@ -24,6 +24,26 @@ namespace Ahed_project.ViewModel
         public ObservableCollection<Node> Nodes { get; set; }
         public ObservableCollection<SingleProductGet> Products { get; set; }
         public bool IsProductSelected {get; set;}
+        private SingleProductGet selectedProduct;
+        public SingleProductGet SelectedProduct
+        {
+            get
+            {
+                return selectedProduct;
+            }
+            set
+            {
+                selectedProduct = value;
+                if(value != null)
+                {
+                    IsProductSelected = true;
+                } else
+                {
+                    IsProductSelected = false;
+                }
+                
+            }
+        }
         public ProductsViewModel(SendDataService sendDataService)
         {
             _sendDataService = sendDataService;
@@ -94,6 +114,7 @@ namespace Ahed_project.ViewModel
         }
 
         public ICommand SelectProductCommand => new AsyncCommand<object>(async (val) => {
+            IsProductSelected = false;
             var selected = (Node)val;
             if (selected.Nodes == null)
             {
@@ -106,10 +127,6 @@ namespace Ahed_project.ViewModel
                     Products.Add(newProduct);
                 }
             }
-        });
-
-        public ICommand SelectFluidCommand => new DelegateCommand<object>((val) => {
-            IsProductSelected = true;
         });
     }
 }

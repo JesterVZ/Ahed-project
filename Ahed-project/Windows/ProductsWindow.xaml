@@ -41,10 +41,7 @@
                 <RowDefinition/>
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
-            <DataGrid ItemsSource="{Binding Products}" Grid.Row="0" Margin="4" AutoGenerateColumns="False" IsReadOnly="True" AllowDrop="False">
-                <DataGrid.InputBindings>
-                    <MouseBinding MouseAction="LeftClick" Command="{Binding SelectFluidCommand}"/>
-                </DataGrid.InputBindings>
+            <DataGrid ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Margin="4" AutoGenerateColumns="False" IsReadOnly="True" AllowDrop="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Path=name}" Header="Name" Width="150"/>
                     <!--<DataGridTextColumn Header="Owner" Width="100"/>
