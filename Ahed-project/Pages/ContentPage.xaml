@@ -4,10 +4,13 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Ahed_project.Pages"
+      xmlns:attach="clr-namespace:Ahed_project.Services"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       mc:Ignorable="d"
       DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}"
+      attach:MyAttachedBehaviors.LoadedCommand="{Binding SelectLastProject}"
+
       Title="ContentPage" >
     <Page.Resources>
         <Style TargetType="{x:Type TabItem}">
