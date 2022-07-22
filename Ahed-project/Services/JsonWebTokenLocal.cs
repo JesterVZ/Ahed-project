@@ -32,40 +32,54 @@ namespace Ahed_project.Services
         /// <returns></returns>
         public async Task<object> AuthenticateUser(string email, string password)
         {
-            using (var context = new EFContext())
+            try
             {
-                var user = context.Users.FirstOrDefault(x => x.Password == password && x.Email == email);
-                string json = JsonConvert.SerializeObject(new
+                UserEF user = null;
+                using (var context = new EFContext())
                 {
-                    email = email,
-                    pass = password
-                });
-                Token token = null;
-                var login = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.LOGIN, json));
-                token = JsonConvert.DeserializeObject<Token>(login.Result.ToString());
-                _sendDataService.AddHeader(token.token);
-                var auth = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.AUTH));
-                token = JsonConvert.DeserializeObject<Token>(auth.Result.ToString());
-                _sendDataService.AddHeader(token.token);
+                   user = context.Users.FirstOrDefault(x => x.Password == password && x.Email == email);
+                }
+                    string json = JsonConvert.SerializeObject(new
+                    {
+                        email = email,
+                        pass = password
+                    });
+                    Token token = null;
+                    var login = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.LOGIN, json));
+                    token = JsonConvert.DeserializeObject<Token>(login.Result.ToString());
+                    _sendDataService.AddHeader(token.token);
+                    var auth = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.AUTH));
+                    token = JsonConvert.DeserializeObject<Token>(auth.Result.ToString());
+                    _sendDataService.AddHeader(token.token);
                 if (user == null)
                 {
-                    user = new UserEF()
+                    using (var context = new EFContext())
                     {
-                        Email = email,
-                        Password = password,
-                        IsActive = true
-                    };
-                    context.Users.Add(user);
-                    context.SaveChanges();
+                        user = new UserEF()
+                        {
+                            Email = email,
+                            Password = password,
+                            IsActive = true
+                        };
+                        context.Users.Add(user);
+                        context.SaveChanges();
+                    }
                 }
                 else
                 {
-                    user.IsActive = true;
-                    context.Users.Update(user);
-                    context.SaveChanges();
-                    context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+                    using (var context = new EFContext())
+                    {
+                        user.IsActive = true;
+                        context.Users.Update(user);
+                        context.SaveChanges();
+                        context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+                    }
                 }
-                return GetUserData(token.token);
+                    return GetUserData(token.token);
+                }
+            catch  (Exception e)
+            {
+                return null;
             }
         }
 

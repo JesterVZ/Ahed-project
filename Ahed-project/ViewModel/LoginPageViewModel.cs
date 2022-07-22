@@ -2,6 +2,7 @@
 using Ahed_project.Pages;
 using Ahed_project.Services;
 using Ahed_project.Services.EF;
+using Ahed_project.Services.EF.Model;
 using DevExpress.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -26,15 +27,16 @@ namespace Ahed_project.ViewModel
             _pageService = pageService;
             _logs = logs;
             _jwt = jwt;
+            UserEF active = null;
             using (var context = new EFContext())
             {
-                var active = context.Users.FirstOrDefault(x => x.IsActive);
-                if(active!=null)
-                {
-                    email = active.Email;
-                    pass = active.Password;
-                    Auth();
-                }
+                active = context.Users.FirstOrDefault(x => x.IsActive);
+            }
+            if (active != null)
+            {
+                email = active.Email;
+                pass = active.Password;
+                Auth();
             }
         }
 
