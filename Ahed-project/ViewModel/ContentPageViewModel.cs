@@ -84,6 +84,33 @@ namespace Ahed_project.ViewModel
             }
         });
 
+        public ICommand SelectLastProject => new AsyncCommand(async () => {
+            _logs.AddMessage("Info", "Загрузка последних проектов...");
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PROJECTS, ""));
+            if(response.Result is string)
+            {
+                try
+                {
+                    Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
+                    List<ProjectInfoGet> projects = JsonConvert.DeserializeObject<List<ProjectInfoGet>>(result.data.ToString());
+                    if(projects.Count > 0)
+                    {
+                        _selectProjectService.SelectProject(projects.Last<ProjectInfoGet>());
+                        _logs.AddMessage("success", "Загрузка проекта выполнена успешно!");
+                    }
+                    
+                }
+                catch (Exception e)
+                {
+                    _logs.AddMessage("Error", e.Message.ToString());
+                }
+            }
+            else if (response.Result is Exception)
+            {
+                _logs.AddMessage("Error", response.Result.ToString());
+            }
+        });
+
         public ICommand SaveComand => new AsyncCommand(async () => {
             _logs.AddMessage("Info", "Идет сохранение проекта...");
             var projectInfoSend = _mapper.Map<ProjectInfoSend>(ProjectInfo);

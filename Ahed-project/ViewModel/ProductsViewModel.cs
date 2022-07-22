@@ -23,10 +23,32 @@ namespace Ahed_project.ViewModel
         private List<Year> Years = null;
         public ObservableCollection<Node> Nodes { get; set; }
         public ObservableCollection<SingleProductGet> Products { get; set; }
+        public bool IsProductSelected {get; set;}
+        private SingleProductGet selectedProduct;
+        public SingleProductGet SelectedProduct
+        {
+            get
+            {
+                return selectedProduct;
+            }
+            set
+            {
+                selectedProduct = value;
+                if(value != null)
+                {
+                    IsProductSelected = true;
+                } else
+                {
+                    IsProductSelected = false;
+                }
+                
+            }
+        }
         public ProductsViewModel(SendDataService sendDataService)
         {
             _sendDataService = sendDataService;
             Nodes = new ObservableCollection<Node>();
+            IsProductSelected = false;
         }
 
         public ICommand GetProductsCommand => new AsyncCommand(async () =>
@@ -92,6 +114,7 @@ namespace Ahed_project.ViewModel
         }
 
         public ICommand SelectProductCommand => new AsyncCommand<object>(async (val) => {
+            IsProductSelected = false;
             var selected = (Node)val;
             if (selected.Nodes == null)
             {
@@ -105,5 +128,10 @@ namespace Ahed_project.ViewModel
                 }
             }
         });
+
+        public ICommand OpenInTubesCommand => new DelegateCommand(() => { });
+        public ICommand OpenInShellCommand => new DelegateCommand(() => { });
+        public ICommand NewfluidCommand => new DelegateCommand(() => { });
+        public ICommand EditfluidCommand => new DelegateCommand(() => { });
     }
 }

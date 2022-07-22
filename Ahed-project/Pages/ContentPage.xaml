@@ -4,10 +4,13 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Ahed_project.Pages"
+      xmlns:attach="clr-namespace:Ahed_project.Services"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       mc:Ignorable="d"
       DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}"
+      attach:MyAttachedBehaviors.LoadedCommand="{Binding SelectLastProject}"
+
       Title="ContentPage" >
     <Page.Resources>
         <Style TargetType="{x:Type TabItem}">
@@ -105,7 +108,7 @@
         <TabControl Grid.Row="1" x:Name="Tabs" VerticalAlignment="Stretch" TabStripPlacement="Left" HorizontalAlignment="Stretch" FontSize="20">
             <TabItem FontSize="12">
                 <TabItem.Header>
-                    <Label FontSize="20">Project</Label>
+                    <Label FontSize="16">Project</Label>
                 </TabItem.Header>
                 <ScrollViewer>
                     <StackPanel DataContext="{Binding ProjectInfo}">
@@ -155,7 +158,7 @@
                                 <TextBlock VerticalAlignment="Top" Text="Description" Grid.Column="0" Grid.Row="5"/>
                                 <TextBlock Style="{StaticResource DefaultText}" Text="Units" Grid.Column="0" Grid.Row="6"/>
 
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding project_id, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding project_id, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" />
                                 <TextBlock Style="{StaticResource DefaultText}" Text="Revision" Grid.Column="2" Grid.Row="1"/>
                                 <TextBox Style="{StaticResource Default}" Text="{Binding revision, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="1"/>
                                 <TextBox Style="{StaticResource Default}" Text="{Binding name, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1"/>
@@ -167,8 +170,11 @@
 
                                 <TextBox TextWrapping="Wrap" Text="{Binding description, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3"/>
                                 <ComboBox Grid.Row="6" Grid.Column="1">
-                                    <ComboBoxItem IsSelected="True" IsEnabled="False">
+                                    <ComboBoxItem IsSelected="True" IsEnabled="True">
                                         <Label>Metric</Label>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem IsSelected="False" IsEnabled="True">
+                                        <Label>Si</Label>
                                     </ComboBoxItem>
                                 </ComboBox>
                                 <TextBlock Style="{StaticResource DefaultText}" Text="Number of decimals" Grid.Row="6" Grid.Column="2"/>
@@ -244,7 +250,7 @@
 
             <TabItem FontSize="12">
                 <TabItem.Header>
-                    <Label FontSize="20">Tubes fluid</Label>
+                    <Label FontSize="16">Tubes fluid</Label>
                 </TabItem.Header>
                 <ScrollViewer>
                     <StackPanel>
@@ -320,9 +326,6 @@
                                     <TabItem Header="Gas Phase">
 
                                     </TabItem>
-                                    <TabItem Header="Mixing Assistant">
-
-                                    </TabItem>
                                 </TabControl>
                             </StackPanel>
                             <StackPanel Width="600">
@@ -350,12 +353,14 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="Shell fluid" IsEnabled="False">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem IsEnabled="False">
+                <TabItem.Header>
+                    <Label FontSize="16">Shell fluid</Label>
+                </TabItem.Header>
             </TabItem>
             <TabItem IsEnabled="True" FontSize="12">
                 <TabItem.Header>
-                    <Label FontSize="20">Heat Balance</Label>
+                    <Label FontSize="16">Heat Balance</Label>
                 </TabItem.Header>
                 <ScrollViewer>
                     <StackPanel>
@@ -685,30 +690,54 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="Geometry">
+            <TabItem>
+                <TabItem.Header>
+                    <Label FontSize="16">Geometry</Label>
+                </TabItem.Header>
                 <ScrollViewer>
 
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="Baffles" IsEnabled="False">
+            <TabItem IsEnabled="False">
+                <TabItem.Header>
+                    <Label FontSize="16">Baffles</Label>
+                </TabItem.Header>
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Header="Overall Calculation">
+            <TabItem>
+                <TabItem.Header>
+                    <Label FontSize="16">Overall Calculation</Label>
+                </TabItem.Header>
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Header="Batch" IsEnabled="False">
+            <TabItem IsEnabled="False">
+                <TabItem.Header>
+                    <Label FontSize="16">Batch</Label>
+                </TabItem.Header>
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Header="Graphs" IsEnabled="False">
+            <TabItem IsEnabled="False">
+                <TabItem.Header>
+                    <Label FontSize="16">Graphs</Label>
+                </TabItem.Header>
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Header="Reports" IsEnabled="False">
+            <TabItem IsEnabled="False">
+                <TabItem.Header>
+                    <Label FontSize="16">Reports</Label>
+                </TabItem.Header>
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Header="Quote" IsEnabled="False">
+            <TabItem IsEnabled="False">
+                <TabItem.Header>
+                    <Label FontSize="16">Quote</Label>
+                </TabItem.Header>
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem Header="3D" IsEnabled="False">
+            <TabItem IsEnabled="False">
+                <TabItem.Header>
+                    <Label FontSize="16">3D</Label>
+                </TabItem.Header>
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
         </TabControl>
