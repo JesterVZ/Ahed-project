@@ -60,11 +60,17 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80"/>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="Search" VerticalAlignment="Center" Margin="4"/>
             <TextBox Grid.Column="1" Margin="4"/>
-            <Button Grid.Column="2" Margin="4">Save presets</Button>
+            <Button Grid.Column="2" Margin="4">Open in Tubes</Button>
+            <Button Grid.Column="3" Margin="4">Open in Shell</Button>
+            <Button Grid.Column="4" Margin="4">New Fluid</Button>
+            <Button Grid.Column="5" Margin="4">Edit Fluid</Button>
         </Grid>
     </Grid>
 </Window>
