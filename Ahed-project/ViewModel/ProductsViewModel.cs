@@ -23,10 +23,12 @@ namespace Ahed_project.ViewModel
         private List<Year> Years = null;
         public ObservableCollection<Node> Nodes { get; set; }
         public ObservableCollection<SingleProductGet> Products { get; set; }
+        public bool IsProductSelected {get; set;}
         public ProductsViewModel(SendDataService sendDataService)
         {
             _sendDataService = sendDataService;
             Nodes = new ObservableCollection<Node>();
+            IsProductSelected = false;
         }
 
         public ICommand GetProductsCommand => new AsyncCommand(async () =>
@@ -104,6 +106,10 @@ namespace Ahed_project.ViewModel
                     Products.Add(newProduct);
                 }
             }
+        });
+
+        public ICommand SelectFluidCommand => new DelegateCommand<object>((val) => {
+            IsProductSelected = true;
         });
     }
 }
