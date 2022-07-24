@@ -19,6 +19,7 @@ namespace Ahed_project.ViewModel
     public class ProductsViewModel : BindableBase
     {
         private readonly SendDataService _sendDataService;
+        private readonly SelectProductService _selectProductService;
 
         private List<Year> Years = null;
         public ObservableCollection<Node> Nodes { get; set; }
@@ -44,9 +45,10 @@ namespace Ahed_project.ViewModel
                 
             }
         }
-        public ProductsViewModel(SendDataService sendDataService)
+        public ProductsViewModel(SendDataService sendDataService, SelectProductService selectProductService)
         {
             _sendDataService = sendDataService;
+            _selectProductService = selectProductService;
             Nodes = new ObservableCollection<Node>();
             IsProductSelected = false;
         }
@@ -129,8 +131,12 @@ namespace Ahed_project.ViewModel
             }
         });
 
-        public ICommand OpenInTubesCommand => new DelegateCommand(() => { });
-        public ICommand OpenInShellCommand => new DelegateCommand(() => { });
+        public ICommand OpenInTubesCommand => new DelegateCommand(() => {
+            _selectProductService.SelectProject(SelectedProduct);
+        });
+        public ICommand OpenInShellCommand => new DelegateCommand(() => {
+            
+        });
         public ICommand NewfluidCommand => new DelegateCommand(() => { });
         public ICommand EditfluidCommand => new DelegateCommand(() => { });
     }

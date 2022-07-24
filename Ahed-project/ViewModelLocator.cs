@@ -37,6 +37,7 @@ namespace Ahed_project
             services.AddSingleton<WebClient>();
             services.AddSingleton<WindowService>();
             services.AddSingleton<JsonWebTokenLocal>();
+            services.AddSingleton<SelectProductService>();
 
             //Маппер
             var configuration = new MapperConfiguration(cfg =>
