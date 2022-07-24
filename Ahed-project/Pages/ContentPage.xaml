@@ -324,7 +324,18 @@
                                         </DataGrid>
                                     </TabItem>
                                     <TabItem Header="Gas Phase">
+                                        <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" Height="500" ItemsSource="{Binding props}">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=gas_phase_temperature}"/>
+                                                <DataGridTextColumn Header="Dens kg/m3" Width="100" Binding="{Binding Path=gas_phase_density}"/>
+                                                <DataGridTextColumn Header="Sp.Heat kcal/kg°C"  Binding="{Binding Path=gas_phase_specific_heat}"/>
+                                                <DataGridTextColumn Header="Th.Cond kcal/mr*hr°C" Binding="{Binding Path=gas_phase_thermal_conductivity}"/>
+                                                <DataGridTextColumn Header="Dyn Visc" Binding="{Binding Path=gas_phase_dyn_visc_gas}"/>
+                                                <DataGridTextColumn Header="P vap" Binding="{Binding Path=gas_phase_p_vap}"/>
+                                                <DataGridTextColumn Header="Vapour Frac" Binding="{Binding Path=gas_phase_vapour_frac}"/>
 
+                                            </DataGrid.Columns>
+                                        </DataGrid>
                                     </TabItem>
                                 </TabControl>
                             </StackPanel>
