@@ -248,9 +248,12 @@
                 </ScrollViewer>
             </TabItem>
 
-            <TabItem FontSize="12">
+            <TabItem FontSize="12" IsEnabled="{Binding Path=TubesFluidState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
                 <TabItem.Header>
-                    <Label FontSize="16">Tubes fluid</Label>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Lock" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=TubesFluidState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label FontSize="16">Tubes fluid</Label>
+                    </StackPanel>
                 </TabItem.Header>
                 <ScrollViewer>
                     <StackPanel DataContext="{Binding SingleProductGet}">
@@ -364,9 +367,13 @@
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-            <TabItem IsEnabled="False">
+            <TabItem IsEnabled="{Binding Path=ShellFluidState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
                 <TabItem.Header>
-                    <Label FontSize="16">Shell fluid</Label>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Lock" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=ShellFluidState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label FontSize="16">Shell fluid</Label>
+                    </StackPanel>
+                    
                 </TabItem.Header>
             </TabItem>
             <TabItem IsEnabled="True" FontSize="12">

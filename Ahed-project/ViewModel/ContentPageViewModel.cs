@@ -42,6 +42,11 @@ namespace Ahed_project.ViewModel
         public ContentPageViewModel(PageService pageService, WindowService windowService, Logs logs,
             SendDataService sendDataService, SelectProjectService selectProjectService, SelectProductService selectProductService, IMapper mapper)
         {
+            TubesFluidState = new ContentState();
+            ShellFluidState = new ContentState();
+            TubesFluidState.IsEnabled = false;
+            ShellFluidState.IsEnabled = false;
+
             _pageService = pageService;
             _windowServise = windowService;
             _logs = logs;
@@ -168,5 +173,10 @@ namespace Ahed_project.ViewModel
         private Visibility projectInfoVisibility = Visibility.Hidden;
 
         public Visibility ProjectInfoVisibility { get => projectInfoVisibility; set => SetValue(ref projectInfoVisibility, value); }
+
+        public ContentState ProjectState { get; set; }
+        public ContentState TubesFluidState { get; set; }
+        public ContentState ShellFluidState { get; set; }
+
     }
 }
