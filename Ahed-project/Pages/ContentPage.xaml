@@ -108,7 +108,12 @@
         <TabControl Grid.Row="1" x:Name="Tabs" VerticalAlignment="Stretch" TabStripPlacement="Left" HorizontalAlignment="Stretch" FontSize="20">
             <TabItem FontSize="12">
                 <TabItem.Header>
-                    <Label FontSize="16">Project</Label>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Lock" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=ProjectState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label FontSize="16">Project</Label>
+                        <materialDesign:PackIcon Kind="{Binding Path=ProjectState.Message}" VerticalAlignment="Center" Visibility="{Binding Path=ProjectState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                    
                 </TabItem.Header>
                 <ScrollViewer>
                     <StackPanel DataContext="{Binding ProjectInfo}">
@@ -253,6 +258,7 @@
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Lock" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=TubesFluidState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label FontSize="16">Tubes fluid</Label>
+                        <materialDesign:PackIcon Kind="{Binding Path=TubesFluidState.Message}" VerticalAlignment="Center" Visibility="{Binding Path=TubesFluidState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                 </TabItem.Header>
                 <ScrollViewer>
@@ -372,6 +378,7 @@
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Lock" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=ShellFluidState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label FontSize="16">Shell fluid</Label>
+                        <materialDesign:PackIcon Kind="{Binding Path=ShellFluidState.Message}" VerticalAlignment="Center" Visibility="{Binding Path=ShellFluidState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                     
                 </TabItem.Header>

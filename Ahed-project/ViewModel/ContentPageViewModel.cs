@@ -7,10 +7,12 @@ using Ahed_project.Services.EF;
 using Ahed_project.Windows;
 using AutoMapper;
 using DevExpress.Mvvm;
+using MaterialDesignThemes.Wpf;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -42,6 +44,7 @@ namespace Ahed_project.ViewModel
         public ContentPageViewModel(PageService pageService, WindowService windowService, Logs logs,
             SendDataService sendDataService, SelectProjectService selectProjectService, SelectProductService selectProductService, IMapper mapper)
         {
+            ProjectState = new ContentState();
             TubesFluidState = new ContentState();
             ShellFluidState = new ContentState();
             TubesFluidState.IsEnabled = false;
@@ -57,6 +60,17 @@ namespace Ahed_project.ViewModel
             _selectProductService.ProductSelected += (product) => SingleProductGet = product;
             LogCollection = _logs.logs;
             _mapper = mapper;
+        }
+
+        private void Validation()
+        {
+            if(ProjectInfo.name != null && ProjectInfo.name != String.Empty)
+            {
+                ProjectState.Message = new PackIcon
+                {
+                    Kind = PackIconKind.Check
+                };
+            }
         }
 
         public ICommand Logout => new AsyncCommand(async () => {
@@ -109,7 +123,7 @@ namespace Ahed_project.ViewModel
                         _selectProjectService.SelectProject(projects.Last<ProjectInfoGet>());
                         _logs.AddMessage("success", "Загрузка проекта выполнена успешно!");
                     }
-                    
+                    Validation();
                 }
                 catch (Exception e)
                 {
