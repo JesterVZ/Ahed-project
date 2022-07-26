@@ -108,11 +108,16 @@
         <TabControl Grid.Row="1" x:Name="Tabs" VerticalAlignment="Stretch" TabStripPlacement="Left" HorizontalAlignment="Stretch" FontSize="20">
             <TabItem FontSize="12">
                 <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Lock" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=ProjectState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label FontSize="16">Project</Label>
-                        <materialDesign:PackIcon Kind="{Binding Path=ProjectState.Message}" VerticalAlignment="Center" Visibility="{Binding Path=ProjectState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
+                    <Grid Width="130">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="17"/>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="17"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=ProjectState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Grid.Column="1" HorizontalAlignment="Center" FontSize="16">Project</Label>
+                        <materialDesign:PackIcon Kind="{Binding Path=ProjectState.Message.Kind}" Grid.Column="2" VerticalAlignment="Center" Visibility="{Binding Path=ProjectState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
                     
                 </TabItem.Header>
                 <ScrollViewer>
@@ -255,11 +260,16 @@
 
             <TabItem FontSize="12" IsEnabled="{Binding Path=TubesFluidState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
                 <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Lock" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=TubesFluidState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label FontSize="16">Tubes fluid</Label>
-                        <materialDesign:PackIcon Kind="{Binding Path=TubesFluidState.Message}" VerticalAlignment="Center" Visibility="{Binding Path=TubesFluidState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
+                    <Grid Width="130">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="17"/>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="17"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=TubesFluidState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Grid.Column="1" HorizontalAlignment="Center" FontSize="16">Tubes fluid</Label>
+                        <materialDesign:PackIcon Kind="{Binding Path=TubesFluidState.Message.Kind}" Grid.Column="2" VerticalAlignment="Center" Visibility="{Binding Path=TubesFluidState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
                 </TabItem.Header>
                 <ScrollViewer>
                     <StackPanel DataContext="{Binding SingleProductGet}">
@@ -375,11 +385,16 @@
             </TabItem>
             <TabItem IsEnabled="{Binding Path=ShellFluidState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
                 <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Lock" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=ShellFluidState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label FontSize="16">Shell fluid</Label>
-                        <materialDesign:PackIcon Kind="{Binding Path=ShellFluidState.Message}" VerticalAlignment="Center" Visibility="{Binding Path=ShellFluidState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
+                    <Grid Width="130">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="17"/>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="17"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=TubesFluidState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Grid.Column="1" HorizontalAlignment="Center" FontSize="16">Tubes fluid</Label>
+                        <materialDesign:PackIcon Kind="{Binding Path=TubesFluidState.Message.Kind}" Grid.Column="2" VerticalAlignment="Center" Visibility="{Binding Path=TubesFluidState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
                     
                 </TabItem.Header>
             </TabItem>
