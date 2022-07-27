@@ -37,18 +37,51 @@ namespace Ahed_project.ViewModel
 
         private ProjectInfoGet projectInfo = new ProjectInfoGet();
         public ProjectInfoGet ProjectInfo { get => projectInfo; set => SetValue(ref projectInfo, value); }
+
         private SingleProductGet singleProductGet = new SingleProductGet();
         public SingleProductGet SingleProductGet { get => singleProductGet; set => SetValue(ref singleProductGet, value); }
-
+        public string ProjectValidationStatusSource { get; set; }
+        public string TubesFluidValidationStatusSource { get; set; }
+        public string ShellFluidValidationStatusSource { get; set; }
+        public string HeatBalanceValidationStatusSource { get; set; }
+        public string GeometryValidationStatusSource { get; set; }
+        public string BafflesValidationStatusSource { get; set; }
+        public string OverallValidationStatusSource { get; set; }
+        public string BatchValidationStatusSource { get; set; }
+        public string GraphsValidationStatusSource { get; set; }
+        public string ReportsValidationStatusSource { get; set; }
+        public string QuoteValidationStatusSource { get; set; }
+        public string ThreeDValidationStatusSource { get; set; }
 
         public ContentPageViewModel(PageService pageService, WindowService windowService, Logs logs,
             SendDataService sendDataService, SelectProjectService selectProjectService, SelectProductService selectProductService, IMapper mapper)
         {
+            //инициализация
             ProjectState = new ContentState();
             TubesFluidState = new ContentState();
             ShellFluidState = new ContentState();
-            TubesFluidState.IsEnabled = false;
-            ShellFluidState.IsEnabled = false;
+            HeatBalanceState = new ContentState();
+            GeometryState = new ContentState();
+            BafflesState = new ContentState();
+            OverallCalculationState = new ContentState();
+            BatchState = new ContentState();
+            GraphState = new ContentState();
+            ReportsState = new ContentState();
+            QuoteState = new ContentState();
+            ThreeDState = new ContentState();
+
+            ProjectState.IsEnabled = true;
+            TubesFluidState.IsEnabled = true;
+            ShellFluidState.IsEnabled = true;
+            HeatBalanceState.IsEnabled = true;
+            GeometryState.IsEnabled = false;
+            BafflesState.IsEnabled = false;
+            OverallCalculationState.IsEnabled = true;
+            BatchState.IsEnabled = false;
+            GraphState.IsEnabled = false;
+            ReportsState.IsEnabled = false;
+            QuoteState.IsEnabled = false;
+            ThreeDState.IsEnabled = false;
 
             _pageService = pageService;
             _windowServise = windowService;
@@ -64,12 +97,10 @@ namespace Ahed_project.ViewModel
 
         private void Validation()
         {
-            if(ProjectInfo.name != null && ProjectInfo.name != String.Empty)
+            if (ProjectInfo.name != null && ProjectInfo.name != String.Empty)
             {
-                ProjectState.Message = new PackIcon
-                {
-                    Kind = PackIconKind.Check
-                };
+                var assembly = Assembly.GetExecutingAssembly();
+                ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
             }
         }
 
@@ -100,7 +131,7 @@ namespace Ahed_project.ViewModel
         });
 
         public ICommand ShowProjectInfo => new DelegateCommand(() => {
-            if(ProjectInfoVisibility == Visibility.Hidden)
+            if (ProjectInfoVisibility == Visibility.Hidden)
             {
                 ProjectInfoVisibility = Visibility.Visible;
             } else
@@ -112,13 +143,13 @@ namespace Ahed_project.ViewModel
         public ICommand SelectLastProject => new AsyncCommand(async () => {
             _logs.AddMessage("Info", "Загрузка последних проектов...");
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PROJECTS, ""));
-            if(response.Result is string)
+            if (response.Result is string)
             {
                 try
                 {
                     Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
                     List<ProjectInfoGet> projects = JsonConvert.DeserializeObject<List<ProjectInfoGet>>(result.data.ToString());
-                    if(projects.Count > 0)
+                    if (projects.Count > 0)
                     {
                         _selectProjectService.SelectProject(projects.Last<ProjectInfoGet>());
                         _logs.AddMessage("success", "Загрузка проекта выполнена успешно!");
@@ -141,7 +172,7 @@ namespace Ahed_project.ViewModel
             var projectInfoSend = _mapper.Map<ProjectInfoSend>(ProjectInfo);
             string json = JsonConvert.SerializeObject(projectInfoSend);
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE, json, ProjectInfo));
-            if(response.Result is string)
+            if (response.Result is string)
             {
                 try
                 {
@@ -162,7 +193,7 @@ namespace Ahed_project.ViewModel
         public ICommand NewProjectCommand => new AsyncCommand(async () => {
             _logs.AddMessage("Info", "Начало создания проекта...");
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CREATE, ""));
-            if(response.Result is string)
+            if (response.Result is string)
             {
                 try
                 {
@@ -176,12 +207,12 @@ namespace Ahed_project.ViewModel
                 {
                     MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            } else if(response.Result is Exception)
+            } else if (response.Result is Exception)
             {
                 MessageBox.Show(response.Result.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            
+
         });
 
         private Visibility projectInfoVisibility = Visibility.Hidden;
@@ -191,6 +222,15 @@ namespace Ahed_project.ViewModel
         public ContentState ProjectState { get; set; }
         public ContentState TubesFluidState { get; set; }
         public ContentState ShellFluidState { get; set; }
+        public ContentState HeatBalanceState { get; set; }
+        public ContentState GeometryState { get; set; }
+        public ContentState BafflesState { get; set; }
+        public ContentState OverallCalculationState { get; set; }
+        public ContentState BatchState { get; set; }
+        public ContentState GraphState { get; set; }
+        public ContentState ReportsState { get; set; }
+        public ContentState QuoteState { get; set; }
+        public ContentState ThreeDState {get; set;}
 
     }
 }

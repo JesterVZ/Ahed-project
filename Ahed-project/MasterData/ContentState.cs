@@ -28,6 +28,5 @@ namespace Ahed_project.MasterData
 
             }
         }
-        public PackIcon Message { get; set; }
     }
 }
