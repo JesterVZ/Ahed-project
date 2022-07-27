@@ -38,7 +38,7 @@ namespace Ahed_project.ViewModel
         private ProjectInfoGet projectInfo = new ProjectInfoGet();
         public ProjectInfoGet ProjectInfo { get => projectInfo; set => SetValue(ref projectInfo, value); }
 
-        private SingleProductGet singleProductGet = new SingleProductGet();
+        private SingleProductGet singleProductGet;
         public SingleProductGet SingleProductGet { get => singleProductGet; set => SetValue(ref singleProductGet, value); }
         public string ProjectValidationStatusSource { get; set; }
         public string TubesFluidValidationStatusSource { get; set; }
@@ -97,11 +97,32 @@ namespace Ahed_project.ViewModel
 
         private void Validation()
         {
-            if (ProjectInfo.name != null && ProjectInfo.name != String.Empty)
+            var assembly = Assembly.GetExecutingAssembly();
+            if ((ProjectInfo.name != null && ProjectInfo.name != String.Empty) && (ProjectInfo.description != null && ProjectInfo.description != String.Empty))
             {
-                var assembly = Assembly.GetExecutingAssembly();
                 ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
+            } else
+            {
+                _logs.AddMessage("warning", "Введите имя проекта!");
+                ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
             }
+            if(SingleProductGet != null)
+            {
+                if (SingleProductGet.name != null && SingleProductGet.name != String.Empty)
+                {
+                    TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
+                }
+                else
+                {
+                    _logs.AddMessage("warning", "Введите имя продукта!");
+                    TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
+                }
+            } else
+            {
+                _logs.AddMessage("Error", "Выберете продукт!");
+                TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/cancel.svg";
+            }
+            
         }
 
         public ICommand Logout => new AsyncCommand(async () => {
@@ -182,6 +203,7 @@ namespace Ahed_project.ViewModel
                         _logs.AddMessage(result.logs[i].type, result.logs[i].message);
                     }
                     _logs.AddMessage("success", "Сохранение выполнено успешно!");
+                    Validation();
                 }
                 catch (Exception e)
                 {
