@@ -31,6 +31,7 @@ namespace Ahed_project.ViewModel
         private readonly SendDataService _sendDataService;
         private readonly SelectProjectService _selectProjectService;
         private readonly SelectProductService _selectProductService;
+        private readonly BackGroundService _backGroundService;
         private readonly IMapper _mapper;
 
         public ObservableCollection<LoggerMessage> LogCollection { get; set; }
@@ -54,7 +55,7 @@ namespace Ahed_project.ViewModel
         public string ThreeDValidationStatusSource { get; set; }
 
         public ContentPageViewModel(PageService pageService, WindowService windowService, Logs logs,
-            SendDataService sendDataService, SelectProjectService selectProjectService, SelectProductService selectProductService, IMapper mapper)
+            SendDataService sendDataService, SelectProjectService selectProjectService, SelectProductService selectProductService, IMapper mapper, BackGroundService backGroundService)
         {
             //инициализация
             ProjectState = new ContentState();
@@ -93,6 +94,7 @@ namespace Ahed_project.ViewModel
             _selectProductService.ProductSelected += (product) => SingleProductGet = product;
             LogCollection = _logs.logs;
             _mapper = mapper;
+            _backGroundService = backGroundService;
         }
 
         private void Validation()
@@ -162,6 +164,7 @@ namespace Ahed_project.ViewModel
         });
 
         public ICommand SelectLastProject => new AsyncCommand(async () => {
+            _backGroundService.Start();
             _logs.AddMessage("Info", "Загрузка последних проектов...");
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PROJECTS, ""));
             if (response.Result is string)

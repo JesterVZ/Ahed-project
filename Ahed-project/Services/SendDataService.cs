@@ -1,6 +1,7 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services.EF;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,7 +16,7 @@ namespace Ahed_project.Services
     public class SendDataService
     {
         private readonly ServiceConfig _serviceConfig;
-        WebHeaderCollection Headers = new WebHeaderCollection();
+        Dictionary<string,string> Headers = new Dictionary<string, string>();
 
         public SendDataService(ServiceConfig serviceConfig)
         {
@@ -23,55 +24,118 @@ namespace Ahed_project.Services
         }
         public async Task<object> SendToServer(ProjectMethods projectMethod, string body = null, ProjectInfoGet projectInfo = null)
         {
-            WebClient _webClient = new WebClient();
-            if (Headers.GetValues("Content-Type") is null)
-                Headers.Add("Content-Type", "application/json");
-            _webClient.Encoding = System.Text.Encoding.UTF8;
-            _webClient.Headers = Headers;
-            string response = "";
+            Headers.TryAdd("Content-Type", "application/json");
+            RestResponse response = null;
             try
             {
                 switch (projectMethod)
                 {
                     case ProjectMethods.LOGIN:
-                        var authorizationHeader = _webClient.Headers["Authorization"];
-                        if (authorizationHeader != null)
-                            _webClient.Headers.Remove("Authorization");
-                        response = _webClient.UploadString(_serviceConfig.LoginLink, SendMethods.POST.ToString(), body);
-                        if (authorizationHeader!=null)     
-                            AddHeader(authorizationHeader.Split(' ').LastOrDefault());     
+                        var restClient = new RestClient(_serviceConfig.LoginLink);
+                        var request = new RestRequest("", Method.Post);
+                        Headers.TryGetValue("Authorization", out var authHeader);
+                        if (authHeader != null)
+                        {
+                            Headers.Remove("Authorization");
+                        }
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        request.Timeout = -1;
+                        if (body != null)
+                            request.AddBody(body);
+                        response = restClient.ExecuteAsync(request).Result;
+                        if (authHeader != null)
+                            AddHeader(authHeader.Split(' ').LastOrDefault());
                         break;
                     case ProjectMethods.AUTH:
-                        response = _webClient.DownloadString(_serviceConfig.AuthLink);
+                        restClient = new RestClient(_serviceConfig.AuthLink);
+                        request = new RestRequest("", Method.Get);
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        response = restClient.ExecuteAsync(request).Result;
                         break;
                     case ProjectMethods.CREATE:
-                        response = _webClient.UploadString(_serviceConfig.CreateLink, SendMethods.POST.ToString(), body);
+                        restClient = new RestClient(_serviceConfig.CreateLink);
+                        request = new RestRequest("", Method.Post);
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        if (body != null)
+                            request.AddBody(body);
+                        response = restClient.ExecuteAsync(request).Result;
                         break;
                     case ProjectMethods.GET:
-                        response = _webClient.UploadString(_serviceConfig.GetLink, SendMethods.POST.ToString(), body);
+                        restClient = new RestClient(_serviceConfig.GetLink);
+                        request = new RestRequest("", Method.Post);
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        if (body != null)
+                            request.AddBody(body);
+                        response = restClient.ExecuteAsync(request).Result;
                         break;
                     case ProjectMethods.UPDATE:
-                        response = _webClient.UploadString(_serviceConfig.UpdateLink+$"/{projectInfo.project_id}", SendMethods.POST.ToString(), body);
+                        restClient = new RestClient(_serviceConfig.UpdateLink + $"/{projectInfo.project_id}");
+                        request = new RestRequest("", Method.Post);
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        if (body != null)
+                            request.AddBody(body);
+                        response = restClient.ExecuteAsync(request).Result;
                         break;
                     case ProjectMethods.GET_PROJECTS:
-                        response = _webClient.UploadString(_serviceConfig.GetProjectsLink, SendMethods.POST.ToString(), body);
+                        restClient = new RestClient(_serviceConfig.GetProjectsLink);
+                        request = new RestRequest("", Method.Post);
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        if (body != null)
+                            request.AddBody(body);
+                        response = restClient.ExecuteAsync(request).Result;
                         break;
                     case ProjectMethods.GET_PRODUCTS:
-                        response = _webClient.DownloadString(_serviceConfig.GetProductsList);
+                        restClient = new RestClient(_serviceConfig.GetProductsList);
+                        request = new RestRequest("", Method.Get);
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        if (body != null)
+                            request.AddBody(body);
+                        response = restClient.ExecuteAsync(request).Result;
                         break;
                     case ProjectMethods.GET_PRODUCT:
-                        response = _webClient.DownloadString(_serviceConfig.GetProduct+body);
+                        restClient = new RestClient(_serviceConfig.GetProduct + body);
+                        request = new RestRequest("", Method.Get);
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        response = restClient.ExecuteAsync(request).Result;
                         break;
                 }
-                return response;
-            }catch(Exception e)
+                return response.Content;
+            }
+            catch (Exception e)
             {
+                if (e.Message == "The operation has timed out.")
+                    await SendToServer(projectMethod, body, projectInfo);
                 return e;
             }
         }
         public void AddHeader(string token)
         {
-            if (Headers.GetValues("Authorization") != null)
+            Headers.TryGetValue("Authorization", out var value);
+            if (value != null)
                 Headers["Authorization"] = $"Bearer {token}";
             else
                 Headers.Add("Authorization", $"Bearer {token}");

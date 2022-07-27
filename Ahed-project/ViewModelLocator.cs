@@ -24,12 +24,12 @@ namespace Ahed_project
                 db.Database.Migrate();
             var services = new ServiceCollection();
             services.AddSingleton(x => ServiceConfig.GetServiceConfig());
-            services.AddTransient<MainViewModel>();
-            services.AddTransient<LoginPageViewModel>();
-            services.AddTransient<ContentPageViewModel>();
-            services.AddTransient<PresetsWindowViewModel>();
-            services.AddTransient<ProjectsWindowViewModel>();
-            services.AddTransient<ProductsViewModel>();
+            services.AddSingleton<MainViewModel>();
+            services.AddSingleton<LoginPageViewModel>();
+            services.AddSingleton<ContentPageViewModel>();
+            services.AddSingleton<PresetsWindowViewModel>();
+            services.AddSingleton<ProjectsWindowViewModel>();
+            services.AddSingleton<ProductsViewModel>();
             services.AddSingleton<SendDataService>();
             services.AddSingleton<PageService>();
             services.AddSingleton<SelectProjectService>();
@@ -38,6 +38,7 @@ namespace Ahed_project
             services.AddSingleton<WindowService>();
             services.AddSingleton<JsonWebTokenLocal>();
             services.AddSingleton<SelectProductService>();
+            services.AddSingleton<BackGroundService>();
 
             //Маппер
             var configuration = new MapperConfiguration(cfg =>

@@ -24,7 +24,10 @@ namespace Ahed_project.ViewModel
         private List<Year> Years = null;
         public ObservableCollection<Node> Nodes { get; set; }
         public ObservableCollection<SingleProductGet> Products { get; set; }
+        public Dictionary<string, List<SingleProductGet>> ProductsDictionary = new Dictionary<string, List<SingleProductGet>>();
+        private readonly Logs _logs;
         public bool IsProductSelected {get; set;}
+        private bool _isProductDownLoaded { get; set; }
         private SingleProductGet selectedProduct;
         public SingleProductGet SelectedProduct
         {
@@ -45,23 +48,27 @@ namespace Ahed_project.ViewModel
                 
             }
         }
-        public ProductsViewModel(SendDataService sendDataService, SelectProductService selectProductService)
+        public ProductsViewModel(SendDataService sendDataService, SelectProductService selectProductService, Logs logs)
         {
             _sendDataService = sendDataService;
             _selectProductService = selectProductService;
             Nodes = new ObservableCollection<Node>();
             IsProductSelected = false;
+            _logs = logs;
         }
 
         public ICommand GetProductsCommand => new AsyncCommand(async () =>
         {
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCTS, ""));
-            Years = JsonConvert.DeserializeObject<List<Year>>(response.Result.ToString());
-            DoNodes();
+            //TO DO Вова, сделай пожалуйста waiter если продукты не загрузились, и страницу заблочь
+            if(!_isProductDownLoaded)
+            {
+
+            }
         });
 
-        private void DoNodes()
+        private async Task DoNodes()
         {
+            ProductsDictionary.Clear();
             Nodes.Clear();
             foreach (var year in Years)
             {
@@ -77,9 +84,52 @@ namespace Ahed_project.ViewModel
                     monthNode.Id = month.Id;
                     monthNode.Name = NumberToText(month.month_number);
                     node.Nodes.Add(monthNode);
+                    ProductsDictionary.Add(month.Id, new List<SingleProductGet>());
+                    // Закомментил решение на 3 потока, не удалять, в целях быстроты теста ниже сделано на безграничное количество потоков
+                    #region Релиз
+                    await Parallel.ForEachAsync(month.products, new ParallelOptions() { MaxDegreeOfParallelism = 3 }, async (x, y) =>
+                    {
+                        var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT, x.product_id.ToString()));
+                        SingleProductGet newProduct = JsonConvert.DeserializeObject<SingleProductGet>(response.Result.ToString());
+                        ProductsDictionary[month.Id].Add(newProduct);
+                    });
+                    #endregion
+                    #region Тест
+                    //await Parallel.ForEachAsync(month.products, new ParallelOptions(), async (x, y) =>
+                    //{
+                    //    var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT, x.product_id.ToString()));
+                    //    SingleProductGet newProduct = JsonConvert.DeserializeObject<SingleProductGet>(response.Result.ToString());
+                    //    ProductsDictionary[month.Id].Add(newProduct);
+                    //});
+                    #endregion
                 }
-                Nodes.Add(node);
+                Application.Current.Dispatcher.Invoke(()=>Nodes.Add(node));
             }
+        }
+
+
+
+        public async void DownloadProducts()
+        {
+            Application.Current.Dispatcher.Invoke(() => { _logs.AddMessage("info", "Start loading Products"); });
+            _isProductDownLoaded = false;
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCTS, ""));
+            Years = JsonConvert.DeserializeObject<List<Year>>(response.Result.ToString());
+            await DoNodes();
+            #region Релиз
+            await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions() { MaxDegreeOfParallelism = 3}, (x, y) => {
+                x.Value.Sort((z, c) => z.product_id.CompareTo(c.product_id));
+                return new ValueTask();
+            });
+            #endregion
+            #region Тест
+            //await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions(), (x, y) => {
+            //    x.Value.Sort((z, c) => z.product_id.CompareTo(c.product_id));
+            //    return new ValueTask();
+            //});
+            #endregion
+            _isProductDownLoaded = true;
+            Application.Current.Dispatcher.Invoke(() => { _logs.AddMessage("info", "End loading Products"); });
         }
 
         private static string NumberToText(int value)
@@ -118,16 +168,9 @@ namespace Ahed_project.ViewModel
         public ICommand SelectProductCommand => new AsyncCommand<object>(async (val) => {
             IsProductSelected = false;
             var selected = (Node)val;
-            if (selected.Nodes == null)
+            if (selected.Nodes == null&&selected.Id!=null)
             {
-                var month = Years.SelectMany(x => x.months).FirstOrDefault(x => x.Id == selected.Id);
-                Products = new ObservableCollection<SingleProductGet>();
-                foreach (var product in month.products)
-                {
-                    var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT,product.product_id.ToString()));
-                    SingleProductGet newProduct = JsonConvert.DeserializeObject<SingleProductGet>(response.Result.ToString());
-                    Products.Add(newProduct);
-                }
+                Products = new ObservableCollection<SingleProductGet>(ProductsDictionary[selected.Id]);
             }
         });
 
