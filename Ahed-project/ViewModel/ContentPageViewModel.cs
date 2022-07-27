@@ -29,6 +29,7 @@ namespace Ahed_project.ViewModel
         private readonly WindowService _windowServise;
         private readonly Logs _logs;
         private readonly SendDataService _sendDataService;
+        private readonly WindowTitleService _windowTitleService;
         private readonly SelectProjectService _selectProjectService;
         private readonly SelectProductService _selectProductService;
         private readonly BackGroundService _backGroundService;
@@ -54,7 +55,7 @@ namespace Ahed_project.ViewModel
         public string QuoteValidationStatusSource { get; set; }
         public string ThreeDValidationStatusSource { get; set; }
 
-        public ContentPageViewModel(PageService pageService, WindowService windowService, Logs logs,
+        public ContentPageViewModel(PageService pageService, WindowService windowService, Logs logs, WindowTitleService windowTitleService,
             SendDataService sendDataService, SelectProjectService selectProjectService, SelectProductService selectProductService, IMapper mapper, BackGroundService backGroundService)
         {
             //инициализация
@@ -90,24 +91,39 @@ namespace Ahed_project.ViewModel
             _sendDataService = sendDataService;
             _selectProjectService = selectProjectService;
             _selectProductService = selectProductService;
+            _windowTitleService = windowTitleService;
             _selectProjectService.ProjectSelected += (project) => ProjectInfo = project;
             _selectProductService.ProductSelected += (product) => SingleProductGet = product;
             LogCollection = _logs.logs;
             _mapper = mapper;
             _backGroundService = backGroundService;
+
+            _windowTitleService.ChangeTitle("Test");
         }
 
         private void Validation()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            if ((ProjectInfo.name != null && ProjectInfo.name != String.Empty) && (ProjectInfo.description != null && ProjectInfo.description != String.Empty))
+            if (ProjectInfo.name != null && ProjectInfo.name != String.Empty)
             {
                 ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
             } else
             {
-                _logs.AddMessage("warning", "Введите имя проекта!");
+                _logs.AddMessage("Error", "Введите имя проекта!");
+                ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/cancel.svg";
+                return;
+            }
+
+            if(ProjectInfo.description != null && ProjectInfo.description != String.Empty)
+            {
+                ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
+                
+            }else
+            {
+                _logs.AddMessage("warning", "Введите описание проекта!");
                 ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
             }
+
             if(SingleProductGet != null)
             {
                 if (SingleProductGet.name != null && SingleProductGet.name != String.Empty)
@@ -123,6 +139,7 @@ namespace Ahed_project.ViewModel
             {
                 _logs.AddMessage("Error", "Выберете продукт!");
                 TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/cancel.svg";
+                return;
             }
             
         }
