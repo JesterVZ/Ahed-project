@@ -86,22 +86,21 @@ namespace Ahed_project.ViewModel
                     node.Nodes.Add(monthNode);
                     ProductsDictionary.Add(month.Id, new List<SingleProductGet>());
                     // Закомментил решение на 3 потока, не удалять, в целях быстроты теста ниже сделано на безграничное количество потоков
-                    #region Релиз
+#if !DEBUG
                     await Parallel.ForEachAsync(month.products, new ParallelOptions() { MaxDegreeOfParallelism = 3 }, async (x, y) =>
                     {
                         var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT, x.product_id.ToString()));
                         SingleProductGet newProduct = JsonConvert.DeserializeObject<SingleProductGet>(response.Result.ToString());
                         ProductsDictionary[month.Id].Add(newProduct);
                     });
-                    #endregion
-                    #region Тест
-                    //await Parallel.ForEachAsync(month.products, new ParallelOptions(), async (x, y) =>
-                    //{
-                    //    var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT, x.product_id.ToString()));
-                    //    SingleProductGet newProduct = JsonConvert.DeserializeObject<SingleProductGet>(response.Result.ToString());
-                    //    ProductsDictionary[month.Id].Add(newProduct);
-                    //});
-                    #endregion
+#else
+                    await Parallel.ForEachAsync(month.products, new ParallelOptions(), async (x, y) =>
+                    {
+                        var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT, x.product_id.ToString()));
+                        SingleProductGet newProduct = JsonConvert.DeserializeObject<SingleProductGet>(response.Result.ToString());
+                        ProductsDictionary[month.Id].Add(newProduct);
+                    });
+#endif
                 }
                 Application.Current.Dispatcher.Invoke(()=>Nodes.Add(node));
             }
@@ -116,18 +115,18 @@ namespace Ahed_project.ViewModel
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCTS, ""));
             Years = JsonConvert.DeserializeObject<List<Year>>(response.Result.ToString());
             await DoNodes();
-            #region Релиз
+#if !DEBUG
             await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions() { MaxDegreeOfParallelism = 3}, (x, y) => {
                 x.Value.Sort((z, c) => z.product_id.CompareTo(c.product_id));
                 return new ValueTask();
             });
-            #endregion
-            #region Тест
-            //await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions(), (x, y) => {
-            //    x.Value.Sort((z, c) => z.product_id.CompareTo(c.product_id));
-            //    return new ValueTask();
-            //});
-            #endregion
+#else
+            await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions(), (x, y) =>
+            {
+                x.Value.Sort((z, c) => z.product_id.CompareTo(c.product_id));
+                return new ValueTask();
+            });
+#endif
             _isProductDownLoaded = true;
             Application.Current.Dispatcher.Invoke(() => { _logs.AddMessage("info", "End loading Products"); });
         }
