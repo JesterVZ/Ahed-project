@@ -92,13 +92,16 @@ namespace Ahed_project.ViewModel
             _selectProjectService = selectProjectService;
             _selectProductService = selectProductService;
             _windowTitleService = windowTitleService;
-            _selectProjectService.ProjectSelected += (project) => ProjectInfo = project;
+            _selectProjectService.ProjectSelected += (project) => { 
+                ProjectInfo = project;
+                _windowTitleService.ChangeTitle(project.name);
+            };
             _selectProductService.ProductSelected += (product) => SingleProductGet = product;
             LogCollection = _logs.logs;
             _mapper = mapper;
             _backGroundService = backGroundService;
 
-            _windowTitleService.ChangeTitle("Test");
+            
         }
 
         private void Validation()
@@ -223,6 +226,7 @@ namespace Ahed_project.ViewModel
                         _logs.AddMessage(result.logs[i].type, result.logs[i].message);
                     }
                     _logs.AddMessage("success", "Сохранение выполнено успешно!");
+                    _windowTitleService.ChangeTitle(ProjectInfo.name);
                     Validation();
                 }
                 catch (Exception e)
