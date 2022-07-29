@@ -127,7 +127,13 @@ namespace Ahed_project.Services
                         response = restClient.ExecuteAsync(request).Result;
                         break;
                 }
-                return response.Content;
+                if (response.IsSuccessful)
+                    return response.Content;
+                else
+                {
+                    Application.Current.Dispatcher.Invoke(() => _logs.AddMessage("Error", $"Excep: {response.ErrorException}, Message: {response.ErrorMessage}, Code: {response.StatusCode}"));
+                    return JsonConvert.SerializeObject(new object());
+                }
             }
             catch (Exception e)
             {
