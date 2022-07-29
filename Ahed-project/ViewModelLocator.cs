@@ -2,6 +2,7 @@
 using Ahed_project.Services;
 using Ahed_project.Services.EF;
 using Ahed_project.ViewModel;
+using Ahed_project.ViewModel.ContentPageComponents;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
