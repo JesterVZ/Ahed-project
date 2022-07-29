@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -18,16 +19,18 @@ namespace Ahed_project.ViewModel
     {
         private readonly SendDataService _sendDataService;
         private readonly SelectProjectService _selectProjectService;
+        private CancellationTokenService _cancellationToken;
         public ObservableCollection<ProjectInfoGet> ProjectsCollection { get; set; }
-        public ProjectsWindowViewModel(SendDataService sendDataService, SelectProjectService selectProjectService)
+        public ProjectsWindowViewModel(SendDataService sendDataService, SelectProjectService selectProjectService, CancellationTokenService cancellationToken)
         {
             _sendDataService = sendDataService;
             _selectProjectService = selectProjectService;
             ProjectsCollection = new ObservableCollection<ProjectInfoGet>();
+            _cancellationToken = cancellationToken;
         }
 
         public ICommand GetProjectsCommand => new AsyncCommand(async () => {
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PROJECTS, ""));
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PROJECTS, ""), _cancellationToken.GetToken());
             if (response.Result is string)
             {
                 

@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -21,9 +22,11 @@ namespace Ahed_project.ViewModel
         private readonly PageService _pageService;
         private readonly Logs _logs;
         private readonly JsonWebTokenLocal _jwt;
+        private readonly CancellationTokenService _cancellationToken;
 
-        public LoginPageViewModel(PageService pageService, Logs logs, JsonWebTokenLocal jwt)
+        public LoginPageViewModel(PageService pageService, Logs logs, JsonWebTokenLocal jwt, CancellationTokenService cancellationToken)
         {
+            _cancellationToken = cancellationToken;
             _pageService = pageService;
             _logs = logs;
             _jwt = jwt;
@@ -48,9 +51,10 @@ namespace Ahed_project.ViewModel
 
         private async void Auth()
         {
+            _cancellationToken.ReCreateSource();
             var assembly = Assembly.GetExecutingAssembly();
             Loading = Visibility.Visible;
-            var result = await Task.Factory.StartNew(() => _jwt.AuthenticateUser(email, pass));
+            var result = await Task.Factory.StartNew(() => _jwt.AuthenticateUser(email, pass),_cancellationToken.GetToken());
             Loading = Visibility.Hidden;
             if (result.Result is User)
             {
