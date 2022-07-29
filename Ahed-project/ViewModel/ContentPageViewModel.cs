@@ -17,6 +17,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -34,6 +35,7 @@ namespace Ahed_project.ViewModel
         private readonly SelectProductService _selectProductService;
         private readonly BackGroundService _backGroundService;
         private readonly IMapper _mapper;
+        private CancellationTokenService _cancellationToken;
 
         public ObservableCollection<LoggerMessage> LogCollection { get; set; }
 
@@ -56,7 +58,8 @@ namespace Ahed_project.ViewModel
         public string ThreeDValidationStatusSource { get; set; }
 
         public ContentPageViewModel(PageService pageService, WindowService windowService, Logs logs, WindowTitleService windowTitleService,
-            SendDataService sendDataService, SelectProjectService selectProjectService, SelectProductService selectProductService, IMapper mapper, BackGroundService backGroundService)
+            SendDataService sendDataService, SelectProjectService selectProjectService, SelectProductService selectProductService, IMapper mapper,
+            BackGroundService backGroundService,CancellationTokenService cancellationToken)
         {
             //инициализация
             ProjectState = new ContentState();
@@ -101,7 +104,7 @@ namespace Ahed_project.ViewModel
             _mapper = mapper;
             _backGroundService = backGroundService;
 
-            
+            _cancellationToken = cancellationToken;
         }
 
         private void Validation()
@@ -155,6 +158,7 @@ namespace Ahed_project.ViewModel
                 context.Update(active);
                 context.SaveChanges();
             }
+            _cancellationToken.Stop();
             _pageService.ChangePage(new LoginPage());
         });
 
@@ -186,7 +190,7 @@ namespace Ahed_project.ViewModel
         public ICommand SelectLastProject => new AsyncCommand(async () => {
             _backGroundService.Start();
             _logs.AddMessage("Info", "Загрузка последних проектов...");
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PROJECTS, ""));
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PROJECTS, ""), _cancellationToken.GetToken());
             if (response.Result is string)
             {
                 try
@@ -215,7 +219,7 @@ namespace Ahed_project.ViewModel
             _logs.AddMessage("Info", "Идет сохранение проекта...");
             var projectInfoSend = _mapper.Map<ProjectInfoSend>(ProjectInfo);
             string json = JsonConvert.SerializeObject(projectInfoSend);
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE, json, ProjectInfo));
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE, json, ProjectInfo),_cancellationToken.GetToken());
             if (response.Result is string)
             {
                 try
@@ -238,7 +242,7 @@ namespace Ahed_project.ViewModel
 
         public ICommand NewProjectCommand => new AsyncCommand(async () => {
             _logs.AddMessage("Info", "Начало создания проекта...");
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CREATE, ""));
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CREATE, ""), _cancellationToken.GetToken());
             if (response.Result is string)
             {
                 try

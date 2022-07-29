@@ -1,6 +1,7 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services.EF;
+using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -10,17 +11,20 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Ahed_project.Services
 {
     public class SendDataService
     {
         private readonly ServiceConfig _serviceConfig;
+        private readonly Logs _logs;
         Dictionary<string,string> Headers = new Dictionary<string, string>();
 
-        public SendDataService(ServiceConfig serviceConfig)
+        public SendDataService(ServiceConfig serviceConfig, Logs logs)
         {
             _serviceConfig = serviceConfig;
+            _logs = logs;
         }
         public async Task<object> SendToServer(ProjectMethods projectMethod, string body = null, ProjectInfoGet projectInfo = null)
         {
@@ -127,9 +131,8 @@ namespace Ahed_project.Services
             }
             catch (Exception e)
             {
-                if (e.Message == "The operation has timed out.")
-                    await SendToServer(projectMethod, body, projectInfo);
-                return e;
+                Application.Current.Dispatcher.Invoke(() => _logs.AddMessage("Error", $"{e.Message} in: {e.Source}"));
+                return JsonConvert.SerializeObject(new object());
             }
         }
         public void AddHeader(string token)

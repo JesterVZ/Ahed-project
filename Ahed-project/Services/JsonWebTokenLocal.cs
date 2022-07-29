@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using Ahed_project.Services.EF.Model;
+using System.Threading;
 
 namespace Ahed_project.Services
 {
@@ -19,10 +20,12 @@ namespace Ahed_project.Services
     {
         private ServiceConfig _serviceConfig;
         private SendDataService _sendDataService;
-        public JsonWebTokenLocal(ServiceConfig serviceConfig, SendDataService sendDataService)
+        private CancellationTokenService _cancellationToken;
+        public JsonWebTokenLocal(ServiceConfig serviceConfig, SendDataService sendDataService, CancellationTokenService cancellationToken)
         {
             _serviceConfig = serviceConfig;
             _sendDataService = sendDataService;
+            _cancellationToken = cancellationToken;
         }
 
         /// <summary>
@@ -45,10 +48,10 @@ namespace Ahed_project.Services
                         pass = password
                     });
                     Token token = null;
-                    var login = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.LOGIN, json));
+                    var login = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.LOGIN, json), _cancellationToken.GetToken());
                     token = JsonConvert.DeserializeObject<Token>(login.Result.ToString());
                     _sendDataService.AddHeader(token.token);
-                    var auth = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.AUTH));
+                    var auth = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.AUTH), _cancellationToken.GetToken());
                     token = JsonConvert.DeserializeObject<Token>(auth.Result.ToString());
                     _sendDataService.AddHeader(token.token);
                 if (user == null)

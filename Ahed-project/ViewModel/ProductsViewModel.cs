@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -20,6 +21,7 @@ namespace Ahed_project.ViewModel
     {
         private readonly SendDataService _sendDataService;
         private readonly SelectProductService _selectProductService;
+        private CancellationTokenService _cancellationToken;
 
         private List<Year> Years = null;
         public ObservableCollection<Node> Nodes { get; set; }
@@ -48,13 +50,15 @@ namespace Ahed_project.ViewModel
                 
             }
         }
-        public ProductsViewModel(SendDataService sendDataService, SelectProductService selectProductService, Logs logs)
+        public ProductsViewModel(SendDataService sendDataService, SelectProductService selectProductService, Logs logs,
+            CancellationTokenService cancellationToken)
         {
             _sendDataService = sendDataService;
             _selectProductService = selectProductService;
             Nodes = new ObservableCollection<Node>();
             IsProductSelected = false;
             _logs = logs;
+            _cancellationToken = cancellationToken;
         }
 
         public ICommand GetProductsCommand => new AsyncCommand(async () =>
@@ -69,7 +73,7 @@ namespace Ahed_project.ViewModel
         private async Task DoNodes()
         {
             ProductsDictionary.Clear();
-            Nodes.Clear();
+            Application.Current.Dispatcher.Invoke(() => Nodes.Clear());
             foreach (var year in Years)
             {
                 year.Id = Guid.NewGuid().ToString();
@@ -87,16 +91,24 @@ namespace Ahed_project.ViewModel
                     ProductsDictionary.Add(month.Id, new List<SingleProductGet>());
                     // Закомментил решение на 3 потока, не удалять, в целях быстроты теста ниже сделано на безграничное количество потоков
 #if !DEBUG
-                    await Parallel.ForEachAsync(month.products, new ParallelOptions() { MaxDegreeOfParallelism = 3 }, async (x, y) =>
+                    await Parallel.ForEachAsync(month.products, new ParallelOptions() { MaxDegreeOfParallelism = 3, CancellationToken = _cancellationToken.GetToken() }, async (x, y) =>
                     {
-                        var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT, x.product_id.ToString()));
+                        if (y.IsCancellationRequested)
+                        {
+                            return;
+                        }
+                        var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT, x.product_id.ToString()), _cancellationToken.GetToken());
                         SingleProductGet newProduct = JsonConvert.DeserializeObject<SingleProductGet>(response.Result.ToString());
                         ProductsDictionary[month.Id].Add(newProduct);
                     });
 #else
-                    await Parallel.ForEachAsync(month.products, new ParallelOptions(), async (x, y) =>
+                    await Parallel.ForEachAsync(month.products, new ParallelOptions() { CancellationToken = _cancellationToken.GetToken()}, async (x, y) =>
                     {
-                        var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT, x.product_id.ToString()));
+                        if (y.IsCancellationRequested)
+                        {
+                            return;
+                        }
+                        var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT, x.product_id.ToString()), _cancellationToken.GetToken());
                         SingleProductGet newProduct = JsonConvert.DeserializeObject<SingleProductGet>(response.Result.ToString());
                         ProductsDictionary[month.Id].Add(newProduct);
                     });
@@ -110,25 +122,42 @@ namespace Ahed_project.ViewModel
 
         public async void DownloadProducts()
         {
-            Application.Current.Dispatcher.Invoke(() => { _logs.AddMessage("info", "Start loading Products"); });
-            _isProductDownLoaded = false;
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCTS, ""));
-            Years = JsonConvert.DeserializeObject<List<Year>>(response.Result.ToString());
-            await DoNodes();
+            try
+            {
+                Application.Current.Dispatcher.Invoke(() => { _logs.AddMessage("info", "Start loading Products"); });
+                _isProductDownLoaded = false;
+                var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCTS, ""), _cancellationToken.GetToken());
+                Years = JsonConvert.DeserializeObject<List<Year>>(response.Result.ToString());
+                await DoNodes();
 #if !DEBUG
-            await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions() { MaxDegreeOfParallelism = 3}, (x, y) => {
+            await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions() { MaxDegreeOfParallelism = 3,CancellationToken = _cancellationToken.GetToken() }, async (x, y) => {
+                if (y.IsCancellationRequested)
+                {
+                    return;
+                }
                 x.Value.Sort((z, c) => z.product_id.CompareTo(c.product_id));
-                return new ValueTask();
             });
 #else
-            await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions(), (x, y) =>
-            {
-                x.Value.Sort((z, c) => z.product_id.CompareTo(c.product_id));
-                return new ValueTask();
-            });
+                await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions() { CancellationToken = _cancellationToken.GetToken() }, async (x, y) =>
+                {
+                    if (y.IsCancellationRequested)
+                    {
+                        return;
+                    }
+                    x.Value?.Sort((z, c) => z.product_id.CompareTo(c.product_id));
+                });
 #endif
-            _isProductDownLoaded = true;
-            Application.Current.Dispatcher.Invoke(() => { _logs.AddMessage("info", "End loading Products"); });
+                _isProductDownLoaded = true;
+                Application.Current.Dispatcher.Invoke(() => { _logs.AddMessage("info", "End loading Products"); });
+            }
+            catch (TaskCanceledException e)
+            {
+
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
         private static string NumberToText(int value)

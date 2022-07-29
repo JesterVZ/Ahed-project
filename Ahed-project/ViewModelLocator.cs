@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ahed_project
@@ -40,7 +41,8 @@ namespace Ahed_project
             services.AddSingleton<SelectProductService>();
             services.AddSingleton<BackGroundService>();
             services.AddSingleton<WindowTitleService>();
-
+            services.AddSingleton<CancellationTokenService>();
+            
             //Маппер
             var configuration = new MapperConfiguration(cfg =>
             {
@@ -75,6 +77,5 @@ namespace Ahed_project
         public PresetsWindowViewModel PresetsWindowViewModel => _provider.GetRequiredService<PresetsWindowViewModel>();
         public ProjectsWindowViewModel ProjectsWindowViewModel => _provider.GetRequiredService<ProjectsWindowViewModel>();
         public ProductsViewModel ProductsViewModel => _provider.GetRequiredService<ProductsViewModel>();
-
     }
 }
