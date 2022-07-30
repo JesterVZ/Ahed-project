@@ -273,7 +273,7 @@
                     </Grid>
                 </TabItem.Header>
                 <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" >
-                    <StackPanel DataContext="{Binding SingleProductGet}">
+                    <StackPanel>
                         <StackPanel.Resources>
                             <Style TargetType="StackPanel" x:Key="Child">
                                 <Setter Property="Width" Value="250"/>
@@ -304,7 +304,7 @@
                             </ComboBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <StackPanel Width="600" Margin="0 0 50 0">
+                            <StackPanel DataContext="{Binding SingleProductGet}" Width="600" Margin="0 0 50 0">
                                 <TextBlock Text="Tubes fluid" FontWeight="Bold"/>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -370,12 +370,12 @@
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="0" Height="200" Series="{Binding SeriesCollection}" LegendLocation="Right"></lvc:CartesianChart>
-                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="0" Height="200" Series="{Binding SeriesCollection}" LegendLocation="Right"></lvc:CartesianChart>
-                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="1" Height="200" Series="{Binding SeriesCollection}" LegendLocation="Right"></lvc:CartesianChart>
-                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="1" Height="200" Series="{Binding SeriesCollection}" LegendLocation="Right"></lvc:CartesianChart>
-                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="2" Height="200" Series="{Binding SeriesCollection}" LegendLocation="Right"></lvc:CartesianChart>
-                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="2" Height="200" Series="{Binding SeriesCollection}" LegendLocation="Right"></lvc:CartesianChart>
+                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="0" Height="200" Series="{Binding DensKgCollection}" LegendLocation="Right"></lvc:CartesianChart>
+                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="0" Height="200" Series="{Binding SpHeatCollection}" LegendLocation="Right"></lvc:CartesianChart>
+                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="1" Height="200" Series="{Binding ThCondCollection}" LegendLocation="Right"></lvc:CartesianChart>
+                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="1" Height="200" Series="{Binding CIndCollection}" LegendLocation="Right"></lvc:CartesianChart>
+                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="2" Height="200" Series="{Binding FIndCollection}" LegendLocation="Right"></lvc:CartesianChart>
+                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="2" Height="200" Series="{Binding DhCollection}" LegendLocation="Right"></lvc:CartesianChart>
                                 </Grid>
                                 
                             </StackPanel>

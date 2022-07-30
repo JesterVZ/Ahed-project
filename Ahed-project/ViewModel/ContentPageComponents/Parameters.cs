@@ -1,4 +1,5 @@
 ﻿using Ahed_project.MasterData;
+using LiveCharts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,8 +23,15 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         public ContentState ReportsState { get; set; }
         public ContentState QuoteState { get; set; }
         public ContentState ThreeDState { get; set; }
-
-
+        /// <summary>
+        /// Для графика
+        /// </summary>
+        public SeriesCollection DensKgCollection { get; set; }
+        public SeriesCollection SpHeatCollection { get; set; }
+        public SeriesCollection ThCondCollection { get; set; }
+        public SeriesCollection CIndCollection { get; set; }
+        public SeriesCollection FIndCollection { get; set; }
+        public SeriesCollection DhCollection { get; set; }
         private Visibility projectInfoVisibility = Visibility.Hidden;
 
         public Visibility ProjectInfoVisibility { get => projectInfoVisibility; set => SetValue(ref projectInfoVisibility, value); }
