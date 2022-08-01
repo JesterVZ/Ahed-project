@@ -15,6 +15,7 @@ namespace Ahed_project.MasterData
         AUTH,
         GET_PROJECTS,
         GET_PRODUCTS,
-        GET_PRODUCT
+        GET_PRODUCT,
+        CALCULATE
     }
 }

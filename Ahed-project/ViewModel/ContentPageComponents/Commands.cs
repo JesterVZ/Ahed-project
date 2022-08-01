@@ -142,5 +142,9 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
 
         });
+
+        public ICommand CalculateCommand => new AsyncCommand(async () => { 
+            
+        });
     }
 }

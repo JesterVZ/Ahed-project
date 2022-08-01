@@ -675,8 +675,11 @@
                                 </ComboBox>
                                 <TextBox Style="{StaticResource Default}"/>
                                 <ComboBox>
-                                    <ComboBoxItem IsSelected="True" IsEnabled="False">
+                                    <ComboBoxItem IsSelected="True">
                                         <Label>SensibleHeat</Label>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        <Label>Condensation</Label>
                                     </ComboBoxItem>
                                 </ComboBox>
                                 <TextBox Style="{StaticResource Enabled}"/>
@@ -780,8 +783,11 @@
                                 </ComboBox>
                                 <TextBox Style="{StaticResource Default}"/>
                                 <ComboBox>
-                                    <ComboBoxItem IsSelected="True" IsEnabled="False">
+                                    <ComboBoxItem IsSelected="True">
                                         <Label>SensibleHeat</Label>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        <Label>Condensation</Label>
                                     </ComboBoxItem>
                                 </ComboBox>
                                 <StackPanel Orientation="Horizontal" Height="30">
