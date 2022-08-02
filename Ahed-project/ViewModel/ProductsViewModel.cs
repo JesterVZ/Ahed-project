@@ -149,6 +149,10 @@ namespace Ahed_project.ViewModel
 #endif
                 _isProductDownLoaded = true;
                 Application.Current.Dispatcher.Invoke(() => { _logs.AddMessage("info", "End loading Products"); });
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Products = new ObservableCollection<SingleProductGet>(ProductsDictionary.SelectMany(x => x.Value).ToList());
+                });
             }
             catch (TaskCanceledException e)
             {
