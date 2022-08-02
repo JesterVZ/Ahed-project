@@ -30,6 +30,7 @@ namespace Ahed_project.ViewModel
         }
 
         public ICommand GetProjectsCommand => new AsyncCommand(async () => {
+            ProjectsCollection.Clear();
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PROJECTS, ""), _cancellationToken.GetToken());
             if (response.Result is string)
             {
