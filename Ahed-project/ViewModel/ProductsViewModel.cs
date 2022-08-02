@@ -26,9 +26,10 @@ namespace Ahed_project.ViewModel
         private List<Year> Years = null;
         public ObservableCollection<Node> Nodes { get; set; }
         public ObservableCollection<SingleProductGet> Products { get; set; }
+        private List<SingleProductGet> ProductsBeforeSearch = new List<SingleProductGet>();
         public Dictionary<string, List<SingleProductGet>> ProductsDictionary = new Dictionary<string, List<SingleProductGet>>();
         private readonly Logs _logs;
-        public bool IsProductSelected {get; set;}
+        public bool IsProductSelected { get; set; }
         private bool _isProductDownLoaded { get; set; }
         private SingleProductGet selectedProduct;
         public SingleProductGet SelectedProduct
@@ -40,14 +41,14 @@ namespace Ahed_project.ViewModel
             set
             {
                 selectedProduct = value;
-                if(value != null)
+                if (value != null)
                 {
                     IsProductSelected = true;
                 } else
                 {
                     IsProductSelected = false;
                 }
-                
+
             }
         }
         public ProductsViewModel(SendDataService sendDataService, SelectProductService selectProductService, Logs logs,
@@ -64,7 +65,7 @@ namespace Ahed_project.ViewModel
         public ICommand GetProductsCommand => new AsyncCommand(async () =>
         {
             //TO DO Вова, сделай пожалуйста waiter если продукты не загрузились, и страницу заблочь
-            if(!_isProductDownLoaded)
+            if (!_isProductDownLoaded)
             {
 
             }
@@ -81,7 +82,7 @@ namespace Ahed_project.ViewModel
                 node.Id = year.Id;
                 node.Name = year.year_number.ToString();
                 node.Nodes = new ObservableCollection<Node>();
-                foreach(var month in year.months)
+                foreach (var month in year.months)
                 {
                     month.Id = Guid.NewGuid().ToString();
                     var monthNode = new Node();
@@ -114,7 +115,7 @@ namespace Ahed_project.ViewModel
                     });
 #endif
                 }
-                Application.Current.Dispatcher.Invoke(()=>Nodes.Add(node));
+                Application.Current.Dispatcher.Invoke(() => Nodes.Add(node));
             }
         }
 
@@ -130,13 +131,14 @@ namespace Ahed_project.ViewModel
                 Years = JsonConvert.DeserializeObject<List<Year>>(response.Result.ToString());
                 await DoNodes();
 #if !DEBUG
-            await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions() { MaxDegreeOfParallelism = 3,CancellationToken = _cancellationToken.GetToken() }, async (x, y) => {
-                if (y.IsCancellationRequested)
+                await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions() { MaxDegreeOfParallelism = 3, CancellationToken = _cancellationToken.GetToken() }, async (x, y) =>
                 {
-                    return;
-                }
-                x.Value.Sort((z, c) => z.product_id.CompareTo(c.product_id));
-            });
+                    if (y.IsCancellationRequested)
+                    {
+                        return;
+                    }
+                    x.Value.Sort((z, c) => z.product_id.CompareTo(c.product_id));
+                });
 #else
                 await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions() { CancellationToken = _cancellationToken.GetToken() }, async (x, y) =>
                 {
@@ -149,10 +151,8 @@ namespace Ahed_project.ViewModel
 #endif
                 _isProductDownLoaded = true;
                 Application.Current.Dispatcher.Invoke(() => { _logs.AddMessage("info", "End loading Products"); });
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    Products = new ObservableCollection<SingleProductGet>(ProductsDictionary.SelectMany(x => x.Value).ToList());
-                });
+                ProductsBeforeSearch = ProductsDictionary.SelectMany(x => x.Value).ToList();
+                SearchCondition();
             }
             catch (TaskCanceledException e)
             {
@@ -200,9 +200,10 @@ namespace Ahed_project.ViewModel
         public ICommand SelectProductCommand => new AsyncCommand<object>(async (val) => {
             IsProductSelected = false;
             var selected = (Node)val;
-            if (selected.Nodes == null&&selected.Id!=null)
+            if (selected.Nodes == null && selected.Id != null)
             {
-                Products = new ObservableCollection<SingleProductGet>(ProductsDictionary[selected.Id]);
+                ProductsBeforeSearch = ProductsDictionary[selected.Id];
+                SearchCondition();
             }
         });
 
@@ -210,9 +211,36 @@ namespace Ahed_project.ViewModel
             _selectProductService.SelectProject(SelectedProduct);
         });
         public ICommand OpenInShellCommand => new DelegateCommand(() => {
-            
+
         });
         public ICommand NewfluidCommand => new DelegateCommand(() => { });
         public ICommand EditfluidCommand => new DelegateCommand(() => { });
+
+
+        private string _searchBox = string.Empty;
+        public string SearchBox
+        {
+            get
+            {
+                return _searchBox;
+            }
+            set
+            {
+                _searchBox = value;
+                SearchCondition();
+            }
+        }
+
+        private void SearchCondition()
+        {
+            if (string.IsNullOrEmpty(SearchBox))
+            {
+                Products = new ObservableCollection<SingleProductGet>(ProductsBeforeSearch);
+            }
+            else
+            {
+                Products = new ObservableCollection<SingleProductGet>(ProductsBeforeSearch.Where(x=>x.name.ToLower().Contains(SearchBox.ToLower())));
+            }
+        }
     }
 }
