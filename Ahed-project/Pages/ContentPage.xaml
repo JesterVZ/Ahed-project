@@ -71,7 +71,7 @@
             <MenuItem Header="File">
                 <MenuItem Header="New" InputGestureText="Ctrl + N" Command="{Binding NewProjectCommand}"></MenuItem>
                 <MenuItem Header="Manage">
-                    <MenuItem Header="Project"></MenuItem>
+                    <MenuItem Header="Project" Command="{Binding OpenProjectsWindow}"></MenuItem>
                     <MenuItem Header="Fluid"></MenuItem>
                     <MenuItem Header="Geometry"></MenuItem>
                 </MenuItem>
