@@ -26,24 +26,17 @@ namespace Ahed_project.Services.BackGroundServices
 
         private void CheckPageChange()
         {
-            try
+            while (true)
             {
-                while (true)
+                if (Application.Current == null)
+                    return;
+                if (Application.Current.Resources.Contains("PageToGo"))
                 {
-                    if (Application.Current.Resources.Contains("PageToGo"))
-                    {
-                        Application.Current.Dispatcher.Invoke(() => _contentPageViewModel.ChangePage((int)Application.Current.Resources["PageToGo"]));
-                        Application.Current.Resources.Remove("PageToGo");
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                if (Application.Current != null)
-                {
-                    throw e;
+                    Application.Current.Dispatcher.Invoke(() => _contentPageViewModel.ChangePage((int)Application.Current.Resources["PageToGo"]));
+                    Application.Current.Resources.Remove("PageToGo");
                 }
             }
         }
     }
 }
+
