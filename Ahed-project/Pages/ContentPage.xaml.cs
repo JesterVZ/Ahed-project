@@ -25,12 +25,12 @@ namespace Ahed_project.Pages
     public partial class ContentPage : Page
     {
         private Logs _logs;
-        public ContentPage(Logs logs, ContentPageViewModel contentPageViewModel)
+        public ContentPage(Logs logs, ContentPageViewModel vm)
         {
             InitializeComponent();
             _logs = logs;
-            this.DataContext = contentPageViewModel;
-            contentPageViewModel.ChangePage += (i) => { Tabs.SelectedIndex = i; };
+            DataContext = vm;
+            vm.ChangePage = ChangePage;
             PrepareLogs();
         }
         private void PrepareLogs()
@@ -41,7 +41,10 @@ namespace Ahed_project.Pages
                 LogData.ItemsSource = _logs.logs.OrderByDescending(x => x.DateTime);
             });
         }
-
+        private void ChangePage(int i)
+        {
+            Tabs.SelectedIndex = i;
+        }
         private void ClearLogs(object sender, RoutedEventArgs e)
         {
             _logs.logs.Clear();

@@ -6,14 +6,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Ahed_project.Services
+namespace Ahed_project.Services.BackGroundServices
 {
-    public class BackGroundService
+    public class DownLoadProductsService
     {
         private readonly ProductsViewModel _productViewModel;
         private CancellationTokenService _cancellationToken;
 
-        public BackGroundService(ProductsViewModel productViewModel, CancellationTokenService cancellationToken)
+        public DownLoadProductsService(ProductsViewModel productViewModel, CancellationTokenService cancellationToken)
         {
             _productViewModel = productViewModel;
             _cancellationToken = cancellationToken;

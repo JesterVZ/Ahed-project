@@ -1,5 +1,6 @@
 ﻿using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services;
+using Ahed_project.Services.BackGroundServices;
 using Ahed_project.Services.EF;
 using Ahed_project.ViewModel;
 using Ahed_project.ViewModel.ContentPageComponents;
@@ -40,9 +41,10 @@ namespace Ahed_project
             services.AddSingleton<WindowService>();
             services.AddSingleton<JsonWebTokenLocal>();
             services.AddSingleton<SelectProductService>();
-            services.AddSingleton<BackGroundService>();
+            services.AddSingleton<DownLoadProductsService>();
             services.AddSingleton<WindowTitleService>();
             services.AddSingleton<CancellationTokenService>();
+            services.AddSingleton<ChangePageService>();
             
             //Маппер
             var configuration = new MapperConfiguration(cfg =>

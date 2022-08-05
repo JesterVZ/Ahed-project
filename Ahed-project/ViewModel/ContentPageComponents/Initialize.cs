@@ -3,6 +3,7 @@ using Ahed_project.MasterData.Products.SingleProduct;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Pages;
 using Ahed_project.Services;
+using Ahed_project.Services.BackGroundServices;
 using Ahed_project.Services.EF;
 using Ahed_project.Windows;
 using AutoMapper;
@@ -33,7 +34,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         private readonly WindowTitleService _windowTitleService;
         private readonly SelectProjectService _selectProjectService;
         private readonly SelectProductService _selectProductService;
-        private readonly BackGroundService _backGroundService;
+        private readonly DownLoadProductsService _backGroundService;
         private readonly IMapper _mapper;
         private CancellationTokenService _cancellationToken;
 
@@ -59,7 +60,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
         public ContentPageViewModel(PageService pageService, WindowService windowService, Logs logs, WindowTitleService windowTitleService,
             SendDataService sendDataService, SelectProjectService selectProjectService, SelectProductService selectProductService, IMapper mapper,
-            BackGroundService backGroundService, CancellationTokenService cancellationToken)
+            DownLoadProductsService backGroundService, CancellationTokenService cancellationToken)
         {
             //инициализация
             ProjectState = new ContentState();

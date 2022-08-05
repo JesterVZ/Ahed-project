@@ -23,7 +23,7 @@ namespace Ahed_project.ViewModel
         private readonly SendDataService _sendDataService;
         private readonly SelectProductService _selectProductService;
         private CancellationTokenService _cancellationToken;
-        private ContentPageViewModel _contentPageViewModel;
+        //private ContentPageViewModel _contentPageViewModel;
 
         private List<Year> Years = null;
         public ObservableCollection<Node> Nodes { get; set; }
@@ -54,11 +54,11 @@ namespace Ahed_project.ViewModel
             }
         }
         public ProductsViewModel(SendDataService sendDataService, SelectProductService selectProductService, Logs logs,
-            CancellationTokenService cancellationToken, ContentPageViewModel contentPageViewModel)
+            CancellationTokenService cancellationToken)
         {
             _sendDataService = sendDataService;
             _selectProductService = selectProductService;
-            _contentPageViewModel = contentPageViewModel;
+            //_contentPageViewModel = contentPageViewModel;
             Nodes = new ObservableCollection<Node>();
             IsProductSelected = false;
             _logs = logs;
@@ -212,7 +212,9 @@ namespace Ahed_project.ViewModel
 
         public ICommand OpenInTubesCommand => new DelegateCommand(() => {
             _selectProductService.SelectProject(SelectedProduct);
-            Application.Current.Dispatcher.BeginInvoke(() => { _contentPageViewModel.ChangePage.Invoke(1); });
+            Application.Current.Dispatcher.BeginInvoke(() => {
+                Application.Current.Resources.Add("PageToGo", 1);
+            });
         });
         public ICommand OpenInShellCommand => new DelegateCommand(() => {
 
