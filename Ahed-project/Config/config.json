@@ -6,5 +6,6 @@
 	"UpdateLink": "https://ahead-api.ru/api/he/project/update",
 	"GetProjectsLink": "https://ahead-api.ru/api/he/project/list",
 	"GetProductsList": "https://ahead-api.ru/api/he/product/list",
-	"GetProduct": "https://ahead-api.ru/api/he/product/get/"
+	"GetProduct": "https://ahead-api.ru/api/he/product/get/",
+	"Calculate": "https://ahead-api.ru/api/he/heat-balance/calculate"
 }

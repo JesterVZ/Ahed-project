@@ -121,7 +121,7 @@
                     </Grid>
                     
                 </TabItem.Header>
-                <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" >
+                <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="927" >
                     <StackPanel DataContext="{Binding ProjectInfo}">
 
                         <Grid>
