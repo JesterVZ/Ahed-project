@@ -17,6 +17,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 {
     public partial class ContentPageViewModel
     {
+        public Action<int> ChangePage { get; set; }
         public ICommand Logout => new AsyncCommand(async () =>
         {
             using (var context = new EFContext())
