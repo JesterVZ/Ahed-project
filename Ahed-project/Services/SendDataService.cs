@@ -126,6 +126,9 @@ namespace Ahed_project.Services
                         }
                         response = restClient.ExecuteAsync(request).Result;
                         break;
+                    case ProjectMethods.CALCULATE:
+                        restClient = new RestClient(_serviceConfig.Calculate);
+                        break;
                 }
                 if (response.IsSuccessful)
                     return response.Content;

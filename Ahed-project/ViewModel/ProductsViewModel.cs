@@ -2,6 +2,7 @@
 using Ahed_project.MasterData.Products;
 using Ahed_project.MasterData.Products.SingleProduct;
 using Ahed_project.Services;
+using Ahed_project.ViewModel.ContentPageComponents;
 using DevExpress.Mvvm;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -22,6 +23,7 @@ namespace Ahed_project.ViewModel
         private readonly SendDataService _sendDataService;
         private readonly SelectProductService _selectProductService;
         private CancellationTokenService _cancellationToken;
+        private ContentPageViewModel _contentPageViewModel;
 
         private List<Year> Years = null;
         public ObservableCollection<Node> Nodes { get; set; }
@@ -52,10 +54,11 @@ namespace Ahed_project.ViewModel
             }
         }
         public ProductsViewModel(SendDataService sendDataService, SelectProductService selectProductService, Logs logs,
-            CancellationTokenService cancellationToken)
+            CancellationTokenService cancellationToken, ContentPageViewModel contentPageViewModel)
         {
             _sendDataService = sendDataService;
             _selectProductService = selectProductService;
+            _contentPageViewModel = contentPageViewModel;
             Nodes = new ObservableCollection<Node>();
             IsProductSelected = false;
             _logs = logs;
@@ -209,6 +212,7 @@ namespace Ahed_project.ViewModel
 
         public ICommand OpenInTubesCommand => new DelegateCommand(() => {
             _selectProductService.SelectProject(SelectedProduct);
+            Application.Current.Dispatcher.BeginInvoke(() => { _contentPageViewModel.ChangePage.Invoke(1); });
         });
         public ICommand OpenInShellCommand => new DelegateCommand(() => {
 

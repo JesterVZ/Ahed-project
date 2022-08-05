@@ -3,6 +3,7 @@ using Ahed_project.Pages;
 using Ahed_project.Services;
 using Ahed_project.Services.EF;
 using Ahed_project.Services.EF.Model;
+using Ahed_project.ViewModel.ContentPageComponents;
 using DevExpress.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -23,10 +24,12 @@ namespace Ahed_project.ViewModel
         private readonly Logs _logs;
         private readonly JsonWebTokenLocal _jwt;
         private readonly CancellationTokenService _cancellationToken;
+        private ContentPageViewModel _contentPageViewModel;
 
-        public LoginPageViewModel(PageService pageService, Logs logs, JsonWebTokenLocal jwt, CancellationTokenService cancellationToken)
+        public LoginPageViewModel(PageService pageService, Logs logs, JsonWebTokenLocal jwt, CancellationTokenService cancellationToken, ContentPageViewModel contentPageViewModel)
         {
             _cancellationToken = cancellationToken;
+            _contentPageViewModel = contentPageViewModel;
             _pageService = pageService;
             _logs = logs;
             _jwt = jwt;
@@ -58,7 +61,7 @@ namespace Ahed_project.ViewModel
             Loading = Visibility.Hidden;
             if (result.Result is User)
             {
-                _pageService.ChangePage(new ContentPage(_logs));
+                _pageService.ChangePage(new ContentPage(_logs, _contentPageViewModel));
             }
             else if (result.Result is Exception || result.Result is string)
             {

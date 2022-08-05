@@ -1,5 +1,6 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.Services;
+using Ahed_project.ViewModel.ContentPageComponents;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,10 +25,12 @@ namespace Ahed_project.Pages
     public partial class ContentPage : Page
     {
         private Logs _logs;
-        public ContentPage(Logs logs)
+        public ContentPage(Logs logs, ContentPageViewModel contentPageViewModel)
         {
             InitializeComponent();
             _logs = logs;
+            this.DataContext = contentPageViewModel;
+            contentPageViewModel.ChangePage += (i) => { Tabs.SelectedIndex = i; };
             PrepareLogs();
         }
         private void PrepareLogs()

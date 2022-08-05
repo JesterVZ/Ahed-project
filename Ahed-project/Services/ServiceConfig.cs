@@ -36,5 +36,6 @@ namespace Ahed_project.Services
         public string GetProjectsLink { get; set; }
         public string GetProductsList { get; set; }
         public string GetProduct { get; set; }
+        public string Calculate { get; set; }
     }
 }

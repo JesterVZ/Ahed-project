@@ -121,7 +121,7 @@
                     </Grid>
                     
                 </TabItem.Header>
-                <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" >
+                <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="927" >
                     <StackPanel DataContext="{Binding ProjectInfo}">
 
                         <Grid>
@@ -685,8 +685,11 @@
                                 </ComboBox>
                                 <TextBox Style="{StaticResource Default}"/>
                                 <ComboBox>
-                                    <ComboBoxItem IsSelected="True" IsEnabled="False">
+                                    <ComboBoxItem IsSelected="True">
                                         <Label>SensibleHeat</Label>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        <Label>Condensation</Label>
                                     </ComboBoxItem>
                                 </ComboBox>
                                 <TextBox Style="{StaticResource Enabled}" Margin="0,3,0,3"/>
@@ -795,8 +798,11 @@
                                 </ComboBox>
                                 <TextBox Style="{StaticResource Default}"/>
                                 <ComboBox>
-                                    <ComboBoxItem IsSelected="True" IsEnabled="False">
+                                    <ComboBoxItem IsSelected="True">
                                         <Label>SensibleHeat</Label>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        <Label>Condensation</Label>
                                     </ComboBoxItem>
                                 </ComboBox>
                                 <StackPanel Orientation="Horizontal" Height="30">
