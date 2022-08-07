@@ -34,7 +34,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 _logs.AddMessage("warning", "Введите описание проекта!");
                 ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
             }
-
+            /*
             if (SingleProductGet != null)
             {
                 if (SingleProductGet.name != null && SingleProductGet.name != string.Empty)
@@ -53,7 +53,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/cancel.svg";
                 return;
             }
-
+            */
         }
     }
 }

@@ -211,13 +211,16 @@ namespace Ahed_project.ViewModel
         });
 
         public ICommand OpenInTubesCommand => new DelegateCommand(() => {
-            _selectProductService.SelectProject(SelectedProduct);
+            _selectProductService.SelectTubesProject(SelectedProduct);
             Application.Current.Dispatcher.BeginInvoke(() => {
                 Application.Current.Resources.Add("PageToGo", 1);
             });
         });
         public ICommand OpenInShellCommand => new DelegateCommand(() => {
-
+            _selectProductService.SelectShellProject(SelectedProduct);
+            Application.Current.Dispatcher.BeginInvoke(() => {
+                Application.Current.Resources.Add("PageToGo", 2);
+            });
         });
         public ICommand NewfluidCommand => new DelegateCommand(() => { });
         public ICommand EditfluidCommand => new DelegateCommand(() => { });

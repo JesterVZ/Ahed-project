@@ -44,7 +44,8 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         public ProjectInfoGet ProjectInfo { get => projectInfo; set => SetValue(ref projectInfo, value); }
 
         private SingleProductGet singleProductGet;
-        public SingleProductGet SingleProductGet { get => singleProductGet; set => SetValue(ref singleProductGet, value); }
+        public SingleProductGet SingleProductGetTubes { get => singleProductGet; set => SetValue(ref singleProductGet, value); }
+        public SingleProductGet SingleProductGetShell { get => singleProductGet; set => SetValue(ref singleProductGet, value); }
         public string ProjectValidationStatusSource { get; set; }
         public string TubesFluidValidationStatusSource { get; set; }
         public string ShellFluidValidationStatusSource { get; set; }
@@ -101,7 +102,8 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 ProjectInfo = project;
                 _windowTitleService.ChangeTitle(project.name);
             };
-            _selectProductService.ProductSelected += (product) => SingleProductGet = product;
+            _selectProductService.ProductTubesSelected += (product) => SingleProductGetTubes = product;
+            _selectProductService.ProductShellSelected += (product) => SingleProductGetShell = product;
             LogCollection = _logs.logs;
             _mapper = mapper;
             _backGroundService = backGroundService;

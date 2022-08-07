@@ -9,7 +9,9 @@ namespace Ahed_project.Services
 {
     public class SelectProductService
     {
-        public event Action<SingleProductGet> ProductSelected;
-        public void SelectProject(SingleProductGet project) => ProductSelected?.Invoke(project);
+        public event Action<SingleProductGet> ProductShellSelected;
+        public event Action<SingleProductGet> ProductTubesSelected;
+        public void SelectShellProject(SingleProductGet project) => ProductShellSelected?.Invoke(project);
+        public void SelectTubesProject(SingleProductGet project) => ProductTubesSelected?.Invoke(project);
     }
 }

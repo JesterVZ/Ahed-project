@@ -304,7 +304,7 @@
                             </ComboBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <StackPanel DataContext="{Binding SingleProductGet}" Width="600" Margin="0 0 50 0">
+                            <StackPanel DataContext="{Binding SingleProductGetTubes}" Width="600" Margin="0 0 50 0">
                                 <TextBlock Text="Tubes fluid" FontWeight="Bold"/>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -399,7 +399,7 @@
                     
                 </TabItem.Header>
                 <ScrollViewer>
-                    <StackPanel DataContext="{Binding SingleProductGet}">
+                    <StackPanel DataContext="{Binding SingleProductGetShell}">
                         <StackPanel.Resources>
                             <Style TargetType="StackPanel" x:Key="Child">
                                 <Setter Property="Width" Value="250"/>
