@@ -43,9 +43,10 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         private ProjectInfoGet projectInfo = new ProjectInfoGet();
         public ProjectInfoGet ProjectInfo { get => projectInfo; set => SetValue(ref projectInfo, value); }
 
-        private SingleProductGet singleProductGet;
-        public SingleProductGet SingleProductGetTubes { get => singleProductGet; set => SetValue(ref singleProductGet, value); }
-        public SingleProductGet SingleProductGetShell { get => singleProductGet; set => SetValue(ref singleProductGet, value); }
+        private SingleProductGet singleProductTubesGet;
+        private SingleProductGet singleProductShellGet;
+        public SingleProductGet SingleProductGetTubes { get => singleProductTubesGet; set => SetValue(ref singleProductTubesGet, value); }
+        public SingleProductGet SingleProductGetShell { get => singleProductShellGet; set => SetValue(ref singleProductShellGet, value); }
         public string ProjectValidationStatusSource { get; set; }
         public string TubesFluidValidationStatusSource { get; set; }
         public string ShellFluidValidationStatusSource { get; set; }
