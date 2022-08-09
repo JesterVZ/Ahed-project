@@ -1,4 +1,5 @@
 ﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.Products.SingleProduct;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Pages;
@@ -39,13 +40,32 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         private CancellationTokenService _cancellationToken;
 
         public ObservableCollection<LoggerMessage> LogCollection { get; set; }
+        public ObservableCollection<Calculation> CalculationCollection { get; set; }
+        private Calculation selectedCalculation;
+        public Calculation SelectedCalculation
+        {
+            get => selectedCalculation;
+            set
+            {
+                selectedCalculation = value;
 
-        private ProjectInfoGet projectInfo = new ProjectInfoGet();
+            }
+        }
+        public string CalculationName { get; set; }
+
+        private ProjectInfoGet projectInfo = new();
         public ProjectInfoGet ProjectInfo { get => projectInfo; set => SetValue(ref projectInfo, value); }
 
         private SingleProductGet singleProductTubesGet;
         private SingleProductGet singleProductShellGet;
-        public SingleProductGet SingleProductGetTubes { get => singleProductTubesGet; set => SetValue(ref singleProductTubesGet, value); }
+        public SingleProductGet SingleProductGetTubes { 
+            get => singleProductTubesGet; 
+            set {
+                SetValue(ref singleProductTubesGet, value);
+                SaveChoose(SelectedCalculation, SingleProductGetTubes, SingleProductGetShell);
+               
+            }
+        }
         public SingleProductGet SingleProductGetShell { get => singleProductShellGet; set => SetValue(ref singleProductShellGet, value); }
         public string ProjectValidationStatusSource { get; set; }
         public string TubesFluidValidationStatusSource { get; set; }
@@ -106,6 +126,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             _selectProductService.ProductTubesSelected += (product) => SingleProductGetTubes = product;
             _selectProductService.ProductShellSelected += (product) => SingleProductGetShell = product;
             LogCollection = _logs.logs;
+            CalculationCollection = new ObservableCollection<Calculation>();
             _mapper = mapper;
             _backGroundService = backGroundService;
 

@@ -16,6 +16,8 @@ namespace Ahed_project.MasterData
         GET_PROJECTS,
         GET_PRODUCTS,
         GET_PRODUCT,
-        CALCULATE
+        CALCULATE,
+        CREATE_CALCULATION,
+        UPDATE_CHOOSE
     }
 }

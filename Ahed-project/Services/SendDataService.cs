@@ -26,7 +26,7 @@ namespace Ahed_project.Services
             _serviceConfig = serviceConfig;
             _logs = logs;
         }
-        public async Task<object> SendToServer(ProjectMethods projectMethod, string body = null, ProjectInfoGet projectInfo = null)
+        public async Task<object> SendToServer(ProjectMethods projectMethod, string body = null, ProjectInfoGet projectInfo = null, string calculation_id = null)
         {
             Headers.TryAdd("Content-Type", "application/json");
             RestResponse response = null;
@@ -128,6 +128,28 @@ namespace Ahed_project.Services
                         break;
                     case ProjectMethods.CALCULATE:
                         restClient = new RestClient(_serviceConfig.Calculate);
+                        break;
+                    case ProjectMethods.CREATE_CALCULATION:
+                        restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectInfo.project_id}/calculation/create");
+                        request = new RestRequest("", Method.Post);
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        if (body != null)
+                            request.AddBody(body);
+                        response = restClient.ExecuteAsync(request).Result;
+                        break;
+                    case ProjectMethods.UPDATE_CHOOSE:
+                        restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectInfo.project_id}/calculation/update/{calculation_id}");
+                        request = new RestRequest("", Method.Post);
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        if (body != null)
+                            request.AddBody(body);
+                        response = restClient.ExecuteAsync(request).Result;
                         break;
                 }
                 if (response.IsSuccessful)

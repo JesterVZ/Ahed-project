@@ -145,8 +145,38 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
         });
 
-        public ICommand CreateCalculationCommand => new DelegateCommand(() => { 
-            
+        public ICommand CreateCalculationCommand => new AsyncCommand(async () => {
+            CalculationSend calculationSend = new CalculationSend
+            {
+                Name = CalculationName
+            };
+            string json = JsonConvert.SerializeObject(calculationSend);
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CREATE_CALCULATION, json, ProjectInfo), _cancellationToken.GetToken());
+            if (response.Result is string)
+            {
+                try
+                {
+                    Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
+                    for (int i = 0; i < result.logs.Count; i++)
+                    {
+                        _logs.AddMessage(result.logs[i].type, result.logs[i].message);
+                    }
+                    CalculationGet calculationGet = JsonConvert.DeserializeObject<CalculationGet>(result.data.ToString());
+                    CalculationCollection.Add(new Calculation
+                    {
+                        calculation_id = calculationGet.calculation_id.ToString(),
+                        name = calculationGet.name.ToString(),
+                    });
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else if (response.Result is Exception)
+            {
+                MessageBox.Show(response.Result.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         });
 
         public ICommand CalculateCommand => new AsyncCommand(async () => {
@@ -154,7 +184,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             {
                 product_id_tube = SingleProductGetTubes.product_id,
                 product_id_shell = SingleProductGetShell.product_id,
-
+                
                 
             };
         });

@@ -1,4 +1,5 @@
 ﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.Products;
 using Ahed_project.MasterData.Products.SingleProduct;
 using Ahed_project.Services;
@@ -211,6 +212,7 @@ namespace Ahed_project.ViewModel
         });
 
         public ICommand OpenInTubesCommand => new DelegateCommand(() => {
+            
             _selectProductService.SelectTubesProject(SelectedProduct);
             Application.Current.Dispatcher.BeginInvoke(() => {
                 Application.Current.Resources.Add("PageToGo", 1);

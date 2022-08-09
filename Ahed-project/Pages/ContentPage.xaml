@@ -191,10 +191,14 @@
                                 <TextBlock Margin="3" Style="{StaticResource DefaultText}" Text="Number of decimals" Grid.Row="6" Grid.Column="2"/>
                                 <TextBox Margin="3" Style="{StaticResource Default}" Text="{Binding number_of_decimals, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="6"/>
                                 <TextBlock Margin="3" Grid.Column="0" Grid.Row="7" FontWeight="Bold">Project Processes</TextBlock>
-                                <TextBox Margin="3" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2"/>
+                                <TextBox Margin="3" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2" DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding CalculationName, UpdateSourceTrigger=PropertyChanged}"/>
                                 <Button Grid.Row="7" Grid.Column="3" Margin="3" DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Command="{Binding CreateCalculationCommand}">Add</Button>
-                                <ListView Margin="3" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3">
-
+                                <ListView Margin="3" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" ItemsSource="{Binding CalculationCollection}" SelectedItem="{Binding SelectedCalculation}" >
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding name}"/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
                                 </ListView>
                                 <StackPanel Margin="3" Orientation="Horizontal" Grid.Column="0" Grid.Row="9">
                                     <TextBlock Grid.ColumnSpan="4" FontWeight="Bold" Margin="0 0 9 0">Advanced Properties</TextBlock>
