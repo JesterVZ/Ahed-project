@@ -145,6 +145,10 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
         });
 
+        public ICommand CreateCalculationCommand => new DelegateCommand(() => { 
+            
+        });
+
         public ICommand CalculateCommand => new AsyncCommand(async () => {
             CalculateSend calculateSend = new CalculateSend
             {

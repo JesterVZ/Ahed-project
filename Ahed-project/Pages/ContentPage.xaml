@@ -192,6 +192,7 @@
                                 <TextBox Margin="3" Style="{StaticResource Default}" Text="{Binding number_of_decimals, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="6"/>
                                 <TextBlock Margin="3" Grid.Column="0" Grid.Row="7" FontWeight="Bold">Project Processes</TextBlock>
                                 <TextBox Margin="3" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2"/>
+                                <Button Grid.Row="7" Grid.Column="3" Margin="3" DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Command="{Binding CreateCalculationCommand}">Add</Button>
                                 <ListView Margin="3" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3">
 
                                 </ListView>
