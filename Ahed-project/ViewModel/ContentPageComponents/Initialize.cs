@@ -154,13 +154,13 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             CalculationCollection = new ObservableCollection<Calculation>();
             TubesProcess = new ObservableCollection<string>
             {
-                "SensibleHeat",
-                "Condensation"
+                "sensible_heat",
+                "condensation"
             };
             ShellProcess = new ObservableCollection<string>
             {
-                "SensibleHeat",
-                "Condensation"
+                "sensible_heat",
+                "condensation"
             };
             _mapper = mapper;
             _backGroundService = backGroundService;
