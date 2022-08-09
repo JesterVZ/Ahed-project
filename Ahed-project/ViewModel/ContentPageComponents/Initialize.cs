@@ -41,6 +41,9 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
         public ObservableCollection<LoggerMessage> LogCollection { get; set; }
         public ObservableCollection<Calculation> CalculationCollection { get; set; }
+        public ObservableCollection<string> TubesProcess { get; set; }
+        public ObservableCollection<string> ShellProcess { get; set; }
+
         private Calculation selectedCalculation;
         public Calculation SelectedCalculation
         {
@@ -52,6 +55,28 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             }
         }
         public string CalculationName { get; set; }
+        private string selectedTubesProcess;
+        public string SelectedTubesProcess
+        {
+            get => selectedTubesProcess;
+            set => SetValue(ref selectedTubesProcess, value);
+        }
+
+        private string selectedShellProcess;
+        public string SelectedShellProcess
+        {
+            get => selectedShellProcess;
+            set => SetValue(ref selectedShellProcess, value);
+        }
+
+        public string FlowTube { get; set; }
+        public string FlowShell { get; set; }
+        public string TemperatureTubeInlet { get; set; }
+        public string TemperatureTubeOutlet { get; set; }
+        public string TemperatureShellInlet { get; set; }
+        public string TemperatureShellOutlet { get; set; }
+        public string PressureTubeInlet { get; set; }
+        public string PressureShellInlet { get; set; }
 
         private ProjectInfoGet projectInfo = new();
         public ProjectInfoGet ProjectInfo { get => projectInfo; set => SetValue(ref projectInfo, value); }
@@ -127,6 +152,16 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             _selectProductService.ProductShellSelected += (product) => SingleProductGetShell = product;
             LogCollection = _logs.logs;
             CalculationCollection = new ObservableCollection<Calculation>();
+            TubesProcess = new ObservableCollection<string>
+            {
+                "SensibleHeat",
+                "Condensation"
+            };
+            ShellProcess = new ObservableCollection<string>
+            {
+                "SensibleHeat",
+                "Condensation"
+            };
             _mapper = mapper;
             _backGroundService = backGroundService;
 

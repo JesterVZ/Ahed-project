@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Ahed_project.ViewModel.ContentPageComponents
 {
@@ -69,7 +70,24 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             };
             string json = JsonConvert.SerializeObject(calculationUpdate);
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, ProjectInfo, calculation.calculation_id), _cancellationToken.GetToken());
-
+            if (response.Result is string)
+            {
+                try
+                {
+                    Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
+                    for (int i = 0; i < result.logs.Count; i++)
+                    {
+                        _logs.AddMessage(result.logs[i].type, result.logs[i].message);
+                    }
+                    _logs.AddMessage("success", "Сохранение выполнено успешно!");
+                    //_windowTitleService.ChangeTitle(ProjectInfo.name);
+                    //Validation();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
     }
 }

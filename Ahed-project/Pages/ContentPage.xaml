@@ -689,22 +689,17 @@
                                     </ComboBoxItem>
                                 </ComboBox>
                                 <TextBox Style="{StaticResource Default}" Text="{Binding name}"/>
-                                <ComboBox>
-                                    <ComboBoxItem IsSelected="True">
-                                        <Label>SensibleHeat</Label>
-                                    </ComboBoxItem>
-                                    <ComboBoxItem>
-                                        <Label>Condensation</Label>
-                                    </ComboBoxItem>
+                                <ComboBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" ItemsSource="{Binding Path=TubesProcess}" SelectedItem="{Binding SelectedTubesProcess, UpdateSourceTrigger=PropertyChanged}">
+                                    
                                 </ComboBox>
-                                <TextBox Style="{StaticResource Enabled}" Margin="0,3,0,3"/>
+                                <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Style="{StaticResource Enabled}" Margin="0,3,0,3" Text="{Binding FlowTube, UpdateSourceTrigger=PropertyChanged}"/>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource SubEnabled}"/>
-                                    <TextBox Style="{StaticResource SubEnabled}" Margin="0,3,0,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Style="{StaticResource SubEnabled}" Text="{Binding TemperatureTubeInlet, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Style="{StaticResource SubEnabled}" Margin="0,3,0,3" Text="{Binding TemperatureTubeOutlet, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                                 <TextBox Style="{StaticResource Default}"/>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource SubEnabled}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Style="{StaticResource SubEnabled}" Text="{Binding PressureTubeInlet, UpdateSourceTrigger=PropertyChanged}"/>
                                     <TextBox Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                                 </StackPanel>
                                 <StackPanel Margin="0,36,0,0" Style="{StaticResource Child}">
@@ -802,27 +797,21 @@
                                     </ComboBoxItem>
                                 </ComboBox>
                                 <TextBox Style="{StaticResource Default}" Text="{Binding name}"/>
-                                <ComboBox>
-                                    <ComboBoxItem IsSelected="True">
-                                        <Label>SensibleHeat</Label>
-                                    </ComboBoxItem>
-                                    <ComboBoxItem>
-                                        <Label>Condensation</Label>
-                                    </ComboBoxItem>
+                                <ComboBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" ItemsSource="{Binding Path=ShellProcess}" SelectedItem="{Binding SelectedShellProcess, UpdateSourceTrigger=PropertyChanged}">
                                 </ComboBox>
                                 <StackPanel Orientation="Horizontal" Height="30">
                                     <RadioButton GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                                    <TextBox Width="235" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}"  Width="235" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding FlowShell, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}" Margin="0,3,0,3" Height="30">
                                     <RadioButton GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                                    <TextBox  Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding TemperatureShellInlet, UpdateSourceTrigger=PropertyChanged}"/>
                                     <RadioButton GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                                    <TextBox Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding TemperatureShellOutlet, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                                 <TextBox Style="{StaticResource Default}"/>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource SubEnabled}" Margin="0,0,3,0"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Style="{StaticResource SubEnabled}" Margin="0,0,3,0" Text="{Binding PressureShellInlet, UpdateSourceTrigger=PropertyChanged}"/>
                                     <TextBox Style="{StaticResource Sub}"/>
                                 </StackPanel>
                                 <StackPanel Margin="0,36,0,0" Style="{StaticResource Child}">

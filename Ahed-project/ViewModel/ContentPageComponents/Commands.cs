@@ -184,8 +184,11 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             {
                 product_id_tube = SingleProductGetTubes.product_id,
                 product_id_shell = SingleProductGetShell.product_id,
-                
-                
+                flow_type = "counter_current",
+                calculate_field = "flow_shell",
+                process_tube = SelectedTubesProcess,
+                process_shell = SelectedShellProcess,
+
             };
         });
     }
