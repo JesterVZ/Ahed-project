@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ahed_project.MasterData.CalculateClasses
 {
-    public class CalculateSendcs
+    public class CalculateSend
     {
         public int product_id_tube { get; set; }
         public int product_id_shell { get; set; }

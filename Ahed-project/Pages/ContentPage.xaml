@@ -527,7 +527,7 @@
                 <ScrollViewer>
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Button x:Name="button" Content="Calculate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Background="#fc6"/>
+                            <Button x:Name="button" Content="Calculate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Background="#fc6" Command="{Binding CalculateCommand}"/>
                             <Button x:Name="button1" Content="Swap Fluids" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="152" Background="#fc6"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
@@ -639,7 +639,7 @@
                                     <Label Style="{StaticResource Right}">%</Label>
                                 </StackPanel>
                             </StackPanel>
-                            <StackPanel>
+                            <StackPanel DataContext="{Binding Path=SingleProductGetTubes}">
                                 <StackPanel.Resources>
                                     <Style TargetType="TextBox" x:Key="Default">
                                         <Setter Property="Height" Value="30"/>
@@ -683,7 +683,7 @@
                                         <Label>--Select Fluid--</Label>
                                     </ComboBoxItem>
                                 </ComboBox>
-                                <TextBox Style="{StaticResource Default}"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding name}"/>
                                 <ComboBox>
                                     <ComboBoxItem IsSelected="True">
                                         <Label>SensibleHeat</Label>
@@ -751,7 +751,7 @@
                                     <TextBox Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                                 </StackPanel>
                             </StackPanel>
-                            <StackPanel Margin="10,0,0,0" HorizontalAlignment="Center">
+                            <StackPanel Margin="10,0,0,0" HorizontalAlignment="Center" DataContext="{Binding Path=SingleProductGetShell}">
                                 <StackPanel.Resources>
                                     <Style TargetType="TextBox" x:Key="Default">
                                         <Setter Property="Height" Value="30"/>
@@ -796,7 +796,7 @@
                                         <Label>--Select Fluid--</Label>
                                     </ComboBoxItem>
                                 </ComboBox>
-                                <TextBox Style="{StaticResource Default}"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding name}"/>
                                 <ComboBox>
                                     <ComboBoxItem IsSelected="True">
                                         <Label>SensibleHeat</Label>

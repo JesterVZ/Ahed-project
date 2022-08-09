@@ -1,4 +1,5 @@
 ﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Pages;
 using Ahed_project.Services.EF;
@@ -144,8 +145,14 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
         });
 
-        public ICommand CalculateCommand => new AsyncCommand(async () => { 
-            
+        public ICommand CalculateCommand => new AsyncCommand(async () => {
+            CalculateSend calculateSend = new CalculateSend
+            {
+                product_id_tube = SingleProductGetTubes.product_id,
+                product_id_shell = SingleProductGetShell.product_id,
+
+                
+            };
         });
     }
 }
