@@ -188,8 +188,42 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 calculate_field = "flow_shell",
                 process_tube = SelectedTubesProcess,
                 process_shell = SelectedShellProcess,
-
+                flow_tube = FlowTube,
+                flow_shell = FlowShell,
+                temperature_tube_inlet = TemperatureTubeInlet,
+                temperature_tube_outlet = TemperatureTubeOutlet,
+                temperature_shell_inlet = TemperatureShellInlet,
+                temperature_shell_outlet = TemperatureShellOutlet,
+                pressure_tube_inlet = PressureTubeInlet,
+                pressure_shell_inlet = PressureShellInlet
             };
+            string json = JsonConvert.SerializeObject(calculateSend);
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE, json, ProjectInfo), _cancellationToken.GetToken());
+            if (response.Result is string)
+            {
+                try
+                {
+                    Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
+                    for (int i = 0; i < result.logs.Count; i++)
+                    {
+                        _logs.AddMessage(result.logs[i].type, result.logs[i].message);
+                    }
+                    CalculationGet calculationGet = JsonConvert.DeserializeObject<CalculationGet>(result.data.ToString());
+                    CalculationCollection.Add(new Calculation
+                    {
+                        calculation_id = calculationGet.calculation_id.ToString(),
+                        name = calculationGet.name.ToString(),
+                    });
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else if (response.Result is Exception)
+            {
+                MessageBox.Show(response.Result.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         });
     }
 }

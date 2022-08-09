@@ -69,7 +69,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 product_id_shell = shell != null ? shell.product_id : 0
             };
             string json = JsonConvert.SerializeObject(calculationUpdate);
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, ProjectInfo, calculation.calculation_id), _cancellationToken.GetToken());
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, ProjectInfo, calculation), _cancellationToken.GetToken());
             if (response.Result is string)
             {
                 try
