@@ -20,7 +20,7 @@ namespace Ahed_project.Services
     {
         private readonly ServiceConfig _serviceConfig;
         private readonly Logs _logs;
-        Dictionary<string,string> Headers = new Dictionary<string, string>();
+        public Dictionary<string,string> Headers = new Dictionary<string, string>();
 
         public SendDataService(ServiceConfig serviceConfig, Logs logs)
         {
@@ -176,6 +176,8 @@ namespace Ahed_project.Services
                     return response.Content;
                 else
                 {
+                    if (projectMethod == ProjectMethods.LOGIN)
+                        return JsonConvert.SerializeObject(new object());
                     Application.Current.Dispatcher.Invoke(() => _logs.AddMessage("Error", $"Excep: {response.ErrorException}, Message: {response.ErrorMessage}, Code: {response.StatusCode}"));
                     return JsonConvert.SerializeObject(new object());
                 }
@@ -193,6 +195,13 @@ namespace Ahed_project.Services
                 Headers["Authorization"] = $"Bearer {token}";
             else
                 Headers.Add("Authorization", $"Bearer {token}");
+        }
+
+        public SendDataService ReturnCopy()
+        {
+            var ret = new SendDataService(_serviceConfig, _logs);
+            ret.Headers = Headers;
+            return ret;
         }
     }
 }

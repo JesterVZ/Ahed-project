@@ -11,17 +11,15 @@ namespace Ahed_project.Services.BackGroundServices
     public class DownLoadProductsService
     {
         private readonly ProductsViewModel _productViewModel;
-        private CancellationTokenService _cancellationToken;
 
-        public DownLoadProductsService(ProductsViewModel productViewModel, CancellationTokenService cancellationToken)
+        public DownLoadProductsService(ProductsViewModel productViewModel)
         {
             _productViewModel = productViewModel;
-            _cancellationToken = cancellationToken;
         }
 
         public void Start()
         {
-            Task task = new Task(DownLoadProducts, _cancellationToken.GetToken());
+            Task task = new Task(DownLoadProducts);
             task.Wait(new TimeSpan(0, 0, 2));
             if (task.IsCanceled)
                 return;

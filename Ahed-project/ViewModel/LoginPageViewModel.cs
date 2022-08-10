@@ -27,10 +27,13 @@ namespace Ahed_project.ViewModel
         private readonly CancellationTokenService _cancellationToken;
         private readonly ChangePageService _changePageService;
         private readonly ContentPageViewModel _contentPageViewModel;
+        private readonly DownLoadProductsService _donwloadProducts;
+        private bool _downloadStarted = false;
 
         public LoginPageViewModel(PageService pageService, Logs logs, JsonWebTokenLocal jwt, CancellationTokenService cancellationToken, ChangePageService changePageService,
-            ContentPageViewModel contentPageViewModel)
+            ContentPageViewModel contentPageViewModel, DownLoadProductsService downLoadProductsService)
         {
+            _donwloadProducts = downLoadProductsService;
             _cancellationToken = cancellationToken;
             _pageService = pageService;
             _changePageService = changePageService;
@@ -65,12 +68,17 @@ namespace Ahed_project.ViewModel
             Loading = Visibility.Hidden;
             if (result.Result is User)
             {
+                if (!_downloadStarted)
+                {
+                    _downloadStarted = true;
+                    _donwloadProducts.Start();
+                }
                 _changePageService.Start();
                 _pageService.ChangePage(new ContentPage(_logs,_contentPageViewModel));
             }
-            else if (result.Result is Exception || result.Result is string)
+            else if (result.Result is null || result.Result is string)
             {
-                MessageBox.Show(result.Result.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Не правильные имя пользователя и/или пароль", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

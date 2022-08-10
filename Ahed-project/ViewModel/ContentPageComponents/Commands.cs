@@ -65,7 +65,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
         public ICommand SelectLastProject => new AsyncCommand(async () =>
         {
-            _backGroundService.Start();
             _logs.AddMessage("Info", "Загрузка последних проектов...");
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PROJECTS, ""), _cancellationToken.GetToken());
             if (response.Result is string)

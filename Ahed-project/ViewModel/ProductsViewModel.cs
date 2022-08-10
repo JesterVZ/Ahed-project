@@ -96,13 +96,13 @@ namespace Ahed_project.ViewModel
                     ProductsDictionary.Add(month.Id, new List<SingleProductGet>());
                     // Закомментил решение на 3 потока, не удалять, в целях быстроты теста ниже сделано на безграничное количество потоков
 #if !DEBUG
-                    await Parallel.ForEachAsync(month.products, new ParallelOptions() { MaxDegreeOfParallelism = 3, CancellationToken = _cancellationToken.GetToken() }, async (x, y) =>
+                    await Parallel.ForEachAsync(month.products, new ParallelOptions() { MaxDegreeOfParallelism = 3 }, async (x, y) =>
                     {
                         if (y.IsCancellationRequested)
                         {
                             return;
                         }
-                        var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT, x.product_id.ToString()), _cancellationToken.GetToken());
+                        var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT, x.product_id.ToString()));
                         SingleProductGet newProduct = JsonConvert.DeserializeObject<SingleProductGet>(response.Result.ToString());
                         ProductsDictionary[month.Id].Add(newProduct);
                     });
@@ -113,7 +113,7 @@ namespace Ahed_project.ViewModel
                         {
                             return;
                         }
-                        var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT, x.product_id.ToString()), _cancellationToken.GetToken());
+                        var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT, x.product_id.ToString()));
                         SingleProductGet newProduct = JsonConvert.DeserializeObject<SingleProductGet>(response.Result.ToString());
                         ProductsDictionary[month.Id].Add(newProduct);
                     });
@@ -129,13 +129,14 @@ namespace Ahed_project.ViewModel
         {
             try
             {
+                var template = _sendDataService.ReturnCopy();
                 Application.Current.Dispatcher.Invoke(() => { _logs.AddMessage("info", "Start loading Products"); });
                 _isProductDownLoaded = false;
-                var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCTS, ""), _cancellationToken.GetToken());
+                var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.GET_PRODUCTS, ""));
                 Years = JsonConvert.DeserializeObject<List<Year>>(response.Result.ToString());
                 await DoNodes();
 #if !DEBUG
-                await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions() { MaxDegreeOfParallelism = 3, CancellationToken = _cancellationToken.GetToken() }, async (x, y) =>
+                await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions() { MaxDegreeOfParallelism = 3 }, async (x, y) =>
                 {
                     if (y.IsCancellationRequested)
                     {
@@ -144,7 +145,7 @@ namespace Ahed_project.ViewModel
                     x.Value.Sort((z, c) => z.product_id.CompareTo(c.product_id));
                 });
 #else
-                await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions() { CancellationToken = _cancellationToken.GetToken() }, async (x, y) =>
+                await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions() { }, async (x, y) =>
                 {
                     if (y.IsCancellationRequested)
                     {

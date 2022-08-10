@@ -32,5 +32,10 @@ namespace Ahed_project.Services.EF.Model
         /// Зайдено или нет
         /// </summary>
         public bool IsActive { get; set; }
+        
+        /// <summary>
+        /// Id последнего проекта
+        /// </summary>
+        public int? LastProjectId { get; set; }
     }
 }

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Ahed_project.Services.EF.Model;
 using System.Threading;
+using System.Windows;
 
 namespace Ahed_project.Services
 {
@@ -40,20 +41,22 @@ namespace Ahed_project.Services
                 UserEF user = null;
                 using (var context = new EFContext())
                 {
-                   user = context.Users.FirstOrDefault(x => x.Password == password && x.Email == email);
+                    user = context.Users.FirstOrDefault(x => x.Password == password && x.Email == email);
                 }
-                    string json = JsonConvert.SerializeObject(new
-                    {
-                        email = email,
-                        pass = password
-                    });
-                    Token token = null;
-                    var login = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.LOGIN, json), _cancellationToken.GetToken());
-                    token = JsonConvert.DeserializeObject<Token>(login.Result.ToString());
-                    _sendDataService.AddHeader(token.token);
-                    var auth = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.AUTH), _cancellationToken.GetToken());
-                    token = JsonConvert.DeserializeObject<Token>(auth.Result.ToString());
-                    _sendDataService.AddHeader(token.token);
+                string json = JsonConvert.SerializeObject(new
+                {
+                    email = email,
+                    pass = password
+                });
+                Token token = null;
+                var login = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.LOGIN, json), _cancellationToken.GetToken());
+                if (!login.Result.ToString().Contains("token"))
+                    return null;
+                token = JsonConvert.DeserializeObject<Token>(login.Result.ToString());
+                _sendDataService.AddHeader(token.token);
+                var auth = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.AUTH), _cancellationToken.GetToken());
+                token = JsonConvert.DeserializeObject<Token>(auth.Result.ToString());
+                _sendDataService.AddHeader(token.token);
                 if (user == null)
                 {
                     using (var context = new EFContext())
@@ -66,6 +69,10 @@ namespace Ahed_project.Services
                         };
                         context.Users.Add(user);
                         context.SaveChanges();
+                        if (!Application.Current.Resources.Contains("UserId"))
+                            Application.Current.Resources.Add("UserId", context.Users.LastOrDefault()?.Id ?? 0);
+                        else
+                            Application.Current.Resources["UserId"] = context.Users.LastOrDefault()?.Id ?? 0;
                     }
                 }
                 else
@@ -77,10 +84,14 @@ namespace Ahed_project.Services
                         context.SaveChanges();
                         context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
                     }
+                    if (!Application.Current.Resources.Contains("UserId"))
+                        Application.Current.Resources.Add("UserId", user.Id);
+                    else
+                        Application.Current.Resources["UserId"] = user.Id;
                 }
-                    return GetUserData(token.token);
-                }
-            catch  (Exception e)
+                return GetUserData(token.token);
+            }
+            catch (Exception e)
             {
                 return null;
             }

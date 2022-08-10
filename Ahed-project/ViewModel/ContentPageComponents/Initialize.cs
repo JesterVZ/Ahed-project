@@ -35,7 +35,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         private readonly WindowTitleService _windowTitleService;
         private readonly SelectProjectService _selectProjectService;
         private readonly SelectProductService _selectProductService;
-        private readonly DownLoadProductsService _backGroundService;
         private readonly IMapper _mapper;
         private CancellationTokenService _cancellationToken;
 
@@ -107,7 +106,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
         public ContentPageViewModel(PageService pageService, WindowService windowService, Logs logs, WindowTitleService windowTitleService,
             SendDataService sendDataService, SelectProjectService selectProjectService, SelectProductService selectProductService, IMapper mapper,
-            DownLoadProductsService backGroundService, CancellationTokenService cancellationToken)
+            CancellationTokenService cancellationToken)
         {
             //инициализация
             ProjectState = new ContentState();
@@ -163,7 +162,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 "condensation"
             };
             _mapper = mapper;
-            _backGroundService = backGroundService;
 
             _cancellationToken = cancellationToken;
         }
