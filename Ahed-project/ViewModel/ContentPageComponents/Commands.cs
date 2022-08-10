@@ -70,6 +70,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PROJECTS, ""), _cancellationToken.GetToken());
             if (response.Result is string)
             {
+                
                 try
                 {
                     Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
@@ -78,6 +79,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     {
                         _selectProjectService.SelectProject(projects.Last());
                         _logs.AddMessage("success", "Загрузка проекта выполнена успешно!");
+                        SelectCalculations();
                     }
                     Validation();
                 }

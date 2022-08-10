@@ -1,9 +1,11 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.Products.SingleProduct;
+using Ahed_project.MasterData.ProjectClasses;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -80,6 +82,29 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                         _logs.AddMessage(result.logs[i].type, result.logs[i].message);
                     }
                     _logs.AddMessage("success", "Сохранение выполнено успешно!");
+                    //_windowTitleService.ChangeTitle(ProjectInfo.name);
+                    //Validation();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+        private async void SelectCalculations()
+        {
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT_CALCULATIONS, null, ProjectInfo), _cancellationToken.GetToken());
+            if (response.Result is string)
+            {
+                try
+                {
+                    Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
+                    CalculationCollection = JsonConvert.DeserializeObject<ObservableCollection<Calculation>>(result.data.ToString());
+                    for (int i = 0; i < result.logs.Count; i++)
+                    {
+                        _logs.AddMessage(result.logs[i].type, result.logs[i].message);
+                    }
+                    _logs.AddMessage("success", "Расчеты получены!");
                     //_windowTitleService.ChangeTitle(ProjectInfo.name);
                     //Validation();
                 }
