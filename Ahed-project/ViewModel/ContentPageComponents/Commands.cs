@@ -69,14 +69,22 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PROJECTS, ""), _cancellationToken.GetToken());
             if (response.Result is string)
             {
-                
+
                 try
                 {
                     Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
                     List<ProjectInfoGet> projects = JsonConvert.DeserializeObject<List<ProjectInfoGet>>(result.data.ToString());
                     if (projects.Count > 0)
                     {
-                        _selectProjectService.SelectProject(projects.Last());
+                        int userId = Convert.ToInt32(Application.Current.Resources["UserId"]);
+                        int id = 0;
+                        using (var context = new EFContext())
+                        {
+                            var user = context.Users.FirstOrDefault(x => x.Id == userId);
+                            id = user.LastProjectId??0;
+                        }
+                        if (id != 0)
+                            _selectProjectService.SelectProject(projects.FirstOrDefault(x => x.project_id == id));
                         _logs.AddMessage("success", "Загрузка проекта выполнена успешно!");
                         SelectCalculations();
                     }

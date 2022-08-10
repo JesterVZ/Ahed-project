@@ -1,6 +1,7 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services;
+using Ahed_project.Services.EF;
 using DevExpress.Mvvm;
 using Newtonsoft.Json;
 using System;
@@ -60,6 +61,15 @@ namespace Ahed_project.ViewModel
 
         public ICommand SelectProject => new DelegateCommand(() => {
             ProjectInfoGet selectefProject = SelectedProject;
+            int userId = Convert.ToInt32(Application.Current.Resources["UserId"]);
+            using (var context = new EFContext())
+            {
+                var user = context.Users.FirstOrDefault(x => x.Id == userId);
+                user.LastProjectId = selectefProject.project_id;
+                context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                context.SaveChanges();
+                context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+            }
             _selectProjectService.SelectProject(selectefProject);
         });
 
