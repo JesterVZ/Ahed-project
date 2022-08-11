@@ -335,10 +335,10 @@
                                 </Grid>
                                 <TabControl>
                                     <TabItem Header="Liquid Phase">
-                                        <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" Height="500" ItemsSource="{Binding props}">
+                                        <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" Height="500" ItemsSource="{Binding props}">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=liquid_phase_temperature}"/>
-                                                <DataGridTextColumn Header="Dens kg/m3" Width="100" Binding="{Binding Path=liquid_phase_dh}"/>
+                                                <DataGridTextColumn Header="Dens kg/m3" Width="100" Binding="{Binding Path=density}"/>
                                                 <DataGridTextColumn Header="Sp.Heat kcal/kg°C"  Binding="{Binding Path=liquid_phase_specific_heat}"/>
                                                 <DataGridTextColumn Header="Th.Cond kcal/mr*hr°C" Binding="{Binding Path=liquid_phase_thermal_conductivity}"/>
                                                 <DataGridTextColumn Header="C.ind.cP" Binding="{Binding Path=liquid_phase_consistency_index}"/>
@@ -375,12 +375,54 @@
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="0" Height="200" Series="{Binding DensKgCollection}" LegendLocation="Right"></lvc:CartesianChart>
-                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="0" Height="200" Series="{Binding SpHeatCollection}" LegendLocation="Right"></lvc:CartesianChart>
-                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="1" Height="200" Series="{Binding ThCondCollection}" LegendLocation="Right"></lvc:CartesianChart>
-                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="1" Height="200" Series="{Binding CIndCollection}" LegendLocation="Right"></lvc:CartesianChart>
-                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="2" Height="200" Series="{Binding FIndCollection}" LegendLocation="Right"></lvc:CartesianChart>
-                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="2" Height="200" Series="{Binding DhCollection}" LegendLocation="Right"></lvc:CartesianChart>
+                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="0" Height="200" Series="{Binding DensKgCollection}">
+                                        <lvc:CartesianChart.AxisX>
+                                            <lvc:Axis Title="Temperature" LabelFormatter="{Binding LabelConverter}"/>
+                                        </lvc:CartesianChart.AxisX>
+                                        <lvc:CartesianChart.AxisY>
+                                            <lvc:Axis Title="Density (kg/m³)" LabelFormatter="{Binding LabelConverter}"/>
+                                        </lvc:CartesianChart.AxisY>
+                                    </lvc:CartesianChart>
+                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="0" Height="200" Series="{Binding SpHeatCollection}" LegendLocation="None">
+                                        <lvc:CartesianChart.AxisX>
+                                            <lvc:Axis Title="Temperature" LabelFormatter="{Binding LabelConverter}"/>
+                                        </lvc:CartesianChart.AxisX>
+                                        <lvc:CartesianChart.AxisY>
+                                            <lvc:Axis Title="Specific Heat (kcal/kg°С)" LabelFormatter="{Binding LabelConverter}"/>
+                                        </lvc:CartesianChart.AxisY>
+                                    </lvc:CartesianChart>
+                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="1" Height="200" Series="{Binding ThCondCollection}" LegendLocation="None">
+                                        <lvc:CartesianChart.AxisX>
+                                            <lvc:Axis Title="Temperature" LabelFormatter="{Binding LabelConverter}"/>
+                                        </lvc:CartesianChart.AxisX>
+                                        <lvc:CartesianChart.AxisY>
+                                            <lvc:Axis Title="Thermal conductivity kcal/m*hr°C" LabelFormatter="{Binding LabelConverter}"/>
+                                        </lvc:CartesianChart.AxisY>
+                                    </lvc:CartesianChart>
+                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="1" Height="200" Series="{Binding CIndCollection}" LegendLocation="None">
+                                        <lvc:CartesianChart.AxisX>
+                                            <lvc:Axis Title="Temperature" LabelFormatter="{Binding LabelConverter}"/>
+                                        </lvc:CartesianChart.AxisX>
+                                        <lvc:CartesianChart.AxisY>
+                                            <lvc:Axis Title="Conductivity index cP" LabelFormatter="{Binding LabelConverter}"/>
+                                        </lvc:CartesianChart.AxisY>
+                                    </lvc:CartesianChart>
+                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="2" Height="200" Series="{Binding FIndCollection}" LegendLocation="None">
+                                        <lvc:CartesianChart.AxisX>
+                                            <lvc:Axis Title="Temperature" LabelFormatter="{Binding LabelConverter}"/>
+                                        </lvc:CartesianChart.AxisX>
+                                        <lvc:CartesianChart.AxisY>
+                                            <lvc:Axis Title="Flow index" ShowLabels="True" LabelFormatter="{Binding LabelConverter}"/>
+                                        </lvc:CartesianChart.AxisY>
+                                    </lvc:CartesianChart>
+                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="2" Height="200" Series="{Binding DhCollection}" LegendLocation="None">
+                                        <lvc:CartesianChart.AxisX>
+                                            <lvc:Axis Title="Temperature" LabelFormatter="{Binding LabelConverter}"/>
+                                        </lvc:CartesianChart.AxisX>
+                                        <lvc:CartesianChart.AxisY>
+                                            <lvc:Axis Title="Latent Heat (kcal/kg)" LabelFormatter="{Binding LabelConverter}"/>
+                                        </lvc:CartesianChart.AxisY>
+                                    </lvc:CartesianChart>
                                 </Grid>
                                 
                             </StackPanel>

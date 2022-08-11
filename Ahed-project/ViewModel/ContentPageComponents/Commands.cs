@@ -189,10 +189,10 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         });
 
         public ICommand CalculateCommand => new AsyncCommand(async () => {
-            CalculateSend calculateSend = new CalculateSend
+            CalculationFull calculateSend = new CalculationFull
             {
-                product_id_tube = SingleProductGetTubes.product_id,
-                product_id_shell = SingleProductGetShell.product_id,
+                product_id_tube = SingleProductGetTubes?.product_id??0,
+                product_id_shell = SingleProductGetShell?.product_id??0,
                 flow_type = "counter_current",
                 calculate_field = "flow_shell",
                 process_tube = SelectedTubesProcess,
@@ -217,12 +217,19 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     {
                         _logs.AddMessage(result.logs[i].type, result.logs[i].message);
                     }
-                    CalculationGet calculationGet = JsonConvert.DeserializeObject<CalculationGet>(result.data.ToString());
+                    CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
+                    calculationGet.calculation_id = -1;
+                    calculationGet.name = "TemplateCalculation";
+                    if (CalculationCollection.FirstOrDefault(x=>x.calculation_id=="-1")==null)
                     CalculationCollection.Add(new Calculation
                     {
                         calculation_id = calculationGet.calculation_id.ToString(),
-                        name = calculationGet.name.ToString(),
+                        name = calculationGet.name,
                     });
+                    var calc = CalculationsInfo.FirstOrDefault(x => x.calculation_id == -1);
+                    if (calc != null)
+                        CalculationsInfo.Remove(calc);
+                    CalculationsInfo.Add(calculationGet);
                 }
                 catch (Exception e)
                 {

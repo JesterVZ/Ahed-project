@@ -42,6 +42,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         public ObservableCollection<Calculation> CalculationCollection { get; set; }
         public ObservableCollection<string> TubesProcess { get; set; }
         public ObservableCollection<string> ShellProcess { get; set; }
+        private List<CalculationFull> CalculationsInfo { get; set; }
 
         private Calculation selectedCalculation;
         public Calculation SelectedCalculation
@@ -50,7 +51,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             set
             {
                 selectedCalculation = value;
-
+                UpdateProjectParamsAccordingToCalculation();
             }
         }
         public string CalculationName { get; set; }
@@ -82,15 +83,28 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
         private SingleProductGet singleProductTubesGet;
         private SingleProductGet singleProductShellGet;
-        public SingleProductGet SingleProductGetTubes { 
-            get => singleProductTubesGet; 
-            set {
+        public SingleProductGet SingleProductGetTubes
+        {
+            get => singleProductTubesGet;
+            set
+            {
                 SetValue(ref singleProductTubesGet, value);
+                if (selectedCalculation!=null&&selectedCalculation?.calculation_id!="0")
                 SaveChoose(SelectedCalculation, SingleProductGetTubes, SingleProductGetShell);
-               
+                CreateTubeCharts();
             }
         }
-        public SingleProductGet SingleProductGetShell { get => singleProductShellGet; set => SetValue(ref singleProductShellGet, value); }
+        public SingleProductGet SingleProductGetShell
+        {
+            get => singleProductShellGet;
+            set
+            {
+                SetValue(ref singleProductShellGet, value);
+                if (selectedCalculation != null && selectedCalculation?.calculation_id != "0")
+                    SaveChoose(SelectedCalculation, SingleProductGetTubes, SingleProductGetShell);
+                CreateShellCharts();
+            }
+        }
         public string ProjectValidationStatusSource { get; set; }
         public string TubesFluidValidationStatusSource { get; set; }
         public string ShellFluidValidationStatusSource { get; set; }
@@ -151,6 +165,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             _selectProductService.ProductShellSelected += (product) => SingleProductGetShell = product;
             LogCollection = _logs.logs;
             CalculationCollection = new ObservableCollection<Calculation>();
+            CalculationsInfo = new List<CalculationFull>();
             TubesProcess = new ObservableCollection<string>
             {
                 "sensible_heat",

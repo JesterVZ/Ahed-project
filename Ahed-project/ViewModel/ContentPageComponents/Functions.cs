@@ -2,6 +2,9 @@
 using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.Products.SingleProduct;
 using Ahed_project.MasterData.ProjectClasses;
+using LiveCharts;
+using LiveCharts.Configurations;
+using LiveCharts.Wpf;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -65,10 +68,15 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
         private async void SaveChoose(Calculation calculation, SingleProductGet tubes, SingleProductGet shell)
         {
+            if (calculation == null||calculation.calculation_id=="-1")
+            {
+                MessageBox.Show("Не выбран рассчет, следует выбрать для внесения данных","Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
             CalculationUpdate calculationUpdate = new()
             {
-                product_id_tube = tubes.product_id,
-                product_id_shell = shell != null ? shell.product_id : 0
+                product_id_tube = tubes?.product_id??0,
+                product_id_shell = shell?.product_id ??0
             };
             string json = JsonConvert.SerializeObject(calculationUpdate);
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, ProjectInfo, calculation), _cancellationToken.GetToken());
@@ -114,5 +122,78 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 }
             }
         }
+
+        private async void UpdateProjectParamsAccordingToCalculation()
+        {
+
+        }
+
+        private void CreateShellCharts()
+        {
+
+        }
+
+        private void CreateTubeCharts()
+        {
+            var config = Mappers.Xy<ChartModel>()
+                  .X(elem => Convert.ToDouble(elem.X))
+                  .Y(elem => Convert.ToDouble(elem.Y));
+            LineSeries lineSeriesDens = new LineSeries(config)
+            {
+                Values = new ChartValues<ChartModel>()
+            };
+            LineSeries lineSeriesSpecificHeat = new LineSeries(config)
+            {
+                Values = new ChartValues<ChartModel>()
+            };
+            LineSeries lineSeriesTh = new LineSeries(config)
+            {
+                Values = new ChartValues<ChartModel>()
+            };
+            LineSeries lineSeriesCInd = new LineSeries(config)
+            {
+                Values = new ChartValues<ChartModel>()
+            };
+            LineSeries lineSeriesFInd = new LineSeries(config)
+            {
+                Values = new ChartValues<ChartModel>()
+            };
+            LineSeries lineSeriesDH = new LineSeries(config)
+            {
+                Values = new ChartValues<ChartModel>()
+            };
+            foreach (var property in SingleProductGetTubes.props)
+            {
+                lineSeriesDens.Values.Add(new ChartModel(property.liquid_phase_temperature,property.density));
+                lineSeriesSpecificHeat.Values.Add(new ChartModel(property.liquid_phase_temperature,property.liquid_phase_specific_heat));
+                lineSeriesTh.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_thermal_conductivity));
+                lineSeriesCInd.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_consistency_index));
+                lineSeriesFInd.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_f_ind));
+                lineSeriesDH.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_dh));
+            }
+            DensKgCollection = new SeriesCollection() { lineSeriesDens };
+            SpHeatCollection = new SeriesCollection() { lineSeriesSpecificHeat };
+            ThCondCollection = new SeriesCollection() { lineSeriesTh };
+            CIndCollection = new SeriesCollection() { lineSeriesCInd };
+            FIndCollection = new SeriesCollection() {lineSeriesFInd };
+            DhCollection = new SeriesCollection() { lineSeriesDH };
+        }
+
+        private class ChartModel
+        {
+            public decimal? X { get; set; }
+            public decimal? Y { get; set; }
+
+            public ChartModel(decimal? x, decimal? y)
+            {
+                X = x;
+                Y = y;
+            }
+        }
+
+        public Func<double, string> LabelConverter = (x) =>
+        {
+            return Math.Round(x,2,MidpointRounding.ToZero).ToString();
+        };
     }
 }
