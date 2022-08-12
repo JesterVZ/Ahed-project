@@ -23,7 +23,7 @@ namespace Ahed_project.MasterData.Products.SingleProduct
         /// Температура в жидкой фазе
         /// </summary>
         public decimal? liquid_phase_temperature { get; set; }
-        public decimal? density { get; set; }
+        public decimal? liquid_phase_density { get; set; }
         public decimal? liquid_phase_specific_heat { get; set; }
         public decimal? liquid_phase_thermal_conductivity { get; set; }
         public decimal? liquid_phase_consistency_index { get; set; }

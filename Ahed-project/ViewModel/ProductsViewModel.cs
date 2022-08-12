@@ -98,21 +98,13 @@ namespace Ahed_project.ViewModel
 #if !DEBUG
                     await Parallel.ForEachAsync(month.products, new ParallelOptions() { MaxDegreeOfParallelism = 3 }, async (x, y) =>
                     {
-                        if (y.IsCancellationRequested)
-                        {
-                            return;
-                        }
                         var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT, x.product_id.ToString()));
                         SingleProductGet newProduct = JsonConvert.DeserializeObject<SingleProductGet>(response.Result.ToString());
                         ProductsDictionary[month.Id].Add(newProduct);
                     });
 #else
-                    await Parallel.ForEachAsync(month.products, new ParallelOptions() { CancellationToken = _cancellationToken.GetToken()}, async (x, y) =>
+                    await Parallel.ForEachAsync(month.products, new ParallelOptions() {}, async (x, y) =>
                     {
-                        if (y.IsCancellationRequested)
-                        {
-                            return;
-                        }
                         var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT, x.product_id.ToString()));
                         SingleProductGet newProduct = JsonConvert.DeserializeObject<SingleProductGet>(response.Result.ToString());
                         ProductsDictionary[month.Id].Add(newProduct);
@@ -138,19 +130,11 @@ namespace Ahed_project.ViewModel
 #if !DEBUG
                 await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions() { MaxDegreeOfParallelism = 3 }, async (x, y) =>
                 {
-                    if (y.IsCancellationRequested)
-                    {
-                        return;
-                    }
                     x.Value.Sort((z, c) => z.product_id.CompareTo(c.product_id));
                 });
 #else
-                await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions() { }, async (x, y) =>
+                await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions() { }, async (x,y) =>
                 {
-                    if (y.IsCancellationRequested)
-                    {
-                        return;
-                    }
                     x.Value?.Sort((z, c) => z.product_id.CompareTo(c.product_id));
                 });
 #endif

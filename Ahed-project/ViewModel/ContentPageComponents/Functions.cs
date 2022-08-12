@@ -164,7 +164,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             };
             foreach (var property in SingleProductGetTubes.props)
             {
-                lineSeriesDens.Values.Add(new ChartModel(property.liquid_phase_temperature,property.density));
+                lineSeriesDens.Values.Add(new ChartModel(property.liquid_phase_temperature,property.liquid_phase_density));
                 lineSeriesSpecificHeat.Values.Add(new ChartModel(property.liquid_phase_temperature,property.liquid_phase_specific_heat));
                 lineSeriesTh.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_thermal_conductivity));
                 lineSeriesCInd.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_consistency_index));
@@ -193,7 +193,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
         public Func<double, string> LabelConverter = (x) =>
         {
-            return Math.Round(x,2,MidpointRounding.ToZero).ToString();
+            return x.ToString("{0.00}");
         };
     }
 }
