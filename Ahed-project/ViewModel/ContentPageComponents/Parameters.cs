@@ -53,7 +53,8 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             set
             {
                 SetValue(ref _singleProductShellGet, value);
-                SelectedCalulationFull.product_id_shell = value?.product_id;
+                if (SelectedCalulationFull != null)
+                    SelectedCalulationFull.product_id_shell = value?.product_id;
                 if (selectedCalculation != null && selectedCalculation?.calculation_id != "0")
                     SaveChoose();
                 CreateShellCharts();
@@ -68,7 +69,8 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             set
             {
                 SetValue(ref _singleProductTubesGet, value);
-                SelectedCalulationFull.product_id_tube = value?.product_id;
+                if (SelectedCalulationFull != null)
+                    SelectedCalulationFull.product_id_tube = value?.product_id;
                 if (selectedCalculation != null && selectedCalculation?.calculation_id != "0")
                     SaveChoose();
                 CreateTubeCharts();
