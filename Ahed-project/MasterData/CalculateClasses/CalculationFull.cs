@@ -2,7 +2,7 @@
 
 namespace Ahed_project.MasterData.CalculateClasses
 {
-    internal class CalculationFull
+    public class CalculationFull
     {
         public int calculation_id { get; set; }
         public int project_id { get; set; }

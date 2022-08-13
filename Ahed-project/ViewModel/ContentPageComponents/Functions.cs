@@ -15,6 +15,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Ahed_project.ViewModel.ContentPageComponents
 {
@@ -66,20 +67,20 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             */
         }
 
-        private async void SaveChoose(Calculation calculation, SingleProductGet tubes, SingleProductGet shell)
+        private async void SaveChoose()
         {
-            if (calculation == null||calculation.calculation_id=="-1")
+            if (SelectedCalulationFull == null|| SelectedCalulationFull.calculation_id==-1)
             {
                 MessageBox.Show("Не выбран рассчет, следует выбрать для внесения данных","Alert", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
             CalculationUpdate calculationUpdate = new()
             {
-                product_id_tube = tubes?.product_id??0,
-                product_id_shell = shell?.product_id ??0
+                product_id_tube = SelectedCalulationFull?.product_id_shell ?? 0,
+                product_id_shell = SelectedCalulationFull?.product_id_shell ?? 0
             };
             string json = JsonConvert.SerializeObject(calculationUpdate);
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, ProjectInfo, calculation), _cancellationToken.GetToken());
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, ProjectInfo, SelectedCalulationFull.calculation_id.ToString()), _cancellationToken.GetToken());
             if (response.Result is string)
             {
                 try
@@ -108,6 +109,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 {
                     Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
                     CalculationCollection = JsonConvert.DeserializeObject<ObservableCollection<Calculation>>(result.data.ToString());
+                    CalculationsInfo = JsonConvert.DeserializeObject<List<CalculationFull>>(result.data.ToString());
                     for (int i = 0; i < result.logs.Count; i++)
                     {
                         _logs.AddMessage(result.logs[i].type, result.logs[i].message);
@@ -125,40 +127,55 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
         private async void UpdateProjectParamsAccordingToCalculation()
         {
-
+            await Task.Factory.StartNew(() =>
+            {
+                while (!Application.Current.Resources.Contains("Products"))
+                {
+                    //Тут waiter можно сделать до прогрузки продуктов
+                }
+                return;
+            });
+            SelectedCalulationFull = CalculationsInfo.FirstOrDefault(x => x.calculation_id.ToString() == SelectedCalculation.calculation_id);
         }
-
-        private void CreateShellCharts()
+        private class ChartModel
         {
+            public decimal? X { get; set; }
+            public decimal? Y { get; set; }
 
+            public ChartModel(decimal? x, decimal? y)
+            {
+                X = x;
+                Y = y;
+            }
         }
 
+        CartesianMapper<ChartModel> ChartsConfig = Mappers.Xy<ChartModel>()
+                  .X(elem => Convert.ToDouble(elem.X))
+                  .Y(elem => Convert.ToDouble(elem.Y))
+                  .Fill(x => Brushes.DarkOrange);
         private void CreateTubeCharts()
         {
-            var config = Mappers.Xy<ChartModel>()
-                  .X(elem => Convert.ToDouble(elem.X))
-                  .Y(elem => Convert.ToDouble(elem.Y));
-            LineSeries lineSeriesDens = new LineSeries(config)
+            LineSeries lineSeriesDens = new LineSeries(ChartsConfig)
             {
                 Values = new ChartValues<ChartModel>()
             };
-            LineSeries lineSeriesSpecificHeat = new LineSeries(config)
+            LineSeries lineSeriesSpecificHeat = new LineSeries(ChartsConfig)
             {
                 Values = new ChartValues<ChartModel>()
             };
-            LineSeries lineSeriesTh = new LineSeries(config)
+            LineSeries lineSeriesTh = new LineSeries(ChartsConfig)
             {
                 Values = new ChartValues<ChartModel>()
             };
-            LineSeries lineSeriesCInd = new LineSeries(config)
+            LineSeries lineSeriesCInd = new LineSeries(ChartsConfig)
             {
                 Values = new ChartValues<ChartModel>()
             };
-            LineSeries lineSeriesFInd = new LineSeries(config)
+            LineSeries lineSeriesFInd = new LineSeries(ChartsConfig)
             {
                 Values = new ChartValues<ChartModel>()
             };
-            LineSeries lineSeriesDH = new LineSeries(config)
+            LineSeries lineSeriesDH = new LineSeries(ChartsConfig)
             {
                 Values = new ChartValues<ChartModel>()
             };
@@ -179,21 +196,14 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             DhCollection = new SeriesCollection() { lineSeriesDH };
         }
 
-        private class ChartModel
+        private void CreateShellCharts()
         {
-            public decimal? X { get; set; }
-            public decimal? Y { get; set; }
 
-            public ChartModel(decimal? x, decimal? y)
-            {
-                X = x;
-                Y = y;
-            }
         }
 
         public Func<double, string> LabelConverter = (x) =>
         {
-            return x.ToString("{0.00}");
+            return Math.Round(x, 2).ToString("0,00");
         };
     }
 }

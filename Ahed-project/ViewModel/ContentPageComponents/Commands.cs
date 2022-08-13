@@ -86,7 +86,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                         if (id != 0)
                             _selectProjectService.SelectProject(projects.FirstOrDefault(x => x.project_id == id));
                         _logs.AddMessage("success", "Загрузка проекта выполнена успешно!");
-                        SelectCalculations();
                     }
                     Validation();
                 }
@@ -195,16 +194,16 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 product_id_shell = SingleProductGetShell?.product_id??0,
                 flow_type = "counter_current",
                 calculate_field = "flow_shell",
-                process_tube = SelectedTubesProcess,
-                process_shell = SelectedShellProcess,
-                flow_tube = FlowTube,
-                flow_shell = FlowShell,
-                temperature_tube_inlet = TemperatureTubeInlet,
-                temperature_tube_outlet = TemperatureTubeOutlet,
-                temperature_shell_inlet = TemperatureShellInlet,
-                temperature_shell_outlet = TemperatureShellOutlet,
-                pressure_tube_inlet = PressureTubeInlet,
-                pressure_shell_inlet = PressureShellInlet
+                process_tube = SelectedCalulationFull.process_tube,
+                process_shell = SelectedCalulationFull.process_shell,
+                flow_tube = SelectedCalulationFull.flow_tube,
+                flow_shell = SelectedCalulationFull.flow_shell,
+                temperature_tube_inlet = SelectedCalulationFull.temperature_tube_inlet,
+                temperature_tube_outlet = SelectedCalulationFull.temperature_tube_outlet,
+                temperature_shell_inlet = SelectedCalulationFull.temperature_shell_inlet,
+                temperature_shell_outlet = SelectedCalulationFull.temperature_shell_outlet,
+                pressure_tube_inlet = SelectedCalulationFull.pressure_tube_inlet,
+                pressure_shell_inlet = SelectedCalulationFull.pressure_shell_inlet
             };
             string json = JsonConvert.SerializeObject(calculateSend);
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE, json, ProjectInfo), _cancellationToken.GetToken());
@@ -230,6 +229,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     if (calc != null)
                         CalculationsInfo.Remove(calc);
                     CalculationsInfo.Add(calculationGet);
+                    SelectedCalulationFull = CalculationsInfo.FirstOrDefault(x => x.calculation_id == -1);
                 }
                 catch (Exception e)
                 {

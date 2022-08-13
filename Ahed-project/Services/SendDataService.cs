@@ -27,7 +27,7 @@ namespace Ahed_project.Services
             _serviceConfig = serviceConfig;
             _logs = logs;
         }
-        public async Task<object> SendToServer(ProjectMethods projectMethod, string body = null, ProjectInfoGet projectInfo = null, Calculation calculation = null)
+        public async Task<object> SendToServer(ProjectMethods projectMethod, string body = null, ProjectInfoGet projectInfo = null, string calculationId = null)
         {
             Headers.TryAdd("Content-Type", "application/json");
             RestResponse response = null;
@@ -150,7 +150,7 @@ namespace Ahed_project.Services
                         response = restClient.ExecuteAsync(request).Result;
                         break;
                     case ProjectMethods.UPDATE_CHOOSE:
-                        restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectInfo.project_id}/calculation/update/{calculation.calculation_id}");
+                        restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectInfo.project_id}/calculation/update/{calculationId}");
                         request = new RestRequest("", Method.Post);
                         foreach (var header in Headers)
                         {

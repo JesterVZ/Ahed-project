@@ -376,6 +376,9 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <lvc:CartesianChart Grid.Column="0" Grid.Row="0" Height="200" Series="{Binding DensKgCollection}">
+                                        <Style TargetType="lvc:LineSeries">
+                                            <Setter Property="Stroke" Value="DarkOrange"/>
+                                        </Style>
                                         <lvc:CartesianChart.AxisX>
                                             <lvc:Axis Title="Temperature" LabelFormatter="{Binding LabelConverter}"/>
                                         </lvc:CartesianChart.AxisX>
@@ -730,67 +733,67 @@
                                         <Label>--Select Fluid--</Label>
                                     </ComboBoxItem>
                                 </ComboBox>
-                                <TextBox Style="{StaticResource Default}" Text="{Binding name}"/>
-                                <ComboBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" ItemsSource="{Binding Path=TubesProcess}" SelectedItem="{Binding SelectedTubesProcess, UpdateSourceTrigger=PropertyChanged}">
+                                <TextBox Style="{StaticResource Default}" DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SingleProductGetTubes.name, UpdateSourceTrigger=PropertyChanged}"/>
+                                <ComboBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" ItemsSource="{Binding Path=TubesProcess}" SelectedItem="{Binding SelectedCalulationFull.process_tube, UpdateSourceTrigger=PropertyChanged}">
                                     
                                 </ComboBox>
-                                <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Style="{StaticResource Enabled}" Margin="0,3,0,3" Text="{Binding FlowTube, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Style="{StaticResource Enabled}" Margin="0,3,0,3" Text="{Binding SelectedCalulationFull.flow_tube, UpdateSourceTrigger=PropertyChanged}"/>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Style="{StaticResource SubEnabled}" Text="{Binding TemperatureTubeInlet, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Style="{StaticResource SubEnabled}" Margin="0,3,0,3" Text="{Binding TemperatureTubeOutlet, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Style="{StaticResource SubEnabled}" Text="{Binding SelectedCalulationFull.temperature_tube_inlet, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Style="{StaticResource SubEnabled}" Margin="0,3,0,3" Text="{Binding SelectedCalulationFull.temperature_tube_outlet, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
-                                <TextBox Style="{StaticResource Default}"/>
+                                <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Style="{StaticResource Default}" Text="{Binding SelectedCalulationFull.duty_tube, UpdateSourceTrigger=PropertyChanged}"/>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Style="{StaticResource SubEnabled}" Text="{Binding PressureTubeInlet, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Style="{StaticResource SubEnabled}" Text="{Binding SelectedCalulationFull.pressure_tube_inlet, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Style="{StaticResource Sub}" Margin="0,3,0,3" Text="{Binding SelectedCalulationFull.pressure_shell_outlet, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                                 <StackPanel Margin="0,36,0,0" Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}"/>
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_density_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_density_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}"/>
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,-3,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_specific_heat_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_specific_heat_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,-3,3"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}"/>
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_thermal_conductivity_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_thermal_conductivity_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}"/>
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_consistency_index_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_consistency_index_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}"/>
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_flow_index_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_flow_index_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}"/>
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_latent_heat_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_latent_heat_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                                 </StackPanel>
                                 <StackPanel Margin="0,36,0,0" Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}"/>
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_density_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_density_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}"/>
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_specific_heat_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_specific_heat_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}"/>
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_thermal_conductivity_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_thermal_conductivity_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}"/>
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_dynamic_viscosity_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_dynamic_viscosity_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}"/>
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_vapour_pressure_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_vapour_pressure_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}"/>
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_mass_vapour_fraction_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_mass_vapour_fraction_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                                 </StackPanel>
                             </StackPanel>
                             <StackPanel Margin="10,0,0,0" HorizontalAlignment="Center" DataContext="{Binding Path=SingleProductGetShell}">
@@ -838,71 +841,71 @@
                                         <Label>--Select Fluid--</Label>
                                     </ComboBoxItem>
                                 </ComboBox>
-                                <TextBox Style="{StaticResource Default}" Text="{Binding name}"/>
-                                <ComboBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" ItemsSource="{Binding Path=ShellProcess}" SelectedItem="{Binding SelectedShellProcess, UpdateSourceTrigger=PropertyChanged}">
+                                <TextBox Style="{StaticResource Default}" DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SingleProductGetShell.name, UpdateSourceTrigger=PropertyChanged}"/>
+                                <ComboBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" ItemsSource="{Binding Path=ShellProcess}" SelectedItem="{Binding SelectedCalulationFull.process_shell, UpdateSourceTrigger=PropertyChanged}">
                                 </ComboBox>
                                 <StackPanel Orientation="Horizontal" Height="30">
                                     <RadioButton GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}"  Width="235" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding FlowShell, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}"  Width="235" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding SelectedCalulationFull.flow_shell, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}" Margin="0,3,0,3" Height="30">
                                     <RadioButton GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding TemperatureShellInlet, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding SelectedCalulationFull.temperature_shell_inlet, UpdateSourceTrigger=PropertyChanged}"/>
                                     <RadioButton GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding TemperatureShellOutlet, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding SelectedCalulationFull.temperature_shell_outlet, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
-                                <TextBox Style="{StaticResource Default}"/>
+                                <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Style="{StaticResource Default}" Text="{Binding SelectedCalulationFull.duty_shell, UpdateSourceTrigger=PropertyChanged}"/>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Style="{StaticResource SubEnabled}" Margin="0,0,3,0" Text="{Binding PressureShellInlet, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <TextBox Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Style="{StaticResource SubEnabled}" Margin="0,0,3,0" Text="{Binding SelectedCalulationFull.pressure_shell_inlet, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Style="{StaticResource Sub}" Text="{Binding SelectedCalulationFull.pressure_shell_outlet, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                                 <StackPanel Margin="0,36,0,0" Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_density_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_density_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_specific_heat_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_specific_heat_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_thermal_conductivity_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_thermal_conductivity_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_consistency_index_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_consistency_index_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_flow_index_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_flow_index_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_latent_heat_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.liquid_latent_heat_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                                 </StackPanel>
                                 <StackPanel Margin="0,36,0,0" Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_density_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_density_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_specific_heat_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_specific_heat_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_thermal_conductivity_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_thermal_conductivity_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_dynamic_viscosity_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_dynamic_viscosity_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_vapour_pressure_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_vapour_pressure_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Style="{StaticResource Sub}"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_mass_vapour_fraction_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                                    <TextBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SelectedCalulationFull.gas_mass_vapour_fraction_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>

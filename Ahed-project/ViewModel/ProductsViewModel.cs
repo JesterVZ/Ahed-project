@@ -139,6 +139,7 @@ namespace Ahed_project.ViewModel
                 });
 #endif
                 _isProductDownLoaded = true;
+                Application.Current.Resources.Add("Products", ProductsDictionary);
                 Application.Current.Dispatcher.Invoke(() => { _logs.AddMessage("info", "End loading Products"); });
                 ProductsBeforeSearch = ProductsDictionary.SelectMany(x => x.Value).ToList();
                 SearchCondition();

@@ -43,81 +43,18 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         public ObservableCollection<string> TubesProcess { get; set; }
         public ObservableCollection<string> ShellProcess { get; set; }
         private List<CalculationFull> CalculationsInfo { get; set; }
-
-        private Calculation selectedCalculation;
-        public Calculation SelectedCalculation
-        {
-            get => selectedCalculation;
-            set
-            {
-                selectedCalculation = value;
-                UpdateProjectParamsAccordingToCalculation();
-            }
-        }
-        public string CalculationName { get; set; }
-        private string selectedTubesProcess;
-        public string SelectedTubesProcess
-        {
-            get => selectedTubesProcess;
-            set => SetValue(ref selectedTubesProcess, value);
-        }
-
-        private string selectedShellProcess;
-        public string SelectedShellProcess
-        {
-            get => selectedShellProcess;
-            set => SetValue(ref selectedShellProcess, value);
-        }
-
-        public string FlowTube { get; set; }
-        public string FlowShell { get; set; }
-        public string TemperatureTubeInlet { get; set; }
-        public string TemperatureTubeOutlet { get; set; }
-        public string TemperatureShellInlet { get; set; }
-        public string TemperatureShellOutlet { get; set; }
-        public string PressureTubeInlet { get; set; }
-        public string PressureShellInlet { get; set; }
-
-        private ProjectInfoGet projectInfo = new();
-        public ProjectInfoGet ProjectInfo { get => projectInfo; set => SetValue(ref projectInfo, value); }
-
-        private SingleProductGet singleProductTubesGet;
-        private SingleProductGet singleProductShellGet;
-        public SingleProductGet SingleProductGetTubes
-        {
-            get => singleProductTubesGet;
-            set
-            {
-                SetValue(ref singleProductTubesGet, value);
-                if (selectedCalculation!=null&&selectedCalculation?.calculation_id!="0")
-                SaveChoose(SelectedCalculation, SingleProductGetTubes, SingleProductGetShell);
-                CreateTubeCharts();
-            }
-        }
-        public SingleProductGet SingleProductGetShell
-        {
-            get => singleProductShellGet;
-            set
-            {
-                SetValue(ref singleProductShellGet, value);
-                if (selectedCalculation != null && selectedCalculation?.calculation_id != "0")
-                    SaveChoose(SelectedCalculation, SingleProductGetTubes, SingleProductGetShell);
-                CreateShellCharts();
-            }
-        }
-        public string ProjectValidationStatusSource { get; set; }
-        public string TubesFluidValidationStatusSource { get; set; }
-        public string ShellFluidValidationStatusSource { get; set; }
-        public string HeatBalanceValidationStatusSource { get; set; }
-        public string GeometryValidationStatusSource { get; set; }
-        public string BafflesValidationStatusSource { get; set; }
-        public string OverallValidationStatusSource { get; set; }
-        public string BatchValidationStatusSource { get; set; }
-        public string GraphsValidationStatusSource { get; set; }
-        public string ReportsValidationStatusSource { get; set; }
-        public string QuoteValidationStatusSource { get; set; }
-        public string ThreeDValidationStatusSource { get; set; }
-
+        public ContentState ProjectState { get; set; }
+        public ContentState TubesFluidState { get; set; }
+        public ContentState ShellFluidState { get; set; }
+        public ContentState HeatBalanceState { get; set; }
+        public ContentState GeometryState { get; set; }
+        public ContentState BafflesState { get; set; }
+        public ContentState OverallCalculationState { get; set; }
+        public ContentState BatchState { get; set; }
+        public ContentState GraphState { get; set; }
+        public ContentState ReportsState { get; set; }
+        public ContentState QuoteState { get; set; }
+        public ContentState ThreeDState { get; set; }
         public ContentPageViewModel(PageService pageService, WindowService windowService, Logs logs, WindowTitleService windowTitleService,
             SendDataService sendDataService, SelectProjectService selectProjectService, SelectProductService selectProductService, IMapper mapper,
             CancellationTokenService cancellationToken)
@@ -160,6 +97,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             {
                 ProjectInfo = project;
                 _windowTitleService.ChangeTitle(project.name);
+                SelectCalculations();
             };
             _selectProductService.ProductTubesSelected += (product) => SingleProductGetTubes = product;
             _selectProductService.ProductShellSelected += (product) => SingleProductGetShell = product;
