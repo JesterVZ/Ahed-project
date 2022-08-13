@@ -376,9 +376,6 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                     <lvc:CartesianChart Grid.Column="0" Grid.Row="0" Height="200" Series="{Binding DensKgCollection}">
-                                        <Style TargetType="lvc:LineSeries">
-                                            <Setter Property="Stroke" Value="DarkOrange"/>
-                                        </Style>
                                         <lvc:CartesianChart.AxisX>
                                             <lvc:Axis Title="Temperature" LabelFormatter="{Binding LabelConverter}"/>
                                         </lvc:CartesianChart.AxisX>
