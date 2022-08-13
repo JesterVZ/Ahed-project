@@ -117,6 +117,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             _mapper = mapper;
 
             _cancellationToken = cancellationToken;
+            SelectedCalulationFull = new CalculationFull();
         }
     }
 }
