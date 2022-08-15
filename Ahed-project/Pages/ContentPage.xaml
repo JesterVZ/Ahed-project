@@ -338,13 +338,12 @@
                                         <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" Height="500" ItemsSource="{Binding props}">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=liquid_phase_temperature}"/>
-                                                <DataGridTextColumn Header="Dens kg/m3" Width="100" Binding="{Binding Path=density}"/>
+                                                <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=liquid_phase_density}"/>
                                                 <DataGridTextColumn Header="Sp.Heat kcal/kg°C"  Binding="{Binding Path=liquid_phase_specific_heat}"/>
                                                 <DataGridTextColumn Header="Th.Cond kcal/mr*hr°C" Binding="{Binding Path=liquid_phase_thermal_conductivity}"/>
                                                 <DataGridTextColumn Header="C.ind.cP" Binding="{Binding Path=liquid_phase_consistency_index}"/>
                                                 <DataGridTextColumn Header="F.ind" Binding="{Binding Path=liquid_phase_f_ind}"/>
                                                 <DataGridTextColumn Header="dH kcal/kg" Binding="{Binding Path=liquid_phase_dh}"/>
-                                                
                                             </DataGrid.Columns>
                                         </DataGrid>
                                     </TabItem>
@@ -352,20 +351,34 @@
                                         <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" Height="500" ItemsSource="{Binding props}">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=gas_phase_temperature}"/>
-                                                <DataGridTextColumn Header="Dens kg/m3" Width="100" Binding="{Binding Path=gas_phase_density}"/>
+                                                <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=gas_phase_density}"/>
                                                 <DataGridTextColumn Header="Sp.Heat kcal/kg°C"  Binding="{Binding Path=gas_phase_specific_heat}"/>
                                                 <DataGridTextColumn Header="Th.Cond kcal/mr*hr°C" Binding="{Binding Path=gas_phase_thermal_conductivity}"/>
-                                                <DataGridTextColumn Header="Dyn Visc" Binding="{Binding Path=gas_phase_dyn_visc_gas}"/>
-                                                <DataGridTextColumn Header="P vap" Binding="{Binding Path=gas_phase_p_vap}"/>
-                                                <DataGridTextColumn Header="Vapour Frac" Binding="{Binding Path=gas_phase_vapour_frac}"/>
-
+                                                <DataGridTextColumn Header="Dyn Visc cP" Binding="{Binding Path=gas_phase_dyn_visc_gas}"/>
+                                                <DataGridTextColumn Header="Vapour pressure bar-a" Binding="{Binding Path=gas_phase_p_vap}"/>
+                                                <DataGridTextColumn Header="Mass Vapour Fraction %" Binding="{Binding Path=gas_phase_vapour_frac}"/>
                                             </DataGrid.Columns>
                                         </DataGrid>
                                     </TabItem>
                                 </TabControl>
                             </StackPanel>
-                            <StackPanel Width="600">
+                            <StackPanel Width="1000">
                                 <Grid>
+                                    <Grid.Resources>
+                                        <Style TargetType="lvc:LineSeries">
+                                            <Setter Property="StrokeThickness" Value="0.5"/>
+                                            <Setter Property="PointGeometrySize" Value="4"/>
+                                        </Style>
+                                        <Style TargetType="lvc:CartesianChart">
+                                            <Setter Property="SeriesColors">
+                                                <Setter.Value>
+                                                    <lvc:ColorsCollection>
+                                                        <Color>DarkOrange</Color>
+                                                    </lvc:ColorsCollection>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Grid.Resources>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
@@ -375,56 +388,13 @@
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="0" Height="200" Series="{Binding DensKgCollection}">
-                                        <lvc:CartesianChart.AxisX>
-                                            <lvc:Axis Title="Temperature" LabelFormatter="{Binding LabelConverter}"/>
-                                        </lvc:CartesianChart.AxisX>
-                                        <lvc:CartesianChart.AxisY>
-                                            <lvc:Axis Title="Density (kg/m³)" LabelFormatter="{Binding LabelConverter}"/>
-                                        </lvc:CartesianChart.AxisY>
-                                    </lvc:CartesianChart>
-                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="0" Height="200" Series="{Binding SpHeatCollection}" LegendLocation="None">
-                                        <lvc:CartesianChart.AxisX>
-                                            <lvc:Axis Title="Temperature" LabelFormatter="{Binding LabelConverter}"/>
-                                        </lvc:CartesianChart.AxisX>
-                                        <lvc:CartesianChart.AxisY>
-                                            <lvc:Axis Title="Specific Heat (kcal/kg°С)" LabelFormatter="{Binding LabelConverter}"/>
-                                        </lvc:CartesianChart.AxisY>
-                                    </lvc:CartesianChart>
-                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="1" Height="200" Series="{Binding ThCondCollection}" LegendLocation="None">
-                                        <lvc:CartesianChart.AxisX>
-                                            <lvc:Axis Title="Temperature" LabelFormatter="{Binding LabelConverter}"/>
-                                        </lvc:CartesianChart.AxisX>
-                                        <lvc:CartesianChart.AxisY>
-                                            <lvc:Axis Title="Thermal conductivity kcal/m*hr°C" LabelFormatter="{Binding LabelConverter}"/>
-                                        </lvc:CartesianChart.AxisY>
-                                    </lvc:CartesianChart>
-                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="1" Height="200" Series="{Binding CIndCollection}" LegendLocation="None">
-                                        <lvc:CartesianChart.AxisX>
-                                            <lvc:Axis Title="Temperature" LabelFormatter="{Binding LabelConverter}"/>
-                                        </lvc:CartesianChart.AxisX>
-                                        <lvc:CartesianChart.AxisY>
-                                            <lvc:Axis Title="Conductivity index cP" LabelFormatter="{Binding LabelConverter}"/>
-                                        </lvc:CartesianChart.AxisY>
-                                    </lvc:CartesianChart>
-                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="2" Height="200" Series="{Binding FIndCollection}" LegendLocation="None">
-                                        <lvc:CartesianChart.AxisX>
-                                            <lvc:Axis Title="Temperature" LabelFormatter="{Binding LabelConverter}"/>
-                                        </lvc:CartesianChart.AxisX>
-                                        <lvc:CartesianChart.AxisY>
-                                            <lvc:Axis Title="Flow index" ShowLabels="True" LabelFormatter="{Binding LabelConverter}"/>
-                                        </lvc:CartesianChart.AxisY>
-                                    </lvc:CartesianChart>
-                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="2" Height="200" Series="{Binding DhCollection}" LegendLocation="None">
-                                        <lvc:CartesianChart.AxisX>
-                                            <lvc:Axis Title="Temperature" LabelFormatter="{Binding LabelConverter}"/>
-                                        </lvc:CartesianChart.AxisX>
-                                        <lvc:CartesianChart.AxisY>
-                                            <lvc:Axis Title="Latent Heat (kcal/kg)" LabelFormatter="{Binding LabelConverter}"/>
-                                        </lvc:CartesianChart.AxisY>
-                                    </lvc:CartesianChart>
+                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="0" Height="200" Series="{Binding FirstChartTube}"/>
+                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="0" Height="200" Series="{Binding SecondChartTube}" LegendLocation="None"/>
+                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="1" Height="200" Series="{Binding ThirdChartTube}" LegendLocation="None"/>
+                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="1" Height="200" Series="{Binding FourthChartTube}" LegendLocation="None"/>
+                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="2" Height="200" Series="{Binding FifthChartTube}" LegendLocation="None"/>
+                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="2" Height="200" Series="{Binding SixthChartTube}" LegendLocation="None"/>
                                 </Grid>
-                                
                             </StackPanel>
                         </StackPanel>
 
@@ -506,13 +476,12 @@
                                         <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" Height="500" ItemsSource="{Binding props}">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=liquid_phase_temperature}"/>
-                                                <DataGridTextColumn Header="Dens kg/m3" Width="100" Binding="{Binding Path=liquid_phase_dh}"/>
+                                                <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=liquid_phase_density}"/>
                                                 <DataGridTextColumn Header="Sp.Heat kcal/kg°C"  Binding="{Binding Path=liquid_phase_specific_heat}"/>
                                                 <DataGridTextColumn Header="Th.Cond kcal/mr*hr°C" Binding="{Binding Path=liquid_phase_thermal_conductivity}"/>
                                                 <DataGridTextColumn Header="C.ind.cP" Binding="{Binding Path=liquid_phase_consistency_index}"/>
                                                 <DataGridTextColumn Header="F.ind" Binding="{Binding Path=liquid_phase_f_ind}"/>
                                                 <DataGridTextColumn Header="dH kcal/kg" Binding="{Binding Path=liquid_phase_dh}"/>
-
                                             </DataGrid.Columns>
                                         </DataGrid>
                                     </TabItem>
@@ -520,20 +489,34 @@
                                         <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" Height="500" ItemsSource="{Binding props}">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=gas_phase_temperature}"/>
-                                                <DataGridTextColumn Header="Dens kg/m3" Width="100" Binding="{Binding Path=gas_phase_density}"/>
+                                                <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=gas_phase_density}"/>
                                                 <DataGridTextColumn Header="Sp.Heat kcal/kg°C"  Binding="{Binding Path=gas_phase_specific_heat}"/>
                                                 <DataGridTextColumn Header="Th.Cond kcal/mr*hr°C" Binding="{Binding Path=gas_phase_thermal_conductivity}"/>
-                                                <DataGridTextColumn Header="Dyn Visc" Binding="{Binding Path=gas_phase_dyn_visc_gas}"/>
-                                                <DataGridTextColumn Header="P vap" Binding="{Binding Path=gas_phase_p_vap}"/>
-                                                <DataGridTextColumn Header="Vapour Frac" Binding="{Binding Path=gas_phase_vapour_frac}"/>
-
+                                                <DataGridTextColumn Header="Dyn Visc cP" Binding="{Binding Path=gas_phase_dyn_visc_gas}"/>
+                                                <DataGridTextColumn Header="Vapour pressure bar-a" Binding="{Binding Path=gas_phase_p_vap}"/>
+                                                <DataGridTextColumn Header="Mass Vapour Fraction %" Binding="{Binding Path=gas_phase_vapour_frac}"/>
                                             </DataGrid.Columns>
                                         </DataGrid>
                                     </TabItem>
                                 </TabControl>
                             </StackPanel>
-                            <StackPanel Width="600">
-                                <Grid>
+                            <StackPanel Width="1000">
+                                <Grid DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}">
+                                    <Grid.Resources>
+                                        <Style TargetType="lvc:LineSeries">
+                                            <Setter Property="StrokeThickness" Value="0.5"/>
+                                            <Setter Property="PointGeometrySize" Value="4"/>
+                                        </Style>
+                                        <Style TargetType="lvc:CartesianChart">
+                                            <Setter Property="SeriesColors">
+                                                <Setter.Value>
+                                                    <lvc:ColorsCollection>
+                                                        <Color>DarkOrange</Color>
+                                                    </lvc:ColorsCollection>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Grid.Resources>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
@@ -543,17 +526,16 @@
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="0" Height="200" Series="{Binding SeriesCollection}" LegendLocation="Right"></lvc:CartesianChart>
-                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="0" Height="200" Series="{Binding SeriesCollection}" LegendLocation="Right"></lvc:CartesianChart>
-                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="1" Height="200" Series="{Binding SeriesCollection}" LegendLocation="Right"></lvc:CartesianChart>
-                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="1" Height="200" Series="{Binding SeriesCollection}" LegendLocation="Right"></lvc:CartesianChart>
-                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="2" Height="200" Series="{Binding SeriesCollection}" LegendLocation="Right"></lvc:CartesianChart>
-                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="2" Height="200" Series="{Binding SeriesCollection}" LegendLocation="Right"></lvc:CartesianChart>
-                                </Grid>
+                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="0" Height="200" Series="{Binding FirstChartShell}" LegendLocation="None"/>
+                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="0" Height="200" Series="{Binding SecondChartShell}" LegendLocation="None"/>
+                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="1" Height="200" Series="{Binding ThirdChartShell}" LegendLocation="None"/>
+                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="1" Height="200" Series="{Binding FourthChartShell}" LegendLocation="None"/>
+                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="2" Height="200" Series="{Binding FifthChartShell}" LegendLocation="None"/>
+                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="2" Height="200" Series="{Binding SixthChartShell}" LegendLocation="None"/>
 
+                                </Grid>
                             </StackPanel>
                         </StackPanel>
-
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

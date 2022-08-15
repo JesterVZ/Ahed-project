@@ -155,50 +155,88 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                   .Fill(x => Brushes.DarkOrange);
         private void CreateTubeCharts()
         {
-            LineSeries lineSeriesDens = new LineSeries(ChartsConfig)
+            LineSeries first = new LineSeries(ChartsConfig)
             {
                 Values = new ChartValues<ChartModel>()
             };
-            LineSeries lineSeriesSpecificHeat = new LineSeries(ChartsConfig)
+            LineSeries second = new LineSeries(ChartsConfig)
             {
                 Values = new ChartValues<ChartModel>()
             };
-            LineSeries lineSeriesTh = new LineSeries(ChartsConfig)
+            LineSeries third = new LineSeries(ChartsConfig)
             {
                 Values = new ChartValues<ChartModel>()
             };
-            LineSeries lineSeriesCInd = new LineSeries(ChartsConfig)
+            LineSeries fourth = new LineSeries(ChartsConfig)
             {
                 Values = new ChartValues<ChartModel>()
             };
-            LineSeries lineSeriesFInd = new LineSeries(ChartsConfig)
+            LineSeries fifth = new LineSeries(ChartsConfig)
             {
                 Values = new ChartValues<ChartModel>()
             };
-            LineSeries lineSeriesDH = new LineSeries(ChartsConfig)
+            LineSeries sixth = new LineSeries(ChartsConfig)
             {
                 Values = new ChartValues<ChartModel>()
             };
             foreach (var property in SingleProductGetTubes.props)
             {
-                lineSeriesDens.Values.Add(new ChartModel(property.liquid_phase_temperature,property.liquid_phase_density));
-                lineSeriesSpecificHeat.Values.Add(new ChartModel(property.liquid_phase_temperature,property.liquid_phase_specific_heat));
-                lineSeriesTh.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_thermal_conductivity));
-                lineSeriesCInd.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_consistency_index));
-                lineSeriesFInd.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_f_ind));
-                lineSeriesDH.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_dh));
+                first.Values.Add(new ChartModel(property.liquid_phase_temperature,property.liquid_phase_density));
+                second.Values.Add(new ChartModel(property.liquid_phase_temperature,property.liquid_phase_specific_heat));
+                third.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_thermal_conductivity));
+                fourth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_consistency_index));
+                fifth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_f_ind));
+                sixth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_dh));
             }
-            DensKgCollection = new SeriesCollection() { lineSeriesDens };
-            SpHeatCollection = new SeriesCollection() { lineSeriesSpecificHeat };
-            ThCondCollection = new SeriesCollection() { lineSeriesTh };
-            CIndCollection = new SeriesCollection() { lineSeriesCInd };
-            FIndCollection = new SeriesCollection() {lineSeriesFInd };
-            DhCollection = new SeriesCollection() { lineSeriesDH };
+            FirstChartTube = new SeriesCollection() { first };
+            SecondChartTube= new SeriesCollection() { second};
+            ThirdChartTube= new SeriesCollection() { third};
+            FourthChartTube= new SeriesCollection() { fourth};
+            FifthChartTube= new SeriesCollection() {fifth};
+            SixthChartTube= new SeriesCollection() { sixth};
         }
 
         private void CreateShellCharts()
         {
-
+            LineSeries first = new LineSeries(ChartsConfig)
+            {
+                Values = new ChartValues<ChartModel>()
+            };
+            LineSeries second = new LineSeries(ChartsConfig)
+            {
+                Values = new ChartValues<ChartModel>()
+            };
+            LineSeries third = new LineSeries(ChartsConfig)
+            {
+                Values = new ChartValues<ChartModel>()
+            };
+            LineSeries fourth = new LineSeries(ChartsConfig)
+            {
+                Values = new ChartValues<ChartModel>()
+            };
+            LineSeries fifth = new LineSeries(ChartsConfig)
+            {
+                Values = new ChartValues<ChartModel>()
+            };
+            LineSeries sixth = new LineSeries(ChartsConfig)
+            {
+                Values = new ChartValues<ChartModel>()
+            };
+            foreach (var property in SingleProductGetTubes.props)
+            {
+                first.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_density));
+                second.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_specific_heat));
+                third.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_thermal_conductivity));
+                fourth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_consistency_index));
+                fifth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_f_ind));
+                sixth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_dh));
+            }
+            FirstChartShell = new SeriesCollection() { first };
+            SecondChartShell = new SeriesCollection() { second };
+            ThirdChartShell = new SeriesCollection() { third };
+            FourthChartShell = new SeriesCollection() { fourth };
+            FifthChartShell = new SeriesCollection() { fifth };
+            SixthChartShell = new SeriesCollection() { sixth };
         }
 
         public Func<double, string> LabelConverter = (x) =>

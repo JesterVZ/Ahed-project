@@ -60,6 +60,15 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 CreateShellCharts();
             }
         }
+        /// <summary>
+        /// Для графика
+        /// </summary>
+        public SeriesCollection FirstChartShell { get; set; }
+        public SeriesCollection SecondChartShell { get; set; }
+        public SeriesCollection ThirdChartShell { get; set; }
+        public SeriesCollection FourthChartShell { get; set; }
+        public SeriesCollection FifthChartShell { get; set; }
+        public SeriesCollection SixthChartShell { get; set; }
         #endregion
         #region Tubes Fluid
         private SingleProductGet _singleProductTubesGet;
@@ -79,12 +88,12 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         /// <summary>
         /// Для графика
         /// </summary>
-        public SeriesCollection DensKgCollection { get; set; }
-        public SeriesCollection SpHeatCollection { get; set; }
-        public SeriesCollection ThCondCollection { get; set; }
-        public SeriesCollection CIndCollection { get; set; }
-        public SeriesCollection FIndCollection { get; set; }
-        public SeriesCollection DhCollection { get; set; }
+        public SeriesCollection FirstChartTube { get; set; }
+        public SeriesCollection SecondChartTube { get; set; }
+        public SeriesCollection ThirdChartTube { get; set; }
+        public SeriesCollection FourthChartTube { get; set; }
+        public SeriesCollection FifthChartTube { get; set; }
+        public SeriesCollection SixthChartTube { get; set; }
         #endregion
         #region Heat Balance
         private CalculationFull _selectedCalculationFull;

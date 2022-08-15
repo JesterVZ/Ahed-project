@@ -188,24 +188,12 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         });
 
         public ICommand CalculateCommand => new AsyncCommand(async () => {
-            CalculationFull calculateSend = new CalculationFull
+            if (SelectedCalulationFull?.project_id == 0)
             {
-                product_id_tube = SingleProductGetTubes?.product_id??0,
-                product_id_shell = SingleProductGetShell?.product_id??0,
-                flow_type = "counter_current",
-                calculate_field = "flow_shell",
-                process_tube = SelectedCalulationFull.process_tube,
-                process_shell = SelectedCalulationFull.process_shell,
-                flow_tube = SelectedCalulationFull.flow_tube,
-                flow_shell = SelectedCalulationFull.flow_shell,
-                temperature_tube_inlet = SelectedCalulationFull.temperature_tube_inlet,
-                temperature_tube_outlet = SelectedCalulationFull.temperature_tube_outlet,
-                temperature_shell_inlet = SelectedCalulationFull.temperature_shell_inlet,
-                temperature_shell_outlet = SelectedCalulationFull.temperature_shell_outlet,
-                pressure_tube_inlet = SelectedCalulationFull.pressure_tube_inlet,
-                pressure_shell_inlet = SelectedCalulationFull.pressure_shell_inlet
-            };
-            string json = JsonConvert.SerializeObject(calculateSend);
+                MessageBox.Show("Выберите рассчет", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            string json = JsonConvert.SerializeObject(SelectedCalulationFull);
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE, json, ProjectInfo), _cancellationToken.GetToken());
             if (response.Result is string)
             {
@@ -216,20 +204,10 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     {
                         _logs.AddMessage(result.logs[i].type, result.logs[i].message);
                     }
-                    CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
-                    calculationGet.calculation_id = -1;
-                    calculationGet.name = "TemplateCalculation";
-                    if (CalculationCollection.FirstOrDefault(x=>x.calculation_id=="-1")==null)
-                    CalculationCollection.Add(new Calculation
-                    {
-                        calculation_id = calculationGet.calculation_id.ToString(),
-                        name = calculationGet.name,
-                    });
-                    var calc = CalculationsInfo.FirstOrDefault(x => x.calculation_id == -1);
-                    if (calc != null)
-                        CalculationsInfo.Remove(calc);
-                    CalculationsInfo.Add(calculationGet);
-                    SelectedCalulationFull = CalculationsInfo.FirstOrDefault(x => x.calculation_id == -1);
+                    //CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
+                    //var index= CalculationsInfo.FindIndex(0,CalculationsInfo.Count,x => x.calculation_id == calculationGet.calculation_id);
+                    //CalculationsInfo[index] = calculationGet;
+                    //SelectedCalulationFull = calculationGet;
                 }
                 catch (Exception e)
                 {
