@@ -204,10 +204,12 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     {
                         _logs.AddMessage(result.logs[i].type, result.logs[i].message);
                     }
-                    //CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
-                    //var index= CalculationsInfo.FindIndex(0,CalculationsInfo.Count,x => x.calculation_id == calculationGet.calculation_id);
-                    //CalculationsInfo[index] = calculationGet;
-                    //SelectedCalulationFull = calculationGet;
+                    CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
+                    calculationGet.calculation_id = SelectedCalulationFull.calculation_id;
+                    calculationGet.project_id = SelectedCalulationFull.project_id;
+                    var index= CalculationsInfo.FindIndex(0,CalculationsInfo.Count,x => x.calculation_id == SelectedCalulationFull.calculation_id);
+                    CalculationsInfo[index] = calculationGet;
+                    SelectedCalulationFull = calculationGet;
                 }
                 catch (Exception e)
                 {
@@ -219,5 +221,16 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 MessageBox.Show(response.Result.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         });
+
+        public ICommand CreateShellChartsCommand => new DelegateCommand(() =>
+        {
+            CreateShellCharts();
+        });
+
+        public ICommand CreateTubeChartsCommand => new DelegateCommand(() =>
+        {
+            CreateTubeCharts();
+        });
+
     }
 }

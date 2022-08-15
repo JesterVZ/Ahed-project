@@ -333,9 +333,9 @@
                                     <TextBlock Text="Saturated" Grid.Column="0" Grid.Row="3"/>
                                     <CheckBox  Margin="3" Grid.Column="2" Grid.Row="3"/>
                                 </Grid>
-                                <TabControl>
+                                <TabControl DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" SelectedIndex="{Binding TubePhaseIndex, UpdateSourceTrigger=PropertyChanged}">
                                     <TabItem Header="Liquid Phase">
-                                        <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" Height="500" ItemsSource="{Binding props}">
+                                        <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" Height="500" ItemsSource="{Binding SingleProductGetTubes.props}">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=liquid_phase_temperature}"/>
                                                 <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=liquid_phase_density}"/>
@@ -348,7 +348,7 @@
                                         </DataGrid>
                                     </TabItem>
                                     <TabItem Header="Gas Phase">
-                                        <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" Height="500" ItemsSource="{Binding props}">
+                                        <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" Height="500" ItemsSource="{Binding SingleProductGetTubes.props}">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=gas_phase_temperature}"/>
                                                 <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=gas_phase_density}"/>
@@ -388,12 +388,12 @@
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="0" Height="200" Series="{Binding FirstChartTube}"/>
-                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="0" Height="200" Series="{Binding SecondChartTube}" LegendLocation="None"/>
-                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="1" Height="200" Series="{Binding ThirdChartTube}" LegendLocation="None"/>
-                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="1" Height="200" Series="{Binding FourthChartTube}" LegendLocation="None"/>
-                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="2" Height="200" Series="{Binding FifthChartTube}" LegendLocation="None"/>
-                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="2" Height="200" Series="{Binding SixthChartTube}" LegendLocation="None"/>
+                                    <lvc:CartesianChart x:Name="FirstChartTubes" Grid.Column="0" Grid.Row="0" Height="200" Series="{Binding FirstChartTube}" LegendLocation="None"/>
+                                    <lvc:CartesianChart x:Name="SecondChartTubes" Grid.Column="1" Grid.Row="0" Height="200" Series="{Binding SecondChartTube}" LegendLocation="None"/>
+                                    <lvc:CartesianChart x:Name="ThirdChartTubes" Grid.Column="0" Grid.Row="1" Height="200" Series="{Binding ThirdChartTube}" LegendLocation="None"/>
+                                    <lvc:CartesianChart x:Name="FourthChartTubes" Grid.Column="1" Grid.Row="1" Height="200" Series="{Binding FourthChartTube}" LegendLocation="None"/>
+                                    <lvc:CartesianChart x:Name="FifthChartTubes" Grid.Column="0" Grid.Row="2" Height="200" Series="{Binding FifthChartTube}" LegendLocation="None"/>
+                                    <lvc:CartesianChart x:Name="SixthChartTubes" Grid.Column="1" Grid.Row="2" Height="200" Series="{Binding SixthChartTube}" LegendLocation="None"/>
                                 </Grid>
                             </StackPanel>
                         </StackPanel>
@@ -471,9 +471,9 @@
                                     <TextBlock Text="Saturated" Grid.Column="0" Grid.Row="3"/>
                                     <CheckBox  Margin="3" Grid.Column="2" Grid.Row="3"/>
                                 </Grid>
-                                <TabControl>
+                                <TabControl DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" SelectedIndex="{Binding ShellPhaseIndex, UpdateSourceTrigger=PropertyChanged}">
                                     <TabItem Header="Liquid Phase">
-                                        <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" Height="500" ItemsSource="{Binding props}">
+                                        <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" Height="500" ItemsSource="{Binding SingleProductGetShell.props}">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=liquid_phase_temperature}"/>
                                                 <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=liquid_phase_density}"/>
@@ -486,7 +486,7 @@
                                         </DataGrid>
                                     </TabItem>
                                     <TabItem Header="Gas Phase">
-                                        <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" Height="500" ItemsSource="{Binding props}">
+                                        <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" Height="500" ItemsSource="{Binding SingleProductGetShell.props}">
                                             <DataGrid.Columns>
                                                 <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=gas_phase_temperature}"/>
                                                 <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=gas_phase_density}"/>
@@ -526,12 +526,12 @@
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="0" Height="200" Series="{Binding FirstChartShell}" LegendLocation="None"/>
-                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="0" Height="200" Series="{Binding SecondChartShell}" LegendLocation="None"/>
-                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="1" Height="200" Series="{Binding ThirdChartShell}" LegendLocation="None"/>
-                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="1" Height="200" Series="{Binding FourthChartShell}" LegendLocation="None"/>
-                                    <lvc:CartesianChart Grid.Column="0" Grid.Row="2" Height="200" Series="{Binding FifthChartShell}" LegendLocation="None"/>
-                                    <lvc:CartesianChart Grid.Column="1" Grid.Row="2" Height="200" Series="{Binding SixthChartShell}" LegendLocation="None"/>
+                                    <lvc:CartesianChart x:Name="FirstChartShell" Grid.Column="0" Grid.Row="0" Height="200" Series="{Binding FirstChartShell}" LegendLocation="None"/>
+                                    <lvc:CartesianChart x:Name="SecondChartShell" Grid.Column="1" Grid.Row="0" Height="200" Series="{Binding SecondChartShell}" LegendLocation="None"/>
+                                    <lvc:CartesianChart x:Name="ThirdChartShell" Grid.Column="0" Grid.Row="1" Height="200" Series="{Binding ThirdChartShell}" LegendLocation="None"/>
+                                    <lvc:CartesianChart x:Name="FourthChartShell" Grid.Column="1" Grid.Row="1" Height="200" Series="{Binding FourthChartShell}" LegendLocation="None"/>
+                                    <lvc:CartesianChart x:Name="FifthChartShell" Grid.Column="0" Grid.Row="2" Height="200" Series="{Binding FifthChartShell}" LegendLocation="None"/>
+                                    <lvc:CartesianChart x:Name="SixthChartShell" Grid.Column="1" Grid.Row="2" Height="200" Series="{Binding SixthChartShell}" LegendLocation="None"/>
 
                                 </Grid>
                             </StackPanel>

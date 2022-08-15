@@ -6,6 +6,7 @@ using LiveCharts;
 using LiveCharts.Configurations;
 using LiveCharts.Wpf;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -69,9 +71,9 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
         private async void SaveChoose()
         {
-            if (SelectedCalulationFull == null|| SelectedCalulationFull.calculation_id==-1)
+            if (SelectedCalulationFull == null || SelectedCalulationFull.calculation_id == -1)
             {
-                MessageBox.Show("Не выбран рассчет, следует выбрать для внесения данных","Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Не выбран рассчет, следует выбрать для внесения данных", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
             CalculationUpdate calculationUpdate = new()
@@ -155,6 +157,13 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                   .Fill(x => Brushes.DarkOrange);
         private void CreateTubeCharts()
         {
+            if (SingleProductGetTubes == null) return;
+            FirstChartShell?.Clear();
+            SecondChartShell?.Clear();
+            ThirdChartShell?.Clear();
+            FourthChartShell?.Clear();
+            FifthChartShell?.Clear();
+            SixthChartShell?.Clear();
             LineSeries first = new LineSeries(ChartsConfig)
             {
                 Values = new ChartValues<ChartModel>()
@@ -179,25 +188,64 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             {
                 Values = new ChartValues<ChartModel>()
             };
-            foreach (var property in SingleProductGetTubes.props)
+            Dictionary<int, Tuple<double, double>> values = new Dictionary<int, Tuple<double, double>>();
+            if (TubePhaseIndex == 0)
             {
-                first.Values.Add(new ChartModel(property.liquid_phase_temperature,property.liquid_phase_density));
-                second.Values.Add(new ChartModel(property.liquid_phase_temperature,property.liquid_phase_specific_heat));
-                third.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_thermal_conductivity));
-                fourth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_consistency_index));
-                fifth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_f_ind));
-                sixth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_dh));
+                foreach (var property in SingleProductGetTubes?.props)
+                {
+                    first.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_density));
+                    second.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_specific_heat));
+                    third.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_thermal_conductivity));
+                    fourth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_consistency_index));
+                    fifth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_f_ind));
+                    sixth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_dh));
+                }
+            }
+            else
+            {
+                foreach (var property in SingleProductGetTubes?.props)
+                {
+                    first.Values.Add(new ChartModel(property.liquid_phase_temperature, property.gas_phase_density));
+                    second.Values.Add(new ChartModel(property.liquid_phase_temperature, property.gas_phase_specific_heat));
+                    third.Values.Add(new ChartModel(property.liquid_phase_temperature, property.gas_phase_thermal_conductivity));
+                    fourth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.gas_phase_dyn_visc_gas));
+                    fifth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.gas_phase_p_vap));
+                    sixth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.gas_phase_vapour_frac));
+                }
+            }
+            if (SingleProductGetTubes?.props?.Count > 0)
+            {
+                var elements = first.Values.AsQueryable().Cast<ChartModel>().Select(x => x.Y).OrderBy(x => x).ToList();
+                values.Add(1, new Tuple<double, double>(0, (double)(elements?.Max() ?? 0) + 0.1));
+                elements = second.Values.AsQueryable().Cast<ChartModel>().Select(x => x.Y).ToList();
+                values.Add(2, new Tuple<double, double>(0, (double)(elements?.Max() ?? 0) + 0.1));
+                elements = third.Values.AsQueryable().Cast<ChartModel>().Select(x => x.Y).ToList();
+                values.Add(3, new Tuple<double, double>(0, (double)(elements?.Max() ?? 0) + 0.1));
+                elements = fourth.Values.AsQueryable().Cast<ChartModel>().Select(x => x.Y).ToList();
+                values.Add(4, new Tuple<double, double>(0, (double)(elements?.Max() ?? 0) + 0.1));
+                elements = fifth.Values.AsQueryable().Cast<ChartModel>().Select(x => x.Y).ToList();
+                values.Add(5, new Tuple<double, double>(0, (double)(elements?.Max() ?? 0) + 0.1));
+                elements = sixth.Values.AsQueryable().Cast<ChartModel>().Select(x => x.Y).ToList();
+                values.Add(6, new Tuple<double, double>(0, (double)(elements?.Max() ?? 0) + 0.1));
+                SetNamesTubes(ShellPhaseIndex, values);
             }
             FirstChartTube = new SeriesCollection() { first };
-            SecondChartTube= new SeriesCollection() { second};
-            ThirdChartTube= new SeriesCollection() { third};
-            FourthChartTube= new SeriesCollection() { fourth};
-            FifthChartTube= new SeriesCollection() {fifth};
-            SixthChartTube= new SeriesCollection() { sixth};
+            SecondChartTube = new SeriesCollection() { second };
+            ThirdChartTube = new SeriesCollection() { third };
+            FourthChartTube = new SeriesCollection() { fourth };
+            FifthChartTube = new SeriesCollection() { fifth };
+            SixthChartTube = new SeriesCollection() { sixth };
         }
 
         private void CreateShellCharts()
         {
+            if (SingleProductGetShell == null) return;
+            FirstChartShell?.Clear();
+            SecondChartShell?.Clear();
+            ThirdChartShell?.Clear();
+            FourthChartShell?.Clear();
+            FifthChartShell?.Clear();
+            SixthChartShell?.Clear();
             LineSeries first = new LineSeries(ChartsConfig)
             {
                 Values = new ChartValues<ChartModel>()
@@ -222,14 +270,46 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             {
                 Values = new ChartValues<ChartModel>()
             };
-            foreach (var property in SingleProductGetTubes.props)
+            Dictionary<int, Tuple<double, double>> values = new Dictionary<int, Tuple<double, double>>();
+            if (ShellPhaseIndex == 0)
             {
-                first.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_density));
-                second.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_specific_heat));
-                third.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_thermal_conductivity));
-                fourth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_consistency_index));
-                fifth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_f_ind));
-                sixth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_dh));
+                foreach (var property in SingleProductGetShell?.props)
+                {
+                    first.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_density));
+                    second.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_specific_heat));
+                    third.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_thermal_conductivity));
+                    fourth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_consistency_index));
+                    fifth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_f_ind));
+                    sixth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.liquid_phase_dh));
+                }
+            }
+            else
+            {
+                foreach (var property in SingleProductGetShell?.props)
+                {
+                    first.Values.Add(new ChartModel(property.liquid_phase_temperature, property.gas_phase_density));
+                    second.Values.Add(new ChartModel(property.liquid_phase_temperature, property.gas_phase_specific_heat));
+                    third.Values.Add(new ChartModel(property.liquid_phase_temperature, property.gas_phase_thermal_conductivity));
+                    fourth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.gas_phase_dyn_visc_gas));
+                    fifth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.gas_phase_p_vap));
+                    sixth.Values.Add(new ChartModel(property.liquid_phase_temperature, property.gas_phase_vapour_frac));
+                }
+            }
+            if (SingleProductGetShell?.props?.Count > 0)
+            {
+                var elements = first.Values.AsQueryable().Cast<ChartModel>().Select(x => x.Y).OrderBy(x=>x).ToList();
+                values.Add(1, new Tuple<double, double>(0, (double)(elements?.Max() ?? 0) + 0.1));
+                elements = second.Values.AsQueryable().Cast<ChartModel>().Select(x => x.Y).ToList();
+                values.Add(2, new Tuple<double, double>(0, (double)(elements?.Max() ?? 0) + 0.1));
+                elements = third.Values.AsQueryable().Cast<ChartModel>().Select(x => x.Y).ToList();
+                values.Add(3, new Tuple<double, double>(0, (double)(elements?.Max() ?? 0) + 0.1));
+                elements = fourth.Values.AsQueryable().Cast<ChartModel>().Select(x => x.Y).ToList();
+                values.Add(4, new Tuple<double, double>(0, (double)(elements?.Max()??0)+0.1));
+                elements = fifth.Values.AsQueryable().Cast<ChartModel>().Select(x => x.Y).ToList();
+                values.Add(5, new Tuple<double, double>(0, (double)(elements?.Max()??0)+0.1));
+                elements = sixth.Values.AsQueryable().Cast<ChartModel>().Select(x => x.Y).ToList();
+                values.Add(6, new Tuple<double, double>(0, (double)(elements?.Max()??0)+0.1));
+                SetNamesShell(ShellPhaseIndex, values);
             }
             FirstChartShell = new SeriesCollection() { first };
             SecondChartShell = new SeriesCollection() { second };
@@ -238,10 +318,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             FifthChartShell = new SeriesCollection() { fifth };
             SixthChartShell = new SeriesCollection() { sixth };
         }
-
-        public Func<double, string> LabelConverter = (x) =>
-        {
-            return Math.Round(x, 2).ToString("0,00");
-        };
+        public Action<int, Dictionary<int, Tuple<double,double>>> SetNamesShell;
+        public Action<int, Dictionary<int, Tuple<double, double>>> SetNamesTubes;
     }
 }

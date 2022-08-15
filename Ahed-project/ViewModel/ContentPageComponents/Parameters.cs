@@ -69,6 +69,18 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         public SeriesCollection FourthChartShell { get; set; }
         public SeriesCollection FifthChartShell { get; set; }
         public SeriesCollection SixthChartShell { get; set; }
+
+        private int _shellPhaseIndex;
+        public int ShellPhaseIndex
+        {
+            get => _shellPhaseIndex;
+            set
+            {
+                _shellPhaseIndex = value;
+                CreateShellCharts();
+            }
+        }
+
         #endregion
         #region Tubes Fluid
         private SingleProductGet _singleProductTubesGet;
@@ -94,6 +106,17 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         public SeriesCollection FourthChartTube { get; set; }
         public SeriesCollection FifthChartTube { get; set; }
         public SeriesCollection SixthChartTube { get; set; }
+
+        private int _tubePhaseIndex;
+        public int TubePhaseIndex
+        {
+            get => _tubePhaseIndex;
+            set
+            {
+                _tubePhaseIndex = value;
+                CreateTubeCharts();
+            }
+        }
         #endregion
         #region Heat Balance
         private CalculationFull _selectedCalculationFull;
