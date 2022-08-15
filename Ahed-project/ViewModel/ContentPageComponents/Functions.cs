@@ -227,7 +227,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 values.Add(5, new Tuple<double, double>(0, (double)(elements?.Max() ?? 0) + 0.1));
                 elements = sixth.Values.AsQueryable().Cast<ChartModel>().Select(x => x.Y).ToList();
                 values.Add(6, new Tuple<double, double>(0, (double)(elements?.Max() ?? 0) + 0.1));
-                SetNamesTubes(ShellPhaseIndex, values);
+                SetNamesTubes(TubePhaseIndex, values);
             }
             FirstChartTube = new SeriesCollection() { first };
             SecondChartTube = new SeriesCollection() { second };
