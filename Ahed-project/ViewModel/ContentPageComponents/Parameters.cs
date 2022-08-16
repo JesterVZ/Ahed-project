@@ -125,8 +125,10 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             {
                 _selectedCalculationFull = value;
                 var products = ((Dictionary<string, List<SingleProductGet>>)Application.Current.Resources["Products"]).SelectMany(x => x.Value);
-                SingleProductGetShell = products.FirstOrDefault(x => x.product_id == _selectedCalculationFull?.product_id_shell);
-                SingleProductGetTubes = products.FirstOrDefault(x => x.product_id == _selectedCalculationFull?.product_id_tube);
+                if (SingleProductGetShell.product_id!=_selectedCalculationFull.product_id_shell)
+                    SingleProductGetShell = products.FirstOrDefault(x => x.product_id == _selectedCalculationFull?.product_id_shell);
+                if (SingleProductGetTubes.product_id != _selectedCalculationFull.product_id_tube)
+                    SingleProductGetTubes = products.FirstOrDefault(x => x.product_id == _selectedCalculationFull?.product_id_tube);
             } 
         }
         #endregion
