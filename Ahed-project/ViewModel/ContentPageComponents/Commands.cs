@@ -188,7 +188,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         });
 
         public ICommand CalculateCommand => new AsyncCommand(async () => {
-            CalculationFull calculateSend = new CalculationFull
+            CalcuationSendJson calculateSend = new CalcuationSendJson
             {
                 product_id_tube = SingleProductGetTubes?.product_id??0,
                 product_id_shell = SingleProductGetShell?.product_id??0,
