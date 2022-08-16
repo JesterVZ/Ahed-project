@@ -70,9 +70,9 @@ namespace Ahed_project.Services
                         context.Users.Add(user);
                         context.SaveChanges();
                         if (!Application.Current.Resources.Contains("UserId"))
-                            Application.Current.Resources.Add("UserId", context.Users.LastOrDefault()?.Id ?? 0);
+                            Application.Current.Resources.Add("UserId", context.Users.ToList().LastOrDefault()?.Id ?? 0);
                         else
-                            Application.Current.Resources["UserId"] = context.Users.LastOrDefault()?.Id ?? 0;
+                            Application.Current.Resources["UserId"] = context.Users.ToList().LastOrDefault()?.Id ?? 0;
                     }
                 }
                 else
