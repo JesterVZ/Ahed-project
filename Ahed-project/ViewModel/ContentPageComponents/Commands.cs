@@ -193,7 +193,24 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 MessageBox.Show("Выберите рассчет", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-            string json = JsonConvert.SerializeObject(SelectedCalulationFull);
+            CalculationSendCalc calculateSend = new CalculationSendCalc
+            {
+                product_id_tube = SingleProductGetTubes?.product_id ?? 0,
+                product_id_shell = SingleProductGetShell?.product_id ?? 0,
+                flow_type = "counter_current",
+                calculate_field = "flow_shell",
+                process_tube = SelectedCalulationFull.process_tube,
+                process_shell = SelectedCalulationFull.process_shell,
+                flow_tube = SelectedCalulationFull.flow_tube,
+                flow_shell = SelectedCalulationFull.flow_shell,
+                temperature_tube_inlet = SelectedCalulationFull.temperature_tube_inlet,
+                temperature_tube_outlet = SelectedCalulationFull.temperature_tube_outlet,
+                temperature_shell_inlet = SelectedCalulationFull.temperature_shell_inlet,
+                temperature_shell_outlet = SelectedCalulationFull.temperature_shell_outlet,
+                pressure_tube_inlet = SelectedCalulationFull.pressure_tube_inlet,
+                pressure_shell_inlet = SelectedCalulationFull.pressure_shell_inlet
+            };
+            string json = JsonConvert.SerializeObject(calculateSend);
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE, json, ProjectInfo), _cancellationToken.GetToken());
             if (response.Result is string)
             {
