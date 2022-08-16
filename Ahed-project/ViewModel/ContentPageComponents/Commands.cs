@@ -217,16 +217,19 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 try
                 {
                     Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
-                    for (int i = 0; i < result.logs.Count; i++)
+                    if (result?.logs != null)
                     {
-                        _logs.AddMessage(result.logs[i].type, result.logs[i].message);
+                        for (int i = 0; i < result.logs.Count; i++)
+                        {
+                            _logs.AddMessage(result.logs[i].type, result.logs[i].message);
+                        }
+                        CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
+                        calculationGet.calculation_id = SelectedCalulationFull.calculation_id;
+                        calculationGet.project_id = SelectedCalulationFull.project_id;
+                        var index = CalculationsInfo.FindIndex(0, CalculationsInfo.Count, x => x.calculation_id == SelectedCalulationFull.calculation_id);
+                        CalculationsInfo[index] = calculationGet;
+                        SelectedCalulationFull = calculationGet;
                     }
-                    CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
-                    calculationGet.calculation_id = SelectedCalulationFull.calculation_id;
-                    calculationGet.project_id = SelectedCalulationFull.project_id;
-                    var index= CalculationsInfo.FindIndex(0,CalculationsInfo.Count,x => x.calculation_id == SelectedCalulationFull.calculation_id);
-                    CalculationsInfo[index] = calculationGet;
-                    SelectedCalulationFull = calculationGet;
                 }
                 catch (Exception e)
                 {
