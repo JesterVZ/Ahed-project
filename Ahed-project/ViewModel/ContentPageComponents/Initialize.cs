@@ -40,8 +40,8 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
         public ObservableCollection<LoggerMessage> LogCollection { get; set; }
         public ObservableCollection<Calculation> CalculationCollection { get; set; }
-        public ObservableCollection<string> TubesProcess { get; set; }
-        public ObservableCollection<string> ShellProcess { get; set; }
+        public Dictionary<string, Process> TubesProcess { get; set; }
+        public Dictionary<string, Process> ShellProcess { get; set; }
         private List<CalculationFull> CalculationsInfo { get; set; }
         public ContentState ProjectState { get; set; }
         public ContentState TubesFluidState { get; set; }
@@ -104,16 +104,13 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             LogCollection = _logs.logs;
             CalculationCollection = new ObservableCollection<Calculation>();
             CalculationsInfo = new List<CalculationFull>();
-            TubesProcess = new ObservableCollection<string>
-            {
-                "sensible_heat",
-                "condensation"
-            };
-            ShellProcess = new ObservableCollection<string>
-            {
-                "sensible_heat",
-                "condensation"
-            };
+            TubesProcess = new Dictionary<string, Process>();
+            ShellProcess = new Dictionary<string, Process>();
+            TubesProcess.Add("sensible_heat", new Process { Name = "SensibleHeat" });
+            TubesProcess.Add("condensation", new Process { Name = "Condensation" });
+            ShellProcess.Add("sensible_heat", new Process { Name = "SensibleHeat" });
+            ShellProcess.Add("condensation", new Process { Name = "Condensation" });
+
             _mapper = mapper;
 
             _cancellationToken = cancellationToken;

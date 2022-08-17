@@ -202,10 +202,6 @@
                                 </ListView>
                                 <StackPanel Margin="3" Orientation="Horizontal" Grid.Column="0" Grid.Row="9">
                                     <TextBlock Grid.ColumnSpan="4" FontWeight="Bold" Margin="0 0 9 0">Advanced Properties</TextBlock>
-                                    <Button Width="15" Height="15">
-
-                                        <materialDesign:PackIcon Kind="ChevronDown"/>
-                                    </Button>
                                 </StackPanel>
 
                                 <Grid Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="4">
@@ -713,8 +709,12 @@
                                     </ComboBoxItem>
                                 </ComboBox>
                                 <TextBox Style="{StaticResource Default}" DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SingleProductGetTubes.name, UpdateSourceTrigger=PropertyChanged}"/>
-                                <ComboBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" ItemsSource="{Binding Path=TubesProcess}" SelectedItem="{Binding SelectedCalulationFull.process_tube, UpdateSourceTrigger=PropertyChanged}">
-                                    
+                                <ComboBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" ItemsSource="{Binding Path=TubesProcess.Values}" SelectedItem="{Binding SelectedCalulationFull.process_tube, UpdateSourceTrigger=PropertyChanged}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Path=Name}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
                                 </ComboBox>
                                 <TextBox Style="{StaticResource Enabled}" Margin="0,3,0,3" Text="{Binding flow_tube, UpdateSourceTrigger=PropertyChanged}"/>
                                 <StackPanel Style="{StaticResource Child}">
@@ -821,7 +821,12 @@
                                     </ComboBoxItem>
                                 </ComboBox>
                                 <TextBox Style="{StaticResource Default}" DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SingleProductGetShell.name, UpdateSourceTrigger=PropertyChanged}"/>
-                                <ComboBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" ItemsSource="{Binding Path=ShellProcess}" SelectedItem="{Binding SelectedCalulationFull.process_shell, UpdateSourceTrigger=PropertyChanged}">
+                                <ComboBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" ItemsSource="{Binding Path=ShellProcess.Values}" SelectedItem="{Binding SelectedCalulationFull.process_shell, UpdateSourceTrigger=PropertyChanged}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Path=Name}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
                                 </ComboBox>
                                 <StackPanel Orientation="Horizontal" Height="30">
                                     <RadioButton GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
