@@ -78,8 +78,8 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             }
             CalculationUpdate calculationUpdate = new()
             {
-                product_id_tube = SelectedCalulationFull?.product_id_shell ?? 0,
-                product_id_shell = SelectedCalulationFull?.product_id_shell ?? 0
+                product_id_tube = SingleProductGetTubes?.product_id ?? 0,
+                product_id_shell = SingleProductGetShell?.product_id ?? 0,
             };
             string json = JsonConvert.SerializeObject(calculationUpdate);
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, ProjectInfo, SelectedCalulationFull.calculation_id.ToString()), _cancellationToken.GetToken());
@@ -137,7 +137,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 }
                 return;
             });
-            SelectedCalulationFull = CalculationsInfo.FirstOrDefault(x => x.calculation_id.ToString() == SelectedCalculation.calculation_id);
+            SelectedCalulationFull = CalculationsInfo.FirstOrDefault(x => x.calculation_id.ToString() == SelectedCalculation?.calculation_id);
         }
         private class ChartModel
         {
