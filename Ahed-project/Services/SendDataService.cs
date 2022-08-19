@@ -19,15 +19,13 @@ namespace Ahed_project.Services
     public class SendDataService
     {
         private readonly ServiceConfig _serviceConfig;
-        private readonly Logs _logs;
         public Dictionary<string,string> Headers = new Dictionary<string, string>();
 
-        public SendDataService(ServiceConfig serviceConfig, Logs logs)
+        public SendDataService(ServiceConfig serviceConfig)
         {
             _serviceConfig = serviceConfig;
-            _logs = logs;
         }
-        public async Task<object> SendToServer(ProjectMethods projectMethod, string body = null, ProjectInfoGet projectInfo = null, string calculationId = null)
+        public string SendToServer(ProjectMethods projectMethod, string body = null, ProjectInfoGet projectInfo = null, string calculationId = null)
         {
             Headers.TryAdd("Content-Type", "application/json");
             RestResponse response = null;
@@ -178,13 +176,13 @@ namespace Ahed_project.Services
                 {
                     if (projectMethod == ProjectMethods.LOGIN)
                         return JsonConvert.SerializeObject(new object());
-                    Application.Current.Dispatcher.Invoke(() => _logs.AddMessage("Error", $"Excep: {response.ErrorException}, Message: {response.ErrorMessage}, Code: {response.StatusCode}"));
+                    Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Error", $"Excep: {response.ErrorException}, Message: {response.ErrorMessage}, Code: {response.StatusCode}")));
                     return JsonConvert.SerializeObject(new object());
                 }
             }
             catch (Exception e)
             {
-                Application.Current.Dispatcher.Invoke(() => _logs.AddMessage("Error", $"{e.Message} in: {e.Source}"));
+                Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Error", $"Excep: {response.ErrorException}, Message: {response.ErrorMessage}, Code: {response.StatusCode}")));
                 return JsonConvert.SerializeObject(new object());
             }
         }
@@ -199,7 +197,7 @@ namespace Ahed_project.Services
 
         public SendDataService ReturnCopy()
         {
-            var ret = new SendDataService(_serviceConfig, _logs);
+            var ret = new SendDataService(_serviceConfig);
             ret.Headers = Headers;
             return ret;
         }

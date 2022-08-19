@@ -2,6 +2,7 @@
 using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Pages;
+using Ahed_project.Services;
 using Ahed_project.Services.EF;
 using Ahed_project.Windows;
 using DevExpress.Mvvm;
@@ -65,79 +66,37 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
         public ICommand SelectLastProject => new AsyncCommand(async () =>
         {
-            _logs.AddMessage("Info", "Загрузка последних проектов...");
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PROJECTS, ""), _cancellationToken.GetToken());
-            if (response.Result is string)
-            {
-
-                try
-                {
-                    Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
-                    List<ProjectInfoGet> projects = JsonConvert.DeserializeObject<List<ProjectInfoGet>>(result.data.ToString());
-                    if (projects.Count > 0)
-                    {
-                        int userId = Convert.ToInt32(Application.Current.Resources["UserId"]);
-                        int id = 0;
-                        using (var context = new EFContext())
-                        {
-                            var user = context.Users.FirstOrDefault(x => x.Id == userId);
-                            id = user.LastProjectId??0;
-                        }
-                        if (id != 0)
-                            _selectProjectService.SelectProject(projects.FirstOrDefault(x => x.project_id == id));
-                        _logs.AddMessage("success", "Загрузка проекта выполнена успешно!");
-                    }
-                    Validation();
-                }
-                catch (Exception e)
-                {
-                    _logs.AddMessage("Error", e.Message.ToString());
-                }
-            }
-            else if (response.Result is Exception)
-            {
-                _logs.AddMessage("Error", response.Result.ToString());
-            }
+            Validation();
         });
 
         public ICommand SaveComand => new AsyncCommand(async () =>
         {
-            _logs.AddMessage("Info", "Идет сохранение проекта...");
+            GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Идет сохранение проекта..."));
             var projectInfoSend = _mapper.Map<ProjectInfoSend>(ProjectInfo);
             string json = JsonConvert.SerializeObject(projectInfoSend);
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE, json, ProjectInfo), _cancellationToken.GetToken());
-            if (response.Result is string)
+            Responce result = JsonConvert.DeserializeObject<Responce>(response);
+            for (int i = 0; i < result.logs.Count; i++)
             {
-                try
-                {
-                    Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
-                    for (int i = 0; i < result.logs.Count; i++)
-                    {
-                        _logs.AddMessage(result.logs[i].type, result.logs[i].message);
-                    }
-                    _logs.AddMessage("success", "Сохранение выполнено успешно!");
-                    _windowTitleService.ChangeTitle(ProjectInfo.name);
-                    Validation();
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message));
             }
+            GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Сохранение выполнено успешно!"));
+            _windowTitleService.ChangeTitle(ProjectInfo.name);
+            Validation();
         });
 
         public ICommand NewProjectCommand => new AsyncCommand(async () =>
         {
-            _logs.AddMessage("Info", "Начало создания проекта...");
+            GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Начало создания проекта..."));
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CREATE, ""), _cancellationToken.GetToken());
-            if (response.Result is string)
+            if (response != null)
             {
                 try
                 {
-                    Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
+                    Responce result = JsonConvert.DeserializeObject<Responce>(response);
                     for (int i = 0; i < result.logs.Count; i++)
                     {
-                        _logs.AddMessage(result.logs[i].type, result.logs[i].message);
+                        GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message));
                     }
                 }
                 catch (Exception e)
@@ -145,49 +104,31 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            else if (response.Result is Exception)
-            {
-                MessageBox.Show(response.Result.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-
-
         });
 
-        public ICommand CreateCalculationCommand => new AsyncCommand(async () => {
+        public ICommand CreateCalculationCommand => new AsyncCommand(async () =>
+        {
             CalculationSend calculationSend = new CalculationSend
             {
                 Name = CalculationName
             };
             string json = JsonConvert.SerializeObject(calculationSend);
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CREATE_CALCULATION, json, ProjectInfo), _cancellationToken.GetToken());
-            if (response.Result is string)
+            Responce result = JsonConvert.DeserializeObject<Responce>(response);
+            for (int i = 0; i < result.logs.Count; i++)
             {
-                try
-                {
-                    Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
-                    for (int i = 0; i < result.logs.Count; i++)
-                    {
-                        _logs.AddMessage(result.logs[i].type, result.logs[i].message);
-                    }
-                    CalculationGet calculationGet = JsonConvert.DeserializeObject<CalculationGet>(result.data.ToString());
-                    CalculationCollection.Add(new Calculation
-                    {
-                        calculation_id = calculationGet.calculation_id.ToString(),
-                        name = calculationGet.name.ToString(),
-                    });
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message));
             }
-            else if (response.Result is Exception)
+            CalculationGet calculationGet = JsonConvert.DeserializeObject<CalculationGet>(result.data.ToString());
+            CalculationCollection.Add(new Calculation
             {
-                MessageBox.Show(response.Result.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+                calculation_id = calculationGet.calculation_id.ToString(),
+                name = calculationGet.name.ToString(),
+            });
         });
 
-        public ICommand CalculateCommand => new AsyncCommand(async () => {
+        public ICommand CalculateCommand => new AsyncCommand(async () =>
+        {
             if (SelectedCalulationFull?.project_id == 0)
             {
                 MessageBox.Show("Выберите рассчет", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -212,33 +153,19 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             };
             string json = JsonConvert.SerializeObject(calculateSend);
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE, json, ProjectInfo), _cancellationToken.GetToken());
-            if (response.Result is string)
+            Responce result = JsonConvert.DeserializeObject<Responce>(response);
+            if (result?.logs != null)
             {
-                try
+                for (int i = 0; i < result.logs.Count; i++)
                 {
-                    Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
-                    if (result?.logs != null)
-                    {
-                        for (int i = 0; i < result.logs.Count; i++)
-                        {
-                            _logs.AddMessage(result.logs[i].type, result.logs[i].message);
-                        }
-                        CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
-                        calculationGet.calculation_id = SelectedCalulationFull.calculation_id;
-                        calculationGet.project_id = SelectedCalulationFull.project_id;
-                        var index = CalculationsInfo.FindIndex(0, CalculationsInfo.Count, x => x.calculation_id == SelectedCalulationFull.calculation_id);
-                        CalculationsInfo[index] = calculationGet;
-                        SelectedCalulationFull = calculationGet;
-                    }
+                    GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message));
                 }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-            else if (response.Result is Exception)
-            {
-                MessageBox.Show(response.Result.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
+                calculationGet.calculation_id = SelectedCalulationFull.calculation_id;
+                calculationGet.project_id = SelectedCalulationFull.project_id;
+                var index = CalculationsInfo.FindIndex(0, CalculationsInfo.Count, x => x.calculation_id == SelectedCalulationFull.calculation_id);
+                CalculationsInfo[index] = calculationGet;
+                SelectedCalulationFull = calculationGet;
             }
         });
 

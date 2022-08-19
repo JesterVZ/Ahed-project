@@ -4,7 +4,6 @@ using Ahed_project.MasterData.Products.SingleProduct;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Pages;
 using Ahed_project.Services;
-using Ahed_project.Services.BackGroundServices;
 using Ahed_project.Services.EF;
 using Ahed_project.Windows;
 using AutoMapper;
@@ -30,7 +29,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
     {
         private readonly PageService _pageService;
         private readonly WindowService _windowServise;
-        private readonly Logs _logs;
         private readonly SendDataService _sendDataService;
         private readonly WindowTitleService _windowTitleService;
         private readonly SelectProjectService _selectProjectService;
@@ -38,7 +36,13 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         private readonly IMapper _mapper;
         private CancellationTokenService _cancellationToken;
 
-        public ObservableCollection<LoggerMessage> LogCollection { get; set; }
+        public ObservableCollection<LoggerMessage> LogCollection
+        {
+            get
+            {
+                return new ObservableCollection<LoggerMessage>(GlobalDataCollectorService.Logs);
+            }
+        }
         public ObservableCollection<Calculation> CalculationCollection { get; set; }
         public ObservableCollection<string> TubesProcess { get; set; }
         public ObservableCollection<string> ShellProcess { get; set; }
@@ -55,7 +59,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         public ContentState ReportsState { get; set; }
         public ContentState QuoteState { get; set; }
         public ContentState ThreeDState { get; set; }
-        public ContentPageViewModel(PageService pageService, WindowService windowService, Logs logs, WindowTitleService windowTitleService,
+        public ContentPageViewModel(PageService pageService, WindowService windowService, WindowTitleService windowTitleService,
             SendDataService sendDataService, SelectProjectService selectProjectService, SelectProductService selectProductService, IMapper mapper,
             CancellationTokenService cancellationToken)
         {
@@ -88,7 +92,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
             _pageService = pageService;
             _windowServise = windowService;
-            _logs = logs;
             _sendDataService = sendDataService;
             _selectProjectService = selectProjectService;
             _selectProductService = selectProductService;
@@ -101,7 +104,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             };
             _selectProductService.ProductTubesSelected += (product) => SingleProductGetTubes = product;
             _selectProductService.ProductShellSelected += (product) => SingleProductGetShell = product;
-            LogCollection = _logs.logs;
             CalculationCollection = new ObservableCollection<Calculation>();
             CalculationsInfo = new List<CalculationFull>();
             TubesProcess = new ObservableCollection<string>

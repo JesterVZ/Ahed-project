@@ -2,6 +2,8 @@
 using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.Products.SingleProduct;
 using Ahed_project.MasterData.ProjectClasses;
+using Ahed_project.Services;
+using DevExpress.Internal.WinApi.Windows.UI.Notifications;
 using LiveCharts;
 using LiveCharts.Configurations;
 using LiveCharts.Wpf;
@@ -32,7 +34,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             }
             else
             {
-                _logs.AddMessage("Error", "Введите имя проекта!");
+                GlobalDataCollectorService.Logs.Add(new LoggerMessage("Error", "Введите имя проекта!"));
                 ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/cancel.svg";
                 return;
             }
@@ -44,7 +46,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             }
             else
             {
-                _logs.AddMessage("warning", "Введите описание проекта!");
+                GlobalDataCollectorService.Logs.Add(new LoggerMessage("warning", "Введите описание проекта!"));
                 ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
             }
             /*
@@ -83,40 +85,30 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             };
             string json = JsonConvert.SerializeObject(calculationUpdate);
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, ProjectInfo, SelectedCalulationFull.calculation_id.ToString()), _cancellationToken.GetToken());
-            if (response.Result is string)
+            Responce result = JsonConvert.DeserializeObject<Responce>(response);
+            for (int i = 0; i < result.logs.Count; i++)
             {
-                try
-                {
-                    Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
-                    for (int i = 0; i < result.logs.Count; i++)
-                    {
-                        _logs.AddMessage(result.logs[i].type, result.logs[i].message);
-                    }
-                    _logs.AddMessage("success", "Сохранение выполнено успешно!");
-                    //_windowTitleService.ChangeTitle(ProjectInfo.name);
-                    //Validation();
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message));
             }
+            GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Сохранение выполнено успешно!"));
+            //_windowTitleService.ChangeTitle(ProjectInfo.name);
+            //Validation();
         }
         private async void SelectCalculations()
         {
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT_CALCULATIONS, null, ProjectInfo), _cancellationToken.GetToken());
-            if (response.Result is string)
+            if (response != null)
             {
                 try
                 {
-                    Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
+                    Responce result = JsonConvert.DeserializeObject<Responce>(response);
                     CalculationCollection = JsonConvert.DeserializeObject<ObservableCollection<Calculation>>(result.data.ToString());
                     CalculationsInfo = JsonConvert.DeserializeObject<List<CalculationFull>>(result.data.ToString());
                     for (int i = 0; i < result.logs.Count; i++)
                     {
-                        _logs.AddMessage(result.logs[i].type, result.logs[i].message);
+                        GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message));
                     }
-                    _logs.AddMessage("success", "Расчеты получены!");
+                    GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Расчеты получены!"));
                     //_windowTitleService.ChangeTitle(ProjectInfo.name);
                     //Validation();
                 }

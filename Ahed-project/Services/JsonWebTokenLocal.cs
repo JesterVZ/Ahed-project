@@ -50,12 +50,12 @@ namespace Ahed_project.Services
                 });
                 Token token = null;
                 var login = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.LOGIN, json), _cancellationToken.GetToken());
-                if (!login.Result.ToString().Contains("token"))
+                if (!login.Contains("token"))
                     return null;
-                token = JsonConvert.DeserializeObject<Token>(login.Result.ToString());
+                token = JsonConvert.DeserializeObject<Token>(login);
                 _sendDataService.AddHeader(token.token);
                 var auth = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.AUTH), _cancellationToken.GetToken());
-                token = JsonConvert.DeserializeObject<Token>(auth.Result.ToString());
+                token = JsonConvert.DeserializeObject<Token>(auth);
                 _sendDataService.AddHeader(token.token);
                 if (user == null)
                 {
@@ -69,10 +69,7 @@ namespace Ahed_project.Services
                         };
                         context.Users.Add(user);
                         context.SaveChanges();
-                        if (!Application.Current.Resources.Contains("UserId"))
-                            Application.Current.Resources.Add("UserId", context.Users.ToList().LastOrDefault()?.Id ?? 0);
-                        else
-                            Application.Current.Resources["UserId"] = context.Users.ToList().LastOrDefault()?.Id ?? 0;
+                        GlobalDataCollectorService.UserId = context.Users.ToList().LastOrDefault().Id;
                     }
                 }
                 else
@@ -84,10 +81,7 @@ namespace Ahed_project.Services
                         context.SaveChanges();
                         context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
                     }
-                    if (!Application.Current.Resources.Contains("UserId"))
-                        Application.Current.Resources.Add("UserId", user.Id);
-                    else
-                        Application.Current.Resources["UserId"] = user.Id;
+                    GlobalDataCollectorService.UserId = user.Id;
                 }
                 return GetUserData(token.token);
             }

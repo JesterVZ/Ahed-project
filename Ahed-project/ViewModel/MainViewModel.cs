@@ -18,7 +18,7 @@ namespace Ahed_project.ViewModel
         public Page PageSource { get; set; }
         public string Title { get; set; }
 
-        public MainViewModel(PageService pageService, Logs logs, WindowTitleService windowTitleService)
+        public MainViewModel(PageService pageService, WindowTitleService windowTitleService)
         {
             _pageService = pageService;
             _windowTitleService = windowTitleService;

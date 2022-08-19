@@ -1,19 +1,10 @@
 ﻿using Ahed_project.MasterData;
-using Ahed_project.MasterData.CalculateClasses;
-using Ahed_project.MasterData.Products;
 using Ahed_project.MasterData.Products.SingleProduct;
 using Ahed_project.Services;
-using Ahed_project.ViewModel.ContentPageComponents;
 using DevExpress.Mvvm;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -21,19 +12,28 @@ namespace Ahed_project.ViewModel
 {
     public class ProductsViewModel : BindableBase
     {
-        private readonly SendDataService _sendDataService;
         private readonly SelectProductService _selectProductService;
-        private CancellationTokenService _cancellationToken;
-        //private ContentPageViewModel _contentPageViewModel;
 
-        private List<Year> Years = null;
-        public ObservableCollection<Node> Nodes { get; set; }
+        public static ObservableCollection<Node> Nodes
+        {
+            get => GlobalDataCollectorService.Nodes;
+        }
         public ObservableCollection<SingleProductGet> Products { get; set; }
-        private List<SingleProductGet> ProductsBeforeSearch = new List<SingleProductGet>();
-        public Dictionary<string, List<SingleProductGet>> ProductsDictionary = new Dictionary<string, List<SingleProductGet>>();
-        private readonly Logs _logs;
+        private List<SingleProductGet> _productsBeforeSearch = null;
         public bool IsProductSelected { get; set; }
-        private bool _isProductDownLoaded { get; set; }
+        private List<SingleProductGet> ProductsBeforeSearch
+        {
+            get
+            {
+                _productsBeforeSearch ??= GlobalDataCollectorService.AllProducts.SelectMany(x => x.Value).ToList();
+                return _productsBeforeSearch;
+            }
+            set
+            {
+                _productsBeforeSearch = value;
+            }
+        }
+        public Dictionary<string, List<SingleProductGet>> ProductsDictionary = new Dictionary<string, List<SingleProductGet>>();
         private SingleProductGet selectedProduct;
         public SingleProductGet SelectedProduct
         {
@@ -47,166 +47,48 @@ namespace Ahed_project.ViewModel
                 if (value != null)
                 {
                     IsProductSelected = true;
-                } else
+                }
+                else
                 {
                     IsProductSelected = false;
                 }
-
             }
         }
-        public ProductsViewModel(SendDataService sendDataService, SelectProductService selectProductService, Logs logs,
-            CancellationTokenService cancellationToken)
+        public ProductsViewModel(SelectProductService selectProductService)
         {
-            _sendDataService = sendDataService;
             _selectProductService = selectProductService;
-            //_contentPageViewModel = contentPageViewModel;
-            Nodes = new ObservableCollection<Node>();
-            IsProductSelected = false;
-            _logs = logs;
-            _cancellationToken = cancellationToken;
         }
 
-        public ICommand GetProductsCommand => new AsyncCommand(async () =>
+        public ICommand SelectProductCommand => new AsyncCommand<object>(async (val) =>
         {
-            //TO DO Вова, сделай пожалуйста waiter если продукты не загрузились, и страницу заблочь
-            if (!_isProductDownLoaded)
-            {
-
-            }
-        });
-
-        private async Task DoNodes()
-        {
-            ProductsDictionary.Clear();
-            Application.Current.Dispatcher.Invoke(() => Nodes.Clear());
-            foreach (var year in Years)
-            {
-                year.Id = Guid.NewGuid().ToString();
-                var node = new Node();
-                node.Id = year.Id;
-                node.Name = year.year_number.ToString();
-                node.Nodes = new ObservableCollection<Node>();
-                foreach (var month in year.months)
-                {
-                    month.Id = Guid.NewGuid().ToString();
-                    var monthNode = new Node();
-                    monthNode.Id = month.Id;
-                    monthNode.Name = NumberToText(month.month_number);
-                    node.Nodes.Add(monthNode);
-                    ProductsDictionary.Add(month.Id, new List<SingleProductGet>());
-                    // Закомментил решение на 3 потока, не удалять, в целях быстроты теста ниже сделано на безграничное количество потоков
-#if !DEBUG
-                    await Parallel.ForEachAsync(month.products, new ParallelOptions() { MaxDegreeOfParallelism = 3 }, async (x, y) =>
-                    {
-                        var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT, x.product_id.ToString()));
-                        SingleProductGet newProduct = JsonConvert.DeserializeObject<SingleProductGet>(response.Result.ToString());
-                        ProductsDictionary[month.Id].Add(newProduct);
-                    });
-#else
-                    await Parallel.ForEachAsync(month.products, new ParallelOptions() {}, async (x, y) =>
-                    {
-                        var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT, x.product_id.ToString()));
-                        SingleProductGet newProduct = JsonConvert.DeserializeObject<SingleProductGet>(response.Result.ToString());
-                        ProductsDictionary[month.Id].Add(newProduct);
-                    });
-#endif
-                }
-                Application.Current.Dispatcher.Invoke(() => Nodes.Add(node));
-            }
-        }
-
-
-
-        public async void DownloadProducts()
-        {
-            try
-            {
-                var template = _sendDataService.ReturnCopy();
-                Application.Current.Dispatcher.Invoke(() => { _logs.AddMessage("info", "Start loading Products"); });
-                _isProductDownLoaded = false;
-                var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.GET_PRODUCTS, ""));
-                Years = JsonConvert.DeserializeObject<List<Year>>(response.Result.ToString());
-                await DoNodes();
-#if !DEBUG
-                await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions() { MaxDegreeOfParallelism = 3 }, async (x, y) =>
-                {
-                    x.Value.Sort((z, c) => z.product_id.CompareTo(c.product_id));
-                });
-#else
-                await Parallel.ForEachAsync(ProductsDictionary, new ParallelOptions() { }, async (x,y) =>
-                {
-                    x.Value?.Sort((z, c) => z.product_id.CompareTo(c.product_id));
-                });
-#endif
-                _isProductDownLoaded = true;
-                Application.Current.Resources.Add("Products", ProductsDictionary);
-                Application.Current.Dispatcher.Invoke(() => { _logs.AddMessage("info", "End loading Products"); });
-                ProductsBeforeSearch = ProductsDictionary.SelectMany(x => x.Value).ToList();
-                SearchCondition();
-            }
-            catch (TaskCanceledException e)
-            {
-
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
-        }
-
-        private static string NumberToText(int value)
-        {
-            switch (value)
-            {
-                case 1:
-                    return "Январь";
-                case 2:
-                    return "Февраль";
-                case 3:
-                    return "Март";
-                case 4:
-                    return "Апрель";
-                case 5:
-                    return "Май";
-                case 6:
-                    return "Июнь";
-                case 7:
-                    return "Июль";
-                case 8:
-                    return "Август";
-                case 9:
-                    return "Сентярь";
-                case 10:
-                    return "Октябрь";
-                case 11:
-                    return "Ноябрь";
-                case 12:
-                    return "Декабрь";
-
-            }
-            return string.Empty;
-        }
-
-        public ICommand SelectProductCommand => new AsyncCommand<object>(async (val) => {
-            IsProductSelected = false;
             var selected = (Node)val;
             if (selected.Nodes == null && selected.Id != null)
             {
-                ProductsBeforeSearch = ProductsDictionary[selected.Id];
+                ProductsBeforeSearch = GlobalDataCollectorService.AllProducts[selected.Id];
                 SearchCondition();
             }
         });
 
-        public ICommand OpenInTubesCommand => new DelegateCommand(() => {
-            
+        public ICommand GetCurrentProducts => new DelegateCommand(() =>
+        {
+            _productsBeforeSearch = GlobalDataCollectorService.AllProducts.SelectMany(x => x.Value).ToList();
+            Products = new ObservableCollection<SingleProductGet>(ProductsBeforeSearch);
+        });
+
+        public ICommand OpenInTubesCommand => new DelegateCommand(() =>
+        {
+
             _selectProductService.SelectTubesProject(SelectedProduct);
-            Application.Current.Dispatcher.BeginInvoke(() => {
+            Application.Current.Dispatcher.BeginInvoke(() =>
+            {
                 Application.Current.Resources.Add("PageToGo", 1);
             });
         });
-        public ICommand OpenInShellCommand => new DelegateCommand(() => {
+        public ICommand OpenInShellCommand => new DelegateCommand(() =>
+        {
             _selectProductService.SelectShellProject(SelectedProduct);
-            Application.Current.Dispatcher.BeginInvoke(() => {
+            Application.Current.Dispatcher.BeginInvoke(() =>
+            {
                 Application.Current.Resources.Add("PageToGo", 2);
             });
         });
@@ -236,7 +118,7 @@ namespace Ahed_project.ViewModel
             }
             else
             {
-                Products = new ObservableCollection<SingleProductGet>(ProductsBeforeSearch.Where(x=>x.name.ToLower().Contains(SearchBox.ToLower())));
+                Products = new ObservableCollection<SingleProductGet>(ProductsBeforeSearch.Where(x => x.name.ToLower().Contains(SearchBox.ToLower())));
             }
         }
     }

@@ -1,7 +1,6 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.Pages;
 using Ahed_project.Services;
-using Ahed_project.Services.BackGroundServices;
 using Ahed_project.Services.EF;
 using Ahed_project.Services.EF.Model;
 using Ahed_project.ViewModel.ContentPageComponents;
@@ -22,23 +21,16 @@ namespace Ahed_project.ViewModel
     public class LoginPageViewModel : BindableBase
     {
         private readonly PageService _pageService;
-        private readonly Logs _logs;
         private readonly JsonWebTokenLocal _jwt;
         private readonly CancellationTokenService _cancellationToken;
-        private readonly ChangePageService _changePageService;
         private readonly ContentPageViewModel _contentPageViewModel;
-        private readonly DownLoadProductsService _donwloadProducts;
-        private bool _downloadStarted = false;
 
-        public LoginPageViewModel(PageService pageService, Logs logs, JsonWebTokenLocal jwt, CancellationTokenService cancellationToken, ChangePageService changePageService,
-            ContentPageViewModel contentPageViewModel, DownLoadProductsService downLoadProductsService)
+        public LoginPageViewModel(PageService pageService, JsonWebTokenLocal jwt, CancellationTokenService cancellationToken,
+            ContentPageViewModel contentPageViewModel)
         {
-            _donwloadProducts = downLoadProductsService;
             _cancellationToken = cancellationToken;
             _pageService = pageService;
-            _changePageService = changePageService;
             _contentPageViewModel = contentPageViewModel;
-            _logs = logs;
             _jwt = jwt;
             UserEF active = null;
             using (var context = new EFContext())
@@ -68,13 +60,7 @@ namespace Ahed_project.ViewModel
             Loading = Visibility.Hidden;
             if (result.Result is User)
             {
-                if (!_downloadStarted)
-                {
-                    _downloadStarted = true;
-                    _donwloadProducts.Start();
-                }
-                _changePageService.Start();
-                _pageService.ChangePage(new ContentPage(_logs,_contentPageViewModel));
+                _pageService.ChangePage(new ContentPage(_contentPageViewModel));
             }
             else if (result.Result is null || result.Result is string)
             {

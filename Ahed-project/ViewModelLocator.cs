@@ -1,6 +1,5 @@
 ﻿using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services;
-using Ahed_project.Services.BackGroundServices;
 using Ahed_project.Services.EF;
 using Ahed_project.ViewModel;
 using Ahed_project.ViewModel.ContentPageComponents;
@@ -33,18 +32,18 @@ namespace Ahed_project
             services.AddSingleton<PresetsWindowViewModel>();
             services.AddSingleton<ProjectsWindowViewModel>();
             services.AddSingleton<ProductsViewModel>();
+            services.AddSingleton<ProjectPageViewModel>();
             services.AddSingleton<SendDataService>();
             services.AddSingleton<PageService>();
             services.AddSingleton<SelectProjectService>();
-            services.AddSingleton<Logs>();
             services.AddSingleton<WebClient>();
             services.AddSingleton<WindowService>();
             services.AddSingleton<JsonWebTokenLocal>();
             services.AddSingleton<SelectProductService>();
-            services.AddSingleton<DownLoadProductsService>();
             services.AddSingleton<WindowTitleService>();
             services.AddSingleton<CancellationTokenService>();
-            services.AddSingleton<ChangePageService>();
+            services.AddSingleton<GlobalDataCollectorService>();
+            services.AddSingleton<StartUpService>();
             
             //Маппер
             var configuration = new MapperConfiguration(cfg =>
@@ -80,5 +79,9 @@ namespace Ahed_project
         public PresetsWindowViewModel PresetsWindowViewModel => _provider.GetRequiredService<PresetsWindowViewModel>();
         public ProjectsWindowViewModel ProjectsWindowViewModel => _provider.GetRequiredService<ProjectsWindowViewModel>();
         public ProductsViewModel ProductsViewModel => _provider.GetRequiredService<ProductsViewModel>();
+        public ProjectPageViewModel ProjectPageViewModel => _provider.GetRequiredService<ProjectPageViewModel>();
+        // Глобильные сервисы
+        public GlobalDataCollectorService GlobalDataCollectorService => _provider.GetRequiredService<GlobalDataCollectorService>();
+        public StartUpService StartUpService => _provider.GetRequiredService<StartUpService>();
     }
 }

@@ -33,29 +33,25 @@ namespace Ahed_project.ViewModel
         public ICommand GetProjectsCommand => new AsyncCommand(async () => {
             ProjectsCollection.Clear();
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PROJECTS, ""), _cancellationToken.GetToken());
-            if (response.Result is string)
+            if (response != null)
             {
-                
+
                 try
                 {
-                    Responce result = JsonConvert.DeserializeObject<Responce>(response.Result.ToString());
+                    Responce result = JsonConvert.DeserializeObject<Responce>(response);
                     List<ProjectInfoGet> projects = JsonConvert.DeserializeObject<List<ProjectInfoGet>>(result.data.ToString());
-                    if(projects.Count > 0)
+                    if (projects.Count > 0)
                     {
-                        for(int i = 0; i < projects.Count; i++)
+                        for (int i = 0; i < projects.Count; i++)
                         {
                             ProjectsCollection.Add(projects[i]);
                         }
                     }
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }
-            else if(response.Result is Exception)
-            {
-                MessageBox.Show(response.Result.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         });
 

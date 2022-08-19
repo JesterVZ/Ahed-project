@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace Ahed_project.Pages
 {
@@ -24,25 +25,25 @@ namespace Ahed_project.Pages
     /// </summary>
     public partial class ContentPage : Page
     {
-        private Logs _logs;
-        public ContentPage(Logs logs, ContentPageViewModel vm)
+        public ContentPage(ContentPageViewModel vm)
         {
             InitializeComponent();
-            _logs = logs;
             DataContext = vm;
             vm.ChangePage = ChangePage;
             vm.SetNamesTubes = SetNameTubes;
             vm.SetNamesShell = SetNameShells;
             PrepareLogs();
         }
-        private void PrepareLogs()
+
+        public void PrepareLogs()
         {
-            _logs.logs.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(
-            delegate (object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-            {
-                LogData.ItemsSource = _logs.logs.OrderByDescending(x => x.DateTime);
-            });
+            GlobalDataCollectorService.Logs.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(
+                delegate (object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+                {
+                    LogData.ItemsSource = GlobalDataCollectorService.Logs.OrderByDescending(x => x.DateTime);
+                });
         }
+
         private void ChangePage(int i)
         {
             Tabs.SelectedIndex = i;
@@ -334,7 +335,7 @@ namespace Ahed_project.Pages
 
         private void ClearLogs(object sender, RoutedEventArgs e)
         {
-            _logs.logs.Clear();
+            GlobalDataCollectorService.Logs.Clear();
         }
 
         private void LogData_SizeChanged(object sender, SizeChangedEventArgs e)
