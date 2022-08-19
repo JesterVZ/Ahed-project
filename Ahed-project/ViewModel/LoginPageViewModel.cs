@@ -22,13 +22,11 @@ namespace Ahed_project.ViewModel
     {
         private readonly PageService _pageService;
         private readonly JsonWebTokenLocal _jwt;
-        private readonly CancellationTokenService _cancellationToken;
         private readonly ContentPageViewModel _contentPageViewModel;
 
-        public LoginPageViewModel(PageService pageService, JsonWebTokenLocal jwt, CancellationTokenService cancellationToken,
+        public LoginPageViewModel(PageService pageService, JsonWebTokenLocal jwt,
             ContentPageViewModel contentPageViewModel)
         {
-            _cancellationToken = cancellationToken;
             _pageService = pageService;
             _contentPageViewModel = contentPageViewModel;
             _jwt = jwt;
@@ -53,10 +51,9 @@ namespace Ahed_project.ViewModel
 
         private async void Auth()
         {
-            _cancellationToken.ReCreateSource();
             var assembly = Assembly.GetExecutingAssembly();
             Loading = Visibility.Visible;
-            var result = await Task.Factory.StartNew(() => _jwt.AuthenticateUser(email, pass),_cancellationToken.GetToken());
+            var result = await Task.Factory.StartNew(() => _jwt.AuthenticateUser(email, pass));
             Loading = Visibility.Hidden;
             if (result.Result is User)
             {

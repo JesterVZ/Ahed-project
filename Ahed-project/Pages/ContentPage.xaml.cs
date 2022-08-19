@@ -1,5 +1,5 @@
 ﻿using Ahed_project.MasterData;
-using Ahed_project.Services;
+using Ahed_project.Services.Global;
 using Ahed_project.ViewModel.ContentPageComponents;
 using System;
 using System.Collections.Generic;
@@ -29,7 +29,6 @@ namespace Ahed_project.Pages
         {
             InitializeComponent();
             DataContext = vm;
-            vm.ChangePage = ChangePage;
             vm.SetNamesTubes = SetNameTubes;
             vm.SetNamesShell = SetNameShells;
             PrepareLogs();
@@ -42,11 +41,6 @@ namespace Ahed_project.Pages
                 {
                     LogData.ItemsSource = GlobalDataCollectorService.Logs.OrderByDescending(x => x.DateTime);
                 });
-        }
-
-        private void ChangePage(int i)
-        {
-            Tabs.SelectedIndex = i;
         }
 
         private void SetNameTubes(int tabIndex, Dictionary<int, Tuple<double,double>> labels)

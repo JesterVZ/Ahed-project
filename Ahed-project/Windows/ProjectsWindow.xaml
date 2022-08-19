@@ -5,27 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ahed_project.Windows"
         xmlns:attach="clr-namespace:Ahed_project.Services"
+        attach:MyAttachedBehaviors.LoadedCommand="{Binding WindowLoaded}"
         DataContext="{Binding ProjectsWindowViewModel, Source={StaticResource ViewModelLocator}}"
         mc:Ignorable="d"
-        attach:MyAttachedBehaviors.LoadedCommand="{Binding GetProjectsCommand}"
         Title="ProjectsWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <DataGrid ItemsSource="{Binding ProjectsCollection}" Margin="5 5 5 5" IsReadOnly="True" AllowDrop="False" SelectedItem="{Binding SelectedProject, Mode=TwoWay}">
-            <DataGrid.InputBindings>
-                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding SelectProject}"/>
-            </DataGrid.InputBindings>
-        </DataGrid>
+        <DataGrid ItemsSource="{Binding Projects}" Margin="5 5 5 5" IsReadOnly="True" AllowDrop="False" SelectedItem="{Binding SelectedProject, Mode=TwoWay}"/>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" Margin="5 5 5 5"/>
-            <Button Grid.Column="1" Margin="5 5 5 5">Select</Button>
+            <TextBox Grid.Column="0" Margin="5 5 5 5" Text="{Binding Path=SearchBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Grid.Column="1" Margin="5 5 5 5" Click="Button_Click" IsCancel="True" Command="{Binding SelectProject}">Select</Button>
         </Grid>
     </Grid>
 </Window>

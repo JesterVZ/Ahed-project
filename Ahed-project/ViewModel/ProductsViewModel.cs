@@ -1,6 +1,6 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.MasterData.Products.SingleProduct;
-using Ahed_project.Services;
+using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +12,6 @@ namespace Ahed_project.ViewModel
 {
     public class ProductsViewModel : BindableBase
     {
-        private readonly SelectProductService _selectProductService;
 
         public static ObservableCollection<Node> Nodes
         {
@@ -54,9 +53,8 @@ namespace Ahed_project.ViewModel
                 }
             }
         }
-        public ProductsViewModel(SelectProductService selectProductService)
+        public ProductsViewModel()
         {
-            _selectProductService = selectProductService;
         }
 
         public ICommand SelectProductCommand => new AsyncCommand<object>(async (val) =>
@@ -77,20 +75,13 @@ namespace Ahed_project.ViewModel
 
         public ICommand OpenInTubesCommand => new DelegateCommand(() =>
         {
-
-            _selectProductService.SelectTubesProject(SelectedProduct);
-            Application.Current.Dispatcher.BeginInvoke(() =>
-            {
-                Application.Current.Resources.Add("PageToGo", 1);
-            });
+            GlobalDataCollectorService.SelectedProductTubes = SelectedProduct;
+            GlobalDataCollectorService.PageToGo = 1;
         });
         public ICommand OpenInShellCommand => new DelegateCommand(() =>
         {
-            _selectProductService.SelectShellProject(SelectedProduct);
-            Application.Current.Dispatcher.BeginInvoke(() =>
-            {
-                Application.Current.Resources.Add("PageToGo", 2);
-            });
+            GlobalDataCollectorService.SelectedProductShell = SelectedProduct;
+            GlobalDataCollectorService.PageToGo = 2;
         });
         public ICommand NewfluidCommand => new DelegateCommand(() => { });
         public ICommand EditfluidCommand => new DelegateCommand(() => { });

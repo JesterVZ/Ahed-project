@@ -2,7 +2,7 @@
 using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.Products.SingleProduct;
 using Ahed_project.MasterData.ProjectClasses;
-using Ahed_project.Services;
+using Ahed_project.Services.Global;
 using DevExpress.Internal.WinApi.Windows.UI.Notifications;
 using LiveCharts;
 using LiveCharts.Configurations;
@@ -28,7 +28,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         private void Validation()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            if (ProjectInfo.name != null && ProjectInfo.name != string.Empty)
+            if (GlobalDataCollectorService.Project.name != null && GlobalDataCollectorService.Project.name != string.Empty)
             {
                 ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
             }
@@ -39,7 +39,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 return;
             }
 
-            if (ProjectInfo.description != null && ProjectInfo.description != string.Empty)
+            if (GlobalDataCollectorService.Project.description != null && GlobalDataCollectorService.Project.description != string.Empty)
             {
                 ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
 
@@ -84,39 +84,39 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 product_id_shell = SingleProductGetShell?.product_id ?? 0,
             };
             string json = JsonConvert.SerializeObject(calculationUpdate);
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, ProjectInfo, SelectedCalulationFull.calculation_id.ToString()), _cancellationToken.GetToken());
-            Responce result = JsonConvert.DeserializeObject<Responce>(response);
-            for (int i = 0; i < result.logs.Count; i++)
-            {
-                GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message));
-            }
-            GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Сохранение выполнено успешно!"));
+            //var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, ProjectInfo, SelectedCalulationFull.calculation_id.ToString()));
+            //Responce result = JsonConvert.DeserializeObject<Responce>(response);
+            //for (int i = 0; i < result.logs.Count; i++)
+            //{
+            //    GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message));
+            //}
+            //GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Сохранение выполнено успешно!"));
             //_windowTitleService.ChangeTitle(ProjectInfo.name);
             //Validation();
         }
         private async void SelectCalculations()
         {
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT_CALCULATIONS, null, ProjectInfo), _cancellationToken.GetToken());
-            if (response != null)
-            {
-                try
-                {
-                    Responce result = JsonConvert.DeserializeObject<Responce>(response);
-                    CalculationCollection = JsonConvert.DeserializeObject<ObservableCollection<Calculation>>(result.data.ToString());
-                    CalculationsInfo = JsonConvert.DeserializeObject<List<CalculationFull>>(result.data.ToString());
-                    for (int i = 0; i < result.logs.Count; i++)
-                    {
-                        GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message));
-                    }
-                    GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Расчеты получены!"));
-                    //_windowTitleService.ChangeTitle(ProjectInfo.name);
-                    //Validation();
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
+            //var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT_CALCULATIONS, null, ProjectInfo));
+            //if (response != null)
+            //{
+            //    try
+            //    {
+            //        Responce result = JsonConvert.DeserializeObject<Responce>(response);
+            //        CalculationCollection = JsonConvert.DeserializeObject<ObservableCollection<Calculation>>(result.data.ToString());
+            //        CalculationsInfo = JsonConvert.DeserializeObject<List<CalculationFull>>(result.data.ToString());
+            //        for (int i = 0; i < result.logs.Count; i++)
+            //        {
+            //            GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message));
+            //        }
+            //        GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Расчеты получены!"));
+            //        //_windowTitleService.ChangeTitle(ProjectInfo.name);
+            //        //Validation();
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    }
+            //}
         }
 
         private async void UpdateProjectParamsAccordingToCalculation()
@@ -129,7 +129,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 }
                 return;
             });
-            SelectedCalulationFull = CalculationsInfo.FirstOrDefault(x => x.calculation_id.ToString() == SelectedCalculation?.calculation_id);
+            //SelectedCalulationFull = CalculationsInfo.FirstOrDefault(x => x.calculation_id.ToString() == SelectedCalculation?.calculation_id);
         }
         private class ChartModel
         {

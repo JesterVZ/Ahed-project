@@ -8,8 +8,11 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ProjectPage"
       DataContext="{Binding ProjectPageViewModel, Source={StaticResource ViewModelLocator}}">
+    <Page.InputBindings>
+        <KeyBinding Key="S" Command="{Binding SaveProject}" Modifiers="Ctrl"/>
+    </Page.InputBindings>
     <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="927" >
-        <Grid DataContext="{Binding ProjectInfoGet}">
+        <Grid>
             <Grid.Resources>
                 <Style TargetType="TextBox" x:Key="Default">
                     <Setter Property="Height" Value="30"/>
@@ -53,15 +56,15 @@
                 <TextBlock Style="{StaticResource DefaultText}" Text="Contact" Grid.Column="0" Grid.Row="4"/>
                 <TextBlock VerticalAlignment="Top" Text="Description" Grid.Column="0" Grid.Row="5"/>
                 <TextBlock Style="{StaticResource DefaultText}" Text="Units" Grid.Column="0" Grid.Row="6"/>
-                <TextBox Margin="3" Style="{StaticResource Colored}" Text="{Binding project_id, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" />
+                <TextBox Margin="3" Style="{StaticResource Colored}" Text="{Binding ProjectInfo.project_id, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" />
                 <TextBlock Margin="3" Style="{StaticResource DefaultText}" Text="Revision" Grid.Column="2" Grid.Row="1"/>
-                <TextBox Margin="3" Style="{StaticResource Default}" Text="{Binding revision, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="1"/>
-                <TextBox Margin="3" Style="{StaticResource Default}" Text="{Binding name, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1"/>
-                <TextBox Margin="3" Style="{StaticResource Default}" Text="{Binding customer, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="3" Grid.Row="3" Grid.Column="1"/>
-                <TextBox Margin="3" Style="{StaticResource Default}" Text="{Binding contact, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
+                <TextBox Margin="3" Style="{StaticResource Default}" Text="{Binding ProjectInfo.revision, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="1"/>
+                <TextBox Margin="3" Style="{StaticResource Default}" Text="{Binding ProjectInfo.name, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1"/>
+                <TextBox Margin="3" Style="{StaticResource Default}" Text="{Binding ProjectInfo.customer, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="3" Grid.Row="3" Grid.Column="1"/>
+                <TextBox Margin="3" Style="{StaticResource Default}" Text="{Binding ProjectInfo.contact, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
                 <TextBlock Margin="3" Style="{StaticResource DefaultText}" Text="Customer reference" Grid.Column="2"  Grid.Row="4"/>
-                <TextBox Margin="3" Style="{StaticResource Default}" Text="{Binding customer_reference, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3"  Grid.Row="4"/>
-                <TextBox Margin="3" TextWrapping="Wrap" Text="{Binding description, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3"/>
+                <TextBox Margin="3" Style="{StaticResource Default}" Text="{Binding ProjectInfo.customer_reference, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3"  Grid.Row="4"/>
+                <TextBox Margin="3" TextWrapping="Wrap" Text="{Binding ProjectInfo.description, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3"/>
                 <ComboBox Margin="3" Grid.Row="6" Grid.Column="1">
                     <ComboBoxItem IsSelected="True" IsEnabled="True">
                         <Label>Metric</Label>
@@ -71,11 +74,11 @@
                     </ComboBoxItem>
                 </ComboBox>
                 <TextBlock Margin="3" Style="{StaticResource DefaultText}" Text="Number of decimals" Grid.Row="6" Grid.Column="2"/>
-                <TextBox Margin="3" Style="{StaticResource Default}" Text="{Binding number_of_decimals, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="6"/>
+                <TextBox Margin="3" Style="{StaticResource Default}" Text="{Binding ProjectInfo.number_of_decimals, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="6"/>
                 <TextBlock Margin="3" Grid.Column="0" Grid.Row="7" FontWeight="Bold">Project Processes</TextBlock>
-                <TextBox Margin="3" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2" DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding CalculationName, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Grid.Row="7" Grid.Column="3" Margin="3" DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Command="{Binding CreateCalculationCommand}">Add</Button>
-                <ListView Margin="3" Grid.Row="8" SelectedIndex="0" Grid.Column="1" Grid.ColumnSpan="3" DataContext="{Binding GlobalDataCollectorService, Source={StaticResource ViewModelLocator}}" ItemsSource="{Binding CalculationsInfo}" SelectedItem="{Binding SelectedCalculation}" >
+                <TextBox Margin="3" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2" Text="{Binding CalculationName, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Row="7" Grid.Column="3" Margin="3" Command="{Binding CreateCalculationCommand}">Add</Button>
+                <ListView Margin="3" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" ItemsSource="{Binding Calculations}" SelectedItem="{Binding SelectedCalculation}" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding name}"/>
@@ -118,18 +121,18 @@
                     <TextBlock Style="{StaticResource DefaultText}" Text="Company"  Grid.Column="3" Grid.Row="3" Margin="3,7"/>
                     <TextBox  Margin="3" Style="{StaticResource Colored}" Grid.Column="4" Grid.Row="3"/>
                     <TextBlock Style="{StaticResource DefaultText}" Text="Date"  Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="0,7"/>
-                    <TextBox Margin="3" Style="{StaticResource Colored}" Text="{Binding createdAt, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4"/>
+                    <TextBox Margin="3" Style="{StaticResource Colored}" Text="{Binding ProjectInfo.createdAt, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4"/>
                     <TextBlock Style="{StaticResource DefaultText}" Text="Date"  Grid.Column="3" Grid.Row="4" Margin="3,7"/>
-                    <TextBox Margin="3" Style="{StaticResource Colored}" Text="{Binding updatedAt, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="4"/>
+                    <TextBox Margin="3" Style="{StaticResource Colored}" Text="{Binding ProjectInfo.updatedAt, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="4"/>
                     <TextBlock Style="{StaticResource DefaultText}" Text="Number of saves"  Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Margin="0,7"/>
                     <TextBox  Margin="3" Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="5"/>
                     <TextBlock Style="{StaticResource DefaultText}" Text="Shared in groups:"  Grid.Column="3" Grid.Row="5" Margin="3,7"/>
                     <TextBlock Style="{StaticResource DefaultText}" Text="Category"  Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Margin="0,7"/>
-                    <TextBox  Margin="3" Style="{StaticResource Default}" Text="{Binding category, UpdateSourceTrigger=LostFocus}" Grid.Column="2" Grid.Row="6"/>
+                    <TextBox  Margin="3" Style="{StaticResource Default}" Text="{Binding ProjectInfo.category, UpdateSourceTrigger=LostFocus}" Grid.Column="2" Grid.Row="6"/>
                     <TextBlock Style="{StaticResource DefaultText}" Text="Keywords"  Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Margin="0,7"/>
-                    <TextBox  Margin="3" Style="{StaticResource Default}" Text="{Binding keywords,UpdateSourceTrigger=LostFocus}" Grid.Column="2" Grid.Row="7"/>
+                    <TextBox  Margin="3" Style="{StaticResource Default}" Text="{Binding ProjectInfo.keywords,UpdateSourceTrigger=LostFocus}" Grid.Column="2" Grid.Row="7"/>
                     <TextBlock  Text="Comments"  Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2"/>
-                    <TextBox Margin="3" Height="100" Text="{Binding comments, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="3"/>
+                    <TextBox Margin="3" Height="100" Text="{Binding ProjectInfo.comments, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="3"/>
                 </Grid>
             </Grid>
         </Grid>

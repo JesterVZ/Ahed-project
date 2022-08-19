@@ -9,18 +9,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ahed_project.Services
+namespace Ahed_project.Services.Global
 {
     public class GlobalDataCollectorService
     {
         public GlobalDataCollectorService()
         {
-            ProjectPageContent = new ProjectInfoGet();
-            CalculationsInfo = new List<CalculationFull>();
-            SelectedCalculation = new CalculationFull();
             Logs = new ObservableCollection<LoggerMessage>();
             AllProducts = new Dictionary<string, List<SingleProductGet>>();
             Nodes = new ObservableCollection<Node>();
+            ProjectsCollection = new List<ProjectInfoGet>();
         }
         #region Global
         public static ObservableCollection<LoggerMessage> Logs { get; set; }
@@ -33,20 +31,29 @@ namespace Ahed_project.Services
             set
             {
                 _userId = value;
-                Task.Factory.StartNew(StartUpService.SetupUserDataAsync);
+                Task.Factory.StartNew(GlobalFunctionsAndCallersService.SetupUserDataAsync);
             }
         }
         #endregion
         #region Project
-        public static ProjectInfoGet ProjectPageContent { get; set; }
-
-        public static List<CalculationFull> CalculationsInfo { get; set; }
-
-        public static CalculationFull SelectedCalculation { get; set; }
+        public static List<ProjectInfoGet> ProjectsCollection { get; set; }
+        public static ProjectInfoGet Project { get; set; }
         #endregion
         #region Products
-        public static Dictionary<string, List<SingleProductGet>> AllProducts { get;set;}
+        public static Dictionary<string, List<SingleProductGet>> AllProducts { get; set; }
         public static ObservableCollection<Node> Nodes { get; set; }
+        private static int _pageToGo = 0;
+        public static int PageToGo
+        {
+            get => _pageToGo;
+            set
+            {
+                _pageToGo = value;
+                GlobalFunctionsAndCallersService.ChangePage(value);
+            }
+        }
+        public static SingleProductGet SelectedProductShell { get; set; }
+        public static SingleProductGet SelectedProductTubes { get; set; }
         #endregion
     }
 }

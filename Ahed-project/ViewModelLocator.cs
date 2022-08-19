@@ -1,18 +1,13 @@
 ﻿using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services;
 using Ahed_project.Services.EF;
+using Ahed_project.Services.Global;
 using Ahed_project.ViewModel;
 using Ahed_project.ViewModel.ContentPageComponents;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Ahed_project
 {
@@ -35,16 +30,13 @@ namespace Ahed_project
             services.AddSingleton<ProjectPageViewModel>();
             services.AddSingleton<SendDataService>();
             services.AddSingleton<PageService>();
-            services.AddSingleton<SelectProjectService>();
             services.AddSingleton<WebClient>();
             services.AddSingleton<WindowService>();
             services.AddSingleton<JsonWebTokenLocal>();
-            services.AddSingleton<SelectProductService>();
             services.AddSingleton<WindowTitleService>();
-            services.AddSingleton<CancellationTokenService>();
             services.AddSingleton<GlobalDataCollectorService>();
-            services.AddSingleton<StartUpService>();
-            
+            services.AddSingleton<GlobalFunctionsAndCallersService>();
+
             //Маппер
             var configuration = new MapperConfiguration(cfg =>
             {
@@ -82,6 +74,6 @@ namespace Ahed_project
         public ProjectPageViewModel ProjectPageViewModel => _provider.GetRequiredService<ProjectPageViewModel>();
         // Глобильные сервисы
         public GlobalDataCollectorService GlobalDataCollectorService => _provider.GetRequiredService<GlobalDataCollectorService>();
-        public StartUpService StartUpService => _provider.GetRequiredService<StartUpService>();
+        public GlobalFunctionsAndCallersService StartUpService => _provider.GetRequiredService<GlobalFunctionsAndCallersService>();
     }
 }

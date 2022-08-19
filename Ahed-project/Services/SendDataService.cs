@@ -2,6 +2,7 @@
 using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services.EF;
+using Ahed_project.Services.Global;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -25,7 +26,7 @@ namespace Ahed_project.Services
         {
             _serviceConfig = serviceConfig;
         }
-        public string SendToServer(ProjectMethods projectMethod, string body = null, ProjectInfoGet projectInfo = null, string calculationId = null)
+        public string SendToServer(ProjectMethods projectMethod, string body = null, string projectId = null, string calculationId = null)
         {
             Headers.TryAdd("Content-Type", "application/json");
             RestResponse response = null;
@@ -84,7 +85,7 @@ namespace Ahed_project.Services
                         response = restClient.ExecuteAsync(request).Result;
                         break;
                     case ProjectMethods.UPDATE:
-                        restClient = new RestClient(_serviceConfig.UpdateLink + $"/{projectInfo.project_id}");
+                        restClient = new RestClient(_serviceConfig.UpdateLink + $"/{projectId}");
                         request = new RestRequest("", Method.Post);
                         foreach (var header in Headers)
                         {
@@ -137,7 +138,7 @@ namespace Ahed_project.Services
                         response = restClient.ExecuteAsync(request).Result;
                         break;
                     case ProjectMethods.CREATE_CALCULATION:
-                        restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectInfo.project_id}/calculation/create");
+                        restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectId}/calculation/create");
                         request = new RestRequest("", Method.Post);
                         foreach (var header in Headers)
                         {
@@ -148,7 +149,7 @@ namespace Ahed_project.Services
                         response = restClient.ExecuteAsync(request).Result;
                         break;
                     case ProjectMethods.UPDATE_CHOOSE:
-                        restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectInfo.project_id}/calculation/update/{calculationId}");
+                        restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectId}/calculation/update/{calculationId}");
                         request = new RestRequest("", Method.Post);
                         foreach (var header in Headers)
                         {
@@ -159,7 +160,7 @@ namespace Ahed_project.Services
                         response = restClient.ExecuteAsync(request).Result;
                         break;
                     case ProjectMethods.GET_PRODUCT_CALCULATIONS:
-                        restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectInfo.project_id}/calculation/list");
+                        restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectId}/calculation/list");
                         request = new RestRequest("", Method.Get);
                         foreach (var header in Headers)
                         {

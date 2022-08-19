@@ -2,8 +2,8 @@
 using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Pages;
-using Ahed_project.Services;
 using Ahed_project.Services.EF;
+using Ahed_project.Services.Global;
 using Ahed_project.Windows;
 using DevExpress.Mvvm;
 using Newtonsoft.Json;
@@ -19,7 +19,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 {
     public partial class ContentPageViewModel
     {
-        public Action<int> ChangePage { get; set; }
         public ICommand Logout => new AsyncCommand(async () =>
         {
             using (var context = new EFContext())
@@ -29,7 +28,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 context.Update(active);
                 context.SaveChanges();
             }
-            _cancellationToken.Stop();
             _pageService.ChangePage(new LoginPage());
         });
 
@@ -64,31 +62,10 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             }
         });
 
-        public ICommand SelectLastProject => new AsyncCommand(async () =>
-        {
-            Validation();
-        });
-
-        public ICommand SaveComand => new AsyncCommand(async () =>
-        {
-            GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Идет сохранение проекта..."));
-            var projectInfoSend = _mapper.Map<ProjectInfoSend>(ProjectInfo);
-            string json = JsonConvert.SerializeObject(projectInfoSend);
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE, json, ProjectInfo), _cancellationToken.GetToken());
-            Responce result = JsonConvert.DeserializeObject<Responce>(response);
-            for (int i = 0; i < result.logs.Count; i++)
-            {
-                GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message));
-            }
-            GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Сохранение выполнено успешно!"));
-            _windowTitleService.ChangeTitle(ProjectInfo.name);
-            Validation();
-        });
-
         public ICommand NewProjectCommand => new AsyncCommand(async () =>
         {
             GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Начало создания проекта..."));
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CREATE, ""), _cancellationToken.GetToken());
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CREATE, ""));
             if (response != null)
             {
                 try
@@ -98,33 +75,15 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     {
                         GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message));
                     }
+                    var newProj = JsonConvert.DeserializeObject<ProjectInfoGet>(result.data.ToString());
+                    GlobalDataCollectorService.ProjectsCollection.Add(newProj);
+                    GlobalFunctionsAndCallersService.SetProject(newProj);
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-        });
-
-        public ICommand CreateCalculationCommand => new AsyncCommand(async () =>
-        {
-            CalculationSend calculationSend = new CalculationSend
-            {
-                Name = CalculationName
-            };
-            string json = JsonConvert.SerializeObject(calculationSend);
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CREATE_CALCULATION, json, ProjectInfo), _cancellationToken.GetToken());
-            Responce result = JsonConvert.DeserializeObject<Responce>(response);
-            for (int i = 0; i < result.logs.Count; i++)
-            {
-                GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message));
-            }
-            CalculationGet calculationGet = JsonConvert.DeserializeObject<CalculationGet>(result.data.ToString());
-            CalculationCollection.Add(new Calculation
-            {
-                calculation_id = calculationGet.calculation_id.ToString(),
-                name = calculationGet.name.ToString(),
-            });
         });
 
         public ICommand CalculateCommand => new AsyncCommand(async () =>
@@ -152,21 +111,21 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 pressure_shell_inlet = SelectedCalulationFull.pressure_shell_inlet
             };
             string json = JsonConvert.SerializeObject(calculateSend);
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE, json, ProjectInfo), _cancellationToken.GetToken());
-            Responce result = JsonConvert.DeserializeObject<Responce>(response);
-            if (result?.logs != null)
-            {
-                for (int i = 0; i < result.logs.Count; i++)
-                {
-                    GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message));
-                }
-                CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
-                calculationGet.calculation_id = SelectedCalulationFull.calculation_id;
-                calculationGet.project_id = SelectedCalulationFull.project_id;
-                var index = CalculationsInfo.FindIndex(0, CalculationsInfo.Count, x => x.calculation_id == SelectedCalulationFull.calculation_id);
-                CalculationsInfo[index] = calculationGet;
-                SelectedCalulationFull = calculationGet;
-            }
+            //var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE, json, ProjectInfo));
+            //Responce result = JsonConvert.DeserializeObject<Responce>(response);
+            //if (result?.logs != null)
+            //{
+            //    for (int i = 0; i < result.logs.Count; i++)
+            //    {
+            //        GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message));
+            //    }
+            //    CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
+            //    calculationGet.calculation_id = SelectedCalulationFull.calculation_id;
+            //    calculationGet.project_id = SelectedCalulationFull.project_id;
+            //    var index = CalculationsInfo.FindIndex(0, CalculationsInfo.Count, x => x.calculation_id == SelectedCalulationFull.calculation_id);
+            //    CalculationsInfo[index] = calculationGet;
+            //    SelectedCalulationFull = calculationGet;
+            //}
         });
 
         public ICommand CreateShellChartsCommand => new DelegateCommand(() =>

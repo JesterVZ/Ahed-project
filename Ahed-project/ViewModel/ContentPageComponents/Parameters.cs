@@ -17,19 +17,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         #region Project
         private Visibility projectInfoVisibility = Visibility.Hidden;
         public Visibility ProjectInfoVisibility { get => projectInfoVisibility; set => SetValue(ref projectInfoVisibility, value); }
-        private Calculation selectedCalculation;
-        public Calculation SelectedCalculation
-        {
-            get => selectedCalculation;
-            set
-            {
-                selectedCalculation = value;
-                UpdateProjectParamsAccordingToCalculation();
-            }
-        }
-        public string CalculationName { get; set; }
-        private ProjectInfoGet projectInfo = new();
-        public ProjectInfoGet ProjectInfo { get => projectInfo; set => SetValue(ref projectInfo, value); }
+        public int SelectedPage { get; set; }
         #endregion
         #region Validation
         public string ProjectValidationStatusSource { get; set; }
@@ -55,7 +43,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 SetValue(ref _singleProductShellGet, value);
                 if (SelectedCalulationFull != null)
                     SelectedCalulationFull.product_id_shell = value?.product_id;
-                if (selectedCalculation != null && selectedCalculation?.calculation_id != "0")
+                //if (selectedCalculation != null && selectedCalculation?.calculation_id != "0")
                     SaveChoose();
                 CreateShellCharts();
             }
@@ -92,7 +80,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 SetValue(ref _singleProductTubesGet, value);
                 if (SelectedCalulationFull != null)
                     SelectedCalulationFull.product_id_tube = value?.product_id;
-                if (selectedCalculation != null && selectedCalculation?.calculation_id != "0")
+                //if (selectedCalculation != null && selectedCalculation?.calculation_id != "0")
                     SaveChoose();
                 CreateTubeCharts();
             }

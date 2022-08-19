@@ -5,6 +5,7 @@ using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Pages;
 using Ahed_project.Services;
 using Ahed_project.Services.EF;
+using Ahed_project.Services.Global;
 using Ahed_project.Windows;
 using AutoMapper;
 using DevExpress.Mvvm;
@@ -31,22 +32,11 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         private readonly WindowService _windowServise;
         private readonly SendDataService _sendDataService;
         private readonly WindowTitleService _windowTitleService;
-        private readonly SelectProjectService _selectProjectService;
-        private readonly SelectProductService _selectProductService;
         private readonly IMapper _mapper;
-        private CancellationTokenService _cancellationToken;
 
-        public ObservableCollection<LoggerMessage> LogCollection
-        {
-            get
-            {
-                return new ObservableCollection<LoggerMessage>(GlobalDataCollectorService.Logs);
-            }
-        }
         public ObservableCollection<Calculation> CalculationCollection { get; set; }
         public ObservableCollection<string> TubesProcess { get; set; }
         public ObservableCollection<string> ShellProcess { get; set; }
-        private List<CalculationFull> CalculationsInfo { get; set; }
         public ContentState ProjectState { get; set; }
         public ContentState TubesFluidState { get; set; }
         public ContentState ShellFluidState { get; set; }
@@ -60,8 +50,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         public ContentState QuoteState { get; set; }
         public ContentState ThreeDState { get; set; }
         public ContentPageViewModel(PageService pageService, WindowService windowService, WindowTitleService windowTitleService,
-            SendDataService sendDataService, SelectProjectService selectProjectService, SelectProductService selectProductService, IMapper mapper,
-            CancellationTokenService cancellationToken)
+            SendDataService sendDataService, IMapper mapper)
         {
             //инициализация
             ProjectState = new ContentState();
@@ -93,19 +82,8 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             _pageService = pageService;
             _windowServise = windowService;
             _sendDataService = sendDataService;
-            _selectProjectService = selectProjectService;
-            _selectProductService = selectProductService;
             _windowTitleService = windowTitleService;
-            _selectProjectService.ProjectSelected += (project) =>
-            {
-                ProjectInfo = project;
-                _windowTitleService.ChangeTitle(project.name);
-                SelectCalculations();
-            };
-            _selectProductService.ProductTubesSelected += (product) => SingleProductGetTubes = product;
-            _selectProductService.ProductShellSelected += (product) => SingleProductGetShell = product;
             CalculationCollection = new ObservableCollection<Calculation>();
-            CalculationsInfo = new List<CalculationFull>();
             TubesProcess = new ObservableCollection<string>
             {
                 "sensible_heat",
@@ -118,7 +96,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             };
             _mapper = mapper;
 
-            _cancellationToken = cancellationToken;
             _selectedCalculationFull = new CalculationFull();
         }
     }

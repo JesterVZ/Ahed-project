@@ -57,7 +57,6 @@
         </Style>
     </Page.Resources>
     <Page.InputBindings>
-        <KeyBinding Key="S" Command="{Binding SaveComand}" Modifiers="Ctrl"/>
         <KeyBinding Key="N" Command="{Binding NewProjectCommand}" Modifiers="Ctrl"/>
     </Page.InputBindings>
 
@@ -106,7 +105,7 @@
                 <MenuItem Header="Release Notes"></MenuItem>
             </MenuItem>
         </Menu>
-        <TabControl Grid.Row="1" x:Name="Tabs" VerticalAlignment="Stretch" TabStripPlacement="Left" HorizontalAlignment="Stretch" FontSize="20">
+        <TabControl Grid.Row="1" x:Name="Tabs" VerticalAlignment="Stretch" TabStripPlacement="Left" HorizontalAlignment="Stretch" FontSize="20" SelectedIndex="{Binding SelectedPage, UpdateSourceTrigger=PropertyChanged}">
             <TabItem FontSize="12">
                 <TabItem.Header>
                     <Grid Width="130">

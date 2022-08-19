@@ -14,15 +14,12 @@ namespace Ahed_project.ViewModel
     public class MainViewModel : BindableBase
     {
         private readonly PageService _pageService;
-        private readonly WindowTitleService _windowTitleService;
         public Page PageSource { get; set; }
         public string Title { get; set; }
 
-        public MainViewModel(PageService pageService, WindowTitleService windowTitleService)
+        public MainViewModel(PageService pageService)
         {
             _pageService = pageService;
-            _windowTitleService = windowTitleService;
-            _windowTitleService.TitleChanged += (title) => Title = title;
             _pageService.OnPageChanged += (page) => PageSource = page;
             _pageService.ChangePage(new LoginPage());
         }
