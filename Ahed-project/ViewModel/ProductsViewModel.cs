@@ -76,12 +76,12 @@ namespace Ahed_project.ViewModel
         public ICommand OpenInTubesCommand => new DelegateCommand(() =>
         {
             GlobalDataCollectorService.SelectedProductTubes = SelectedProduct;
-            GlobalDataCollectorService.PageToGo = 1;
+            GlobalFunctionsAndCallersService.ChangePage(1);
         });
         public ICommand OpenInShellCommand => new DelegateCommand(() =>
         {
             GlobalDataCollectorService.SelectedProductShell = SelectedProduct;
-            GlobalDataCollectorService.PageToGo = 2;
+            GlobalFunctionsAndCallersService.ChangePage(2);
         });
         public ICommand NewfluidCommand => new DelegateCommand(() => { });
         public ICommand EditfluidCommand => new DelegateCommand(() => { });

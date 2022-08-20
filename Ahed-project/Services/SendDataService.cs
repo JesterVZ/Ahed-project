@@ -181,7 +181,7 @@ namespace Ahed_project.Services
                     return JsonConvert.SerializeObject(new object());
                 }
             }
-            catch (Exception e)
+            catch
             {
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Error", $"Excep: {response.ErrorException}, Message: {response.ErrorMessage}, Code: {response.StatusCode}")));
                 return JsonConvert.SerializeObject(new object());

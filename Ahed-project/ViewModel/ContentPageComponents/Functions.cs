@@ -94,43 +94,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             //_windowTitleService.ChangeTitle(ProjectInfo.name);
             //Validation();
         }
-        private async void SelectCalculations()
-        {
-            //var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT_CALCULATIONS, null, ProjectInfo));
-            //if (response != null)
-            //{
-            //    try
-            //    {
-            //        Responce result = JsonConvert.DeserializeObject<Responce>(response);
-            //        CalculationCollection = JsonConvert.DeserializeObject<ObservableCollection<Calculation>>(result.data.ToString());
-            //        CalculationsInfo = JsonConvert.DeserializeObject<List<CalculationFull>>(result.data.ToString());
-            //        for (int i = 0; i < result.logs.Count; i++)
-            //        {
-            //            GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message));
-            //        }
-            //        GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Расчеты получены!"));
-            //        //_windowTitleService.ChangeTitle(ProjectInfo.name);
-            //        //Validation();
-            //    }
-            //    catch (Exception e)
-            //    {
-            //        MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            //    }
-            //}
-        }
-
-        private async void UpdateProjectParamsAccordingToCalculation()
-        {
-            await Task.Factory.StartNew(() =>
-            {
-                while (!Application.Current.Resources.Contains("Products"))
-                {
-                    //Тут waiter можно сделать до прогрузки продуктов
-                }
-                return;
-            });
-            //SelectedCalulationFull = CalculationsInfo.FirstOrDefault(x => x.calculation_id.ToString() == SelectedCalculation?.calculation_id);
-        }
         private class ChartModel
         {
             public decimal? X { get; set; }
@@ -143,7 +106,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             }
         }
 
-        CartesianMapper<ChartModel> ChartsConfig = Mappers.Xy<ChartModel>()
+        readonly CartesianMapper<ChartModel> ChartsConfig = Mappers.Xy<ChartModel>()
                   .X(elem => Convert.ToDouble(elem.X))
                   .Y(elem => Convert.ToDouble(elem.Y))
                   .Fill(x => Brushes.DarkOrange);
@@ -156,11 +119,11 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             FourthChartShell?.Clear();
             FifthChartShell?.Clear();
             SixthChartShell?.Clear();
-            LineSeries first = new LineSeries(ChartsConfig)
+            LineSeries first = new(ChartsConfig)
             {
                 Values = new ChartValues<ChartModel>()
             };
-            LineSeries second = new LineSeries(ChartsConfig)
+            LineSeries second = new(ChartsConfig)
             {
                 Values = new ChartValues<ChartModel>()
             };

@@ -23,7 +23,7 @@ namespace Ahed_project.ViewModel
 
         public ICommand SelectProject => new DelegateCommand(() => {
             GlobalFunctionsAndCallersService.SetProject(SelectedProject);
-            GlobalDataCollectorService.PageToGo = 0;
+            GlobalFunctionsAndCallersService.ChangePage(0);
         });
 
         public ProjectInfoGet SelectedProject { get; set; }

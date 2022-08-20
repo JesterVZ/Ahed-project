@@ -42,16 +42,6 @@ namespace Ahed_project.Services.Global
         #region Products
         public static Dictionary<string, List<SingleProductGet>> AllProducts { get; set; }
         public static ObservableCollection<Node> Nodes { get; set; }
-        private static int _pageToGo = 0;
-        public static int PageToGo
-        {
-            get => _pageToGo;
-            set
-            {
-                _pageToGo = value;
-                GlobalFunctionsAndCallersService.ChangePage(value);
-            }
-        }
         public static SingleProductGet SelectedProductShell { get; set; }
         public static SingleProductGet SelectedProductTubes { get; set; }
         #endregion

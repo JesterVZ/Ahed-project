@@ -22,20 +22,14 @@ namespace Ahed_project.ViewModel
             set => SetValue(ref _projectInfo, value);
         }
 
-        public void SetProject(ProjectInfoGet projectInfoGet)
+        private CalculationFull _selectedCalculation;
+        public CalculationFull SelectedCalculation
         {
-            ProjectInfo = projectInfoGet;
-            GlobalDataCollectorService.Project = projectInfoGet;
-        }
-
-        private Calculation selectedCalculation;
-        public Calculation SelectedCalculation
-        {
-            get => selectedCalculation;
+            get => _selectedCalculation;
             set
             {
-                selectedCalculation = value;
-                //UpdateProjectParamsAccordingToCalculation();
+                _selectedCalculation = value;
+                GlobalFunctionsAndCallersService.SetCalculation(SelectedCalculation);
             }
         }
         public ObservableCollection<CalculationFull> Calculations { get; set; }

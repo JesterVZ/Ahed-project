@@ -32,16 +32,18 @@ namespace Ahed_project.Services.Global
         private static ProjectPageViewModel _projectPageViewModel;
         private static IMapper _mapper;
         private static MainViewModel _mainViewModel;
+        private static HeatBalanceViewModel _heatBalanceViewModel;
 
         public GlobalFunctionsAndCallersService(SendDataService sendDataService, ContentPageViewModel contentPage,
             ProjectPageViewModel projectPageViewModel, IMapper mapper,
-            MainViewModel mainViewModel)
+            MainViewModel mainViewModel, HeatBalanceViewModel heatBalanceViewModel)
         {
             _sendDataService = sendDataService;
             _contentPageViewModel = contentPage;
             _projectPageViewModel = projectPageViewModel;
             _mapper = mapper;
             _mainViewModel = mainViewModel;
+            _heatBalanceViewModel = heatBalanceViewModel;
         }
 
         //Первичная загрузка после входа
@@ -94,16 +96,20 @@ namespace Ahed_project.Services.Global
             foreach (var year in years)
             {
                 year.Id = Guid.NewGuid().ToString();
-                var node = new Node();
-                node.Id = year.Id;
-                node.Name = year.year_number.ToString();
-                node.Nodes = new ObservableCollection<Node>();
+                var node = new Node
+                {
+                    Id = year.Id,
+                    Name = year.year_number.ToString(),
+                    Nodes = new ObservableCollection<Node>()
+                };
                 foreach (var month in year.months)
                 {
                     month.Id = Guid.NewGuid().ToString();
-                    var monthNode = new Node();
-                    monthNode.Id = month.Id;
-                    monthNode.Name = new DateTime(1, month.month_number, 1).ToString("MMMM");
+                    var monthNode = new Node
+                    {
+                        Id = month.Id,
+                        Name = new DateTime(1, month.month_number, 1).ToString("MMMM")
+                    };
                     node.Nodes.Add(monthNode);
                     GlobalDataCollectorService.AllProducts.Add(month.Id, new List<SingleProductGet>());
                     await Parallel.ForEachAsync(month.products, new ParallelOptions() { }, async (x, y) =>
@@ -138,7 +144,8 @@ namespace Ahed_project.Services.Global
         //Установка продукта
         public static void SetProject(ProjectInfoGet projectInfoGet)
         {
-            _projectPageViewModel.SetProject(projectInfoGet);
+            _projectPageViewModel.ProjectInfo = projectInfoGet;
+            GlobalDataCollectorService.Project = projectInfoGet;
             SetUserLastProject(projectInfoGet.project_id);
             Task.Factory.StartNew(()=>GetCalculations(projectInfoGet.project_id.ToString()));
             _mainViewModel.Title = projectInfoGet.name;
@@ -187,7 +194,7 @@ namespace Ahed_project.Services.Global
         //Создание рассчета
         public async static void CreateCalculation(string name)
         {
-            CalculationSend calculationSend = new CalculationSend
+            CalculationSend calculationSend = new()
             {
                 Name = name
             };
@@ -201,6 +208,69 @@ namespace Ahed_project.Services.Global
             CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
             Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations.Add(calculationGet));
             _projectPageViewModel.SelectedCalculation = null;
+        }
+
+        //Выбор рассчета
+        public static void SetCalculation(CalculationFull calc)
+        {
+            _heatBalanceViewModel.Calculation = calc;
+            var products = GlobalDataCollectorService.AllProducts.SelectMany(x => x.Value).ToList();
+            var tubeProduct = products.FirstOrDefault(x => x.product_id == calc.product_id_tube);
+            Task.Factory.StartNew(() => SelectProductTube(tubeProduct));
+            var shellProduct = products.FirstOrDefault(x => x.product_id == calc.product_id_shell);
+            Task.Factory.StartNew(() => SelectProductShell(shellProduct));
+        }
+        //Выбор продукта Tube
+        public static void SelectProductTube(SingleProductGet product)
+        {
+            _heatBalanceViewModel.TubesProductName = product?.name;
+        }
+
+        //Выбор продукта Shell
+        public static void SelectProductShell(SingleProductGet product)
+        {
+            _heatBalanceViewModel.ShellProductName = product?.name;
+        }
+
+        //Рассчитать
+        public static async void Calculate(CalculationFull calculation)
+        {
+            if (calculation == null)
+            {
+                MessageBox.Show("Выберите рассчет", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            CalculationSendCalc calculateSend = new CalculationSendCalc
+            {
+                product_id_tube = calculation.product_id_tube?? 0,
+                product_id_shell = calculation.product_id_shell ?? 0,
+                flow_type = "counter_current",
+                calculate_field = "flow_shell",
+                process_tube = calculation.process_tube,
+                process_shell = calculation.process_shell,
+                flow_tube = calculation.flow_tube,
+                flow_shell = calculation.flow_shell,
+                temperature_tube_inlet = calculation.temperature_tube_inlet,
+                temperature_tube_outlet = calculation.temperature_tube_outlet,
+                temperature_shell_inlet = calculation.temperature_shell_inlet,
+                temperature_shell_outlet = calculation.temperature_shell_outlet,
+                pressure_tube_inlet = calculation.pressure_tube_inlet,
+                pressure_shell_inlet = calculation.pressure_shell_inlet
+            };
+            string json = JsonConvert.SerializeObject(calculateSend);
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE, json, calculation.project_id.ToString()));
+            Responce result = JsonConvert.DeserializeObject<Responce>(response);
+            if (result?.logs != null)
+            {
+                for (int i = 0; i < result.logs.Count; i++)
+                {
+                    GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message));
+                }
+                CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
+                calculationGet.calculation_id = calculation.calculation_id;
+                calculationGet.project_id = calculation.project_id;
+                _heatBalanceViewModel.Calculation = calculationGet;
+            }
         }
     }
 }

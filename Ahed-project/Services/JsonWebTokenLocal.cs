@@ -20,8 +20,8 @@ namespace Ahed_project.Services
 {
     public class JsonWebTokenLocal
     {
-        private ServiceConfig _serviceConfig;
-        private SendDataService _sendDataService;
+        private readonly ServiceConfig _serviceConfig;
+        private readonly SendDataService _sendDataService;
         public JsonWebTokenLocal(ServiceConfig serviceConfig, SendDataService sendDataService)
         {
             _serviceConfig = serviceConfig;
@@ -44,7 +44,7 @@ namespace Ahed_project.Services
                 }
                 string json = JsonConvert.SerializeObject(new
                 {
-                    email = email,
+                    email,
                     pass = password
                 });
                 Token token = null;
@@ -58,18 +58,16 @@ namespace Ahed_project.Services
                 _sendDataService.AddHeader(token.token);
                 if (user == null)
                 {
-                    using (var context = new EFContext())
+                    using var context = new EFContext();
+                    user = new UserEF()
                     {
-                        user = new UserEF()
-                        {
-                            Email = email,
-                            Password = password,
-                            IsActive = true
-                        };
-                        context.Users.Add(user);
-                        context.SaveChanges();
-                        GlobalDataCollectorService.UserId = context.Users.ToList().LastOrDefault().Id;
-                    }
+                        Email = email,
+                        Password = password,
+                        IsActive = true
+                    };
+                    context.Users.Add(user);
+                    context.SaveChanges();
+                    GlobalDataCollectorService.UserId = context.Users.ToList().LastOrDefault().Id;
                 }
                 else
                 {
@@ -84,7 +82,7 @@ namespace Ahed_project.Services
                 }
                 return GetUserData(token.token);
             }
-            catch (Exception e)
+            catch
             {
                 return null;
             }
@@ -95,7 +93,7 @@ namespace Ahed_project.Services
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
-        public User GetUserData(string token)
+        public static User GetUserData(string token)
         {
             var wt = new JsonWebToken(token);
             var user = new User();

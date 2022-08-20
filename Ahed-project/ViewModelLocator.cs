@@ -28,6 +28,7 @@ namespace Ahed_project
             services.AddSingleton<ProjectsWindowViewModel>();
             services.AddSingleton<ProductsViewModel>();
             services.AddSingleton<ProjectPageViewModel>();
+            services.AddSingleton<HeatBalanceViewModel>();
             services.AddSingleton<SendDataService>();
             services.AddSingleton<PageService>();
             services.AddSingleton<WebClient>();
@@ -72,6 +73,7 @@ namespace Ahed_project
         public ProjectsWindowViewModel ProjectsWindowViewModel => _provider.GetRequiredService<ProjectsWindowViewModel>();
         public ProductsViewModel ProductsViewModel => _provider.GetRequiredService<ProductsViewModel>();
         public ProjectPageViewModel ProjectPageViewModel => _provider.GetRequiredService<ProjectPageViewModel>();
+        public HeatBalanceViewModel HeatBalanceViewModel => _provider.GetRequiredService<HeatBalanceViewModel>();
         // Глобильные сервисы
         public GlobalDataCollectorService GlobalDataCollectorService => _provider.GetRequiredService<GlobalDataCollectorService>();
         public GlobalFunctionsAndCallersService StartUpService => _provider.GetRequiredService<GlobalFunctionsAndCallersService>();

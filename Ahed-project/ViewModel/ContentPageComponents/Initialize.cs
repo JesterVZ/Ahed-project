@@ -31,12 +31,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         private readonly PageService _pageService;
         private readonly WindowService _windowServise;
         private readonly SendDataService _sendDataService;
-        private readonly WindowTitleService _windowTitleService;
-        private readonly IMapper _mapper;
-
-        public ObservableCollection<Calculation> CalculationCollection { get; set; }
-        public ObservableCollection<string> TubesProcess { get; set; }
-        public ObservableCollection<string> ShellProcess { get; set; }
         public ContentState ProjectState { get; set; }
         public ContentState TubesFluidState { get; set; }
         public ContentState ShellFluidState { get; set; }
@@ -82,21 +76,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             _pageService = pageService;
             _windowServise = windowService;
             _sendDataService = sendDataService;
-            _windowTitleService = windowTitleService;
-            CalculationCollection = new ObservableCollection<Calculation>();
-            TubesProcess = new ObservableCollection<string>
-            {
-                "sensible_heat",
-                "condensation"
-            };
-            ShellProcess = new ObservableCollection<string>
-            {
-                "sensible_heat",
-                "condensation"
-            };
-            _mapper = mapper;
-
-            _selectedCalculationFull = new CalculationFull();
         }
     }
 }
