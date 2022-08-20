@@ -1,23 +1,19 @@
-﻿using Ahed_project.MasterData.ProjectClasses;
-using Ahed_project.MasterData;
+﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData.CalculateClasses;
+using Ahed_project.MasterData.Products;
+using Ahed_project.MasterData.Products.SingleProduct;
+using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services.EF;
+using Ahed_project.ViewModel;
+using Ahed_project.ViewModel.ContentPageComponents;
+using AutoMapper;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Ahed_project.MasterData.Products;
-using System.Windows;
-using Ahed_project.MasterData.Products.SingleProduct;
 using System.Collections.ObjectModel;
-using Ahed_project.ViewModel.ContentPageComponents;
-using Ahed_project.ViewModel;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Ahed_project.MasterData.CalculateClasses;
-using static System.Reflection.Metadata.BlobBuilder;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace Ahed_project.Services.Global
 {
@@ -152,7 +148,7 @@ namespace Ahed_project.Services.Global
             _projectPageViewModel.ProjectInfo = projectInfoGet;
             GlobalDataCollectorService.Project = projectInfoGet;
             SetUserLastProject(projectInfoGet.project_id);
-            Task.Factory.StartNew(()=>GetCalculations(projectInfoGet.project_id.ToString()));
+            Task.Factory.StartNew(() => GetCalculations(projectInfoGet.project_id.ToString()));
             _mainViewModel.Title = projectInfoGet.name;
         }
 
@@ -183,7 +179,7 @@ namespace Ahed_project.Services.Global
         //Сохранение продукта
         public async static void SaveProject()
         {
-            Application.Current.Dispatcher.Invoke(()=>GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Идет сохранение проекта...")));
+            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Идет сохранение проекта...")));
             var projectInfoSend = _mapper.Map<ProjectInfoSend>(GlobalDataCollectorService.Project);
             string json = JsonConvert.SerializeObject(projectInfoSend);
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE, json, GlobalDataCollectorService.Project.project_id.ToString()));
@@ -229,7 +225,7 @@ namespace Ahed_project.Services.Global
         public static void SelectProductTube(SingleProductGet product)
         {
             _heatBalanceViewModel.TubesProductName = product?.name;
-            if (_heatBalanceViewModel.Calculation!=null&&_heatBalanceViewModel.Calculation?.product_id_tube != product?.product_id)
+            if (_heatBalanceViewModel.Calculation != null && _heatBalanceViewModel.Calculation?.product_id_tube != product?.product_id)
             {
                 _heatBalanceViewModel.Calculation.product_id_tube = product?.product_id;
                 Task.Factory.StartNew(UpdateCalculationProducts);
@@ -267,9 +263,9 @@ namespace Ahed_project.Services.Global
             Responce result = JsonConvert.DeserializeObject<Responce>(response);
             for (int i = 0; i < result.logs.Count; i++)
             {
-                Application.Current.Dispatcher.Invoke(()=>GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
+                Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
             }
-            Application.Current.Dispatcher.Invoke(()=>GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Сохранение выполнено успешно!")));
+            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Сохранение выполнено успешно!")));
         }
 
         //Рассчитать
@@ -282,7 +278,7 @@ namespace Ahed_project.Services.Global
             }
             CalculationSendCalc calculateSend = new CalculationSendCalc
             {
-                product_id_tube = calculation.product_id_tube?? 0,
+                product_id_tube = calculation.product_id_tube ?? 0,
                 product_id_shell = calculation.product_id_shell ?? 0,
                 flow_type = "counter_current",
                 calculate_field = "flow_shell",

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using Ahed_project.Services.EF;
-using Microsoft.EntityFrameworkCore;
+﻿using System.Windows;
 
 namespace Ahed_project
 {

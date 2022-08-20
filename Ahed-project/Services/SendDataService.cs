@@ -1,18 +1,9 @@
 ﻿using Ahed_project.MasterData;
-using Ahed_project.MasterData.CalculateClasses;
-using Ahed_project.MasterData.ProjectClasses;
-using Ahed_project.Services.EF;
 using Ahed_project.Services.Global;
 using Newtonsoft.Json;
 using RestSharp;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Ahed_project.Services
@@ -20,7 +11,7 @@ namespace Ahed_project.Services
     public class SendDataService
     {
         private readonly ServiceConfig _serviceConfig;
-        public Dictionary<string,string> Headers = new Dictionary<string, string>();
+        public Dictionary<string, string> Headers = new Dictionary<string, string>();
 
         public SendDataService(ServiceConfig serviceConfig)
         {

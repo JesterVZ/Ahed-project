@@ -1,28 +1,6 @@
 ﻿using Ahed_project.MasterData;
-using Ahed_project.MasterData.CalculateClasses;
-using Ahed_project.MasterData.Products.SingleProduct;
-using Ahed_project.MasterData.ProjectClasses;
-using Ahed_project.Pages;
 using Ahed_project.Services;
-using Ahed_project.Services.EF;
-using Ahed_project.Services.Global;
-using Ahed_project.Windows;
-using AutoMapper;
 using DevExpress.Mvvm;
-using MaterialDesignThemes.Wpf;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
 
 namespace Ahed_project.ViewModel.ContentPageComponents
 {
@@ -30,7 +8,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
     {
         private readonly PageService _pageService;
         private readonly WindowService _windowServise;
-        private readonly SendDataService _sendDataService;
         public ContentState ProjectState { get; set; }
         public ContentState TubesFluidState { get; set; }
         public ContentState ShellFluidState { get; set; }
@@ -43,8 +20,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         public ContentState ReportsState { get; set; }
         public ContentState QuoteState { get; set; }
         public ContentState ThreeDState { get; set; }
-        public ContentPageViewModel(PageService pageService, WindowService windowService, WindowTitleService windowTitleService,
-            SendDataService sendDataService, IMapper mapper)
+        public ContentPageViewModel(PageService pageService, WindowService windowService)
         {
             //инициализация
             ProjectState = new ContentState();
@@ -75,7 +51,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
             _pageService = pageService;
             _windowServise = windowService;
-            _sendDataService = sendDataService;
         }
     }
 }

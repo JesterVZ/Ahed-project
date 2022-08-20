@@ -1,20 +1,12 @@
 using Ahed_project.MasterData;
 using Ahed_project.Services.EF;
+using Ahed_project.Services.EF.Model;
+using Ahed_project.Services.Global;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Newtonsoft.Json;
 using System;
-using System.IdentityModel.Tokens;
-using System.IO;
-using System.Net;
-using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq;
-using Ahed_project.Services.EF.Model;
-using System.Threading;
-using System.Windows;
-using Ahed_project.Services.Global;
+using System.Threading.Tasks;
 
 namespace Ahed_project.Services
 {

@@ -1,17 +1,12 @@
 ﻿using Ahed_project.Services.EF.Configuration;
 using Ahed_project.Services.EF.Model;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ahed_project.Services.EF
 {
-    public class EFContext:DbContext
+    public class EFContext : DbContext
     {
         public EFContext()
         {

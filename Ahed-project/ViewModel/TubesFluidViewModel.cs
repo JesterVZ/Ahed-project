@@ -3,17 +3,11 @@ using DevExpress.Mvvm;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media;
 
 namespace Ahed_project.ViewModel
 {
-    public class TubesFluidViewModel:BindableBase
+    public class TubesFluidViewModel : BindableBase
     {
         private SingleProductGet _product;
         public SingleProductGet Product
@@ -51,7 +45,7 @@ namespace Ahed_project.ViewModel
             FourthChart = new PlotModel();
             FifthChart = new PlotModel();
             SixthChart = new PlotModel();
-            var firstSeries = new LineSeries() { Color=OxyColor.Parse("#ff8c00") };
+            var firstSeries = new LineSeries() { Color = OxyColor.Parse("#ff8c00") };
             var secondSeries = new LineSeries() { Color = OxyColor.Parse("#ff8c00") };
             var thirdSeries = new LineSeries() { Color = OxyColor.Parse("#ff8c00") };
             var fourthSeries = new LineSeries() { Color = OxyColor.Parse("#ff8c00") };

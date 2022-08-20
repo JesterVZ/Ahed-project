@@ -1,16 +1,9 @@
-﻿using Ahed_project.MasterData;
-using Ahed_project.MasterData.CalculateClasses;
-using Ahed_project.MasterData.ProjectClasses;
-using Ahed_project.Pages;
+﻿using Ahed_project.Pages;
 using Ahed_project.Services.EF;
 using Ahed_project.Services.Global;
 using Ahed_project.Windows;
 using DevExpress.Mvvm;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;

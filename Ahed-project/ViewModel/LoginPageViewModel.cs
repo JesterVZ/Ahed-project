@@ -5,13 +5,8 @@ using Ahed_project.Services.EF;
 using Ahed_project.Services.EF.Model;
 using Ahed_project.ViewModel.ContentPageComponents;
 using DevExpress.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -43,7 +38,8 @@ namespace Ahed_project.ViewModel
             }
         }
 
-        public ICommand GoToContent => new AsyncCommand(async () => {
+        public ICommand GoToContent => new AsyncCommand(async () =>
+        {
             {
                 Auth();
             }

@@ -1,16 +1,9 @@
-﻿using Ahed_project.MasterData;
-using Ahed_project.MasterData.ProjectClasses;
-using Ahed_project.Services;
+﻿using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
 using System.Linq;
+using System.Windows.Input;
 
 namespace Ahed_project.ViewModel
 {
@@ -21,7 +14,8 @@ namespace Ahed_project.ViewModel
 
         }
 
-        public ICommand SelectProject => new DelegateCommand(() => {
+        public ICommand SelectProject => new DelegateCommand(() =>
+        {
             GlobalFunctionsAndCallersService.SetProject(SelectedProject);
             GlobalFunctionsAndCallersService.ChangePage(0);
         });
@@ -50,13 +44,13 @@ namespace Ahed_project.ViewModel
         {
             if (string.IsNullOrEmpty(SearchBox))
             {
-                Projects = new ObservableCollection<ProjectInfoGet>(GlobalDataCollectorService.ProjectsCollection); 
+                Projects = new ObservableCollection<ProjectInfoGet>(GlobalDataCollectorService.ProjectsCollection);
             }
             else
             {
                 var lowSB = _searchBox.ToLower();
                 Projects = new ObservableCollection<ProjectInfoGet>(GlobalDataCollectorService.ProjectsCollection.Where
-                    (x => (x.name?.ToLower().Contains(lowSB)??false) || (x.customer?.ToLower().Contains(lowSB) ?? false)
+                    (x => (x.name?.ToLower().Contains(lowSB) ?? false) || (x.customer?.ToLower().Contains(lowSB) ?? false)
                     || (x.description?.ToLower().Contains(lowSB) ?? false) || (x.category?.ToLower().Contains(lowSB) ?? false)
                     || (x.keywords?.ToLower().Contains(lowSB) ?? false) || (x.comments?.ToLower().Contains(lowSB) ?? false)));
             }

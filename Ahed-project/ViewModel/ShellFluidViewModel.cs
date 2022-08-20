@@ -1,12 +1,8 @@
 ﻿using Ahed_project.MasterData.Products.SingleProduct;
 using DevExpress.Mvvm;
+using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
-using OxyPlot;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Ahed_project.ViewModel
