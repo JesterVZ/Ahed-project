@@ -177,13 +177,13 @@ namespace Ahed_project.Services
                 {
                     if (projectMethod == ProjectMethods.LOGIN)
                         return JsonConvert.SerializeObject(new object());
-                    Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Error", $"Excep: {response.ErrorException}, Message: {response.ErrorMessage}, Code: {response.StatusCode}")));
+                    Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Error", $"Message: {response.ErrorMessage}\r\nCode: {response.StatusCode}\r\nExcep: {response.ErrorException}")));
                     return JsonConvert.SerializeObject(new object());
                 }
             }
             catch
             {
-                Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Error", $"Excep: {response.ErrorException}, Message: {response.ErrorMessage}, Code: {response.StatusCode}")));
+                Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Error", $"Message: {response.ErrorMessage}\r\nCode: {response.StatusCode}\r\nExcep: {response.ErrorException}")));
                 return JsonConvert.SerializeObject(new object());
             }
         }
