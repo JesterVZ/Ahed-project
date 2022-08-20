@@ -4,9 +4,6 @@ using Ahed_project.MasterData.Products.SingleProduct;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services.Global;
 using DevExpress.Internal.WinApi.Windows.UI.Notifications;
-using LiveCharts;
-using LiveCharts.Configurations;
-using LiveCharts.Wpf;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -82,10 +79,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             }
         }
 
-        readonly CartesianMapper<ChartModel> ChartsConfig = Mappers.Xy<ChartModel>()
-                  .X(elem => Convert.ToDouble(elem.X))
-                  .Y(elem => Convert.ToDouble(elem.Y))
-                  .Fill(x => Brushes.DarkOrange);
         //private void CreateTubeCharts()
         //{
         //    if (SingleProductGetTubes == null) return;

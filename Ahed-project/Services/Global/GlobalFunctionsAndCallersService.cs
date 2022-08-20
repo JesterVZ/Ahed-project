@@ -33,10 +33,13 @@ namespace Ahed_project.Services.Global
         private static IMapper _mapper;
         private static MainViewModel _mainViewModel;
         private static HeatBalanceViewModel _heatBalanceViewModel;
+        private static TubesFluidViewModel _tubesFluidViewModel;
+        private static ShellFluidViewModel _shellFluidViewModel;
 
         public GlobalFunctionsAndCallersService(SendDataService sendDataService, ContentPageViewModel contentPage,
             ProjectPageViewModel projectPageViewModel, IMapper mapper,
-            MainViewModel mainViewModel, HeatBalanceViewModel heatBalanceViewModel)
+            MainViewModel mainViewModel, HeatBalanceViewModel heatBalanceViewModel, TubesFluidViewModel tubesFluidViewModel,
+            ShellFluidViewModel shellFluidViewModel)
         {
             _sendDataService = sendDataService;
             _contentPageViewModel = contentPage;
@@ -44,6 +47,8 @@ namespace Ahed_project.Services.Global
             _mapper = mapper;
             _mainViewModel = mainViewModel;
             _heatBalanceViewModel = heatBalanceViewModel;
+            _tubesFluidViewModel = tubesFluidViewModel;
+            _shellFluidViewModel = shellFluidViewModel;
         }
 
         //Первичная загрузка после входа
@@ -224,22 +229,24 @@ namespace Ahed_project.Services.Global
         public static void SelectProductTube(SingleProductGet product)
         {
             _heatBalanceViewModel.TubesProductName = product?.name;
-            if (_heatBalanceViewModel.Calculation.product_id_tube != product?.product_id)
+            if (_heatBalanceViewModel.Calculation!=null&&_heatBalanceViewModel.Calculation?.product_id_tube != product?.product_id)
             {
                 _heatBalanceViewModel.Calculation.product_id_tube = product?.product_id;
                 Task.Factory.StartNew(UpdateCalculationProducts);
             }
+            _tubesFluidViewModel.Product = product;
         }
 
         //Выбор продукта Shell
         public static void SelectProductShell(SingleProductGet product)
         {
             _heatBalanceViewModel.ShellProductName = product?.name;
-            if (_heatBalanceViewModel.Calculation.product_id_shell != product?.product_id)
+            if (_heatBalanceViewModel.Calculation != null && _heatBalanceViewModel.Calculation?.product_id_shell != product?.product_id)
             {
                 _heatBalanceViewModel.Calculation.product_id_shell = product?.product_id;
                 Task.Factory.StartNew(UpdateCalculationProducts);
             }
+            _shellFluidViewModel.Product = product;
         }
 
         //Обновить продукты в рассчете

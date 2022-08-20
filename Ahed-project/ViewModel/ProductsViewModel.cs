@@ -53,10 +53,6 @@ namespace Ahed_project.ViewModel
                 }
             }
         }
-        public ProductsViewModel()
-        {
-        }
-
         public ICommand SelectProductCommand => new AsyncCommand<object>(async (val) =>
         {
             var selected = (Node)val;

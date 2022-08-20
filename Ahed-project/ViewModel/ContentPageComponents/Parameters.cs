@@ -2,7 +2,6 @@
 using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.Products.SingleProduct;
 using Ahed_project.MasterData.ProjectClasses;
-using LiveCharts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,28 +31,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         public string ReportsValidationStatusSource { get; set; }
         public string QuoteValidationStatusSource { get; set; }
         public string ThreeDValidationStatusSource { get; set; }
-        #endregion
-        #region Shell fluid
-        /// <summary>
-        /// Для графика
-        /// </summary>
-        public SeriesCollection FirstChartShell { get; set; }
-        public SeriesCollection SecondChartShell { get; set; }
-        public SeriesCollection ThirdChartShell { get; set; }
-        public SeriesCollection FourthChartShell { get; set; }
-        public SeriesCollection FifthChartShell { get; set; }
-        public SeriesCollection SixthChartShell { get; set; }
-        #endregion
-        #region Tubes Fluid
-        /// <summary>
-        /// Для графика
-        /// </summary>
-        public SeriesCollection FirstChartTube { get; set; }
-        public SeriesCollection SecondChartTube { get; set; }
-        public SeriesCollection ThirdChartTube { get; set; }
-        public SeriesCollection FourthChartTube { get; set; }
-        public SeriesCollection FifthChartTube { get; set; }
-        public SeriesCollection SixthChartTube { get; set; }
         #endregion
     }
 }

@@ -1,0 +1,118 @@
+﻿<Page x:Class="Ahed_project.Pages.ShellFluidPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:oxy="http://oxyplot.org/wpf"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ShellFluidPage"
+      DataContext="{Binding ShellFluidViewModel,Source={StaticResource ViewModelLocator}}">
+    <ScrollViewer>
+        <StackPanel>
+            <StackPanel.Resources>
+                <Style TargetType="StackPanel" x:Key="Child">
+                    <Setter Property="Width" Value="250"/>
+                    <Setter Property="Height" Value="30"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="Orientation" Value="Horizontal"/>
+                </Style>
+                <Style TargetType="Label" x:Key="Left">
+                    <Setter Property="Width" Value="170"/>
+                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                </Style>
+                <Style TargetType="Label" x:Key="Right">
+                    <Setter Property="Width" Value="80"/>
+                    <Setter Property="HorizontalAlignment" Value="Right"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Right"/>
+                </Style>
+                <Style TargetType="Label" BasedOn="{StaticResource Left}" x:Key="LeftWMargin">
+                    <Setter Property="Margin" Value="5,0,0,0"/>
+                </Style>
+            </StackPanel.Resources>
+            <StackPanel Orientation="Horizontal" Height="30">
+                <Button Content="New Shell" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Background="#fc6" Margin="0 0 40 0"/>
+                <TextBlock Text="Shell presets" VerticalAlignment="Center" Margin="0 0 40 0"/>
+                <ComboBox Width="300">
+                    <ComboBoxItem IsSelected="True" IsEnabled="False" >
+                        <Label>--Select Shell--</Label>
+                    </ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Width="600" Margin="0 0 50 0">
+                    <TextBlock Text="Tubes shell" FontWeight="Bold"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Name" Grid.Column="0" Grid.Row="0"/>
+                        <TextBox Margin="3" Grid.Column="3" Grid.Row="0" Text="{Binding Product.name}"/>
+                        <TextBlock Text="Description" Grid.Column="0" Grid.Row="1"/>
+                        <TextBox Margin="3" Grid.Column="3" Grid.Row="1"/>
+                        <TextBlock Text="Molar mass" Grid.Column="0" Grid.Row="2"/>
+                        <TextBox Margin="3" Width="100" HorizontalAlignment="Left" Grid.Column="3" Grid.Row="2"/>
+                        <TextBlock Text="kg/rmol" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="2"/>
+                        <TextBlock Text="Saturated" Grid.Column="0" Grid.Row="3"/>
+                        <CheckBox  Margin="3" Grid.Column="2" Grid.Row="3"/>
+                    </Grid>
+                    <TabControl SelectedIndex="{Binding TabIndex, UpdateSourceTrigger=PropertyChanged}">
+                        <TabItem Header="Liquid Phase">
+                            <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" Height="500" ItemsSource="{Binding Product.props}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=liquid_phase_temperature}"/>
+                                    <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=liquid_phase_density}"/>
+                                    <DataGridTextColumn Header="Sp.Heat kcal/kg°C"  Binding="{Binding Path=liquid_phase_specific_heat}"/>
+                                    <DataGridTextColumn Header="Th.Cond kcal/mr*hr°C" Binding="{Binding Path=liquid_phase_thermal_conductivity}"/>
+                                    <DataGridTextColumn Header="C.ind.cP" Binding="{Binding Path=liquid_phase_consistency_index}"/>
+                                    <DataGridTextColumn Header="F.ind" Binding="{Binding Path=liquid_phase_f_ind}"/>
+                                    <DataGridTextColumn Header="dH kcal/kg" Binding="{Binding Path=liquid_phase_dh}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </TabItem>
+                        <TabItem Header="Gas Phase">
+                            <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" Height="500" ItemsSource="{Binding Product.props}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=gas_phase_temperature}"/>
+                                    <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=gas_phase_density}"/>
+                                    <DataGridTextColumn Header="Sp.Heat kcal/kg°C"  Binding="{Binding Path=gas_phase_specific_heat}"/>
+                                    <DataGridTextColumn Header="Th.Cond kcal/mr*hr°C" Binding="{Binding Path=gas_phase_thermal_conductivity}"/>
+                                    <DataGridTextColumn Header="Dyn Visc cP" Binding="{Binding Path=gas_phase_dyn_visc_gas}"/>
+                                    <DataGridTextColumn Header="Vapour pressure bar-a" Binding="{Binding Path=gas_phase_p_vap}"/>
+                                    <DataGridTextColumn Header="Mass Vapour Fraction %" Binding="{Binding Path=gas_phase_vapour_frac}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </TabItem>
+                    </TabControl>
+                </StackPanel>
+                <StackPanel Width="1000">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <oxy:PlotView Grid.Column="0" Grid.Row="0" Height="200" Model="{Binding FirstChart, UpdateSourceTrigger=PropertyChanged}"/>
+                        <oxy:PlotView Grid.Column="1" Grid.Row="0" Height="200" Model="{Binding SecondChart, UpdateSourceTrigger=PropertyChanged}"/>
+                        <oxy:PlotView Grid.Column="0" Grid.Row="1" Height="200" Model="{Binding ThirdChart, UpdateSourceTrigger=PropertyChanged}"/>
+                        <oxy:PlotView Grid.Column="1" Grid.Row="1" Height="200" Model="{Binding FourthChart, UpdateSourceTrigger=PropertyChanged}"/>
+                        <oxy:PlotView Grid.Column="0" Grid.Row="2" Height="200" Model="{Binding FifthChart, UpdateSourceTrigger=PropertyChanged}"/>
+                        <oxy:PlotView Grid.Column="1" Grid.Row="2" Height="200" Model="{Binding SixthChart, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
