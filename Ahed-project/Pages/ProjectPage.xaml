@@ -8,9 +8,6 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ProjectPage"
       DataContext="{Binding ProjectPageViewModel, Source={StaticResource ViewModelLocator}}">
-    <Page.InputBindings>
-        <KeyBinding Key="S" Command="{Binding SaveProject}" Modifiers="Ctrl"/>
-    </Page.InputBindings>
     <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="927" >
         <Grid>
             <Grid.Resources>

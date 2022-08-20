@@ -11,7 +11,6 @@
       mc:Ignorable="d"
       DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}"
       attach:MyAttachedBehaviors.LoadedCommand="{Binding SelectLastProject}"
-
       Title="ContentPage" >
     <Page.Resources>
         <Style TargetType="{x:Type TabItem}">
@@ -58,8 +57,8 @@
     </Page.Resources>
     <Page.InputBindings>
         <KeyBinding Key="N" Command="{Binding NewProjectCommand}" Modifiers="Ctrl"/>
+        <KeyBinding Key="S" Command="{Binding SaveCommand}" Modifiers="Ctrl"/>
     </Page.InputBindings>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="18"/>

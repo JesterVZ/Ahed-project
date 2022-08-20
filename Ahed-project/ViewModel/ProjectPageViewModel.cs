@@ -42,12 +42,6 @@ namespace Ahed_project.ViewModel
         public string CalculationName { get; set; }
         #endregion
         #region Comms
-
-        public ICommand SaveProject => new AsyncCommand(async () =>
-        {
-            Task.Factory.StartNew(GlobalFunctionsAndCallersService.SaveProject);
-        });
-
         public ICommand CreateCalculationCommand => new AsyncCommand(async () =>
         {
             await Task.Factory.StartNew(()=>GlobalFunctionsAndCallersService.CreateCalculation(CalculationName));

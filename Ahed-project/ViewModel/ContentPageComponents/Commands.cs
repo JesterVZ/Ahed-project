@@ -86,6 +86,11 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             }
         });
 
+        public ICommand SaveCommand => new AsyncCommand(async () =>
+        {
+            Task.Factory.StartNew(GlobalFunctionsAndCallersService.SaveProject);
+        });
+
         public ICommand CalculateCommand => new AsyncCommand(async () =>
         {
             if (SelectedCalulationFull?.project_id == 0)

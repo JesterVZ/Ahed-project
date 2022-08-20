@@ -15,7 +15,8 @@ namespace Ahed_project.ViewModel
     {
         private readonly PageService _pageService;
         public Page PageSource { get; set; }
-        public string Title { get; set; }
+        private string _title="";
+        public string Title { get => _title; set => _title = value; }
 
         public MainViewModel(PageService pageService)
         {
