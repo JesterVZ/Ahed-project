@@ -42,8 +42,6 @@ namespace Ahed_project.Services.Global
         #region Products
         public static Dictionary<string, List<SingleProductGet>> AllProducts { get; set; }
         public static ObservableCollection<Node> Nodes { get; set; }
-        public static SingleProductGet SelectedProductShell { get; set; }
-        public static SingleProductGet SelectedProductTubes { get; set; }
         #endregion
     }
 }

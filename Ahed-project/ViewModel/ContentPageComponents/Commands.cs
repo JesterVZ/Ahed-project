@@ -64,46 +64,12 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
         public ICommand NewProjectCommand => new AsyncCommand(async () =>
         {
-            GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Начало создания проекта..."));
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CREATE, ""));
-            if (response != null)
-            {
-                try
-                {
-                    Responce result = JsonConvert.DeserializeObject<Responce>(response);
-                    for (int i = 0; i < result.logs.Count; i++)
-                    {
-                        GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message));
-                    }
-                    var newProj = JsonConvert.DeserializeObject<ProjectInfoGet>(result.data.ToString());
-                    GlobalDataCollectorService.ProjectsCollection.Add(newProj);
-                    GlobalFunctionsAndCallersService.SetProject(newProj);
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
+            Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CreateNewProject());
         });
 
         public ICommand SaveCommand => new AsyncCommand(async () =>
         {
             Task.Factory.StartNew(GlobalFunctionsAndCallersService.SaveProject);
         });
-
-        public ICommand CalculateCommand => new AsyncCommand(async () =>
-        {
-        });
-
-        public ICommand CreateShellChartsCommand => new DelegateCommand(() =>
-        {
-            CreateShellCharts();
-        });
-
-        public ICommand CreateTubeChartsCommand => new DelegateCommand(() =>
-        {
-            CreateTubeCharts();
-        });
-
     }
 }

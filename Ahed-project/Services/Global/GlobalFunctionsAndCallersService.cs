@@ -49,7 +49,7 @@ namespace Ahed_project.Services.Global
         //Первичная загрузка после входа
         public static async Task SetupUserDataAsync()
         {
-            GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка последних проектов..."));
+            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка последних проектов...")));
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PROJECTS, ""));
             Responce result = JsonConvert.DeserializeObject<Responce>(response);
             List<ProjectInfoGet> projects = JsonConvert.DeserializeObject<List<ProjectInfoGet>>(result.data.ToString());
@@ -65,7 +65,7 @@ namespace Ahed_project.Services.Global
                 }
                 if (id != 0)
                     SetProject(projects.FirstOrDefault(x => x.project_id == id));
-                GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Загрузка проекта выполнена успешно!"));
+                Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Загрузка проекта выполнена успешно!")));
             }
             Task.Factory.StartNew(DownLoadProducts);
         }
@@ -203,7 +203,7 @@ namespace Ahed_project.Services.Global
             Responce result = JsonConvert.DeserializeObject<Responce>(response);
             for (int i = 0; i < result.logs.Count; i++)
             {
-                GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message));
+                Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
             }
             CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
             Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations.Add(calculationGet));
@@ -224,12 +224,45 @@ namespace Ahed_project.Services.Global
         public static void SelectProductTube(SingleProductGet product)
         {
             _heatBalanceViewModel.TubesProductName = product?.name;
+            if (_heatBalanceViewModel.Calculation.product_id_tube != product?.product_id)
+            {
+                _heatBalanceViewModel.Calculation.product_id_tube = product?.product_id;
+                Task.Factory.StartNew(UpdateCalculationProducts);
+            }
         }
 
         //Выбор продукта Shell
         public static void SelectProductShell(SingleProductGet product)
         {
             _heatBalanceViewModel.ShellProductName = product?.name;
+            if (_heatBalanceViewModel.Calculation.product_id_shell != product?.product_id)
+            {
+                _heatBalanceViewModel.Calculation.product_id_shell = product?.product_id;
+                Task.Factory.StartNew(UpdateCalculationProducts);
+            }
+        }
+
+        //Обновить продукты в рассчете
+        public static async void UpdateCalculationProducts()
+        {
+            if (_heatBalanceViewModel.Calculation == null)
+            {
+                MessageBox.Show("Не выбран рассчет, следует выбрать для внесения данных", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            CalculationUpdate calculationUpdate = new()
+            {
+                product_id_tube = _heatBalanceViewModel.Calculation.product_id_tube ?? 0,
+                product_id_shell = _heatBalanceViewModel.Calculation.product_id_shell ?? 0,
+            };
+            string json = JsonConvert.SerializeObject(calculationUpdate);
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, _heatBalanceViewModel.Calculation.project_id.ToString(), _heatBalanceViewModel.Calculation.calculation_id.ToString()));
+            Responce result = JsonConvert.DeserializeObject<Responce>(response);
+            for (int i = 0; i < result.logs.Count; i++)
+            {
+                Application.Current.Dispatcher.Invoke(()=>GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
+            }
+            Application.Current.Dispatcher.Invoke(()=>GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Сохранение выполнено успешно!")));
         }
 
         //Рассчитать
@@ -264,12 +297,37 @@ namespace Ahed_project.Services.Global
             {
                 for (int i = 0; i < result.logs.Count; i++)
                 {
-                    GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message));
+                    Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
                 }
                 CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
                 calculationGet.calculation_id = calculation.calculation_id;
                 calculationGet.project_id = calculation.project_id;
                 _heatBalanceViewModel.Calculation = calculationGet;
+            }
+        }
+
+        //Создать проект
+        public static async void CreateNewProject()
+        {
+            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Начало создания проекта...")));
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CREATE, ""));
+            if (response != null)
+            {
+                try
+                {
+                    Responce result = JsonConvert.DeserializeObject<Responce>(response);
+                    for (int i = 0; i < result.logs.Count; i++)
+                    {
+                        Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
+                    }
+                    var newProj = JsonConvert.DeserializeObject<ProjectInfoGet>(result.data.ToString());
+                    GlobalDataCollectorService.ProjectsCollection.Add(newProj);
+                    SetProject(newProj);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
     }

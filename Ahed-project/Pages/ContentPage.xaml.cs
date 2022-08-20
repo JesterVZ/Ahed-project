@@ -25,12 +25,9 @@ namespace Ahed_project.Pages
     /// </summary>
     public partial class ContentPage : Page
     {
-        public ContentPage(ContentPageViewModel vm)
+        public ContentPage()
         {
             InitializeComponent();
-            DataContext = vm;
-            vm.SetNamesTubes = SetNameTubes;
-            vm.SetNamesShell = SetNameShells;
             PrepareLogs();
         }
 

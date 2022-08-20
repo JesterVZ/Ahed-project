@@ -57,7 +57,7 @@ namespace Ahed_project.ViewModel
             Loading = Visibility.Hidden;
             if (result.Result is User)
             {
-                _pageService.ChangePage(new ContentPage(_contentPageViewModel));
+                _pageService.ChangePage(new ContentPage());
             }
             else if (result.Result is null || result.Result is string)
             {
