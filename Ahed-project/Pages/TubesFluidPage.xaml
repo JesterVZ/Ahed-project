@@ -31,7 +31,7 @@
                     <Setter Property="Margin" Value="5,0,0,0"/>
                 </Style>
             </StackPanel.Resources>
-            <StackPanel Orientation="Horizontal" Height="30">
+            <StackPanel Orientation="Horizontal" Height="30" Visibility="Hidden">
                 <Button Content="New Fluid" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Background="#fc6" Margin="0 0 40 0"/>
                 <TextBlock Text="Fluid presets" VerticalAlignment="Center" Margin="0 0 40 0"/>
                 <ComboBox Width="300">
