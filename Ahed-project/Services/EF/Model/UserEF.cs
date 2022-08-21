@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Ahed_project.Services.EF.Model
 {
@@ -32,7 +27,7 @@ namespace Ahed_project.Services.EF.Model
         /// Зайдено или нет
         /// </summary>
         public bool IsActive { get; set; }
-        
+
         /// <summary>
         /// Id последнего проекта
         /// </summary>

@@ -1,12 +1,6 @@
 ﻿using Ahed_project.Pages;
 using Ahed_project.Services;
-using Ahed_project.Services.EF;
 using DevExpress.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace Ahed_project.ViewModel
@@ -14,15 +8,13 @@ namespace Ahed_project.ViewModel
     public class MainViewModel : BindableBase
     {
         private readonly PageService _pageService;
-        private readonly WindowTitleService _windowTitleService;
         public Page PageSource { get; set; }
-        public string Title { get; set; }
+        private string _title = "";
+        public string Title { get => _title; set => _title = value; }
 
-        public MainViewModel(PageService pageService, Logs logs, WindowTitleService windowTitleService)
+        public MainViewModel(PageService pageService)
         {
             _pageService = pageService;
-            _windowTitleService = windowTitleService;
-            _windowTitleService.TitleChanged += (title) => Title = title;
             _pageService.OnPageChanged += (page) => PageSource = page;
             _pageService.ChangePage(new LoginPage());
         }

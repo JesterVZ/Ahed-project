@@ -3,15 +3,11 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Ahed_project.Pages"
       xmlns:SVG="http://sharpvectors.codeplex.com/svgc/"
       xmlns:attach="clr-namespace:Ahed_project.Services"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       mc:Ignorable="d"
       DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}"
-      attach:MyAttachedBehaviors.LoadedCommand="{Binding SelectLastProject}"
-
       Title="ContentPage" >
     <Page.Resources>
         <Style TargetType="{x:Type TabItem}">
@@ -57,10 +53,9 @@
         </Style>
     </Page.Resources>
     <Page.InputBindings>
-        <KeyBinding Key="S" Command="{Binding SaveComand}" Modifiers="Ctrl"/>
         <KeyBinding Key="N" Command="{Binding NewProjectCommand}" Modifiers="Ctrl"/>
+        <KeyBinding Key="S" Command="{Binding SaveCommand}" Modifiers="Ctrl"/>
     </Page.InputBindings>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="18"/>
@@ -106,7 +101,7 @@
                 <MenuItem Header="Release Notes"></MenuItem>
             </MenuItem>
         </Menu>
-        <TabControl Grid.Row="1" x:Name="Tabs" VerticalAlignment="Stretch" TabStripPlacement="Left" HorizontalAlignment="Stretch" FontSize="20">
+        <TabControl Grid.Row="1" x:Name="Tabs" VerticalAlignment="Stretch" TabStripPlacement="Left" HorizontalAlignment="Stretch" FontSize="20" SelectedIndex="{Binding SelectedPage, UpdateSourceTrigger=PropertyChanged}">
             <TabItem FontSize="12">
                 <TabItem.Header>
                     <Grid Width="130">
@@ -119,145 +114,8 @@
                         <Label Grid.Column="1" HorizontalAlignment="Center" FontSize="12">Project</Label>
                         <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=ProjectValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
-                    
                 </TabItem.Header>
-                <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="927" >
-                    <StackPanel DataContext="{Binding ProjectInfo}">
-
-                        <Grid>
-                            <Grid.Resources>
-                                <Style TargetType="TextBox" x:Key="Default">
-                                    <Setter Property="Height" Value="30"/>
-                                    <Setter Property="VerticalContentAlignment" Value="Center"/>
-                                </Style>
-                                <Style TargetType="TextBlock" x:Key="DefaultText">
-                                    <Setter Property="VerticalAlignment" Value="Center"/>
-                                </Style>
-                                <Style BasedOn="{StaticResource Default}" TargetType="TextBox" x:Key="Colored">
-                                    <Setter Property="Background" Value="#f9efe5"/>
-                                    <Setter Property="IsEnabled" Value="False"/>
-                                </Style>
-                            </Grid.Resources>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition MaxWidth="800"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="200"/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition Height="100"/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                    <RowDefinition Height="100"/>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" FontWeight="Bold">Project</TextBlock>
-                                <TextBlock Style="{StaticResource DefaultText}" Text="Id"  Grid.Column="0" Grid.Row="1"/>
-                                <TextBlock Style="{StaticResource DefaultText}" Text="Name" Grid.Column="0" Grid.Row="2"/>
-                                <TextBlock Style="{StaticResource DefaultText}" Text="Customer" Grid.Column="0" Grid.Row="3"/>
-                                <TextBlock Style="{StaticResource DefaultText}" Text="Contact" Grid.Column="0" Grid.Row="4"/>
-                                <TextBlock VerticalAlignment="Top" Text="Description" Grid.Column="0" Grid.Row="5"/>
-                                <TextBlock Style="{StaticResource DefaultText}" Text="Units" Grid.Column="0" Grid.Row="6"/>
-
-                                <TextBox Margin="3" Style="{StaticResource Colored}" Text="{Binding project_id, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" />
-                                <TextBlock Margin="3" Style="{StaticResource DefaultText}" Text="Revision" Grid.Column="2" Grid.Row="1"/>
-                                <TextBox Margin="3" Style="{StaticResource Default}" Text="{Binding revision, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="1"/>
-                                <TextBox Margin="3" Style="{StaticResource Default}" Text="{Binding name, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1"/>
-                                <TextBox Margin="3" Style="{StaticResource Default}" Text="{Binding customer, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="3" Grid.Row="3" Grid.Column="1"/>
-
-                                <TextBox Margin="3" Style="{StaticResource Default}" Text="{Binding contact, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
-                                <TextBlock Margin="3" Style="{StaticResource DefaultText}" Text="Customer reference" Grid.Column="2"  Grid.Row="4"/>
-                                <TextBox Margin="3" Style="{StaticResource Default}" Text="{Binding customer_reference, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3"  Grid.Row="4"/>
-
-                                <TextBox Margin="3" TextWrapping="Wrap" Text="{Binding description, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3"/>
-                                <ComboBox Margin="3" Grid.Row="6" Grid.Column="1">
-                                    <ComboBoxItem IsSelected="True" IsEnabled="True">
-                                        <Label>Metric</Label>
-                                    </ComboBoxItem>
-                                    <ComboBoxItem IsSelected="False" IsEnabled="True">
-                                        <Label>Si</Label>
-                                    </ComboBoxItem>
-                                </ComboBox>
-                                <TextBlock Margin="3" Style="{StaticResource DefaultText}" Text="Number of decimals" Grid.Row="6" Grid.Column="2"/>
-                                <TextBox Margin="3" Style="{StaticResource Default}" Text="{Binding number_of_decimals, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="6"/>
-                                <TextBlock Margin="3" Grid.Column="0" Grid.Row="7" FontWeight="Bold">Project Processes</TextBlock>
-                                <TextBox Margin="3" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2" DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding CalculationName, UpdateSourceTrigger=PropertyChanged}"/>
-                                <Button Grid.Row="7" Grid.Column="3" Margin="3" DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Command="{Binding CreateCalculationCommand}">Add</Button>
-                                <ListView Margin="3" Grid.Row="8" SelectedIndex="0" Grid.Column="1" Grid.ColumnSpan="3" DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" ItemsSource="{Binding CalculationCollection}" SelectedItem="{Binding SelectedCalculation}" >
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding name}"/>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                                <StackPanel Margin="3" Orientation="Horizontal" Grid.Column="0" Grid.Row="9">
-                                    <TextBlock Grid.ColumnSpan="4" FontWeight="Bold" Margin="0 0 9 0">Advanced Properties</TextBlock>
-                                </StackPanel>
-
-                                <Grid Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="133"/>
-                                        <ColumnDefinition Width="67"/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Style="{StaticResource DefaultText}" Text="Created"  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"/>
-                                    <TextBlock Style="{StaticResource DefaultText}" Text="Modified"  Grid.Column="3" Grid.Row="1"/>
-                                    <TextBlock Style="{StaticResource DefaultText}" Text="User Email"  Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,7"/>
-                                    <TextBox Margin="3" Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="2"/>
-                                    <TextBlock Style="{StaticResource DefaultText}" Text="User Email"  Grid.Column="3" Grid.Row="2" Margin="3,7"/>
-                                    <TextBox Margin="3" Style="{StaticResource Colored}" Grid.Column="4" Grid.Row="2"/>
-
-                                    <TextBlock Style="{StaticResource DefaultText}" Text="Company"  Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="0,7"/>
-                                    <TextBox Margin="3" Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="3"/>
-                                    <TextBlock Style="{StaticResource DefaultText}" Text="Company"  Grid.Column="3" Grid.Row="3" Margin="3,7"/>
-                                    <TextBox  Margin="3" Style="{StaticResource Colored}" Grid.Column="4" Grid.Row="3"/>
-
-                                    <TextBlock Style="{StaticResource DefaultText}" Text="Date"  Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="0,7"/>
-                                    <TextBox Margin="3" Style="{StaticResource Colored}" Text="{Binding createdAt, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4"/>
-                                    <TextBlock Style="{StaticResource DefaultText}" Text="Date"  Grid.Column="3" Grid.Row="4" Margin="3,7"/>
-                                    <TextBox Margin="3" Style="{StaticResource Colored}" Text="{Binding updatedAt, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="4"/>
-
-                                    <TextBlock Style="{StaticResource DefaultText}" Text="Number of saves"  Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Margin="0,7"/>
-                                    <TextBox  Margin="3" Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="5"/>
-                                    <TextBlock Style="{StaticResource DefaultText}" Text="Shared in groups:"  Grid.Column="3" Grid.Row="5" Margin="3,7"/>
-
-                                    <TextBlock Style="{StaticResource DefaultText}" Text="Category"  Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Margin="0,7"/>
-                                    <TextBox  Margin="3" Style="{StaticResource Default}" Text="{Binding category, UpdateSourceTrigger=LostFocus}" Grid.Column="2" Grid.Row="6"/>
-
-                                    <TextBlock Style="{StaticResource DefaultText}" Text="Keywords"  Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Margin="0,7"/>
-                                    <TextBox  Margin="3" Style="{StaticResource Default}" Text="{Binding keywords,UpdateSourceTrigger=LostFocus}" Grid.Column="2" Grid.Row="7"/>
-
-                                    <TextBlock  Text="Comments"  Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2"/>
-                                    <TextBox Margin="3" Height="100" Text="{Binding comments, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="3"/>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-
-                    </StackPanel>
-                </ScrollViewer>
+                <Frame Source="ProjectPage.xaml"/>
             </TabItem>
 
             <TabItem FontSize="12" IsEnabled="{Binding Path=TubesFluidState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
@@ -273,129 +131,7 @@
                         <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=TubesFluidValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" >
-                    <StackPanel>
-                        <StackPanel.Resources>
-                            <Style TargetType="StackPanel" x:Key="Child">
-                                <Setter Property="Width" Value="250"/>
-                                <Setter Property="Height" Value="30"/>
-                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                <Setter Property="Orientation" Value="Horizontal"/>
-                            </Style>
-                            <Style TargetType="Label" x:Key="Left">
-                                <Setter Property="Width" Value="170"/>
-                                <Setter Property="HorizontalAlignment" Value="Left"/>
-                            </Style>
-                            <Style TargetType="Label" x:Key="Right">
-                                <Setter Property="Width" Value="80"/>
-                                <Setter Property="HorizontalAlignment" Value="Right"/>
-                                <Setter Property="HorizontalContentAlignment" Value="Right"/>
-                            </Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource Left}" x:Key="LeftWMargin">
-                                <Setter Property="Margin" Value="5,0,0,0"/>
-                            </Style>
-                        </StackPanel.Resources>
-                        <StackPanel Orientation="Horizontal" Height="30">
-                            <Button Content="New Fluid" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Background="#fc6" Margin="0 0 40 0"/>
-                            <TextBlock Text="Fluid presets" VerticalAlignment="Center" Margin="0 0 40 0"/>
-                            <ComboBox Width="300">
-                                <ComboBoxItem IsSelected="True" IsEnabled="False" >
-                                    <Label>--Select Fluid--</Label>
-                                </ComboBoxItem>
-                            </ComboBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel DataContext="{Binding SingleProductGetTubes}" Width="600" Margin="0 0 50 0">
-                                <TextBlock Text="Tubes fluid" FontWeight="Bold"/>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="0.5*"/>
-                                        <ColumnDefinition Width="0.5*"/>
-                                        <ColumnDefinition Width="2*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text="Name" Grid.Column="0" Grid.Row="0"/>
-                                    <TextBox Margin="3" Grid.Column="3" Grid.Row="0" Text="{Binding name}"/>
-                                    <TextBlock Text="Description" Grid.Column="0" Grid.Row="1"/>
-                                    <TextBox Margin="3" Grid.Column="3" Grid.Row="1"/>
-                                    <TextBlock Text="Molar mass" Grid.Column="0" Grid.Row="2"/>
-                                    <TextBox Margin="3" Width="100" HorizontalAlignment="Left" Grid.Column="3" Grid.Row="2"/>
-                                    <TextBlock Text="kg/rmol" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="2"/>
-                                    <TextBlock Text="Saturated" Grid.Column="0" Grid.Row="3"/>
-                                    <CheckBox  Margin="3" Grid.Column="2" Grid.Row="3"/>
-                                </Grid>
-                                <TabControl DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" SelectedIndex="{Binding TubePhaseIndex, UpdateSourceTrigger=PropertyChanged}">
-                                    <TabItem Header="Liquid Phase">
-                                        <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" Height="500" ItemsSource="{Binding SingleProductGetTubes.props}">
-                                            <DataGrid.Columns>
-                                                <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=liquid_phase_temperature}"/>
-                                                <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=liquid_phase_density}"/>
-                                                <DataGridTextColumn Header="Sp.Heat kcal/kg°C"  Binding="{Binding Path=liquid_phase_specific_heat}"/>
-                                                <DataGridTextColumn Header="Th.Cond kcal/mr*hr°C" Binding="{Binding Path=liquid_phase_thermal_conductivity}"/>
-                                                <DataGridTextColumn Header="C.ind.cP" Binding="{Binding Path=liquid_phase_consistency_index}"/>
-                                                <DataGridTextColumn Header="F.ind" Binding="{Binding Path=liquid_phase_f_ind}"/>
-                                                <DataGridTextColumn Header="dH kcal/kg" Binding="{Binding Path=liquid_phase_dh}"/>
-                                            </DataGrid.Columns>
-                                        </DataGrid>
-                                    </TabItem>
-                                    <TabItem Header="Gas Phase">
-                                        <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" Height="500" ItemsSource="{Binding SingleProductGetTubes.props}">
-                                            <DataGrid.Columns>
-                                                <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=gas_phase_temperature}"/>
-                                                <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=gas_phase_density}"/>
-                                                <DataGridTextColumn Header="Sp.Heat kcal/kg°C"  Binding="{Binding Path=gas_phase_specific_heat}"/>
-                                                <DataGridTextColumn Header="Th.Cond kcal/mr*hr°C" Binding="{Binding Path=gas_phase_thermal_conductivity}"/>
-                                                <DataGridTextColumn Header="Dyn Visc cP" Binding="{Binding Path=gas_phase_dyn_visc_gas}"/>
-                                                <DataGridTextColumn Header="Vapour pressure bar-a" Binding="{Binding Path=gas_phase_p_vap}"/>
-                                                <DataGridTextColumn Header="Mass Vapour Fraction %" Binding="{Binding Path=gas_phase_vapour_frac}"/>
-                                            </DataGrid.Columns>
-                                        </DataGrid>
-                                    </TabItem>
-                                </TabControl>
-                            </StackPanel>
-                            <StackPanel Width="1000">
-                                <Grid>
-                                    <Grid.Resources>
-                                        <Style TargetType="lvc:LineSeries">
-                                            <Setter Property="StrokeThickness" Value="0.5"/>
-                                            <Setter Property="PointGeometrySize" Value="4"/>
-                                        </Style>
-                                        <Style TargetType="lvc:CartesianChart">
-                                            <Setter Property="SeriesColors">
-                                                <Setter.Value>
-                                                    <lvc:ColorsCollection>
-                                                        <Color>DarkOrange</Color>
-                                                    </lvc:ColorsCollection>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </Grid.Resources>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <lvc:CartesianChart x:Name="FirstChartTubes" Grid.Column="0" Grid.Row="0" Height="200" Series="{Binding FirstChartTube}" LegendLocation="None"/>
-                                    <lvc:CartesianChart x:Name="SecondChartTubes" Grid.Column="1" Grid.Row="0" Height="200" Series="{Binding SecondChartTube}" LegendLocation="None"/>
-                                    <lvc:CartesianChart x:Name="ThirdChartTubes" Grid.Column="0" Grid.Row="1" Height="200" Series="{Binding ThirdChartTube}" LegendLocation="None"/>
-                                    <lvc:CartesianChart x:Name="FourthChartTubes" Grid.Column="1" Grid.Row="1" Height="200" Series="{Binding FourthChartTube}" LegendLocation="None"/>
-                                    <lvc:CartesianChart x:Name="FifthChartTubes" Grid.Column="0" Grid.Row="2" Height="200" Series="{Binding FifthChartTube}" LegendLocation="None"/>
-                                    <lvc:CartesianChart x:Name="SixthChartTubes" Grid.Column="1" Grid.Row="2" Height="200" Series="{Binding SixthChartTube}" LegendLocation="None"/>
-                                </Grid>
-                            </StackPanel>
-                        </StackPanel>
-
-                    </StackPanel>
-                </ScrollViewer>
+                <Frame Source="TubesFluidPage.xaml"/>
             </TabItem>
             <TabItem  FontSize="12" IsEnabled="{Binding Path=ShellFluidState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
                 <TabItem.Header>
@@ -409,131 +145,8 @@
                         <Label Grid.Column="1" HorizontalAlignment="Center" FontSize="12">Shell fluid</Label>
                         <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=ShellFluidValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
-                    
                 </TabItem.Header>
-                <ScrollViewer>
-                    <StackPanel DataContext="{Binding SingleProductGetShell}">
-                        <StackPanel.Resources>
-                            <Style TargetType="StackPanel" x:Key="Child">
-                                <Setter Property="Width" Value="250"/>
-                                <Setter Property="Height" Value="30"/>
-                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                <Setter Property="Orientation" Value="Horizontal"/>
-                            </Style>
-                            <Style TargetType="Label" x:Key="Left">
-                                <Setter Property="Width" Value="170"/>
-                                <Setter Property="HorizontalAlignment" Value="Left"/>
-                            </Style>
-                            <Style TargetType="Label" x:Key="Right">
-                                <Setter Property="Width" Value="80"/>
-                                <Setter Property="HorizontalAlignment" Value="Right"/>
-                                <Setter Property="HorizontalContentAlignment" Value="Right"/>
-                            </Style>
-                            <Style TargetType="Label" BasedOn="{StaticResource Left}" x:Key="LeftWMargin">
-                                <Setter Property="Margin" Value="5,0,0,0"/>
-                            </Style>
-                        </StackPanel.Resources>
-                        <StackPanel Orientation="Horizontal" Height="30">
-                            <Button Content="New Shell" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Background="#fc6" Margin="0 0 40 0"/>
-                            <TextBlock Text="Shell presets" VerticalAlignment="Center" Margin="0 0 40 0"/>
-                            <ComboBox Width="300">
-                                <ComboBoxItem IsSelected="True" IsEnabled="False" >
-                                    <Label>--Select Shell--</Label>
-                                </ComboBoxItem>
-                            </ComboBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel Width="600" Margin="0 0 50 0">
-                                <TextBlock Text="Tubes shell" FontWeight="Bold"/>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="0.5*"/>
-                                        <ColumnDefinition Width="0.5*"/>
-                                        <ColumnDefinition Width="2*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text="Name" Grid.Column="0" Grid.Row="0"/>
-                                    <TextBox Margin="3" Grid.Column="3" Grid.Row="0" Text="{Binding name}"/>
-                                    <TextBlock Text="Description" Grid.Column="0" Grid.Row="1"/>
-                                    <TextBox Margin="3" Grid.Column="3" Grid.Row="1"/>
-                                    <TextBlock Text="Molar mass" Grid.Column="0" Grid.Row="2"/>
-                                    <TextBox Margin="3" Width="100" HorizontalAlignment="Left" Grid.Column="3" Grid.Row="2"/>
-                                    <TextBlock Text="kg/rmol" Grid.Column="1" HorizontalAlignment="Right" Grid.Row="2"/>
-                                    <TextBlock Text="Saturated" Grid.Column="0" Grid.Row="3"/>
-                                    <CheckBox  Margin="3" Grid.Column="2" Grid.Row="3"/>
-                                </Grid>
-                                <TabControl DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" SelectedIndex="{Binding ShellPhaseIndex, UpdateSourceTrigger=PropertyChanged}">
-                                    <TabItem Header="Liquid Phase">
-                                        <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" Height="500" ItemsSource="{Binding SingleProductGetShell.props}">
-                                            <DataGrid.Columns>
-                                                <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=liquid_phase_temperature}"/>
-                                                <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=liquid_phase_density}"/>
-                                                <DataGridTextColumn Header="Sp.Heat kcal/kg°C"  Binding="{Binding Path=liquid_phase_specific_heat}"/>
-                                                <DataGridTextColumn Header="Th.Cond kcal/mr*hr°C" Binding="{Binding Path=liquid_phase_thermal_conductivity}"/>
-                                                <DataGridTextColumn Header="C.ind.cP" Binding="{Binding Path=liquid_phase_consistency_index}"/>
-                                                <DataGridTextColumn Header="F.ind" Binding="{Binding Path=liquid_phase_f_ind}"/>
-                                                <DataGridTextColumn Header="dH kcal/kg" Binding="{Binding Path=liquid_phase_dh}"/>
-                                            </DataGrid.Columns>
-                                        </DataGrid>
-                                    </TabItem>
-                                    <TabItem Header="Gas Phase">
-                                        <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" Height="500" ItemsSource="{Binding SingleProductGetShell.props}">
-                                            <DataGrid.Columns>
-                                                <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=gas_phase_temperature}"/>
-                                                <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=gas_phase_density}"/>
-                                                <DataGridTextColumn Header="Sp.Heat kcal/kg°C"  Binding="{Binding Path=gas_phase_specific_heat}"/>
-                                                <DataGridTextColumn Header="Th.Cond kcal/mr*hr°C" Binding="{Binding Path=gas_phase_thermal_conductivity}"/>
-                                                <DataGridTextColumn Header="Dyn Visc cP" Binding="{Binding Path=gas_phase_dyn_visc_gas}"/>
-                                                <DataGridTextColumn Header="Vapour pressure bar-a" Binding="{Binding Path=gas_phase_p_vap}"/>
-                                                <DataGridTextColumn Header="Mass Vapour Fraction %" Binding="{Binding Path=gas_phase_vapour_frac}"/>
-                                            </DataGrid.Columns>
-                                        </DataGrid>
-                                    </TabItem>
-                                </TabControl>
-                            </StackPanel>
-                            <StackPanel Width="1000">
-                                <Grid DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}">
-                                    <Grid.Resources>
-                                        <Style TargetType="lvc:LineSeries">
-                                            <Setter Property="StrokeThickness" Value="0.5"/>
-                                            <Setter Property="PointGeometrySize" Value="4"/>
-                                        </Style>
-                                        <Style TargetType="lvc:CartesianChart">
-                                            <Setter Property="SeriesColors">
-                                                <Setter.Value>
-                                                    <lvc:ColorsCollection>
-                                                        <Color>DarkOrange</Color>
-                                                    </lvc:ColorsCollection>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </Grid.Resources>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <lvc:CartesianChart x:Name="FirstChartShell" Grid.Column="0" Grid.Row="0" Height="200" Series="{Binding FirstChartShell}" LegendLocation="None"/>
-                                    <lvc:CartesianChart x:Name="SecondChartShell" Grid.Column="1" Grid.Row="0" Height="200" Series="{Binding SecondChartShell}" LegendLocation="None"/>
-                                    <lvc:CartesianChart x:Name="ThirdChartShell" Grid.Column="0" Grid.Row="1" Height="200" Series="{Binding ThirdChartShell}" LegendLocation="None"/>
-                                    <lvc:CartesianChart x:Name="FourthChartShell" Grid.Column="1" Grid.Row="1" Height="200" Series="{Binding FourthChartShell}" LegendLocation="None"/>
-                                    <lvc:CartesianChart x:Name="FifthChartShell" Grid.Column="0" Grid.Row="2" Height="200" Series="{Binding FifthChartShell}" LegendLocation="None"/>
-                                    <lvc:CartesianChart x:Name="SixthChartShell" Grid.Column="1" Grid.Row="2" Height="200" Series="{Binding SixthChartShell}" LegendLocation="None"/>
-
-                                </Grid>
-                            </StackPanel>
-                        </StackPanel>
-                    </StackPanel>
-                </ScrollViewer>
+                <Frame Source="ShellFluidPage.xaml"/>
             </TabItem>
             <TabItem IsEnabled="{Binding Path=HeatBalanceState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" FontSize="12">
                 <TabItem.Header>
@@ -547,354 +160,8 @@
                         <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">Heat Balance</Label>
                         <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=HeatBalanceValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
-                   
                 </TabItem.Header>
-                <ScrollViewer>
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Button x:Name="button" Content="Calculate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Background="#fc6" Command="{Binding CalculateCommand}"/>
-                            <Button x:Name="button1" Content="Swap Fluids" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="152" Background="#fc6" Visibility="Hidden"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Visibility="Hidden">
-                            <Label Margin="250,0,0,0">Flow Type</Label>
-                            <RadioButton Content="Counter current" GroupName="HeatBalanceFlowType" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                            <RadioButton Content="Co-current" GroupName="HeatBalanceFlowType" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                        </StackPanel>
-                        <Label FontWeight="Bold">Heat Balance</Label>
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel.Resources>
-                                <Style TargetType="StackPanel" x:Key="Father">
-                                    <Setter Property="Width" Value="250"/>
-                                    <Setter Property="Margin" Value="3"/>
-                                </Style>
-                            </StackPanel.Resources>
-                            <StackPanel Style="{StaticResource Father}">
-                                <StackPanel.Resources>
-                                    <Style TargetType="StackPanel" x:Key="Child">
-                                        <Setter Property="Width" Value="250"/>
-                                        <Setter Property="Height" Value="30"/>
-                                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                                        <Setter Property="Orientation" Value="Horizontal"/>
-                                        <Setter Property="Margin" Value="0,3"/>
-                                    </Style>
-                                    <Style TargetType="Label" x:Key="Left">
-                                        <Setter Property="Width" Value="170"/>
-                                        <Setter Property="HorizontalAlignment" Value="Left"/>
-                                    </Style>
-                                    <Style TargetType="Label" x:Key="Right">
-                                        <Setter Property="Width" Value="80"/>
-                                        <Setter Property="HorizontalAlignment" Value="Right"/>
-                                        <Setter Property="HorizontalContentAlignment" Value="Right"/>
-                                    </Style>
-                                    <Style TargetType="Label" BasedOn="{StaticResource Left}" x:Key="LeftWMargin">
-                                        <Setter Property="Margin" Value="5,0,0,0"/>
-                                    </Style>
-                                    <Style TargetType="Label">
-                                        <Setter Property="Height" Value="30"/>
-                                        <Setter Property="Margin" Value="0,3"/>
-                                    </Style>
-                                </StackPanel.Resources>
-                                <Label Margin="0,50,0,3">Fluid Presets</Label>
-                                <Label>Fluid Name</Label>
-                                <Label>Process</Label>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <Label Style="{StaticResource Left}">Flow</Label>
-                                    <Label Style="{StaticResource Right}">kg/hr</Label>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <Label Style="{StaticResource Left}">Temperature</Label>
-                                    <Label Style="{StaticResource Right}">°C</Label>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <Label Style="{StaticResource Left}">Duty</Label>
-                                    <Label Style="{StaticResource Right}">kcal/hr</Label>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <Label Style="{StaticResource Left}">Pressure</Label>
-                                    <Label Style="{StaticResource Right}">bar-a</Label>
-                                </StackPanel>
-                                <Label FontWeight="Bold">Liquid Phase</Label>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <Label Style="{StaticResource LeftWMargin}">Density</Label>
-                                    <Label Style="{StaticResource Right}">kg/m³</Label>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <Label Style="{StaticResource LeftWMargin}">Specific heat</Label>
-                                    <Label Style="{StaticResource Right}">kcal/kg•°С</Label>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <Label Style="{StaticResource LeftWMargin}">Thermal conductivity</Label>
-                                    <Label Style="{StaticResource Right}">kcal/m•hr•°C</Label>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <Label Style="{StaticResource LeftWMargin}">Consistency Index</Label>
-                                    <Label Style="{StaticResource Right}">cP</Label>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <Label Style="{StaticResource LeftWMargin}">Flow index</Label>
-                                    <Label Style="{StaticResource Right}"></Label>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <Label Style="{StaticResource LeftWMargin}">Latent heat</Label>
-                                    <Label Style="{StaticResource Right}">kcal/kg</Label>
-                                </StackPanel>
-                                <Label FontWeight="Bold">Gas Phase</Label>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <Label Style="{StaticResource LeftWMargin}">Density Gas</Label>
-                                    <Label Style="{StaticResource Right}">kg/m³</Label>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <Label Style="{StaticResource LeftWMargin}">Specific heat gas at constant pressure(Cp)</Label>
-                                    <Label Style="{StaticResource Right}">kcal/kg•°C</Label>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <Label Style="{StaticResource LeftWMargin}">Thermal Conductivity Gas</Label>
-                                    <Label Style="{StaticResource Right}">kcal/m•hr•°C</Label>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <Label Style="{StaticResource LeftWMargin}">Dynamic viscosity gas</Label>
-                                    <Label Style="{StaticResource Right}">cP</Label>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <Label Style="{StaticResource LeftWMargin}">Vapour pressure</Label>
-                                    <Label Style="{StaticResource Right}">bar-a</Label>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <Label Style="{StaticResource LeftWMargin}">Mass Vapour Fraction</Label>
-                                    <Label Style="{StaticResource Right}">%</Label>
-                                </StackPanel>
-                            </StackPanel>
-                            <StackPanel DataContext="{Binding Path=SelectedCalulationFull}">
-                                <StackPanel.Resources>
-                                    <Style TargetType="TextBox" x:Key="Default">
-                                        <Setter Property="Height" Value="30"/>
-                                        <Setter Property="IsEnabled" Value="false"/>
-                                        <Setter Property="Background" Value="#f9efe5"/>
-                                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                                        <Setter Property="Margin" Value="0,3"/>
-                                    </Style>
-                                    <Style TargetType="ComboBox">
-                                        <Setter Property="Height" Value="30"/>
-                                        <Setter Property="Margin" Value="0,3"/>
-                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                    </Style>
-                                    <Style TargetType="TextBox" x:Key="Enabled">
-                                        <Setter Property="Height" Value="30"/>
-                                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                                        <Setter Property="HorizontalContentAlignment" Value="Right"/>
-                                    </Style>
-                                    <Style TargetType="StackPanel" x:Key="Child">
-                                        <Setter Property="Orientation" Value="Horizontal"/>
-                                        <Setter Property="Height" Value="36"/>
-                                    </Style>
-                                    <Style BasedOn="{StaticResource Default}" TargetType="TextBox" x:Key="Sub">
-                                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                                        <Setter Property="HorizontalContentAlignment" Value="Right"/>
-                                        <Setter Property="Width" Value="125"/>
-                                        <Setter Property="Margin" Value="0,3,3,3"/>
-                                    </Style>
-                                    <Style BasedOn="{StaticResource Enabled}" TargetType="TextBox" x:Key="SubEnabled">
-                                        <Setter Property="Width" Value="125"/>
-                                        <Setter Property="Margin" Value="0,3,3,3"/>
-                                    </Style>
-                                </StackPanel.Resources>
-                                <Label HorizontalAlignment="Center" FontWeight="Bold">Tubes Side</Label>
-                                <StackPanel Orientation="Horizontal"  Height="24">
-                                    <Label FontSize="8" Width="125" HorizontalContentAlignment="Center" Foreground="Gray">Inlet</Label>
-                                    <Label FontSize="8" Width="125" HorizontalContentAlignment="Center" Foreground="Gray">Outlet</Label>
-                                </StackPanel>
-                                <ComboBox>
-                                    <ComboBoxItem IsSelected="True" IsEnabled="False">
-                                        <Label>--Select Fluid--</Label>
-                                    </ComboBoxItem>
-                                </ComboBox>
-                                <TextBox Style="{StaticResource Default}" DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SingleProductGetTubes.name, UpdateSourceTrigger=PropertyChanged}"/>
-                                <ComboBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" ItemsSource="{Binding Path=TubesProcess.Values}" SelectedItem="{Binding SelectedCalulationFull.process_tube, UpdateSourceTrigger=PropertyChanged}">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <Label Content="{Binding Path=Name}"/>
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                                <TextBox Style="{StaticResource Enabled}" Margin="0,3,0,3" Text="{Binding flow_tube, UpdateSourceTrigger=PropertyChanged}"/>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource SubEnabled}" Text="{Binding temperature_tube_inlet, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <TextBox Style="{StaticResource SubEnabled}" Margin="0,3,0,3" Text="{Binding temperature_tube_outlet, UpdateSourceTrigger=PropertyChanged}"/>
-                                </StackPanel>
-                                <TextBox Style="{StaticResource Default}" Text="{Binding duty_tube, UpdateSourceTrigger=PropertyChanged}"/>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource SubEnabled}" Text="{Binding pressure_tube_inlet, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <TextBox Style="{StaticResource Sub}" Margin="0,3,0,3" Text="{Binding pressure_shell_outlet, UpdateSourceTrigger=PropertyChanged}"/>
-                                </StackPanel>
-                                <StackPanel Margin="0,36,0,0" Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding liquid_density_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                    <TextBox Text="{Binding liquid_density_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding liquid_specific_heat_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                    <TextBox Text="{Binding liquid_specific_heat_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,-3,3"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding liquid_thermal_conductivity_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                    <TextBox Text="{Binding liquid_thermal_conductivity_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding liquid_consistency_index_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                    <TextBox Text="{Binding liquid_consistency_index_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding liquid_flow_index_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                    <TextBox Text="{Binding liquid_flow_index_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding liquid_latent_heat_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                    <TextBox Text="{Binding liquid_latent_heat_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
-                                </StackPanel>
-                                <StackPanel Margin="0,36,0,0" Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding gas_density_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                    <TextBox Text="{Binding gas_density_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding gas_specific_heat_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                    <TextBox Text="{Binding gas_specific_heat_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding gas_thermal_conductivity_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                    <TextBox Text="{Binding gas_thermal_conductivity_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding gas_dynamic_viscosity_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                    <TextBox Text="{Binding gas_dynamic_viscosity_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding gas_vapour_pressure_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                    <TextBox Text="{Binding gas_vapour_pressure_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding gas_mass_vapour_fraction_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                    <TextBox Text="{Binding gas_mass_vapour_fraction_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
-                                </StackPanel>
-                            </StackPanel>
-                            <StackPanel Margin="10,0,0,0" HorizontalAlignment="Center" DataContext="{Binding Path=SelectedCalulationFull}">
-                                <StackPanel.Resources>
-                                    <Style TargetType="TextBox" x:Key="Default">
-                                        <Setter Property="Height" Value="30"/>
-                                        <Setter Property="IsEnabled" Value="false"/>
-                                        <Setter Property="Background" Value="#f9efe5"/>
-                                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                                        <Setter Property="Margin" Value="0,3"/>
-                                    </Style>
-                                    <Style TargetType="ComboBox">
-                                        <Setter Property="Height" Value="30"/>
-                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                                <Setter Property="Margin" Value="0,3"/>
-                                            </Style>
-                                    <Style TargetType="TextBox" x:Key="Enabled">
-                                        <Setter Property="Height" Value="30"/>
-                                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                                        <Setter Property="HorizontalContentAlignment" Value="Right"/>
-                                    </Style>
-                                    <Style TargetType="StackPanel">
-                                        <Setter Property="Margin" Value="0,3"/>
-                                    </Style>
-                                    <Style TargetType="StackPanel" x:Key="Child">
-                                        <Setter Property="Orientation" Value="Horizontal"/>
-                                        <Setter Property="Height" Value="36"/>
-                                    </Style>
-                                    <Style BasedOn="{StaticResource Default}" TargetType="TextBox" x:Key="Sub">
-                                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                                        <Setter Property="HorizontalContentAlignment" Value="Right"/>
-                                        <Setter Property="Width" Value="125"/>
-                                    </Style>
-                                    <Style BasedOn="{StaticResource Enabled}" TargetType="TextBox" x:Key="SubEnabled">
-                                        <Setter Property="Width" Value="125"/>
-                                    </Style>
-                                </StackPanel.Resources>
-                                <Label HorizontalAlignment="Center" FontWeight="Bold">Shell Side</Label>
-                                <StackPanel Orientation="Horizontal"  Height="24" Margin="0,0,0,0">
-                                    <Label FontSize="8" Width="125" HorizontalContentAlignment="Center" Foreground="Gray">Inlet</Label>
-                                    <Label FontSize="8" Width="125" HorizontalContentAlignment="Center" Foreground="Gray">Outlet</Label>
-                                </StackPanel>
-                                <ComboBox>
-                                    <ComboBoxItem IsSelected="True" IsEnabled="False">
-                                        <Label>--Select Fluid--</Label>
-                                    </ComboBoxItem>
-                                </ComboBox>
-                                <TextBox Style="{StaticResource Default}" DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" Text="{Binding SingleProductGetShell.name, UpdateSourceTrigger=PropertyChanged}"/>
-                                <ComboBox DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}" ItemsSource="{Binding Path=ShellProcess.Values}" SelectedItem="{Binding SelectedCalulationFull.process_shell, UpdateSourceTrigger=PropertyChanged}">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <Label Content="{Binding Path=Name}"/>
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                                <StackPanel Orientation="Horizontal" Height="30">
-                                    <RadioButton GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                                    <TextBox Width="235" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding flow_shell, UpdateSourceTrigger=PropertyChanged}"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}" Margin="0,3,0,3" Height="30">
-                                    <RadioButton GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                                    <TextBox Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding temperature_shell_inlet, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <RadioButton GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                                    <TextBox Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding temperature_shell_outlet, UpdateSourceTrigger=PropertyChanged}"/>
-                                </StackPanel>
-                                <TextBox Style="{StaticResource Default}" Text="{Binding duty_shell, UpdateSourceTrigger=PropertyChanged}"/>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Style="{StaticResource SubEnabled}" Margin="0,0,3,0" Text="{Binding pressure_shell_inlet, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <TextBox Style="{StaticResource Sub}" Text="{Binding pressure_shell_outlet, UpdateSourceTrigger=PropertyChanged}"/>
-                                </StackPanel>
-                                <StackPanel Margin="0,36,0,0" Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding liquid_density_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Text="{Binding liquid_density_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding liquid_specific_heat_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Text="{Binding liquid_specific_heat_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding liquid_thermal_conductivity_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Text="{Binding liquid_thermal_conductivity_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding liquid_consistency_index_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Text="{Binding liquid_consistency_index_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding liquid_flow_index_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Text="{Binding liquid_flow_index_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding liquid_latent_heat_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Text="{Binding liquid_latent_heat_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                </StackPanel>
-                                <StackPanel Margin="0,36,0,0" Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding gas_density_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Text="{Binding gas_density_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding gas_specific_heat_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Text="{Binding gas_specific_heat_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding gas_thermal_conductivity_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Text="{Binding gas_thermal_conductivity_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding gas_dynamic_viscosity_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Text="{Binding gas_dynamic_viscosity_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding gas_vapour_pressure_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Text="{Binding gas_vapour_pressure_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                </StackPanel>
-                                <StackPanel Style="{StaticResource Child}">
-                                    <TextBox Text="{Binding gas_mass_vapour_fraction_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                                    <TextBox Text="{Binding gas_mass_vapour_fraction_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </StackPanel>
-                    </StackPanel>
-                </ScrollViewer>
+                <Frame Source="HeatBalancePage.xaml"/>
             </TabItem>
             <TabItem IsEnabled="{Binding Path=GeometryState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
                 <TabItem.Header>
@@ -909,9 +176,7 @@
                         <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=GeometryValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <ScrollViewer>
-
-                </ScrollViewer>
+                <Frame Source="GeometryPage.xaml"/>
             </TabItem>
             <TabItem IsEnabled="{Binding Path=BafflesState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
                 <TabItem.Header>
@@ -926,7 +191,7 @@
                         <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=BafflesValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <Grid Background="#FFE5E5E5"/>
+                <Frame Source="BafflesPage.xaml"/>
             </TabItem>
             <TabItem IsEnabled="{Binding Path=OverallCalculationState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
                 <TabItem.Header>
@@ -941,7 +206,7 @@
                         <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=OverallValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <Grid Background="#FFE5E5E5"/>
+                <Frame Source="OverallCalculationPage.xaml"/>
             </TabItem>
             <TabItem IsEnabled="{Binding Path=BatchState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
                 <TabItem.Header>
@@ -956,7 +221,7 @@
                         <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=BatchValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <Grid Background="#FFE5E5E5"/>
+                <Frame Source="BatchPage.xaml"/>
             </TabItem>
             <TabItem IsEnabled="{Binding Path=GraphState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
                 <TabItem.Header>
@@ -971,7 +236,7 @@
                         <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=GraphsValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <Grid Background="#FFE5E5E5"/>
+                <Frame Source="GraphsPage.xaml"/>
             </TabItem>
             <TabItem IsEnabled="{Binding Path=ReportsState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
                 <TabItem.Header>
@@ -986,7 +251,7 @@
                         <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=ReportsValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <Grid Background="#FFE5E5E5"/>
+                <Frame Source="ReportsPage.xaml"/>
             </TabItem>
             <TabItem IsEnabled="{Binding Path=QuoteState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
                 <TabItem.Header>
@@ -1001,7 +266,7 @@
                         <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=QuoteValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <Grid Background="#FFE5E5E5"/>
+                <Frame Source="QuotePage.xaml"/>
             </TabItem>
             <TabItem IsEnabled="{Binding Path=ThreeDState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
                 <TabItem.Header>
@@ -1016,11 +281,11 @@
                         <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=ThreeDValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <Grid Background="#FFE5E5E5"/>
+                <Frame Source="3DPage.xaml"/>
             </TabItem>
         </TabControl>
         <GridSplitter Grid.Row="1" VerticalAlignment="Bottom" Height="5" HorizontalAlignment="Stretch" />
-        <DataGrid x:Name="LogData" Grid.Row="3" ItemsSource="{Binding LogCollection}" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" SizeChanged="LogData_SizeChanged">
+        <DataGrid x:Name="LogData" Grid.Row="3" DataContext="{Binding GlobalDataCollectorService, Source={StaticResource ViewModelLocator}}"  ItemsSource="{Binding Logs}" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" SizeChanged="LogData_SizeChanged">
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
                     <Style.Triggers>

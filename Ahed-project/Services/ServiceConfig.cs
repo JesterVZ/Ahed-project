@@ -1,12 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace Ahed_project.Services
 {
@@ -20,7 +15,7 @@ namespace Ahed_project.Services
             {
                 var assembly = Assembly.GetExecutingAssembly();
                 string configData = File.ReadAllText(Path.GetDirectoryName(assembly.Location) + "\\Config\\config.json");
-                _serviceConfig= JsonConvert.DeserializeObject<ServiceConfig>(configData);
+                _serviceConfig = JsonConvert.DeserializeObject<ServiceConfig>(configData);
                 return _serviceConfig;
             }
             catch (Exception e)
@@ -28,7 +23,7 @@ namespace Ahed_project.Services
                 throw e;
             }
         }
-        public string LoginLink { get;set;}
+        public string LoginLink { get; set; }
         public string AuthLink { get; set; }
         public string CreateLink { get; set; }
         public string GetLink { get; set; }

@@ -1,10 +1,4 @@
-﻿using MaterialDesignThemes.Wpf;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 
 namespace Ahed_project.MasterData
 {
@@ -13,15 +7,18 @@ namespace Ahed_project.MasterData
         public Visibility LockVisibillity { get; set; } //виден ли замочек
 
         private bool isEnabled;
-        public bool IsEnabled { 
+        public bool IsEnabled
+        {
             get => isEnabled;
-            set {
+            set
+            {
                 isEnabled = value;
                 if (isEnabled == true)
                 {
                     LockVisibillity = Visibility.Hidden;
-                    
-                } else
+
+                }
+                else
                 {
                     LockVisibillity = Visibility.Visible;
                 }

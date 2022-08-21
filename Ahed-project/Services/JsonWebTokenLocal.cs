@@ -1,32 +1,23 @@
 using Ahed_project.MasterData;
 using Ahed_project.Services.EF;
+using Ahed_project.Services.EF.Model;
+using Ahed_project.Services.Global;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Newtonsoft.Json;
 using System;
-using System.IdentityModel.Tokens;
-using System.IO;
-using System.Net;
-using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq;
-using Ahed_project.Services.EF.Model;
-using System.Threading;
-using System.Windows;
+using System.Threading.Tasks;
 
 namespace Ahed_project.Services
 {
     public class JsonWebTokenLocal
     {
-        private ServiceConfig _serviceConfig;
-        private SendDataService _sendDataService;
-        private CancellationTokenService _cancellationToken;
-        public JsonWebTokenLocal(ServiceConfig serviceConfig, SendDataService sendDataService, CancellationTokenService cancellationToken)
+        private readonly ServiceConfig _serviceConfig;
+        private readonly SendDataService _sendDataService;
+        public JsonWebTokenLocal(ServiceConfig serviceConfig, SendDataService sendDataService)
         {
             _serviceConfig = serviceConfig;
             _sendDataService = sendDataService;
-            _cancellationToken = cancellationToken;
         }
 
         /// <summary>
@@ -45,35 +36,30 @@ namespace Ahed_project.Services
                 }
                 string json = JsonConvert.SerializeObject(new
                 {
-                    email = email,
+                    email,
                     pass = password
                 });
                 Token token = null;
-                var login = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.LOGIN, json), _cancellationToken.GetToken());
-                if (!login.Result.ToString().Contains("token"))
+                var login = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.LOGIN, json));
+                if (!login.Contains("token"))
                     return null;
-                token = JsonConvert.DeserializeObject<Token>(login.Result.ToString());
+                token = JsonConvert.DeserializeObject<Token>(login);
                 _sendDataService.AddHeader(token.token);
-                var auth = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.AUTH), _cancellationToken.GetToken());
-                token = JsonConvert.DeserializeObject<Token>(auth.Result.ToString());
+                var auth = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.AUTH));
+                token = JsonConvert.DeserializeObject<Token>(auth);
                 _sendDataService.AddHeader(token.token);
                 if (user == null)
                 {
-                    using (var context = new EFContext())
+                    using var context = new EFContext();
+                    user = new UserEF()
                     {
-                        user = new UserEF()
-                        {
-                            Email = email,
-                            Password = password,
-                            IsActive = true
-                        };
-                        context.Users.Add(user);
-                        context.SaveChanges();
-                        if (!Application.Current.Resources.Contains("UserId"))
-                            Application.Current.Resources.Add("UserId", context.Users.ToList().LastOrDefault()?.Id ?? 0);
-                        else
-                            Application.Current.Resources["UserId"] = context.Users.ToList().LastOrDefault()?.Id ?? 0;
-                    }
+                        Email = email,
+                        Password = password,
+                        IsActive = true
+                    };
+                    context.Users.Add(user);
+                    context.SaveChanges();
+                    GlobalDataCollectorService.UserId = context.Users.ToList().LastOrDefault().Id;
                 }
                 else
                 {
@@ -84,14 +70,11 @@ namespace Ahed_project.Services
                         context.SaveChanges();
                         context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
                     }
-                    if (!Application.Current.Resources.Contains("UserId"))
-                        Application.Current.Resources.Add("UserId", user.Id);
-                    else
-                        Application.Current.Resources["UserId"] = user.Id;
+                    GlobalDataCollectorService.UserId = user.Id;
                 }
                 return GetUserData(token.token);
             }
-            catch (Exception e)
+            catch
             {
                 return null;
             }
@@ -102,7 +85,7 @@ namespace Ahed_project.Services
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
-        public User GetUserData(string token)
+        public static User GetUserData(string token)
         {
             var wt = new JsonWebToken(token);
             var user = new User();
