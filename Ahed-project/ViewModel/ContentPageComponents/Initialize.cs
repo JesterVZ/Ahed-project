@@ -51,9 +51,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
             _pageService = pageService;
             _windowServise = windowService;
-
-            _cancellationToken = cancellationToken;
-            _selectedCalculationFull = new CalculationFull();
         }
     }
 }
