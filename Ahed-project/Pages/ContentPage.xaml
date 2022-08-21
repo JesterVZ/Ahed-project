@@ -71,7 +71,7 @@
                     <MenuItem Header="Geometry"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Save">
-                    <MenuItem Header="Project" InputGestureText="Ctrl + S" Command="{Binding SaveComand}"></MenuItem>
+                    <MenuItem Header="Project" InputGestureText="Ctrl + S" Command="{Binding SaveCommand}"></MenuItem>
                     <MenuItem Header="Fluid"></MenuItem>
                     <MenuItem Header="Geometry"></MenuItem>
                 </MenuItem>

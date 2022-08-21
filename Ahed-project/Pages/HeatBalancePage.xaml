@@ -168,7 +168,11 @@
                     </ComboBox>
                     <TextBox Style="{StaticResource Default}" Text="{Binding TubesProductName, UpdateSourceTrigger=PropertyChanged}"/>
                     <ComboBox ItemsSource="{Binding Path=TubesProcess}" SelectedItem="{Binding Calculation.process_tube, UpdateSourceTrigger=PropertyChanged}">
-
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding Value}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
                     </ComboBox>
                     <TextBox Style="{StaticResource Enabled}" Margin="0,3,0,3" Text="{Binding Calculation.flow_tube, UpdateSourceTrigger=PropertyChanged}"/>
                     <StackPanel Style="{StaticResource Child}">
@@ -276,6 +280,11 @@
                     </ComboBox>
                     <TextBox Style="{StaticResource Default}" Text="{Binding ShellProductName, UpdateSourceTrigger=PropertyChanged}"/>
                     <ComboBox ItemsSource="{Binding Path=ShellProcess}" SelectedItem="{Binding Calculation.process_shell, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding Value}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
                     </ComboBox>
                     <StackPanel Orientation="Horizontal" Height="30">
                         <RadioButton GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
