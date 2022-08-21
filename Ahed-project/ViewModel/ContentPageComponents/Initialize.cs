@@ -40,14 +40,14 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             TubesFluidState.IsEnabled = true;
             ShellFluidState.IsEnabled = true;
             HeatBalanceState.IsEnabled = true;
-            GeometryState.IsEnabled = false;
-            BafflesState.IsEnabled = false;
+            GeometryState.IsEnabled = true;
+            BafflesState.IsEnabled = true;
             OverallCalculationState.IsEnabled = true;
-            BatchState.IsEnabled = false;
-            GraphState.IsEnabled = false;
-            ReportsState.IsEnabled = false;
-            QuoteState.IsEnabled = false;
-            ThreeDState.IsEnabled = false;
+            BatchState.IsEnabled = true;
+            GraphState.IsEnabled = true;
+            ReportsState.IsEnabled = true;
+            QuoteState.IsEnabled = true;
+            ThreeDState.IsEnabled = true;
 
             _pageService = pageService;
             _windowServise = windowService;

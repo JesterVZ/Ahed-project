@@ -285,7 +285,7 @@
             </TabItem>
         </TabControl>
         <GridSplitter Grid.Row="1" VerticalAlignment="Bottom" Height="5" HorizontalAlignment="Stretch" />
-        <DataGrid x:Name="LogData" Grid.Row="3" DataContext="{Binding GlobalDataCollectorService, Source={StaticResource ViewModelLocator}}"  ItemsSource="{Binding Logs}" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" SizeChanged="LogData_SizeChanged">
+        <DataGrid x:Name="LogData" Grid.Row="3" DataContext="{Binding GlobalDataCollectorService, Source={StaticResource ViewModelLocator}}"  ItemsSource="{Binding Logs}" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" SizeChanged="LogData_SizeChanged" IsReadOnly="True">
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
                     <Style.Triggers>
