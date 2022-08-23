@@ -19,6 +19,7 @@ namespace Ahed_project.Services
         }
         public string SendToServer(ProjectMethods projectMethod, string body = null, string projectId = null, string calculationId = null)
         {
+            System.Net.ServicePointManager.ServerCertificateValidationCallback += (object qq, System.Security.Cryptography.X509Certificates.X509Certificate certificate, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors) => true;
             Headers.TryAdd("Content-Type", "application/json");
             RestResponse response = null;
             try
