@@ -276,12 +276,17 @@ namespace Ahed_project.Services.Global
                 MessageBox.Show("Выберите рассчет", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
+            if (calculation.process_tube==null||calculation.process_shell==null)
+            {
+                MessageBox.Show("Выберите процессы", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
             CalculationSendCalc calculateSend = new CalculationSendCalc
             {
                 product_id_tube = calculation.product_id_tube ?? 0,
                 product_id_shell = calculation.product_id_shell ?? 0,
                 flow_type = "counter_current",
-                calculate_field = "flow_shell",
+                calculate_field = _heatBalanceViewModel.FlowShell?"flow_shell":(_heatBalanceViewModel.TemperatureShellInLet?"temperature_shell_inlet": "temperature_shell_outlet"),
                 process_tube = (calculation.process_tube[1]=='1')? "sensible_heat" : "condensation",
                 process_shell = (calculation.process_shell[1] =='1') ? "sensible_heat" : "condensation",
                 flow_tube = calculation.flow_tube,

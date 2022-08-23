@@ -18,6 +18,9 @@ namespace Ahed_project.ViewModel
             ShellProcess = new Dictionary<int, string>();
             ShellProcess.Add(1, "Sensible Heat");
             ShellProcess.Add(2, "Condensation");
+            FlowShell = true;
+            TemperatureShellInLet = false;
+            TemperatureShellOutLet = false;
         }
         public string TubesProductName { get; set; }
         public string ShellProductName { get; set; }
@@ -29,5 +32,9 @@ namespace Ahed_project.ViewModel
         {
             Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.Calculate(Calculation));
         });
+
+        public bool FlowShell { get; set; }
+        public bool TemperatureShellInLet { get; set; }
+        public bool TemperatureShellOutLet { get; set; }
     }
 }
