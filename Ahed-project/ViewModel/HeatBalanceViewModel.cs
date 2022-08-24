@@ -21,6 +21,9 @@ namespace Ahed_project.ViewModel
             FlowShell = true;
             TemperatureShellInLet = false;
             TemperatureShellOutLet = false;
+            FlowShellTB = false;
+            TemperatureShellInLetTB = true;
+            TemperatureShellOutLetTB = true;
         }
         public string TubesProductName { get; set; }
         public string ShellProductName { get; set; }
@@ -33,8 +36,38 @@ namespace Ahed_project.ViewModel
             Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.Calculate(Calculation));
         });
 
-        public bool FlowShell { get; set; }
-        public bool TemperatureShellInLet { get; set; }
-        public bool TemperatureShellOutLet { get; set; }
+        private bool _flowShell;
+        public bool FlowShell 
+        {
+            get => _flowShell;
+            set
+            {
+                _flowShell = value;
+                FlowShellTB = !value;
+            }
+        }
+        public bool FlowShellTB { get; set; }
+        private bool _temperatureShellInLet;
+        public bool TemperatureShellInLet 
+        { 
+            get=>_temperatureShellInLet;
+            set
+            {
+                _temperatureShellInLet = value;
+                TemperatureShellInLetTB = !value;
+            }
+        }
+        public bool TemperatureShellInLetTB { get; set; }
+        private bool _temperatureShellOutLet;
+        public bool TemperatureShellOutLet 
+        {
+            get=>_temperatureShellOutLet; 
+            set
+            {
+                _temperatureShellOutLet = value;
+                TemperatureShellOutLetTB = !value;
+            }
+        }
+        public bool TemperatureShellOutLetTB { get; set; }
     }
 }

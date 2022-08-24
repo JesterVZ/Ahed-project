@@ -288,15 +288,15 @@
                     </ComboBox>
                     <StackPanel Orientation="Horizontal" Height="30">
                         <RadioButton IsChecked="{Binding FlowShell}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                        <TextBox Width="235" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Calculation.flow_shell, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Width="235" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Calculation.flow_shell, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding FlowShellTB }"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource Child}" Margin="0,3,0,3" Height="30">
                         <RadioButton IsChecked="{Binding TemperatureShellInLet}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                        <TextBox Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Calculation.temperature_shell_inlet, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox IsEnabled="{Binding TemperatureShellInLetTB}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Calculation.temperature_shell_inlet, UpdateSourceTrigger=PropertyChanged}"/>
                         <RadioButton IsChecked="{Binding TemperatureShellOutLet}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                        <TextBox Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Calculation.temperature_shell_outlet, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox  IsEnabled="{Binding TemperatureShellOutLetTB}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Calculation.temperature_shell_outlet, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
-                    <TextBox Style="{StaticResource Default}" Text="{Binding Calculation.duty_shell, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Style="{StaticResource Default}" Text="{Binding Calculation.duty_shell, UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FFABADB3"/>
                     <StackPanel Style="{StaticResource Child}">
                         <TextBox Style="{StaticResource SubEnabled}" Margin="0,0,3,0" Text="{Binding Calculation.pressure_shell_inlet, UpdateSourceTrigger=PropertyChanged}"/>
                         <TextBox Style="{StaticResource Sub}" Text="{Binding Calculation.pressure_shell_outlet, UpdateSourceTrigger=PropertyChanged}"/>
