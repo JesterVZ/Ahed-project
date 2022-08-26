@@ -1,7 +1,6 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.Products;
-using Ahed_project.MasterData.Products.SingleProduct;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services.EF;
 using Ahed_project.ViewModel;
@@ -112,13 +111,11 @@ namespace Ahed_project.Services.Global
                         Name = new DateTime(1, month.month_number, 1).ToString("MMMM")
                     };
                     node.Nodes.Add(monthNode);
-                    GlobalDataCollectorService.AllProducts.Add(month.Id, new List<SingleProductGet>());
-                    await Parallel.ForEachAsync(month.products, new ParallelOptions() { }, async (x, y) =>
+                    GlobalDataCollectorService.AllProducts.Add(month.Id, new List<ProductGet>());
+                    foreach (var product in month.products)
                     {
-                        var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT, x.product_id.ToString()));
-                        SingleProductGet newProduct = JsonConvert.DeserializeObject<SingleProductGet>(response);
-                        GlobalDataCollectorService.AllProducts[month.Id].Add(newProduct);
-                    });
+                        GlobalDataCollectorService.AllProducts[month.Id].Add(product);
+                    }
                 }
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Nodes.Add(node));
             }
@@ -195,6 +192,11 @@ namespace Ahed_project.Services.Global
         //Создание рассчета
         public async static void CreateCalculation(string name)
         {
+            if (GlobalDataCollectorService.Project==null||GlobalDataCollectorService.Project.project_id==0)
+            {
+                MessageBox.Show("Необходимо выбрать проект", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             CalculationSend calculationSend = new()
             {
                 Name = name
@@ -222,7 +224,7 @@ namespace Ahed_project.Services.Global
             Task.Factory.StartNew(() => SelectProductShell(shellProduct));
         }
         //Выбор продукта Tube
-        public static void SelectProductTube(SingleProductGet product)
+        public static void SelectProductTube(ProductGet product)
         {
             _heatBalanceViewModel.TubesProductName = product?.name;
             if (_heatBalanceViewModel.Calculation != null && _heatBalanceViewModel.Calculation?.product_id_tube != product?.product_id)
@@ -234,7 +236,7 @@ namespace Ahed_project.Services.Global
         }
 
         //Выбор продукта Shell
-        public static void SelectProductShell(SingleProductGet product)
+        public static void SelectProductShell(ProductGet product)
         {
             _heatBalanceViewModel.ShellProductName = product?.name;
             if (_heatBalanceViewModel.Calculation != null && _heatBalanceViewModel.Calculation?.product_id_shell != product?.product_id)
@@ -248,7 +250,7 @@ namespace Ahed_project.Services.Global
         //Обновить продукты в рассчете
         public static async void UpdateCalculationProducts()
         {
-            if (_heatBalanceViewModel.Calculation == null)
+            if (_heatBalanceViewModel.Calculation == null||_heatBalanceViewModel.Calculation.calculation_id==0)
             {
                 MessageBox.Show("Не выбран рассчет, следует выбрать для внесения данных", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;

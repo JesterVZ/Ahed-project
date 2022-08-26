@@ -279,7 +279,7 @@
                         </ComboBoxItem>
                     </ComboBox>
                     <TextBox Style="{StaticResource Default}" Text="{Binding ShellProductName, UpdateSourceTrigger=PropertyChanged}"/>
-                    <ComboBox ItemsSource="{Binding Path=ShellProcess}" SelectedItem="{Binding Calculation.process_shell, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBox ItemsSource="{Binding Path=ShellProcess}" SelectedItem="{Binding ShellProcessSelector, UpdateSourceTrigger=PropertyChanged}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <Label Content="{Binding Value}"/>

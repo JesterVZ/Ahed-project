@@ -1,4 +1,4 @@
-﻿using Ahed_project.MasterData.Products.SingleProduct;
+﻿using Ahed_project.MasterData.Products;
 using DevExpress.Mvvm;
 using OxyPlot;
 using OxyPlot.Axes;
@@ -9,8 +9,8 @@ namespace Ahed_project.ViewModel
 {
     public class ShellFluidViewModel : BindableBase
     {
-        private SingleProductGet _product;
-        public SingleProductGet Product
+        private ProductGet _product;
+        public ProductGet Product
         {
             get => _product;
             set
@@ -65,7 +65,7 @@ namespace Ahed_project.ViewModel
                 FifthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Flow Index" });
                 SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature" });
                 SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Latent Heat" });
-                foreach (var property in Product?.props)
+                foreach (var property in Product?.product_properties)
                 {
                     firstSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.liquid_phase_density ?? 0)));
                     secondSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.liquid_phase_specific_heat ?? 0)));
@@ -89,7 +89,7 @@ namespace Ahed_project.ViewModel
                 FifthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Vapour Pressure" });
                 SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature" });
                 SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Mass Vapour Fraction" });
-                foreach (var property in Product?.props)
+                foreach (var property in Product?.product_properties)
                 {
                     firstSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.gas_phase_density ?? 0)));
                     secondSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.gas_phase_specific_heat ?? 0)));
