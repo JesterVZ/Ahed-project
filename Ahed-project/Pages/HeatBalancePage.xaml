@@ -7,10 +7,10 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="HeatBalancePage"
       DataContext="{Binding HeatBalanceViewModel, Source={StaticResource ViewModelLocator}}">
-    <ScrollViewer>
+    <ScrollViewer >
         <StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Button x:Name="button" Content="Calculate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Background="#fc6" Command="{Binding Calculate}"/>
+                <Button x:Name="button" Content="Calculate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6" Command="{Binding Calculate}"/>
                 <Button x:Name="button1" Content="Swap Fluids" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="152" Background="#fc6" Visibility="Hidden"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Visibility="Hidden">
@@ -125,6 +125,7 @@
                 <StackPanel>
                     <StackPanel.Resources>
                         <Style TargetType="TextBox" x:Key="Default">
+                            <Setter Property="Width" Value="253"/>
                             <Setter Property="Height" Value="30"/>
                             <Setter Property="IsEnabled" Value="false"/>
                             <Setter Property="Background" Value="#f9efe5"/>
@@ -132,6 +133,7 @@
                             <Setter Property="Margin" Value="0,3"/>
                         </Style>
                         <Style TargetType="ComboBox">
+                            <Setter Property="Width" Value="253"/>
                             <Setter Property="Height" Value="30"/>
                             <Setter Property="Margin" Value="0,3"/>
                             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -161,7 +163,7 @@
                         <Label FontSize="8" Width="125" HorizontalContentAlignment="Center" Foreground="Gray">Inlet</Label>
                         <Label FontSize="8" Width="125" HorizontalContentAlignment="Center" Foreground="Gray">Outlet</Label>
                     </StackPanel>
-                    <ComboBox>
+                    <ComboBox Width="253">
                         <ComboBoxItem IsSelected="True" IsEnabled="False">
                             <Label>--Select Fluid--</Label>
                         </ComboBoxItem>
@@ -273,7 +275,7 @@
                         <Label FontSize="8" Width="125" HorizontalContentAlignment="Center" Foreground="Gray">Inlet</Label>
                         <Label FontSize="8" Width="125" HorizontalContentAlignment="Center" Foreground="Gray">Outlet</Label>
                     </StackPanel>
-                    <ComboBox>
+                    <ComboBox Width="253">
                         <ComboBoxItem IsSelected="True" IsEnabled="False">
                             <Label>--Select Fluid--</Label>
                         </ComboBoxItem>

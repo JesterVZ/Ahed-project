@@ -7,8 +7,8 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ProjectPage"
-      DataContext="{Binding ProjectPageViewModel, Source={StaticResource ViewModelLocator}}">
-    <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="927" >
+      DataContext="{Binding ProjectPageViewModel, Source={StaticResource ViewModelLocator}}" VerticalAlignment="Top">
+    <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="927" MinHeight="800">
         <Grid>
             <Grid.Resources>
                 <Style TargetType="TextBox" x:Key="Default">
