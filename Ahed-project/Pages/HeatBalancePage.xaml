@@ -288,13 +288,13 @@
                     </ComboBox>
                     <StackPanel Orientation="Horizontal" Height="30">
                         <RadioButton IsChecked="{Binding FlowShell}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                        <TextBox Width="235" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Calculation.flow_shell, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding FlowShellTB }"/>
+                        <TextBox Background="{Binding FB, UpdateSourceTrigger=PropertyChanged}" Width="235" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Calculation.flow_shell, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding FlowShellTB }"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource Child}" Margin="0,3,0,3" Height="30">
-                        <RadioButton IsChecked="{Binding TemperatureShellInLet}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                        <TextBox IsEnabled="{Binding TemperatureShellInLetTB}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Calculation.temperature_shell_inlet, UpdateSourceTrigger=PropertyChanged}"/>
-                        <RadioButton IsChecked="{Binding TemperatureShellOutLet}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                        <TextBox  IsEnabled="{Binding TemperatureShellOutLetTB}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Calculation.temperature_shell_outlet, UpdateSourceTrigger=PropertyChanged}"/>
+                        <RadioButton IsEnabled="{Binding TSIE}" IsChecked="{Binding TemperatureShellInLet, UpdateSourceTrigger=PropertyChanged}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
+                        <TextBox Background="{Binding TIB, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding TemperatureShellInLetTB, UpdateSourceTrigger=PropertyChanged}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Calculation.temperature_shell_inlet, UpdateSourceTrigger=PropertyChanged}"/>
+                        <RadioButton IsEnabled="{Binding TSOE}" IsChecked="{Binding TemperatureShellOutLet, UpdateSourceTrigger=PropertyChanged}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
+                        <TextBox Background="{Binding TOB, UpdateSourceTrigger=PropertyChanged}"  IsEnabled="{Binding TemperatureShellOutLetTB, UpdateSourceTrigger=PropertyChanged}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Calculation.temperature_shell_outlet, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                     <TextBox Style="{StaticResource Default}" Text="{Binding Calculation.duty_shell, UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FFABADB3"/>
                     <StackPanel Style="{StaticResource Child}">
