@@ -81,7 +81,7 @@ namespace Ahed_project.ViewModel
                 FlowShellTB = !value;
                 if (value)
                 {
-                    FB = new SolidColorBrush(Color.FromRgb(248, 24, 148));
+                    FB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
                     TOB = new SolidColorBrush(Color.FromRgb(255, 255, 255));
                     TIB = new SolidColorBrush(Color.FromRgb(255, 255, 255));
                 }
@@ -102,7 +102,7 @@ namespace Ahed_project.ViewModel
                 {
                     FB = new SolidColorBrush(Color.FromRgb(255, 255, 255));
                     TOB = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-                    TIB = new SolidColorBrush(Color.FromRgb(248, 24, 148));
+                    TIB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
                 }
             }
         }
@@ -118,7 +118,7 @@ namespace Ahed_project.ViewModel
                 if (value)
                 {
                     FB = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-                    TOB = new SolidColorBrush(Color.FromRgb(248, 24, 148));
+                    TOB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
                     TIB = new SolidColorBrush(Color.FromRgb(255, 255, 255));
                 }
             }
