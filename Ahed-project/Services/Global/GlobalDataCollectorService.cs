@@ -1,5 +1,5 @@
 ﻿using Ahed_project.MasterData;
-using Ahed_project.MasterData.Products.SingleProduct;
+using Ahed_project.MasterData.Products;
 using Ahed_project.MasterData.ProjectClasses;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +12,7 @@ namespace Ahed_project.Services.Global
         public GlobalDataCollectorService()
         {
             Logs = new ObservableCollection<LoggerMessage>();
-            AllProducts = new Dictionary<string, List<SingleProductGet>>();
+            AllProducts = new Dictionary<string, List<ProductGet>>();
             Nodes = new ObservableCollection<Node>();
             ProjectsCollection = new List<ProjectInfoGet>();
         }
@@ -36,7 +36,7 @@ namespace Ahed_project.Services.Global
         public static ProjectInfoGet Project { get; set; }
         #endregion
         #region Products
-        public static Dictionary<string, List<SingleProductGet>> AllProducts { get; set; }
+        public static Dictionary<string, List<ProductGet>> AllProducts { get; set; }
         public static ObservableCollection<Node> Nodes { get; set; }
         #endregion
     }

@@ -12,6 +12,7 @@ namespace Ahed_project.ViewModel
     {
         public HeatBalanceViewModel()
         {
+            Calculation = new CalculationFull();
             TubesProcess = new Dictionary<int, string>();
             TubesProcess.Add(1, "Sensible Heat");
             TubesProcess.Add(2, "Condensation");
@@ -30,6 +31,19 @@ namespace Ahed_project.ViewModel
         public CalculationFull Calculation { get; set; }
         public Dictionary<int,string> TubesProcess { get; set; }
         public Dictionary<int, string> ShellProcess { get; set; }
+
+        public string ShellProcessSelector
+        {
+            get => Calculation.process_shell;
+            set
+            {
+                Calculation.process_shell = value;
+                if (value=="Condensation")
+                {
+                    FlowShell = true;
+                }
+            }
+        }
 
         public ICommand Calculate => new DelegateCommand(() =>
         {

@@ -1,5 +1,5 @@
 ﻿using Ahed_project.MasterData;
-using Ahed_project.MasterData.Products.SingleProduct;
+using Ahed_project.MasterData.Products;
 using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
 using System.Collections.Generic;
@@ -16,10 +16,10 @@ namespace Ahed_project.ViewModel
         {
             get => GlobalDataCollectorService.Nodes;
         }
-        public ObservableCollection<SingleProductGet> Products { get; set; }
-        private List<SingleProductGet> _productsBeforeSearch = null;
+        public ObservableCollection<ProductGet> Products { get; set; }
+        private List<ProductGet> _productsBeforeSearch = null;
         public bool IsProductSelected { get; set; }
-        private List<SingleProductGet> ProductsBeforeSearch
+        private List<ProductGet> ProductsBeforeSearch
         {
             get
             {
@@ -31,9 +31,9 @@ namespace Ahed_project.ViewModel
                 _productsBeforeSearch = value;
             }
         }
-        public Dictionary<string, List<SingleProductGet>> ProductsDictionary = new Dictionary<string, List<SingleProductGet>>();
-        private SingleProductGet selectedProduct;
-        public SingleProductGet SelectedProduct
+        public Dictionary<string, List<ProductGet>> ProductsDictionary = new Dictionary<string, List<ProductGet>>();
+        private ProductGet selectedProduct;
+        public ProductGet SelectedProduct
         {
             get
             {
@@ -65,7 +65,7 @@ namespace Ahed_project.ViewModel
         public ICommand GetCurrentProducts => new DelegateCommand(() =>
         {
             _productsBeforeSearch = GlobalDataCollectorService.AllProducts.SelectMany(x => x.Value).ToList();
-            Products = new ObservableCollection<SingleProductGet>(ProductsBeforeSearch);
+            Products = new ObservableCollection<ProductGet>(ProductsBeforeSearch);
         });
 
         public ICommand OpenInTubesCommand => new DelegateCommand(() =>
@@ -100,11 +100,11 @@ namespace Ahed_project.ViewModel
         {
             if (string.IsNullOrEmpty(SearchBox))
             {
-                Products = new ObservableCollection<SingleProductGet>(ProductsBeforeSearch);
+                Products = new ObservableCollection<ProductGet>(ProductsBeforeSearch);
             }
             else
             {
-                Products = new ObservableCollection<SingleProductGet>(ProductsBeforeSearch.Where(x => x.name.ToLower().Contains(SearchBox.ToLower())));
+                Products = new ObservableCollection<ProductGet>(ProductsBeforeSearch.Where(x => x.name.ToLower().Contains(SearchBox.ToLower())));
             }
         }
     }

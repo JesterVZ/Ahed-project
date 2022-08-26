@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Ahed_project.MasterData.Products.SingleProduct
+namespace Ahed_project.MasterData.Products
 {
     /// <summary>
     /// Для пропсов
     /// </summary>
-    public class SigleProductProperties
+    public class ProductProperties
     {
         /// <summary>
         /// Идентификатор
