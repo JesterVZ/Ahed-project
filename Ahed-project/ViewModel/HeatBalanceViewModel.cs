@@ -50,8 +50,8 @@ namespace Ahed_project.ViewModel
                     FlowShell = true;
                     TSIE = false;
                     TSOE = false;
-                    TOB = new SolidColorBrush(Color.FromRgb(248,24,148));
-                    FB = new SolidColorBrush(Color.FromRgb(248, 24, 148));
+                    TOB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
+                    FB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
                     if (double.TryParse(Calculation.temperature_tube_outlet,out double res))
                         Calculation.temperature_shell_outlet = res.ToString();
                     RaisePropertiesChanged("Calculation");
