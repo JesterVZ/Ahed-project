@@ -3,10 +3,12 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Ahed_project.Pages" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:Ahed_project.Pages" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:SVG="http://sharpvectors.codeplex.com/svgc/"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ProjectPage"
+      
       DataContext="{Binding ProjectPageViewModel, Source={StaticResource ViewModelLocator}}" VerticalAlignment="Top">
     <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="927" MinHeight="800">
         <Grid>
@@ -14,6 +16,10 @@
                 <Style TargetType="TextBox" x:Key="Default">
                     <Setter Property="Height" Value="30"/>
                     <Setter Property="VerticalContentAlignment" Value="Center"/>
+                </Style>
+                <Style TargetType="TextBox" x:Key="EditableText">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderBrush" Value="Transparent"/>
                 </Style>
                 <Style TargetType="TextBlock" x:Key="DefaultText">
                     <Setter Property="VerticalAlignment" Value="Center"/>
@@ -78,7 +84,8 @@
                 <ListView Margin="3" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" ItemsSource="{Binding Calculations}" SelectedItem="{Binding SelectedCalculation}" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding name}"/>
+                            <TextBox Style="{StaticResource EditableText}" Text="{Binding Path=name, UpdateSourceTrigger=PropertyChanged}"/>
+
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

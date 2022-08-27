@@ -4,12 +4,15 @@ using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Ahed_project.ViewModel
 {
     public class ProjectPageViewModel : BindableBase
     {
+        public Visibility TextBoxVisibillity { get; set; }
+        public Visibility LabelVisibillity { get; set; }
         #region Props
         private ProjectInfoGet _projectInfo = new();
         public ProjectInfoGet ProjectInfo
