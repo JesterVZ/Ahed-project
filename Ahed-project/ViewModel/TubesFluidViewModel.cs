@@ -65,15 +65,19 @@ namespace Ahed_project.ViewModel
                 FifthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Flow Index" });
                 SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature" });
                 SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Latent Heat" });
-                foreach (var property in Product?.product_properties)
+                if(Product != null)
                 {
-                    firstSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.liquid_phase_density ?? 0)));
-                    secondSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.liquid_phase_specific_heat ?? 0)));
-                    thirdSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.liquid_phase_thermal_conductivity ?? 0)));
-                    fourthSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.liquid_phase_consistency_index ?? 0)));
-                    fifthSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.liquid_phase_f_ind ?? 0)));
-                    sixthSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.liquid_phase_dh ?? 0)));
+                    foreach (var property in Product?.product_properties)
+                    {
+                        firstSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.liquid_phase_density ?? 0)));
+                        secondSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.liquid_phase_specific_heat ?? 0)));
+                        thirdSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.liquid_phase_thermal_conductivity ?? 0)));
+                        fourthSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.liquid_phase_consistency_index ?? 0)));
+                        fifthSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.liquid_phase_f_ind ?? 0)));
+                        sixthSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.liquid_phase_dh ?? 0)));
+                    }
                 }
+
             }
             else
             {
