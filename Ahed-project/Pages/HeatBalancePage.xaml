@@ -300,7 +300,7 @@
                     </StackPanel>
                     <TextBox Style="{StaticResource Default}" Text="{Binding Calculation.duty_shell, UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FFABADB3"/>
                     <StackPanel Style="{StaticResource Child}">
-                        <TextBox Style="{StaticResource SubEnabled}" Margin="0,0,3,0" Text="{Binding Calculation.pressure_shell_inlet, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox DataContext="{Binding HeatBalanceViewModel, Source={StaticResource ViewModelLocator}}" Style="{StaticResource SubEnabled}" Margin="0,0,3,0" Text="{Binding Pressure_shell_inlet_value, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
                         <TextBox Style="{StaticResource Sub}" Text="{Binding Calculation.pressure_shell_outlet, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                     <StackPanel Margin="0,36,0,0" Style="{StaticResource Child}">

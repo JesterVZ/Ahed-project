@@ -1,6 +1,7 @@
 ﻿using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -35,6 +36,29 @@ namespace Ahed_project.ViewModel
         public Brush TOB { get; set; }
         public string TubesProductName { get; set; }
         public string ShellProductName { get; set; }
+
+        private string _pressure_shell_inlet_value;
+        public string Pressure_shell_inlet_value
+        {
+            get
+            {
+                return _pressure_shell_inlet_value;
+            }
+            set
+            {
+                _pressure_shell_inlet_value = value;
+                GetTemperatureCalculation();
+            }
+        }
+        private async void GetTemperatureCalculation()
+        {
+            var result = await Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateTemperature(_pressure_shell_inlet_value, Calculation));
+            Calculation.pressure_shell_inlet = _pressure_shell_inlet_value;
+            object data = JsonConvert.DeserializeObject(result.Result);
+
+            Calculation.temperature_shell_outlet = "1";
+            Calculation.temperature_tube_outlet = "2";
+        }
         public CalculationFull Calculation { get; set; }
         public Dictionary<int,string> TubesProcess { get; set; }
         public Dictionary<int, string> ShellProcess { get; set; }

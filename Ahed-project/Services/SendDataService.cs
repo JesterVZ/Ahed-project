@@ -151,6 +151,17 @@ namespace Ahed_project.Services
                             request.AddBody(body);
                         response = restClient.ExecuteAsync(request).Result;
                         break;
+                    case ProjectMethods.CALCULATE_TEMPERATURE:
+                        restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/getT");
+                        request = new RestRequest("", Method.Post);
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        if (body != null)
+                            request.AddBody(body);
+                        response = restClient.ExecuteAsync(request).Result;
+                        break;
                     case ProjectMethods.GET_PRODUCT_CALCULATIONS:
                         restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectId}/calculation/list");
                         request = new RestRequest("", Method.Get);

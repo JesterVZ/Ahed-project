@@ -212,12 +212,25 @@ namespace Ahed_project.Services.Global
             Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations.Add(calculationGet));
             _projectPageViewModel.SelectedCalculation = null;
         }
-
-        public async static void ChangeCalculationName(CalculationFull calc)
+        //изменение имени рассчета
+        public static async void ChangeCalculationName(CalculationFull calc)
         {
             string json = JsonConvert.SerializeObject(calc);
 
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, GlobalDataCollectorService.Project.project_id.ToString(), calc.calculation_id.ToString()));
+        }
+        //расчет температуры при условии того, что в поле pressure_shell_inlet введено значнеие
+        public static async Task<string> CalculateTemperature(string pressure_shell_inlet_value, CalculationFull calc)
+        {
+            CalculationTemperatureSend calculationTemperatureSend = new CalculationTemperatureSend
+            {
+                pressure_shell_inlet = pressure_shell_inlet_value
+            };
+            string json = JsonConvert.SerializeObject(calculationTemperatureSend);
+            string response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_TEMPERATURE, json, GlobalDataCollectorService.Project.project_id.ToString(), calc.calculation_id.ToString()));
+            return response;
+            //Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
+
         }
 
         //Выбор рассчета
