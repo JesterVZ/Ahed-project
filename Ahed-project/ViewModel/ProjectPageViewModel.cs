@@ -2,6 +2,7 @@
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
+using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -38,6 +39,10 @@ namespace Ahed_project.ViewModel
         public ICommand CreateCalculationCommand => new AsyncCommand(async () =>
         {
             await Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CreateCalculation(CalculationName));
+        });
+        public ICommand ChangeCalculationNameCommand => new AsyncCommand(async () =>
+        {
+            await Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.ChangeCalculationName(_selectedCalculation));
         });
         #endregion
     }

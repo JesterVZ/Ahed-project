@@ -213,8 +213,15 @@ namespace Ahed_project.Services.Global
             _projectPageViewModel.SelectedCalculation = null;
         }
 
+        public async static void ChangeCalculationName(CalculationFull calc)
+        {
+            string json = JsonConvert.SerializeObject(calc);
+
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, GlobalDataCollectorService.Project.project_id.ToString(), calc.calculation_id.ToString()));
+        }
+
         //Выбор рассчета
-        public static void SetCalculation(CalculationFull calc)
+        public static async void SetCalculation(CalculationFull calc)
         {
             _heatBalanceViewModel.Calculation = calc;
             var products = GlobalDataCollectorService.AllProducts.SelectMany(x => x.Value).ToList();
@@ -222,6 +229,7 @@ namespace Ahed_project.Services.Global
             Task.Factory.StartNew(() => SelectProductTube(tubeProduct));
             var shellProduct = products.FirstOrDefault(x => x.product_id == calc.product_id_shell);
             Task.Factory.StartNew(() => SelectProductShell(shellProduct));
+           
         }
         //Выбор продукта Tube
         public static void SelectProductTube(ProductGet product)

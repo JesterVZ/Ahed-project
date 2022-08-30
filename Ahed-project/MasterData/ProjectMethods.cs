@@ -13,6 +13,6 @@
         GET_PRODUCT_CALCULATIONS,
         CALCULATE,
         CREATE_CALCULATION,
-        UPDATE_CHOOSE
+        UPDATE_CHOOSE,
     }
 }
