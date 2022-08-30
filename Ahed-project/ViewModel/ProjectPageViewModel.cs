@@ -29,6 +29,7 @@ namespace Ahed_project.ViewModel
             set
             {
                 _selectedCalculation = value;
+                _selectedCalculation.ChangeNameCommand = ChangeCalculationNameCommand;
                 GlobalFunctionsAndCallersService.SetCalculation(SelectedCalculation);
             }
         }

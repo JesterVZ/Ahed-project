@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Input;
 
 namespace Ahed_project.MasterData.CalculateClasses
 {
@@ -80,5 +81,8 @@ namespace Ahed_project.MasterData.CalculateClasses
         public int menu_geometry { get; set; }
         public DateTime createdAt { get; set; }
         public DateTime updatedAt { get; set; }
+
+        public ICommand ChangeNameCommand { get; set; }
+
     }
 }
