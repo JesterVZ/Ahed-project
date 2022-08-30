@@ -335,6 +335,7 @@ namespace Ahed_project.Services.Global
                 calculationGet.project_id = calculation.project_id;
                 _heatBalanceViewModel.Calculation = calculationGet;
             }
+            var saveResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CALCULATION, json, calculation.project_id.ToString(), calculation.calculation_id.ToString()));
         }
 
         //Создать проект

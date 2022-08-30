@@ -173,6 +173,17 @@ namespace Ahed_project.Services
                             request.AddBody(body);
                         response = restClient.ExecuteAsync(request).Result;
                         break;
+                    case ProjectMethods.UPDATE_CALCULATION:
+                        restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/heat-balance/calculate");
+                        request = new RestRequest("", Method.Post);
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        if (body != null)
+                            request.AddBody(body);
+                        response = restClient.ExecuteAsync(request).Result;
+                        break;
                 }
                 if (response.IsSuccessful)
                     return response.Content;
