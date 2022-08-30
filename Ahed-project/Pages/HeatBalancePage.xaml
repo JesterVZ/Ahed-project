@@ -52,7 +52,7 @@
                             <Setter Property="Margin" Value="0,3"/>
                         </Style>
                     </StackPanel.Resources>
-                    <Label Margin="0,50,0,3">Fluid Presets</Label>
+                    <Label Visibility="Hidden" Margin="0,50,0,3">Fluid Presets</Label>
                     <Label>Fluid Name</Label>
                     <Label>Process</Label>
                     <StackPanel Style="{StaticResource Child}">
@@ -163,7 +163,7 @@
                         <Label FontSize="8" Width="125" HorizontalContentAlignment="Center" Foreground="Gray">Inlet</Label>
                         <Label FontSize="8" Width="125" HorizontalContentAlignment="Center" Foreground="Gray">Outlet</Label>
                     </StackPanel>
-                    <ComboBox Width="253">
+                    <ComboBox Width="253" Visibility="Hidden">
                         <ComboBoxItem IsSelected="True" IsEnabled="False">
                             <Label>--Select Fluid--</Label>
                         </ComboBoxItem>
@@ -275,7 +275,7 @@
                         <Label FontSize="8" Width="125" HorizontalContentAlignment="Center" Foreground="Gray">Inlet</Label>
                         <Label FontSize="8" Width="125" HorizontalContentAlignment="Center" Foreground="Gray">Outlet</Label>
                     </StackPanel>
-                    <ComboBox Width="253">
+                    <ComboBox Width="253" Visibility="Hidden">
                         <ComboBoxItem IsSelected="True" IsEnabled="False">
                             <Label>--Select Fluid--</Label>
                         </ComboBoxItem>
