@@ -54,10 +54,10 @@ namespace Ahed_project.ViewModel
         {
             var result = await Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateTemperature(_pressure_shell_inlet_value, Calculation));
             Calculation.pressure_shell_inlet = _pressure_shell_inlet_value;
-            object data = JsonConvert.DeserializeObject(result.Result);
+            CalculationTemperatureGet data = JsonConvert.DeserializeObject<CalculationTemperatureGet>(result.Result);
 
-            Calculation.temperature_shell_outlet = "1";
-            Calculation.temperature_tube_outlet = "2";
+            Calculation.temperature_shell_inlet = data.temperature_shell_inlet; //биндинг не происходит
+            Calculation.temperature_shell_outlet = data.temperature_shell_outlet;
         }
         public CalculationFull Calculation { get; set; }
         public Dictionary<int,string> TubesProcess { get; set; }
