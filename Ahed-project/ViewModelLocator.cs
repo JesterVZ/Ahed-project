@@ -26,6 +26,7 @@ namespace Ahed_project
             services.AddSingleton<ContentPageViewModel>();
             services.AddSingleton<PresetsWindowViewModel>();
             services.AddSingleton<ProjectsWindowViewModel>();
+            services.AddSingleton<GeometryWindowViewModel>();
             services.AddSingleton<ProductsViewModel>();
             services.AddSingleton<ProjectPageViewModel>();
             services.AddSingleton<HeatBalanceViewModel>();
@@ -74,6 +75,7 @@ namespace Ahed_project
         public PresetsWindowViewModel PresetsWindowViewModel => _provider.GetRequiredService<PresetsWindowViewModel>();
         public ProjectsWindowViewModel ProjectsWindowViewModel => _provider.GetRequiredService<ProjectsWindowViewModel>();
         public ProductsViewModel ProductsViewModel => _provider.GetRequiredService<ProductsViewModel>();
+        public GeometryWindowViewModel GeometryWindowViewModel => _provider.GetRequiredService<GeometryWindowViewModel>();
         public ProjectPageViewModel ProjectPageViewModel => _provider.GetRequiredService<ProjectPageViewModel>();
         public HeatBalanceViewModel HeatBalanceViewModel => _provider.GetRequiredService<HeatBalanceViewModel>();
         public TubesFluidViewModel TubesFluidViewModel => _provider.GetRequiredService<TubesFluidViewModel>();
