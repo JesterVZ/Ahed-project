@@ -228,15 +228,14 @@ namespace Ahed_project.Services.Global
         //расчет температуры при условии того, что в поле pressure_shell_inlet введено значнеие
         public static async Task<string> CalculateTemperature(string pressure_shell_inlet_value, CalculationFull calc)
         {
-            CalculationTemperatureSend calculationTemperatureSend = new CalculationTemperatureSend
+            var calculationTemperatureSend = new
             {
-                pressure_shell_inlet = pressure_shell_inlet_value
+                pressure_shell_inlet = double.Parse(pressure_shell_inlet_value)
             };
             string json = JsonConvert.SerializeObject(calculationTemperatureSend);
-            string response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_TEMPERATURE, json, GlobalDataCollectorService.Project.project_id.ToString(), calc.calculation_id.ToString()));
+            string response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_TEMPERATURE, json, calc.project_id.ToString(), calc.calculation_id.ToString()));
             return response;
-            //Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
-
+            //Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)))
         }
 
         //Выбор рассчета

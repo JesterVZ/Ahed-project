@@ -47,7 +47,10 @@ namespace Ahed_project.ViewModel
             set
             {
                 _pressure_shell_inlet_value = value;
-                GetTemperatureCalculation();
+                if (Calculation.process_shell.Contains("Condensation") && double.TryParse(value, out var res))
+                {
+                    GetTemperatureCalculation();
+                }
             }
         }
         private async void GetTemperatureCalculation()
@@ -58,6 +61,7 @@ namespace Ahed_project.ViewModel
 
             Calculation.temperature_shell_inlet = data.temperature_shell_inlet; //биндинг не происходит
             Calculation.temperature_shell_outlet = data.temperature_shell_outlet;
+            RaisePropertiesChanged("Calculation");
         }
         public CalculationFull Calculation { get; set; }
         public Dictionary<int,string> TubesProcess { get; set; }
