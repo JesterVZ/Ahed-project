@@ -215,9 +215,15 @@ namespace Ahed_project.Services.Global
         //изменение имени рассчета
         public static async void ChangeCalculationName(CalculationFull calc)
         {
-            string json = JsonConvert.SerializeObject(calc);
+            CalculationUpdate calculationUpdate = new()
+            {
+                product_id_tube = calc.product_id_tube ?? 0,
+                product_id_shell = calc.product_id_shell ?? 0,
+                name = calc.name
+            };
+            string json = JsonConvert.SerializeObject(calculationUpdate);
 
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, GlobalDataCollectorService.Project.project_id.ToString(), calc.calculation_id.ToString()));
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, calc.project_id.ToString(), calc.calculation_id.ToString()));
         }
         //расчет температуры при условии того, что в поле pressure_shell_inlet введено значнеие
         public static async Task<string> CalculateTemperature(string pressure_shell_inlet_value, CalculationFull calc)
@@ -280,6 +286,7 @@ namespace Ahed_project.Services.Global
             {
                 product_id_tube = _heatBalanceViewModel.Calculation.product_id_tube ?? 0,
                 product_id_shell = _heatBalanceViewModel.Calculation.product_id_shell ?? 0,
+                name = _heatBalanceViewModel.Calculation.name
             };
             string json = JsonConvert.SerializeObject(calculationUpdate);
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, _heatBalanceViewModel.Calculation.project_id.ToString(), _heatBalanceViewModel.Calculation.calculation_id.ToString()));

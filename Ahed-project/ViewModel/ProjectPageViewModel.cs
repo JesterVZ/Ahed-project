@@ -1,9 +1,11 @@
-﻿using Ahed_project.MasterData.CalculateClasses;
+﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -29,7 +31,6 @@ namespace Ahed_project.ViewModel
             set
             {
                 _selectedCalculation = value;
-                _selectedCalculation.ChangeNameCommand = ChangeCalculationNameCommand;
                 GlobalFunctionsAndCallersService.SetCalculation(SelectedCalculation);
             }
         }
@@ -40,10 +41,6 @@ namespace Ahed_project.ViewModel
         public ICommand CreateCalculationCommand => new AsyncCommand(async () =>
         {
             await Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CreateCalculation(CalculationName));
-        });
-        public ICommand ChangeCalculationNameCommand => new AsyncCommand(async () =>
-        {
-            await Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.ChangeCalculationName(_selectedCalculation));
         });
         #endregion
     }

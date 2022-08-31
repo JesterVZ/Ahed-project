@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Ahed_project.Services.Global;
+using DevExpress.Mvvm;
+using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Ahed_project.MasterData.CalculateClasses
@@ -82,7 +85,11 @@ namespace Ahed_project.MasterData.CalculateClasses
         public DateTime createdAt { get; set; }
         public DateTime updatedAt { get; set; }
 
-        public ICommand ChangeNameCommand { get; set; }
+        public ICommand ChangeNameCommand => new AsyncCommand<object>((calc) =>
+        {
+            var c = (CalculationFull)calc;
+            return Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.ChangeCalculationName(c));
+        });
 
     }
 }

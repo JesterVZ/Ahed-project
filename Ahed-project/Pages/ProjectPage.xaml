@@ -4,7 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Ahed_project.Pages" 
-      xmlns:acb="clr-namespace:Ahed_project.MasterData"
+      xmlns:acb="clr-namespace:Ahed_project.MasterData.Behaviors"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:SVG="http://sharpvectors.codeplex.com/svgc/"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -82,15 +83,16 @@
                 <TextBlock Margin="3" Grid.Column="0" Grid.Row="7" FontWeight="Bold">Project Processes</TextBlock>
                 <TextBox Margin="3" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2" Text="{Binding CalculationName, UpdateSourceTrigger=PropertyChanged}"/>
                 <Button Grid.Row="7" Grid.Column="3" Margin="3" Command="{Binding CreateCalculationCommand}">Add</Button>
-                <ListView Margin="3" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" ItemsSource="{Binding Calculations}" SelectedItem="{Binding SelectedCalculation}" >
+                <ListView Margin="3" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" ItemsSource="{Binding Calculations}" SelectedItem="{Binding SelectedCalculation}" HorizontalContentAlignment="Stretch">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextBox Style="{StaticResource EditableText}" Text="{Binding Path=name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" acb:TextBoxBehavior.OnLostFocus="{Binding ChangeNameCommand}">
-                                <TextBox.InputBindings>
-                                    <KeyBinding Key="Return" Command="{Binding ChangeNameCommand}"/>
-                                </TextBox.InputBindings>
+                            <TextBox Style="{StaticResource EditableText}" Text="{Binding Path=name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="LostFocus">
+                                        <i:InvokeCommandAction Command="{Binding ChangeNameCommand}" CommandParameter="{Binding}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </TextBox>
-
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
