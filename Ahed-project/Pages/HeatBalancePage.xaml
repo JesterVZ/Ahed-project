@@ -169,7 +169,7 @@
                         </ComboBoxItem>
                     </ComboBox>
                     <TextBox Style="{StaticResource Default}" Text="{Binding TubesProductName, UpdateSourceTrigger=PropertyChanged}"/>
-                    <ComboBox ItemsSource="{Binding Path=TubesProcess}" SelectedItem="{Binding Calculation.process_tube, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBox ItemsSource="{Binding Path=TubesProcess}" SelectedItem="{Binding TubesProcessSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <Label Content="{Binding Value}"/>
@@ -281,7 +281,7 @@
                         </ComboBoxItem>
                     </ComboBox>
                     <TextBox Style="{StaticResource Default}" Text="{Binding ShellProductName, UpdateSourceTrigger=PropertyChanged}"/>
-                    <ComboBox ItemsSource="{Binding Path=ShellProcess}" SelectedItem="{Binding ShellProcessSelector, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBox ItemsSource="{Binding Path=ShellProcess}" SelectedItem="{Binding ShellProcessSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <Label Content="{Binding Value}"/>

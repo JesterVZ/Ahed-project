@@ -4,6 +4,7 @@ using DevExpress.Mvvm;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -47,7 +48,7 @@ namespace Ahed_project.ViewModel
             set
             {
                 _pressure_shell_inlet_value = value;
-                if (Calculation.process_shell.Contains("Condensation") && double.TryParse(value, out var res))
+                if (Calculation!=null&&Calculation.calculation_id!=0&&Calculation.process_shell.Contains("Condensation") && double.TryParse(value, out var res))
                 {
                     GetTemperatureCalculation();
                 }
@@ -63,17 +64,75 @@ namespace Ahed_project.ViewModel
             Calculation.temperature_shell_outlet = data.temperature_shell_outlet;
             RaisePropertiesChanged("Calculation");
         }
-        public CalculationFull Calculation { get; set; }
+        private CalculationFull _calculation;
+        public CalculationFull Calculation 
+        {
+            get => _calculation;
+            set
+            {
+                _calculation = value;
+                if (value.calculation_id != 0)
+                {
+                    if (value.process_tube == null)
+                    {
+                        value.process_tube = "Sensible Heat";
+                    }
+                    if (value.process_shell == null)
+                    {
+                        value.process_shell = "Sensible Heat";
+                    }
+                    if (value.process_tube == "Sensible Heat" || value.process_tube == "sensible_heat")
+                    {
+                        TubesProcessSelector = TubesProcess.First();
+                        RaisePropertiesChanged("TubesProcessSelector");
+                    }
+                    else if (value.process_tube == "Condensation" || value.process_tube == "condensation")
+                    {
+                        TubesProcessSelector = TubesProcess.Last();
+                        RaisePropertiesChanged("TubesProcessSelector");
+                    }
+                    if (value.process_shell == "Sensible Heat" || value.process_shell == "sensible_heat")
+                    {
+                        ShellProcessSelector = ShellProcess.First();
+                        RaisePropertiesChanged("ShellProcessSelector");
+                    }
+                    else if (value.process_shell == "Condensation" || value.process_shell == "condensation")
+                    {
+                        ShellProcessSelector = ShellProcess.Last();
+                        RaisePropertiesChanged("ShellProcessSelector");
+                    }
+                }
+            }
+        }
         public Dictionary<int,string> TubesProcess { get; set; }
         public Dictionary<int, string> ShellProcess { get; set; }
 
-        public string ShellProcessSelector
+        public KeyValuePair<int,string> TubesProcessSelector
         {
-            get => Calculation.process_shell;
+            get
+            {
+                if (Calculation != null&&Calculation.calculation_id!=0)
+                    return (Calculation.process_tube?.Contains("condensation")??false) ? TubesProcess.Last() : TubesProcess.First();
+                else return default;
+            }
             set
             {
-                Calculation.process_shell = value;
-                if (value.Contains("Condensation"))
+                Calculation.process_tube = value.Value;
+            }
+        }
+
+        public KeyValuePair<int, string> ShellProcessSelector
+        {
+            get
+            {
+                if (Calculation != null && Calculation.calculation_id != 0)
+                    return (Calculation.process_shell?.Contains("condensation") ?? false) ? ShellProcess.Last() : ShellProcess.First();
+                else return default;
+            }
+            set
+            {
+                Calculation.process_shell = value.Value;
+                if (value.Value.Contains("Condensation"))
                 {
                     FlowShell = true;
                     TSIE = false;
