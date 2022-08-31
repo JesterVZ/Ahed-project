@@ -37,7 +37,15 @@
                 <StackPanel Orientation="Horizontal">
                     <Button Content="Calculate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
                 </StackPanel>
-                <Label FontWeight="Bold">Tube and Shell geometry</Label>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" FontWeight="Bold">Tube and Shell geometry</Label>
+                    <Label Grid.Column="1" FontWeight="Bold">Tubeplate Layout</Label>
+                </Grid>
+
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -114,7 +122,7 @@
 
                         <Label Grid.Column="0" Grid.Row="7">Number of Tubes</Label>
                         <TextBox Style="{StaticResource Default}" Grid.Column="2" Grid.Row="7"/>
-                        
+
                         <Label Grid.Column="0" Grid.Row="8">Tube Inner Length (mm)</Label>
                         <TextBox Style="{StaticResource Default}" Grid.Column="2" Grid.Row="8"/>
 
@@ -138,14 +146,14 @@
 
                         <Label Grid.Column="0" Grid.Row="12">Area / Module (m^2)</Label>
                         <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="12"/>
-                        
-                        <Label Grid.Column="0" Grid.Row="13">Volume / Module </Label>
+
+                        <Label Grid.Column="0" Grid.Row="13">Volume / Module</Label>
                         <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="13"/>
                         <TextBox Style="{StaticResource Colored}" Grid.Column="3" Grid.Row="13"/>
 
                         <Label Grid.Column="0" Grid.Row="14">Tube Profile</Label>
                         <ComboBox Style="{StaticResource ComboboxDefault}" Grid.Column="2" Grid.Row="14">
-                            
+
                         </ComboBox>
 
                         <Label Grid.Column="0" Grid.Row="15">Roughness</Label>
@@ -157,6 +165,86 @@
                         <RadioButton Grid.Column="3" Grid.Row="16" GroupName="BundleType" Content="Removable" VerticalAlignment="Center"/>
 
                         <CheckBox Grid.Column="2" Grid.Row="17" Content="Roller Expanded"/>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Canvas Grid.Column="0" Grid.Row="0">
+                            <Ellipse Fill="#F7F5F8" StrokeThickness="1" Stroke="Black" Width="200" Height="200" Canvas.Left="50" Canvas.Top="50"/>
+                            <Ellipse Fill="#FBF0EA" StrokeThickness="1" Stroke="Black" Width="51" Height="51" Canvas.Left="82" Canvas.Top="83" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Ellipse Fill="#FBF0EA" StrokeThickness="1" Stroke="Black" Width="51" Height="51" Canvas.Left="171" Canvas.Top="83" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Ellipse Fill="#FBF0EA" StrokeThickness="1" Stroke="Black" Width="51" Height="51" Canvas.Left="82" Canvas.Top="162" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                            <Ellipse Fill="#FBF0EA" StrokeThickness="1" Stroke="Black" Width="51" Height="51" Canvas.Left="171" Canvas.Top="162" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                        </Canvas>
+                        <Grid Grid.Column="1" Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">Tube Pitch (mm)</Label>
+                            <Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">Tube Layout</Label>
+                            <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="0"/>
+                            <ComboBox Style="{StaticResource ComboboxDefault}" Grid.Column="1" Grid.Row="1"></ComboBox>
+
+                            <Label Grid.Column="0" Grid.Row="2" VerticalAlignment="Center">Number of Passes</Label>
+                            <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="2"/>
+
+                            <Label Grid.Column="0" Grid.Row="3" VerticalAlignment="Center">Div.Plate Layout</Label>
+                            <ComboBox Style="{StaticResource ComboboxDefault}" Grid.Column="1" Grid.Row="3"></ComboBox>
+
+                            <Label Grid.Column="0" Grid.Row="4" VerticalAlignment="Center">Div.Plate Thickness (mm)</Label>
+                            <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="4"/>
+
+                            <Label Grid.Column="0" Grid.Row="5" VerticalAlignment="Center">TubePlate Thickness (mm)</Label>
+                            <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="5"/>
+
+                            <Label Grid.Column="0" Grid.Row="6" VerticalAlignment="Center">Shell Cross Section(m^2)</Label>
+                            <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="6"/>
+
+                            <Label Grid.Column="0" Grid.Row="7" VerticalAlignment="Center">Tubes Cross Section(per pass) (m^2)</Label>
+                            <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="7"/>
+
+                            <Label Grid.Column="0" Grid.Row="8" VerticalAlignment="Center">Perimeter (mm)</Label>
+                            <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="8"/>
+                        </Grid>
+                        <Grid Grid.Column="0" Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="38"/>
+                                <RowDefinition Height="38"/>
+                                <RowDefinition Height="38"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">Max Nr.Tubes</Label>
+                            <Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">Tubes Distribution</Label>
+                            <Label Grid.Column="0" Grid.Row="2" VerticalAlignment="Center">Tube-Tube Spacing (mm)</Label>
+
+                            <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="0"/>
+                            <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="1"/>
+                            <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="2"/>
+                        </Grid>
                     </Grid>
                 </Grid>
             </StackPanel>
