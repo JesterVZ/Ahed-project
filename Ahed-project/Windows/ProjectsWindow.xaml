@@ -5,10 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ahed_project.Windows"
         xmlns:attach="clr-namespace:Ahed_project.Services"
-        attach:MyAttachedBehaviors.LoadedCommand="{Binding WindowLoaded}"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         DataContext="{Binding ProjectsWindowViewModel, Source={StaticResource ViewModelLocator}}"
         mc:Ignorable="d"
         Title="ProjectsWindow" Height="450" Width="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding WindowLoaded}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
