@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -168,7 +169,11 @@ namespace Ahed_project.Services.Global
                         id = user.LastCalculationId ?? 0;
                     }
                     if (id != 0)
-                        _projectPageViewModel.SelectedCalculation = _projectPageViewModel.Calculations.FirstOrDefault(x=>x.calculation_id==id);
+                        Task.Factory.StartNew(() =>
+                        {
+                            Thread.Sleep(new TimeSpan(0, 0, 5));
+                            _projectPageViewModel.SelectedCalculation = _projectPageViewModel.Calculations.FirstOrDefault(x => x.calculation_id == id);
+                        });
                     else
                         _projectPageViewModel.SelectedCalculation = null;
                     for (int i = 0; i < result.logs.Count; i++)
