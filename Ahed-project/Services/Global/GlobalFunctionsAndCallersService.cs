@@ -3,6 +3,7 @@ using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.Products;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services.EF;
+using Ahed_project.Services.EF.Model;
 using Ahed_project.ViewModel;
 using Ahed_project.ViewModel.ContentPageComponents;
 using AutoMapper;
@@ -159,7 +160,17 @@ namespace Ahed_project.Services.Global
                 {
                     Responce result = JsonConvert.DeserializeObject<Responce>(response);
                     Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations = JsonConvert.DeserializeObject<ObservableCollection<CalculationFull>>(result.data.ToString()));
-                    _projectPageViewModel.SelectedCalculation = null;
+                    int userId = GlobalDataCollectorService.UserId;
+                    int id = 0;
+                    using (var context = new EFContext())
+                    {
+                        var user = context.Users.FirstOrDefault(x => x.Id == userId);
+                        id = user.LastCalculationId ?? 0;
+                    }
+                    if (id != 0)
+                        _projectPageViewModel.SelectedCalculation = _projectPageViewModel.Calculations.FirstOrDefault(x=>x.calculation_id==id);
+                    else
+                        _projectPageViewModel.SelectedCalculation = null;
                     for (int i = 0; i < result.logs.Count; i++)
                     {
                         Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
@@ -241,13 +252,23 @@ namespace Ahed_project.Services.Global
         //Выбор рассчета
         public static async void SetCalculation(CalculationFull calc)
         {
+            using (var context = new EFContext())
+            {
+                var user = context.Users.FirstOrDefault(x => x.Id == GlobalDataCollectorService.UserId);
+                user.LastCalculationId = calc.calculation_id;
+                context.Users.Update(user);
+                context.SaveChanges();
+            }
             _heatBalanceViewModel.Calculation = calc;
             var products = GlobalDataCollectorService.AllProducts.SelectMany(x => x.Value).ToList();
             var tubeProduct = products.FirstOrDefault(x => x.product_id == calc.product_id_tube);
-            Task.Factory.StartNew(() => SelectProductTube(tubeProduct));
+            _heatBalanceViewModel.TubesProductName = tubeProduct?.name;
+            _tubesFluidViewModel.Product = tubeProduct;
             var shellProduct = products.FirstOrDefault(x => x.product_id == calc.product_id_shell);
-            Task.Factory.StartNew(() => SelectProductShell(shellProduct));
-           
+            _heatBalanceViewModel.ShellProductName = shellProduct?.name;
+            _shellFluidViewModel.Product = shellProduct;
+
+
         }
         //Выбор продукта Tube
         public static void SelectProductTube(ProductGet product)

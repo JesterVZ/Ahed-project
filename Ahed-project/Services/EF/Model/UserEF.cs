@@ -32,5 +32,10 @@ namespace Ahed_project.Services.EF.Model
         /// Id последнего проекта
         /// </summary>
         public int? LastProjectId { get; set; }
+
+        /// <summary>
+        /// Последний рассчет пользователя
+        /// </summary>
+        public int? LastCalculationId { get; set; }
     }
 }
