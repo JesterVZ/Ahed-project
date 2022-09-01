@@ -7,29 +7,12 @@
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:SVG="http://sharpvectors.codeplex.com/svgc/"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="800" d:DesignWidth="800"
       Title="ProjectPage"
       
       DataContext="{Binding ProjectPageViewModel, Source={StaticResource ViewModelLocator}}" VerticalAlignment="Top">
     <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="927" MinHeight="800">
-        <Grid>
-            <Grid.Resources>
-                <Style TargetType="TextBox" x:Key="Default">
-                    <Setter Property="Height" Value="30"/>
-                    <Setter Property="VerticalContentAlignment" Value="Center"/>
-                </Style>
-                <Style TargetType="TextBox" x:Key="EditableText">
-                    <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="BorderBrush" Value="Transparent"/>
-                </Style>
-                <Style TargetType="TextBlock" x:Key="DefaultText">
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                </Style>
-                <Style BasedOn="{StaticResource Default}" TargetType="TextBox" x:Key="Colored">
-                    <Setter Property="Background" Value="#f9efe5"/>
-                    <Setter Property="IsEnabled" Value="False"/>
-                </Style>
-            </Grid.Resources>
+        <Grid Background="White">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition MaxWidth="800"/>
             </Grid.ColumnDefinitions>
@@ -97,7 +80,7 @@
                 </ListView>
                 <StackPanel Margin="3" Orientation="Horizontal" Grid.Column="0" Grid.Row="9">
                     <TextBlock Grid.ColumnSpan="4" FontWeight="Bold" Margin="0 0 9 0">Advanced Properties</TextBlock>
-                    <Button Width="15" Height="15">
+                    <Button Width="20" Height="20" Template="{StaticResource RoundedButton}">
                         <materialDesign:PackIcon Kind="ChevronDown"/>
                     </Button>
                 </StackPanel>

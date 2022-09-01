@@ -10,47 +10,6 @@
       DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}"
       Title="ContentPage" >
     <Page.Resources>
-        <Style TargetType="{x:Type TabItem}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TabItem}">
-                        <Grid>
-                            <Border  Name="Border">
-                                <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" RecognizesAccessKey="True"/>
-                            </Border>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="DarkOrange" />
-                            </Trigger>
-
-                            <Trigger Property="IsSelected" Value="False">
-                                <Setter TargetName="Border" Property="Background">
-                                    <Setter.Value>
-                                        <LinearGradientBrush>
-                                            <GradientStop Color="White" Offset="1"/>
-                                            <GradientStop Color="#fc6" Offset="0"/>
-                                        </LinearGradientBrush>
-                                    </Setter.Value>
-                                </Setter>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Foreground" Value="Gray"></Setter>
-                                <Setter Property="TabItem.Header">
-                                    <Setter.Value>
-                                        <StackPanel Orientation="Horizontal">
-                                            <materialDesign:PackIcon Kind="Lock" Foreground="Red" Width="30" Height="30" VerticalAlignment="Center"/>
-                                            <Label FontSize="20">Project</Label>
-                                        </StackPanel>
-                                    </Setter.Value>
-                                </Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </Page.Resources>
     <Page.InputBindings>
         <KeyBinding Key="N" Command="{Binding NewProjectCommand}" Modifiers="Ctrl"/>
@@ -102,7 +61,7 @@
             </MenuItem>
         </Menu>
         <TabControl Grid.Row="1" x:Name="Tabs" VerticalAlignment="Stretch" TabStripPlacement="Left" HorizontalAlignment="Stretch" FontSize="20" SelectedIndex="{Binding SelectedPage, UpdateSourceTrigger=PropertyChanged}">
-            <TabItem FontSize="12">
+            <TabItem FontSize="12" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -118,7 +77,7 @@
                 <Frame Source="ProjectPage.xaml"/>
             </TabItem>
 
-            <TabItem FontSize="12" IsEnabled="{Binding Path=TubesFluidState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
+            <TabItem FontSize="12" IsEnabled="{Binding Path=TubesFluidState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -133,7 +92,7 @@
                 </TabItem.Header>
                 <Frame Source="TubesFluidPage.xaml"/>
             </TabItem>
-            <TabItem  FontSize="12" IsEnabled="{Binding Path=ShellFluidState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
+            <TabItem  FontSize="12" IsEnabled="{Binding Path=ShellFluidState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -148,7 +107,7 @@
                 </TabItem.Header>
                 <Frame Source="ShellFluidPage.xaml"/>
             </TabItem>
-            <TabItem IsEnabled="{Binding Path=HeatBalanceState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" FontSize="12">
+            <TabItem IsEnabled="{Binding Path=HeatBalanceState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" FontSize="12" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -156,14 +115,14 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="17"/>
                         </Grid.ColumnDefinitions>
-                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=HeatBalanceState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=HeatBalanceState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}" />
                         <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">Heat Balance</Label>
                         <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=HeatBalanceValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Source="HeatBalancePage.xaml"/>
             </TabItem>
-            <TabItem IsEnabled="{Binding Path=GeometryState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
+            <TabItem IsEnabled="{Binding Path=GeometryState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -178,7 +137,7 @@
                 </TabItem.Header>
                 <Frame Source="GeometryPage.xaml"/>
             </TabItem>
-            <TabItem IsEnabled="{Binding Path=BafflesState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
+            <TabItem IsEnabled="{Binding Path=BafflesState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -193,7 +152,7 @@
                 </TabItem.Header>
                 <Frame Source="BafflesPage.xaml"/>
             </TabItem>
-            <TabItem IsEnabled="{Binding Path=OverallCalculationState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
+            <TabItem IsEnabled="{Binding Path=OverallCalculationState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -208,7 +167,7 @@
                 </TabItem.Header>
                 <Frame Source="OverallCalculationPage.xaml"/>
             </TabItem>
-            <TabItem IsEnabled="{Binding Path=BatchState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
+            <TabItem IsEnabled="{Binding Path=BatchState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -223,7 +182,7 @@
                 </TabItem.Header>
                 <Frame Source="BatchPage.xaml"/>
             </TabItem>
-            <TabItem IsEnabled="{Binding Path=GraphState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
+            <TabItem IsEnabled="{Binding Path=GraphState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -238,7 +197,7 @@
                 </TabItem.Header>
                 <Frame Source="GraphsPage.xaml"/>
             </TabItem>
-            <TabItem IsEnabled="{Binding Path=ReportsState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
+            <TabItem IsEnabled="{Binding Path=ReportsState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -253,7 +212,7 @@
                 </TabItem.Header>
                 <Frame Source="ReportsPage.xaml"/>
             </TabItem>
-            <TabItem IsEnabled="{Binding Path=QuoteState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
+            <TabItem IsEnabled="{Binding Path=QuoteState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -268,7 +227,7 @@
                 </TabItem.Header>
                 <Frame Source="QuotePage.xaml"/>
             </TabItem>
-            <TabItem IsEnabled="{Binding Path=ThreeDState.IsEnabled, UpdateSourceTrigger=PropertyChanged}">
+            <TabItem IsEnabled="{Binding Path=ThreeDState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>

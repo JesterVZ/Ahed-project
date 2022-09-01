@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Color x:Key="NotEditTextBoxColor">#f9efe5</Color>
+
+    <SolidColorBrush x:Key="ButtonMouseOverBrush" Color="#defcff"/>
+
+    <Color x:Key="SelectedPageColor">DarkOrange</Color>
+    <SolidColorBrush x:Key="SelectedPageBrush" Color="DarkOrange"/>
+
+    <Color x:Key="ButtonColor">#fc6</Color>
+    <SolidColorBrush x:Key="ButtonBrush" Color="#fc6"/>
+
+    <Color x:Key="RedColor">Red</Color>
+    <SolidColorBrush x:Key="RedBrush" Color="Red"/>
+    
+    <Color x:Key="YellowColor">Yellow</Color>
+    <Color x:Key="GreenColor">Green</Color>
+
+    <LinearGradientBrush x:Key="PageGradient">
+        <GradientStop Color="White" Offset="1"/>
+        <GradientStop Color="#fc6" Offset="0"/>
+    </LinearGradientBrush>
+</ResourceDictionary>

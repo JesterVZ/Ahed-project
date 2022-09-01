@@ -35,5 +35,9 @@ namespace Ahed_project.Pages
             LogData.Columns[2].Width = e.NewSize.Width - 360;
         }
 
+        private void LogData_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

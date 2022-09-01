@@ -4,6 +4,18 @@
              xmlns:local="clr-namespace:Ahed_project"
              StartupUri="Windows/MainWindow.xaml">
     <Application.Resources>
-        <local:ViewModelLocator x:Key="ViewModelLocator"/>
+        <ResourceDictionary>
+            <local:ViewModelLocator x:Key="ViewModelLocator"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Colors.xaml"/>
+                <ResourceDictionary Source="Styles/TabItem.xaml"/>
+                <ResourceDictionary Source="Styles/TextBox.xaml"/>
+                <ResourceDictionary Source="Styles/Button.xaml"/>
+                <ResourceDictionary Source="Styles/ComboBox.xaml"/>
+                <ResourceDictionary Source="Styles/StackPanel.xaml"/>
+                <ResourceDictionary Source="Styles/Label.xaml"/>
+                <ResourceDictionary Source="Styles/UserControls.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

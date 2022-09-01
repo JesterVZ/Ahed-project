@@ -9,6 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Visual\check.svg" />
+    <None Remove="Visual\Diagram.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Visual\check.svg">
@@ -39,6 +40,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Visual\arrow.png" />
+    <Resource Include="Visual\Diagram.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Visual\loading.gif" />

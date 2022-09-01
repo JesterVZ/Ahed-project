@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style TargetType="Label" x:Key="Left">
+        <Setter Property="Width" Value="170"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+    </Style>
+    <Style TargetType="Label" x:Key="Right">
+        <Setter Property="Width" Value="80"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+    </Style>
+    <Style TargetType="Label" BasedOn="{StaticResource Left}" x:Key="LeftWMargin">
+        <Setter Property="Margin" Value="5,0,0,0"/>
+    </Style>
+</ResourceDictionary>
