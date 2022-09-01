@@ -10,9 +10,10 @@ namespace Ahed_project.UserControl
 {
     public class CustomGrid : Grid
     {
-        public static readonly DependencyProperty dependencyProperty = DependencyProperty.Register("IsOpen", typeof(bool), typeof(CustomGrid), new PropertyMetadata(false, new PropertyChangedCallback(ChangeIsOpenProperty)));
+        public static readonly DependencyProperty dependencyProperty = 
+            DependencyProperty.Register("IsOpen", typeof(bool), typeof(CustomGrid), new PropertyMetadata(true, new PropertyChangedCallback(ChangeIsOpenProperty)));
 
-        public bool IsOpen
+        public object IsOpen
         {
             get => (bool)GetValue(dependencyProperty);
             set => SetValue(dependencyProperty, value);

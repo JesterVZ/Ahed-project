@@ -86,7 +86,7 @@
                         <materialDesign:PackIcon Kind="ChevronDown"/>
                     </Button>
                 </StackPanel>
-                <customGrid:CustomGrid Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="4" IsOpen="False">
+                <customGrid:CustomGrid Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="4" IsOpen="{Binding IsOpen, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource AnimatedGrid}">
                     <Grid >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="133"/>

@@ -26,7 +26,7 @@
         </Style.Resources>
 
         <Style.Triggers>
-            <Trigger Property="controls:CustomGrid.IsOpen" Value="True">
+            <Trigger Property="IsOpen" Value="True">
                 <Trigger.EnterActions>
                     <BeginStoryboard Storyboard="{StaticResource FadeInGrid}"/>
                 </Trigger.EnterActions>
@@ -35,7 +35,7 @@
                 </Trigger.ExitActions>
             </Trigger>
 
-            <Trigger Property="controls:CustomGrid.IsOpen" Value="False">
+            <Trigger Property="IsOpen" Value="False">
                 <Trigger.ExitActions>
                     <BeginStoryboard Storyboard="{StaticResource FadeInGrid}"/>
                 </Trigger.ExitActions>
