@@ -5,12 +5,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Ahed_project.Pages" 
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:customGrid ="clr-namespace:Ahed_project.UserControl"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:SVG="http://sharpvectors.codeplex.com/svgc/"
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="800"
       Title="ProjectPage"
       
       DataContext="{Binding ProjectPageViewModel, Source={StaticResource ViewModelLocator}}" VerticalAlignment="Top">
+
     <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="927" MinHeight="800">
         <Grid Background="White">
             <Grid.ColumnDefinitions>
@@ -80,53 +82,56 @@
                 </ListView>
                 <StackPanel Margin="3" Orientation="Horizontal" Grid.Column="0" Grid.Row="9">
                     <TextBlock Grid.ColumnSpan="4" FontWeight="Bold" Margin="0 0 9 0">Advanced Properties</TextBlock>
-                    <Button Width="20" Height="20" Template="{StaticResource RoundedButton}">
+                    <Button Width="20" Height="20" Template="{StaticResource RoundedButton}" Command="{Binding ToggleCommand}">
                         <materialDesign:PackIcon Kind="ChevronDown"/>
                     </Button>
                 </StackPanel>
-                <Grid Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="4">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="133"/>
-                        <ColumnDefinition Width="67"/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Style="{StaticResource DefaultText}" Text="Created"  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"/>
-                    <TextBlock Style="{StaticResource DefaultText}" Text="Modified"  Grid.Column="3" Grid.Row="1"/>
-                    <TextBlock Style="{StaticResource DefaultText}" Text="User Email"  Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,7"/>
-                    <TextBox Margin="3" Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="2"/>
-                    <TextBlock Style="{StaticResource DefaultText}" Text="User Email"  Grid.Column="3" Grid.Row="2" Margin="3,7"/>
-                    <TextBox Margin="3" Style="{StaticResource Colored}" Grid.Column="4" Grid.Row="2"/>
-                    <TextBlock Style="{StaticResource DefaultText}" Text="Company"  Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="0,7"/>
-                    <TextBox Margin="3" Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="3"/>
-                    <TextBlock Style="{StaticResource DefaultText}" Text="Company"  Grid.Column="3" Grid.Row="3" Margin="3,7"/>
-                    <TextBox  Margin="3" Style="{StaticResource Colored}" Grid.Column="4" Grid.Row="3"/>
-                    <TextBlock Style="{StaticResource DefaultText}" Text="Date"  Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="0,7"/>
-                    <TextBox Margin="3" Style="{StaticResource Colored}" Text="{Binding ProjectInfo.createdAt, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4"/>
-                    <TextBlock Style="{StaticResource DefaultText}" Text="Date"  Grid.Column="3" Grid.Row="4" Margin="3,7"/>
-                    <TextBox Margin="3" Style="{StaticResource Colored}" Text="{Binding ProjectInfo.updatedAt, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="4"/>
-                    <TextBlock Style="{StaticResource DefaultText}" Text="Number of saves"  Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Margin="0,7"/>
-                    <TextBox  Margin="3" Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="5"/>
-                    <TextBlock Style="{StaticResource DefaultText}" Text="Shared in groups:"  Grid.Column="3" Grid.Row="5" Margin="3,7"/>
-                    <TextBlock Style="{StaticResource DefaultText}" Text="Category"  Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Margin="0,7"/>
-                    <TextBox  Margin="3" Style="{StaticResource Default}" Text="{Binding ProjectInfo.category, UpdateSourceTrigger=LostFocus}" Grid.Column="2" Grid.Row="6"/>
-                    <TextBlock Style="{StaticResource DefaultText}" Text="Keywords"  Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Margin="0,7"/>
-                    <TextBox  Margin="3" Style="{StaticResource Default}" Text="{Binding ProjectInfo.keywords,UpdateSourceTrigger=LostFocus}" Grid.Column="2" Grid.Row="7"/>
-                    <TextBlock  Text="Comments"  Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2"/>
-                    <TextBox Margin="3" Height="100" Text="{Binding ProjectInfo.comments, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="3"/>
-                </Grid>
+                <customGrid:CustomGrid Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="4" IsOpen="False">
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="133"/>
+                            <ColumnDefinition Width="67"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Style="{StaticResource DefaultText}" Text="Created"  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"/>
+                        <TextBlock Style="{StaticResource DefaultText}" Text="Modified"  Grid.Column="3" Grid.Row="1"/>
+                        <TextBlock Style="{StaticResource DefaultText}" Text="User Email"  Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,7"/>
+                        <TextBox Margin="3" Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="2"/>
+                        <TextBlock Style="{StaticResource DefaultText}" Text="User Email"  Grid.Column="3" Grid.Row="2" Margin="3,7"/>
+                        <TextBox Margin="3" Style="{StaticResource Colored}" Grid.Column="4" Grid.Row="2"/>
+                        <TextBlock Style="{StaticResource DefaultText}" Text="Company"  Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="0,7"/>
+                        <TextBox Margin="3" Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="3"/>
+                        <TextBlock Style="{StaticResource DefaultText}" Text="Company"  Grid.Column="3" Grid.Row="3" Margin="3,7"/>
+                        <TextBox  Margin="3" Style="{StaticResource Colored}" Grid.Column="4" Grid.Row="3"/>
+                        <TextBlock Style="{StaticResource DefaultText}" Text="Date"  Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="0,7"/>
+                        <TextBox Margin="3" Style="{StaticResource Colored}" Text="{Binding ProjectInfo.createdAt, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4"/>
+                        <TextBlock Style="{StaticResource DefaultText}" Text="Date"  Grid.Column="3" Grid.Row="4" Margin="3,7"/>
+                        <TextBox Margin="3" Style="{StaticResource Colored}" Text="{Binding ProjectInfo.updatedAt, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="4"/>
+                        <TextBlock Style="{StaticResource DefaultText}" Text="Number of saves"  Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Margin="0,7"/>
+                        <TextBox  Margin="3" Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="5"/>
+                        <TextBlock Style="{StaticResource DefaultText}" Text="Shared in groups:"  Grid.Column="3" Grid.Row="5" Margin="3,7"/>
+                        <TextBlock Style="{StaticResource DefaultText}" Text="Category"  Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Margin="0,7"/>
+                        <TextBox  Margin="3" Style="{StaticResource Default}" Text="{Binding ProjectInfo.category, UpdateSourceTrigger=LostFocus}" Grid.Column="2" Grid.Row="6"/>
+                        <TextBlock Style="{StaticResource DefaultText}" Text="Keywords"  Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Margin="0,7"/>
+                        <TextBox  Margin="3" Style="{StaticResource Default}" Text="{Binding ProjectInfo.keywords,UpdateSourceTrigger=LostFocus}" Grid.Column="2" Grid.Row="7"/>
+                        <TextBlock  Text="Comments"  Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2"/>
+                        <TextBox Margin="3" Height="100" Text="{Binding ProjectInfo.comments, UpdateSourceTrigger=LostFocus}" TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="3"/>
+                    </Grid>
+                </customGrid:CustomGrid>
+                
             </Grid>
         </Grid>
     </ScrollViewer>

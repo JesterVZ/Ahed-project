@@ -16,6 +16,9 @@ namespace Ahed_project.ViewModel
     {
         public Visibility TextBoxVisibillity { get; set; }
         public Visibility LabelVisibillity { get; set; }
+
+        public bool IsOpen { get; set; }
+
         #region Props
         private ProjectInfoGet _projectInfo = new();
         public ProjectInfoGet ProjectInfo
@@ -41,6 +44,11 @@ namespace Ahed_project.ViewModel
         public ICommand CreateCalculationCommand => new AsyncCommand(async () =>
         {
             await Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CreateCalculation(CalculationName));
+        });
+
+        public ICommand ToggleCommand => new DelegateCommand(async () =>
+        {
+            IsOpen = !IsOpen;
         });
         #endregion
     }
