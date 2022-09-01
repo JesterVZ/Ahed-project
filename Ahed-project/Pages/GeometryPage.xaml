@@ -4,9 +4,11 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Ahed_project.Pages"
-       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:SVG="http://sharpvectors.codeplex.com/svgc/"
+      xmlns:customGrid ="clr-namespace:Ahed_project.UserControl"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:SVG="http://sharpvectors.codeplex.com/svgc/"
       mc:Ignorable="d" 
       d:DesignHeight="1600" d:DesignWidth="1200"
+      DataContext="{Binding GeometryPageViewModel, Source={StaticResource ViewModelLocator}}"
       Title="GeometryPage">
 
     <ScrollViewer>
@@ -320,61 +322,64 @@
                 </Grid>
                 <StackPanel Margin="3" Orientation="Horizontal" Grid.Column="0" Grid.Row="9">
                     <TextBlock Grid.ColumnSpan="4" FontWeight="Bold" Margin="0 0 9 0">Advanced Properties</TextBlock>
-                    <Button Width="20" Height="20" Template="{StaticResource RoundedButton}">
+                    <Button Width="20" Height="20" Template="{StaticResource RoundedButton}" Command="{Binding ToggleCommand}">
                         <materialDesign:PackIcon Kind="ChevronDown"/>
                     </Button>
                 </StackPanel>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
+                <customGrid:CustomGrid IsOpen="{Binding IsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource AnimatedGrid}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
 
-                    <Label Grid.Column="0" Grid.Row="0">Tube to tubeplate (A) (mm)</Label>
-                    <TextBox Grid.Column="1" Grid.Row="0" Style="{StaticResource Default}"/>
-                    
-                    <Label Grid.Column="0" Grid.Row="1">Tubeplate to shell (B) (mm)</Label>
-                    <TextBox Grid.Column="1" Grid.Row="1" Style="{StaticResource Default}"/>
+                        <Label Grid.Column="0" Grid.Row="0">Tube to tubeplate (A) (mm)</Label>
+                        <TextBox Grid.Column="1" Grid.Row="0" Style="{StaticResource Default}"/>
 
-                    <Label Grid.Column="0" Grid.Row="2">Division plate to shell (C) (mm)</Label>
-                    <TextBox Grid.Column="1" Grid.Row="2" Style="{StaticResource Default}"/>
+                        <Label Grid.Column="0" Grid.Row="1">Tubeplate to shell (B) (mm)</Label>
+                        <TextBox Grid.Column="1" Grid.Row="1" Style="{StaticResource Default}"/>
 
-                    <Label Grid.Column="0" Grid.Row="3">Minimum tube hole to tubeplate edge (D) (mm)</Label>
-                    <TextBox Grid.Column="1" Grid.Row="3" Style="{StaticResource Default}"/>
+                        <Label Grid.Column="0" Grid.Row="2">Division plate to shell (C) (mm)</Label>
+                        <TextBox Grid.Column="1" Grid.Row="2" Style="{StaticResource Default}"/>
 
-                    <Label Grid.Column="0" Grid.Row="4">Actual tube hole to tubeplate edge (D) (mm)</Label>
-                    <TextBox Grid.Column="1" Grid.Row="4" Style="{StaticResource Colored}"/>
+                        <Label Grid.Column="0" Grid.Row="3">Minimum tube hole to tubeplate edge (D) (mm)</Label>
+                        <TextBox Grid.Column="1" Grid.Row="3" Style="{StaticResource Default}"/>
 
-                    <Label Grid.Column="0" Grid.Row="5">Min. tube hole to division plate groove (E) (mm)</Label>
-                    <TextBox Grid.Column="1" Grid.Row="5" Style="{StaticResource Default}"/>
+                        <Label Grid.Column="0" Grid.Row="4">Actual tube hole to tubeplate edge (D) (mm)</Label>
+                        <TextBox Grid.Column="1" Grid.Row="4" Style="{StaticResource Colored}"/>
 
-                    <Label Grid.Column="0" Grid.Row="6">Actual tube hole to tube hole (F) (mm)</Label>
-                    <TextBox Grid.Column="1" Grid.Row="6" Style="{StaticResource Colored}"/>
+                        <Label Grid.Column="0" Grid.Row="5">Min. tube hole to division plate groove (E) (mm)</Label>
+                        <TextBox Grid.Column="1" Grid.Row="5" Style="{StaticResource Default}"/>
 
-                    <Label Grid.Column="0" Grid.Row="7">Division plate to tubeplate (groove) (mm)</Label>
-                    <TextBox Grid.Column="1" Grid.Row="7" Style="{StaticResource Default}"/>
+                        <Label Grid.Column="0" Grid.Row="6">Actual tube hole to tube hole (F) (mm)</Label>
+                        <TextBox Grid.Column="1" Grid.Row="6" Style="{StaticResource Colored}"/>
 
-                    <Label Grid.Column="0" Grid.Row="8">Minimum tube-in-tube spacing (G) (mm)</Label>
-                    <TextBox Grid.Column="1" Grid.Row="8" Style="{StaticResource Default}"/>
+                        <Label Grid.Column="0" Grid.Row="7">Division plate to tubeplate (groove) (mm)</Label>
+                        <TextBox Grid.Column="1" Grid.Row="7" Style="{StaticResource Default}"/>
 
-                    <Button Grid.Column="1" Margin="3" Grid.Row="9" Content="Restore Defaults" VerticalAlignment="Center" Background="#fc6"/>
-                    <Button Grid.Column="1" Margin="3" Grid.Row="10" Content="Show Template" VerticalAlignment="Center" Background="#fc6"/>
-                </Grid>
+                        <Label Grid.Column="0" Grid.Row="8">Minimum tube-in-tube spacing (G) (mm)</Label>
+                        <TextBox Grid.Column="1" Grid.Row="8" Style="{StaticResource Default}"/>
+
+                        <Button Grid.Column="1" Margin="3" Grid.Row="9" Content="Restore Defaults" VerticalAlignment="Center" Background="#fc6"/>
+                        <Button Grid.Column="1" Margin="3" Grid.Row="10" Content="Show Template" VerticalAlignment="Center" Background="#fc6"/>
+                    </Grid>
+                </customGrid:CustomGrid>
+                
             </StackPanel>
 
         </Grid>
