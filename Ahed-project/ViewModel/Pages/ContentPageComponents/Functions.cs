@@ -7,7 +7,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 {
     public partial class ContentPageViewModel
     {
-        private void Validation()
+        public void Validation()
         {
             var assembly = Assembly.GetExecutingAssembly();
             if (GlobalDataCollectorService.Project.name != null && GlobalDataCollectorService.Project.name != string.Empty)

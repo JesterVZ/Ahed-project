@@ -415,5 +415,11 @@ namespace Ahed_project.Services.Global
                 }
             }
         }
+
+        //Валидация
+        public static void Validate()
+        {
+            _contentPageViewModel.Validation();
+        }
     }
 }
