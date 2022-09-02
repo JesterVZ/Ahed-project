@@ -2,6 +2,7 @@
 using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -71,7 +72,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _calculation = value;
-                if (value.calculation_id != 0)
+                if (value!=null&&value?.calculation_id != 0)
                 {
                     if (value.process_tube == null)
                     {
@@ -118,38 +119,43 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 Calculation.process_tube = value.Value;
+                RaisePropertiesChanged("Calculation");
             }
         }
+
+        public ICommand ChangeProcess => new DelegateCommand(() =>
+        {
+            if (ShellProcessSelector.Value.Contains("Condensation"))
+            {
+                FlowShell = true;
+                TSIE = false;
+                TSOE = false;
+                TOB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
+                FB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
+                if (double.TryParse(Calculation.temperature_tube_outlet, out double res))
+                    Calculation.temperature_shell_outlet = res.ToString();
+                RaisePropertiesChanged("Calculation");
+            }
+            else
+            {
+                TSIE = true;
+                TSOE = true;
+                TOB = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+                RaisePropertiesChanged("Calculation");
+            }
+        });
 
         public KeyValuePair<int, string> ShellProcessSelector
         {
             get
             {
                 if (Calculation != null && Calculation.calculation_id != 0)
-                    return Calculation.process_shell?.Contains("condensation") ?? false ? ShellProcess.Last() : ShellProcess.First();
+                    return Calculation.process_shell?.ToLower().Contains("condensation") ?? false ? ShellProcess.Last() : ShellProcess.First();
                 else return default;
             }
             set
             {
                 Calculation.process_shell = value.Value;
-                if (value.Value.Contains("Condensation"))
-                {
-                    FlowShell = true;
-                    TSIE = false;
-                    TSOE = false;
-                    TOB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
-                    FB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
-                    if (double.TryParse(Calculation.temperature_tube_outlet, out double res))
-                        Calculation.temperature_shell_outlet = res.ToString();
-                    RaisePropertiesChanged("Calculation");
-                }
-                else
-                {
-                    TSIE = true;
-                    TSOE = true;
-                    TOB = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-
-                }
             }
         }
 

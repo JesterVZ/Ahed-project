@@ -4,6 +4,7 @@ using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Ahed_project.ViewModel.Pages
 {
@@ -47,6 +48,37 @@ namespace Ahed_project.ViewModel.Pages
         public PlotModel FourthChart { get; private set; }
         public PlotModel FifthChart { get; private set; }
         public PlotModel SixthChart { get; private set; }
+
+        public ICommand CreateBaseOxyPlots => new DelegateCommand(() =>
+        {
+            if (FirstChart == null)
+            {
+                FirstChart = new PlotModel();
+                SecondChart = new PlotModel();
+                ThirdChart = new PlotModel();
+                FourthChart = new PlotModel();
+                FifthChart = new PlotModel();
+                SixthChart = new PlotModel();
+                FirstChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
+                FirstChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Density", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
+                SecondChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
+                SecondChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Specific Heat", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
+                ThirdChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
+                ThirdChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Thermal Conductivity", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
+                FourthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
+                FourthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Consistency Index", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
+                FifthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
+                FifthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Flow Index", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
+                SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
+                SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Latent Heat", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
+                FirstChart.Series.Add(new LineSeries());
+                SecondChart.Series.Add(new LineSeries());
+                ThirdChart.Series.Add(new LineSeries());
+                FourthChart.Series.Add(new LineSeries());
+                FifthChart.Series.Add(new LineSeries());
+                SixthChart.Series.Add(new LineSeries());
+            }
+        });
 
         private async void CreateCharts()
         {
