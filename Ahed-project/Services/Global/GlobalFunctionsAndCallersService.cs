@@ -226,7 +226,6 @@ namespace Ahed_project.Services.Global
             }
             CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
             Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations.Add(calculationGet));
-            _projectPageViewModel.SelectedCalculation = null;
         }
         //изменение имени рассчета
         public static async void ChangeCalculationName(CalculationFull calc)
@@ -257,12 +256,15 @@ namespace Ahed_project.Services.Global
         //Выбор рассчета
         public static async void SetCalculation(CalculationFull calc)
         {
-            using (var context = new EFContext())
+            if (calc != null)
             {
-                var user = context.Users.FirstOrDefault(x => x.Id == GlobalDataCollectorService.UserId);
-                user.LastCalculationId = calc.calculation_id;
-                context.Users.Update(user);
-                context.SaveChanges();
+                using (var context = new EFContext())
+                {
+                    var user = context.Users.FirstOrDefault(x => x.Id == GlobalDataCollectorService.UserId);
+                    user.LastCalculationId = calc.calculation_id;
+                    context.Users.Update(user);
+                    context.SaveChanges();
+                }
             }
             _heatBalanceViewModel.Calculation = calc;
             var products = GlobalDataCollectorService.AllProducts.SelectMany(x => x.Value).ToList();

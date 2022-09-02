@@ -81,22 +81,22 @@ namespace Ahed_project.ViewModel
                     {
                         value.process_shell = "Sensible Heat";
                     }
-                    if (value.process_tube == "Sensible Heat" || value.process_tube == "sensible_heat")
+                    if (value.process_tube == "sensible_heat")
                     {
                         TubesProcessSelector = TubesProcess.First();
                         RaisePropertiesChanged("TubesProcessSelector");
                     }
-                    else if (value.process_tube == "Condensation" || value.process_tube == "condensation")
+                    else if (value.process_tube == "condensation")
                     {
                         TubesProcessSelector = TubesProcess.Last();
                         RaisePropertiesChanged("TubesProcessSelector");
                     }
-                    if (value.process_shell == "Sensible Heat" || value.process_shell == "sensible_heat")
+                    if (value.process_shell == "sensible_heat")
                     {
                         ShellProcessSelector = ShellProcess.First();
                         RaisePropertiesChanged("ShellProcessSelector");
                     }
-                    else if (value.process_shell == "Condensation" || value.process_shell == "condensation")
+                    else if (value.process_shell == "condensation")
                     {
                         ShellProcessSelector = ShellProcess.Last();
                         RaisePropertiesChanged("ShellProcessSelector");

@@ -9,6 +9,15 @@ namespace Ahed_project.ViewModel
 {
     public class TubesFluidViewModel : BindableBase
     {
+        public TubesFluidViewModel()
+        {
+            FirstChart = new PlotModel();
+            SecondChart = new PlotModel();
+            ThirdChart = new PlotModel();
+            FourthChart = new PlotModel();
+            FifthChart = new PlotModel();
+            SixthChart = new PlotModel();
+        }
         private ProductGet _product;
         public ProductGet Product
         {
@@ -65,7 +74,7 @@ namespace Ahed_project.ViewModel
                 FifthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Flow Index" });
                 SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature" });
                 SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Latent Heat" });
-                if(Product != null)
+                if(Product != null && Product.product_properties != null)
                 {
                     foreach (var property in Product?.product_properties)
                     {
@@ -93,14 +102,17 @@ namespace Ahed_project.ViewModel
                 FifthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Vapour Pressure" });
                 SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature" });
                 SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Mass Vapour Fraction" });
-                foreach (var property in Product?.product_properties)
+                if (Product != null && Product.product_properties != null)
                 {
-                    firstSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.gas_phase_density ?? 0)));
-                    secondSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.gas_phase_specific_heat ?? 0)));
-                    thirdSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.gas_phase_thermal_conductivity ?? 0)));
-                    fourthSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.gas_phase_dyn_visc_gas ?? 0)));
-                    fifthSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.gas_phase_p_vap ?? 0)));
-                    sixthSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.gas_phase_vapour_frac ?? 0)));
+                    foreach (var property in Product?.product_properties)
+                    {
+                        firstSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.gas_phase_density ?? 0)));
+                        secondSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.gas_phase_specific_heat ?? 0)));
+                        thirdSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.gas_phase_thermal_conductivity ?? 0)));
+                        fourthSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.gas_phase_dyn_visc_gas ?? 0)));
+                        fifthSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.gas_phase_p_vap ?? 0)));
+                        sixthSeries.Points.Add(new DataPoint((double)(property.liquid_phase_temperature ?? 0), (double)(property.gas_phase_vapour_frac ?? 0)));
+                    }
                 }
             }
             FirstChart.Series.Add(firstSeries);
