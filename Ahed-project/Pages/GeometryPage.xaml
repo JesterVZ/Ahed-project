@@ -10,6 +10,9 @@
       d:DesignHeight="1600" d:DesignWidth="1200"
       DataContext="{Binding GeometryPageViewModel, Source={StaticResource ViewModelLocator}}"
       Title="GeometryPage">
+    <Page.Resources>
+        <customGrid:GridLengthConverter x:Key="gridLengthConverter"/>
+    </Page.Resources>
 
     <ScrollViewer>
         <Grid Background="White" Width="1200" HorizontalAlignment="Left">
@@ -35,7 +38,7 @@
                     <Grid Grid.Column="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="{Binding Path=GridColumnWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource gridLengthConverter}}"/>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
@@ -60,19 +63,12 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Label Grid.Column="0" Grid.Row="0">Heat Exchanger Type</Label>
-                        <ComboBox Style="{StaticResource ComboboxDefault}" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0">
-                            <ComboBoxItem>
-                                Tube/Shell
-                            </ComboBoxItem>
-                            <ComboBoxItem IsSelected="True">
-                                Annular Space
-                            </ComboBoxItem>
-                            <ComboBoxItem >
-                                Unicus
-                            </ComboBoxItem>
-                            <ComboBoxItem >
-                                R Series
-                            </ComboBoxItem>
+                        <ComboBox ItemsSource="{Binding Exchangers}" SelectedItem="{Binding ExchangersSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Value}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
                         <Button Grid.Column="0" Grid.Row="1" Content="Tubes Assistant" HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
                         <Label Grid.Column="1" Grid.Row="1" FontWeight="Bold">Inner Side</Label>
