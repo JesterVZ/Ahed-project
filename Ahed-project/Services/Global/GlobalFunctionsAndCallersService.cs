@@ -33,12 +33,11 @@ namespace Ahed_project.Services.Global
         private static HeatBalanceViewModel _heatBalanceViewModel;
         private static TubesFluidViewModel _tubesFluidViewModel;
         private static ShellFluidViewModel _shellFluidViewModel;
-        private static MaterialsWindowViewModel _materialsWindowViewModel;
 
         public GlobalFunctionsAndCallersService(SendDataService sendDataService, ContentPageViewModel contentPage,
             ProjectPageViewModel projectPageViewModel, IMapper mapper,
             MainViewModel mainViewModel, HeatBalanceViewModel heatBalanceViewModel, TubesFluidViewModel tubesFluidViewModel,
-            ShellFluidViewModel shellFluidViewModel, MaterialsWindowViewModel materialsWindowViewModel)
+            ShellFluidViewModel shellFluidViewModel)
         {
             _sendDataService = sendDataService;
             _contentPageViewModel = contentPage;
@@ -48,7 +47,6 @@ namespace Ahed_project.Services.Global
             _heatBalanceViewModel = heatBalanceViewModel;
             _tubesFluidViewModel = tubesFluidViewModel;
             _shellFluidViewModel = shellFluidViewModel;
-            _materialsWindowViewModel = materialsWindowViewModel;
         }
 
         //Первичная загрузка после входа
@@ -152,7 +150,7 @@ namespace Ahed_project.Services.Global
             GlobalDataCollectorService.Project = projectInfoGet;
             SetUserLastProject(projectInfoGet.project_id);
             Task.Factory.StartNew(() => GetCalculations(projectInfoGet.project_id.ToString()));
-            _mainViewModel.Title = projectInfoGet.name;
+            _mainViewModel.Title = $"{projectInfoGet.name} ({_heatBalanceViewModel.Calculation?.name})";
         }
 
         //Получение рассчетов
@@ -278,8 +276,7 @@ namespace Ahed_project.Services.Global
             var shellProduct = products.FirstOrDefault(x => x.product_id == calc.product_id_shell);
             _heatBalanceViewModel.ShellProductName = shellProduct?.name;
             _shellFluidViewModel.Product = shellProduct;
-
-
+            _mainViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({_heatBalanceViewModel.Calculation?.name})";
         }
         //Выбор продукта Tube
         public static void SelectProductTube(ProductGet product)
