@@ -35,7 +35,7 @@
                     <Grid Grid.Column="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="1*"/>
+                            <customGrid:CustomColumnDefinition IsColumnVisible="False" Style="{StaticResource ToggleColumn}"  Width="*"/>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
@@ -64,7 +64,7 @@
                             <ComboBoxItem>
                                 Tube/Shell
                             </ComboBoxItem>
-                            <ComboBoxItem IsSelected="True">
+                            <ComboBoxItem >
                                 Annular Space
                             </ComboBoxItem>
                             <ComboBoxItem >
