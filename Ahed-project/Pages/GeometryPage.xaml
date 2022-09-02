@@ -63,19 +63,12 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Label Grid.Column="0" Grid.Row="0">Heat Exchanger Type</Label>
-                        <ComboBox Style="{StaticResource ComboboxDefault}" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0">
-                            <ComboBoxItem>
-                                Tube/Shell
-                            </ComboBoxItem>
-                            <ComboBoxItem >
-                                Annular Space
-                            </ComboBoxItem>
-                            <ComboBoxItem >
-                                Unicus
-                            </ComboBoxItem>
-                            <ComboBoxItem >
-                                R Series
-                            </ComboBoxItem>
+                        <ComboBox ItemsSource="{Binding Exchangers}" SelectedItem="{Binding ExchangersSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Value}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
                         <Button Grid.Column="0" Grid.Row="1" Content="Tubes Assistant" HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
                         <Label Grid.Column="1" Grid.Row="1" FontWeight="Bold">Inner Side</Label>
