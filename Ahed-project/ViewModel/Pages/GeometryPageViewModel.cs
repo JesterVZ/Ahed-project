@@ -14,6 +14,7 @@ namespace Ahed_project.ViewModel.Pages
         public bool IsOpen { get; set; }
 
         public bool IsColumnVisible { get; set; }
+        public double GridColumnWidth { get; set; }
 
         #region coms
 
@@ -21,6 +22,14 @@ namespace Ahed_project.ViewModel.Pages
         {
             IsOpen = !IsOpen;
             IsColumnVisible = !IsColumnVisible;
+
+            if (IsColumnVisible)
+            {
+                GridColumnWidth = 120; //решение - полная глина, но потом разбурусь с триггерами
+            } else
+            {
+                GridColumnWidth = 0;
+            }
         });
 
         #endregion

@@ -10,6 +10,9 @@
       d:DesignHeight="1600" d:DesignWidth="1200"
       DataContext="{Binding GeometryPageViewModel, Source={StaticResource ViewModelLocator}}"
       Title="GeometryPage">
+    <Page.Resources>
+        <customGrid:GridLengthConverter x:Key="gridLengthConverter"/>
+    </Page.Resources>
 
     <ScrollViewer>
         <Grid Background="White" Width="1200" HorizontalAlignment="Left">
@@ -35,7 +38,7 @@
                     <Grid Grid.Column="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
-                            <customGrid:CustomColumnDefinition IsColumnVisible="False" Style="{StaticResource ToggleColumn}"  Width="*"/>
+                            <ColumnDefinition Width="{Binding Path=GridColumnWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource gridLengthConverter}}"/>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
