@@ -4,8 +4,9 @@ using Ahed_project.MasterData.Products;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services.EF;
 using Ahed_project.Services.EF.Model;
-using Ahed_project.ViewModel;
 using Ahed_project.ViewModel.ContentPageComponents;
+using Ahed_project.ViewModel.Pages;
+using Ahed_project.ViewModel.Windows;
 using AutoMapper;
 using Newtonsoft.Json;
 using System;
@@ -32,11 +33,12 @@ namespace Ahed_project.Services.Global
         private static HeatBalanceViewModel _heatBalanceViewModel;
         private static TubesFluidViewModel _tubesFluidViewModel;
         private static ShellFluidViewModel _shellFluidViewModel;
+        private static MaterialsWindowViewModel _materialsWindowViewModel;
 
         public GlobalFunctionsAndCallersService(SendDataService sendDataService, ContentPageViewModel contentPage,
             ProjectPageViewModel projectPageViewModel, IMapper mapper,
             MainViewModel mainViewModel, HeatBalanceViewModel heatBalanceViewModel, TubesFluidViewModel tubesFluidViewModel,
-            ShellFluidViewModel shellFluidViewModel)
+            ShellFluidViewModel shellFluidViewModel, MaterialsWindowViewModel materialsWindowViewModel)
         {
             _sendDataService = sendDataService;
             _contentPageViewModel = contentPage;
@@ -46,6 +48,7 @@ namespace Ahed_project.Services.Global
             _heatBalanceViewModel = heatBalanceViewModel;
             _tubesFluidViewModel = tubesFluidViewModel;
             _shellFluidViewModel = shellFluidViewModel;
+            _materialsWindowViewModel = materialsWindowViewModel;
         }
 
         //Первичная загрузка после входа
@@ -70,6 +73,7 @@ namespace Ahed_project.Services.Global
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Загрузка проекта выполнена успешно!")));
             }
             Task.Factory.StartNew(DownLoadProducts);
+            Task.Factory.StartNew(GetMaterials);
         }
 
         // Загрузка продуктов
@@ -389,6 +393,24 @@ namespace Ahed_project.Services.Global
                     var newProj = JsonConvert.DeserializeObject<ProjectInfoGet>(result.data.ToString());
                     GlobalDataCollectorService.ProjectsCollection.Add(newProj);
                     SetProject(newProj);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+        
+        //Загрузка материалов
+        public static async void GetMaterials()
+        {
+            var response = await Task.Factory.StartNew(() =>_sendDataService.SendToServer(ProjectMethods.GET_MATERIALS));
+            if (response!=null)
+            {
+                try
+                {
+                    var materials = JsonConvert.DeserializeObject<IEnumerable<Material>>(response);
+                    GlobalDataCollectorService.Materials = materials.ToList();
                 }
                 catch (Exception e)
                 {

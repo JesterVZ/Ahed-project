@@ -10,7 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Color = System.Windows.Media.Color;
 
-namespace Ahed_project.ViewModel
+namespace Ahed_project.ViewModel.Pages
 {
     public class HeatBalanceViewModel : BindableBase
     {
@@ -48,7 +48,7 @@ namespace Ahed_project.ViewModel
             set
             {
                 _pressure_shell_inlet_value = value;
-                if (Calculation!=null&&Calculation.calculation_id!=0&&Calculation.process_shell.Contains("Condensation") && double.TryParse(value, out var res))
+                if (Calculation != null && Calculation.calculation_id != 0 && Calculation.process_shell.Contains("Condensation") && double.TryParse(value, out var res))
                 {
                     GetTemperatureCalculation();
                 }
@@ -65,7 +65,7 @@ namespace Ahed_project.ViewModel
             RaisePropertiesChanged("Calculation");
         }
         private CalculationFull _calculation;
-        public CalculationFull Calculation 
+        public CalculationFull Calculation
         {
             get => _calculation;
             set
@@ -104,15 +104,15 @@ namespace Ahed_project.ViewModel
                 }
             }
         }
-        public Dictionary<int,string> TubesProcess { get; set; }
+        public Dictionary<int, string> TubesProcess { get; set; }
         public Dictionary<int, string> ShellProcess { get; set; }
 
-        public KeyValuePair<int,string> TubesProcessSelector
+        public KeyValuePair<int, string> TubesProcessSelector
         {
             get
             {
-                if (Calculation != null&&Calculation.calculation_id!=0)
-                    return (Calculation.process_tube?.Contains("condensation")??false) ? TubesProcess.Last() : TubesProcess.First();
+                if (Calculation != null && Calculation.calculation_id != 0)
+                    return Calculation.process_tube?.Contains("condensation") ?? false ? TubesProcess.Last() : TubesProcess.First();
                 else return default;
             }
             set
@@ -126,7 +126,7 @@ namespace Ahed_project.ViewModel
             get
             {
                 if (Calculation != null && Calculation.calculation_id != 0)
-                    return (Calculation.process_shell?.Contains("condensation") ?? false) ? ShellProcess.Last() : ShellProcess.First();
+                    return Calculation.process_shell?.Contains("condensation") ?? false ? ShellProcess.Last() : ShellProcess.First();
                 else return default;
             }
             set
@@ -139,7 +139,7 @@ namespace Ahed_project.ViewModel
                     TSOE = false;
                     TOB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
                     FB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
-                    if (double.TryParse(Calculation.temperature_tube_outlet,out double res))
+                    if (double.TryParse(Calculation.temperature_tube_outlet, out double res))
                         Calculation.temperature_shell_outlet = res.ToString();
                     RaisePropertiesChanged("Calculation");
                 }
@@ -147,7 +147,7 @@ namespace Ahed_project.ViewModel
                 {
                     TSIE = true;
                     TSOE = true;
-                    TOB = new SolidColorBrush(Color.FromRgb(255,255,255));
+                    TOB = new SolidColorBrush(Color.FromRgb(255, 255, 255));
 
                 }
             }
@@ -159,7 +159,7 @@ namespace Ahed_project.ViewModel
         });
 
         private bool _flowShell;
-        public bool FlowShell 
+        public bool FlowShell
         {
             get => _flowShell;
             set
@@ -178,9 +178,9 @@ namespace Ahed_project.ViewModel
         public bool TSIE { get; set; }
         public bool TSOE { get; set; }
         private bool _temperatureShellInLet;
-        public bool TemperatureShellInLet 
-        { 
-            get=>_temperatureShellInLet;
+        public bool TemperatureShellInLet
+        {
+            get => _temperatureShellInLet;
             set
             {
                 _temperatureShellInLet = value;
@@ -195,9 +195,9 @@ namespace Ahed_project.ViewModel
         }
         public bool TemperatureShellInLetTB { get; set; }
         private bool _temperatureShellOutLet;
-        public bool TemperatureShellOutLet 
+        public bool TemperatureShellOutLet
         {
-            get=>_temperatureShellOutLet; 
+            get => _temperatureShellOutLet;
             set
             {
                 _temperatureShellOutLet = value;

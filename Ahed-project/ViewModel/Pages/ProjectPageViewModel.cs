@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Ahed_project.ViewModel
+namespace Ahed_project.ViewModel.Pages
 {
     public class ProjectPageViewModel : BindableBase
     {

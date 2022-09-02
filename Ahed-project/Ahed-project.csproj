@@ -77,4 +77,9 @@
     <PackageReference Include="System.ServiceModel.Federation" Version="4.10.0" />
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0" />
   </ItemGroup>
+  <ItemGroup>
+    <Page Update="Windows\MaterialsWindow.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
 </Project>

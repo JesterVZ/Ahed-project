@@ -43,6 +43,11 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             _windowServise.OpenModalWindow(new ProjectsWindow());
         });
 
+        public ICommand OpenMaterialsWindow => new DelegateCommand(() =>
+        {
+            _windowServise.OpenModalWindow(new MaterialsWindow());
+        });
+
         public ICommand ShowProjectInfo => new DelegateCommand(() =>
         {
             if (ProjectInfoVisibility == Visibility.Hidden)

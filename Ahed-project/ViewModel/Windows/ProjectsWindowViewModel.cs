@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 
-namespace Ahed_project.ViewModel
+namespace Ahed_project.ViewModel.Windows
 {
     public class ProjectsWindowViewModel : BindableBase
     {

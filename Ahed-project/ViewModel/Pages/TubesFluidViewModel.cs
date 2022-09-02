@@ -5,7 +5,7 @@ using OxyPlot.Axes;
 using OxyPlot.Series;
 using System.Threading.Tasks;
 
-namespace Ahed_project.ViewModel
+namespace Ahed_project.ViewModel.Pages
 {
     public class TubesFluidViewModel : BindableBase
     {
@@ -74,7 +74,7 @@ namespace Ahed_project.ViewModel
                 FifthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Flow Index" });
                 SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature" });
                 SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Latent Heat" });
-                if(Product != null && Product.product_properties != null)
+                if (Product != null && Product.product_properties != null)
                 {
                     foreach (var property in Product?.product_properties)
                     {

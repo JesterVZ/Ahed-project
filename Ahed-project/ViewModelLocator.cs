@@ -2,8 +2,9 @@
 using Ahed_project.Services;
 using Ahed_project.Services.EF;
 using Ahed_project.Services.Global;
-using Ahed_project.ViewModel;
 using Ahed_project.ViewModel.ContentPageComponents;
+using Ahed_project.ViewModel.Pages;
+using Ahed_project.ViewModel.Windows;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,12 +28,12 @@ namespace Ahed_project
             services.AddSingleton<PresetsWindowViewModel>();
             services.AddSingleton<ProjectsWindowViewModel>();
             services.AddSingleton<GeometryWindowViewModel>();
-            services.AddSingleton<GeometryPageViewModel>();
             services.AddSingleton<ProductsViewModel>();
             services.AddSingleton<ProjectPageViewModel>();
             services.AddSingleton<HeatBalanceViewModel>();
             services.AddSingleton<TubesFluidViewModel>();
             services.AddSingleton<ShellFluidViewModel>();
+            services.AddSingleton<MaterialsWindowViewModel>();
             services.AddSingleton<SendDataService>();
             services.AddSingleton<PageService>();
             services.AddSingleton<WebClient>();
@@ -77,11 +78,11 @@ namespace Ahed_project
         public ProjectsWindowViewModel ProjectsWindowViewModel => _provider.GetRequiredService<ProjectsWindowViewModel>();
         public ProductsViewModel ProductsViewModel => _provider.GetRequiredService<ProductsViewModel>();
         public GeometryWindowViewModel GeometryWindowViewModel => _provider.GetRequiredService<GeometryWindowViewModel>();
-        public GeometryPageViewModel GeometryPageViewModel => _provider.GetRequiredService<GeometryPageViewModel>();
         public ProjectPageViewModel ProjectPageViewModel => _provider.GetRequiredService<ProjectPageViewModel>();
         public HeatBalanceViewModel HeatBalanceViewModel => _provider.GetRequiredService<HeatBalanceViewModel>();
         public TubesFluidViewModel TubesFluidViewModel => _provider.GetRequiredService<TubesFluidViewModel>();
         public ShellFluidViewModel ShellFluidViewModel => _provider.GetRequiredService<ShellFluidViewModel>();
+        public MaterialsWindowViewModel MaterialsWindowViewModel => _provider.GetRequiredService<MaterialsWindowViewModel>();
         // Глобильные сервисы
         public GlobalDataCollectorService GlobalDataCollectorService => _provider.GetRequiredService<GlobalDataCollectorService>();
         public GlobalFunctionsAndCallersService StartUpService => _provider.GetRequiredService<GlobalFunctionsAndCallersService>();

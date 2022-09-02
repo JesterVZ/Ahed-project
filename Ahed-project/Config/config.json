@@ -7,5 +7,6 @@
 	"GetProjectsLink": "https://ahead-api.ru/api/he/project/list",
 	"GetProductsList": "https://ahead-api.ru/api/he/product/list",
 	"GetProduct": "https://ahead-api.ru/api/he/product/get/",
-	"Calculate": "https://ahead-api.ru/api/he/heat-balance/calculate"
+	"Calculate": "https://ahead-api.ru/api/he/heat-balance/calculate",
+	"Materials": "https://ahead-api.ru/api/he/material/list"
 }

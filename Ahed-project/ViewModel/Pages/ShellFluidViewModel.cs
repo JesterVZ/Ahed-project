@@ -5,7 +5,7 @@ using OxyPlot.Axes;
 using OxyPlot.Series;
 using System.Threading.Tasks;
 
-namespace Ahed_project.ViewModel
+namespace Ahed_project.ViewModel.Pages
 {
     public class ShellFluidViewModel : BindableBase
     {

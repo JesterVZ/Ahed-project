@@ -15,6 +15,7 @@ namespace Ahed_project.Services.Global
             AllProducts = new Dictionary<string, List<ProductGet>>();
             Nodes = new ObservableCollection<Node>();
             ProjectsCollection = new List<ProjectInfoGet>();
+            Materials = new List<Material>();
         }
         #region Global
         public static ObservableCollection<LoggerMessage> Logs { get; set; }
@@ -38,6 +39,9 @@ namespace Ahed_project.Services.Global
         #region Products
         public static Dictionary<string, List<ProductGet>> AllProducts { get; set; }
         public static ObservableCollection<Node> Nodes { get; set; }
+        #endregion
+        #region Materials
+        public static List<Material> Materials { get; set; }
         #endregion
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Ahed_project.ViewModel
+namespace Ahed_project.ViewModel.Pages
 {
     public class GeometryPageViewModel : BindableBase
     {
