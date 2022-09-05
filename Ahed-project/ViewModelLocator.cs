@@ -37,6 +37,7 @@ namespace Ahed_project
             services.AddSingleton<MaterialsWindowViewModel>();
             services.AddSingleton<SendDataService>();
             services.AddSingleton<PageService>();
+            services.AddSingleton<TabStateService>();
             services.AddSingleton<WebClient>();
             services.AddSingleton<WindowService>();
             services.AddSingleton<JsonWebTokenLocal>();

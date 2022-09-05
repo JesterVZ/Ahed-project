@@ -10,47 +10,99 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         public void Validation()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            if (GlobalDataCollectorService.Project.name != null && GlobalDataCollectorService.Project.name != string.Empty)
+            
+            if (GlobalDataCollectorService.Project != null)
             {
-                ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
+                if (GlobalFunctionsAndCallersService.GetSelectedCalculation != null)
+                {
+                    ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
+                    _tabStateService.ChangeTab(MasterData.Pages.TUBES_FLUID);
+                    _tabStateService.ChangeTab(MasterData.Pages.SHELL_FLUID);
+                    _tabStateService.ChangeTab(MasterData.Pages.HEAT_BALANCE);
+                    _tabStateService.ChangeTab(MasterData.Pages.GEOMETRY);
+                    if(GlobalFunctionsAndCallersService.GetTubeProduct() == null)
+                    {
+                        TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
+                    } else
+                    {
+                        TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
+                    }
+                    if (GlobalFunctionsAndCallersService.GetShellProduct() == null)
+                    {
+                        ShellFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
+                    } else
+                    {
+                        ShellFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
+                    }
+                } else
+                {
+                    //GlobalDataCollectorService.Logs.Add(new LoggerMessage("warning", "Выберите калькуляцию!"));
+                    ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
+                }
+                
             }
             else
             {
-                GlobalDataCollectorService.Logs.Add(new LoggerMessage("Error", "Введите имя проекта!"));
+                //GlobalDataCollectorService.Logs.Add(new LoggerMessage("Error", "Выберите проект!"));
                 ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/cancel.svg";
                 return;
             }
+        }
 
-            if (GlobalDataCollectorService.Project.description != null && GlobalDataCollectorService.Project.description != string.Empty)
-            {
-                ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
 
-            }
-            else
+        private void ChangeTabState(MasterData.Pages page)
+        {
+            switch (page)
             {
-                GlobalDataCollectorService.Logs.Add(new LoggerMessage("warning", "Введите описание проекта!"));
-                ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
+                case MasterData.Pages.PROJECT:
+                    ProjectState.IsEnabled = true;
+                    RaisePropertiesChanged("ProjectState");
+                    break;
+                case MasterData.Pages.TUBES_FLUID:
+                    TubesFluidState.IsEnabled = true;
+                    RaisePropertiesChanged("TubesFluidState");
+                    break;
+                case MasterData.Pages.SHELL_FLUID:
+                    ShellFluidState.IsEnabled = true;
+                    RaisePropertiesChanged("ShellFluidState");
+                    break;
+                case MasterData.Pages.HEAT_BALANCE:
+                    HeatBalanceState.IsEnabled = true;
+                    RaisePropertiesChanged("HeatBalanceState");
+                    break;
+                case MasterData.Pages.GEOMETRY:
+                    GeometryState.IsEnabled = true;
+                    RaisePropertiesChanged("GeometryState");
+                    break;
+                case MasterData.Pages.BAFFLES:
+                    BafflesState.IsEnabled = true;
+                    RaisePropertiesChanged("BafflesState");
+                    break;
+                case MasterData.Pages.OVERALL_CALCULATION:
+                    OverallCalculationState.IsEnabled = true;
+                    RaisePropertiesChanged("OverallCalculationState");
+                    break;
+                case MasterData.Pages.BATCH:
+                    BatchState.IsEnabled = true;
+                    RaisePropertiesChanged("BatchState");
+                    break;
+                case MasterData.Pages.GRAPHS:
+                    GraphState.IsEnabled = true;
+                    RaisePropertiesChanged("GraphState");
+                    break;
+                case MasterData.Pages.REPORTS:
+                    ReportsState.IsEnabled = true;
+                    RaisePropertiesChanged("ReportsState");
+                    break;
+                case MasterData.Pages.QUOTE:
+                    QuoteState.IsEnabled = true;
+                    RaisePropertiesChanged("QuoteState");
+                    break;
+                case MasterData.Pages.THREE_D:
+                    ThreeDState.IsEnabled = true;
+                    RaisePropertiesChanged("ThreeDState");
+                    break;
             }
-            /*
-            if (SingleProductGet != null)
-            {
-                if (SingleProductGet.name != null && SingleProductGet.name != string.Empty)
-                {
-                    TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
-                }
-                else
-                {
-                    _logs.AddMessage("warning", "Введите имя продукта!");
-                    TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
-                }
-            }
-            else
-            {
-                _logs.AddMessage("Error", "Выберете продукт!");
-                TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/cancel.svg";
-                return;
-            }
-            */
         }
     }
 }

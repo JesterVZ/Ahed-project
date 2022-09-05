@@ -8,6 +8,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
     {
         private readonly PageService _pageService;
         private readonly WindowService _windowServise;
+        private readonly TabStateService _tabStateService;
         public ContentState ProjectState { get; set; }
         public ContentState TubesFluidState { get; set; }
         public ContentState ShellFluidState { get; set; }
@@ -20,7 +21,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         public ContentState ReportsState { get; set; }
         public ContentState QuoteState { get; set; }
         public ContentState ThreeDState { get; set; }
-        public ContentPageViewModel(PageService pageService, WindowService windowService)
+        public ContentPageViewModel(PageService pageService, WindowService windowService, TabStateService tabStateService)
         {
             //инициализация
             ProjectState = new ContentState();
@@ -37,20 +38,25 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             ThreeDState = new ContentState();
 
             ProjectState.IsEnabled = true;
-            TubesFluidState.IsEnabled = true;
-            ShellFluidState.IsEnabled = true;
-            HeatBalanceState.IsEnabled = true;
-            GeometryState.IsEnabled = true;
-            BafflesState.IsEnabled = true;
-            OverallCalculationState.IsEnabled = true;
-            BatchState.IsEnabled = true;
-            GraphState.IsEnabled = true;
-            ReportsState.IsEnabled = true;
-            QuoteState.IsEnabled = true;
-            ThreeDState.IsEnabled = true;
+            TubesFluidState.IsEnabled = false;
+            ShellFluidState.IsEnabled = false;
+            HeatBalanceState.IsEnabled = false;
+            GeometryState.IsEnabled = false;
+            BafflesState.IsEnabled = false;
+            OverallCalculationState.IsEnabled = false;
+            BatchState.IsEnabled = false;
+            GraphState.IsEnabled = false;
+            ReportsState.IsEnabled = false;
+            QuoteState.IsEnabled = false;
+            ThreeDState.IsEnabled = false;
 
             _pageService = pageService;
             _windowServise = windowService;
+            _tabStateService = tabStateService;
+            _tabStateService.TabChanged += ChangeTabState;
+
+
         }
+
     }
 }

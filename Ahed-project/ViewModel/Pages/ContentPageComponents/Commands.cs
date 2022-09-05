@@ -48,18 +48,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             _windowServise.OpenModalWindow(new MaterialsWindow());
         });
 
-        public ICommand ShowProjectInfo => new DelegateCommand(() =>
-        {
-            if (ProjectInfoVisibility == Visibility.Hidden)
-            {
-                ProjectInfoVisibility = Visibility.Visible;
-            }
-            else
-            {
-                ProjectInfoVisibility = Visibility.Hidden;
-            }
-        });
-
         public ICommand NewProjectCommand => new AsyncCommand(async () =>
         {
             Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CreateNewProject());

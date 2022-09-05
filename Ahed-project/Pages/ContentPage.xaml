@@ -77,7 +77,7 @@
                 <Frame Source="ProjectPage.xaml"/>
             </TabItem>
 
-            <TabItem FontSize="12" IsEnabled="{Binding Path=TubesFluidState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
+            <TabItem FontSize="12" IsEnabled="{Binding Path=TubesFluidState.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -92,7 +92,7 @@
                 </TabItem.Header>
                 <Frame Source="TubesFluidPage.xaml"/>
             </TabItem>
-            <TabItem  FontSize="12" IsEnabled="{Binding Path=ShellFluidState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
+            <TabItem  FontSize="12" IsEnabled="{Binding Path=ShellFluidState.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -102,12 +102,12 @@
                         </Grid.ColumnDefinitions>
                         <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=ShellFluidState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="1" HorizontalAlignment="Center" FontSize="12">Shell fluid</Label>
-                        <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=ShellFluidValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=ShellFluidValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Source="ShellFluidPage.xaml"/>
             </TabItem>
-            <TabItem IsEnabled="{Binding Path=HeatBalanceState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" FontSize="12" Style="{StaticResource TabItemMain}">
+            <TabItem IsEnabled="{Binding Path=HeatBalanceState.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="12" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>

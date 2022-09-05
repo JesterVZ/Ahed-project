@@ -21,9 +21,11 @@ namespace Ahed_project.ViewModel.Pages
             TubesProcess = new Dictionary<int, string>();
             TubesProcess.Add(1, "Sensible Heat");
             TubesProcess.Add(2, "Condensation");
-            ShellProcess = new Dictionary<int, string>();
-            ShellProcess.Add(1, "Sensible Heat");
-            ShellProcess.Add(2, "Condensation");
+            ShellProcess = new Dictionary<int, string>
+            {
+                { 1, "Sensible Heat" },
+                { 2, "Condensation" }
+            };
             FlowShell = true;
             TemperatureShellInLet = false;
             TemperatureShellOutLet = false;
