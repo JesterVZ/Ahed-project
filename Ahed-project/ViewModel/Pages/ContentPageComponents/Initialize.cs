@@ -58,47 +58,5 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
         }
 
-        private void ChangeTabState(Ahed_project.MasterData.Pages page)
-        {
-            switch (page)
-            {
-                case MasterData.Pages.PROJECT:
-                    ProjectState.IsEnabled = true;
-                    break;
-                case MasterData.Pages.TUBES_FLUID:
-                    TubesFluidState.IsEnabled = true;
-                    break;
-                case MasterData.Pages.SHELL_FLUID:
-                    ShellFluidState.IsEnabled = true;
-                    break;
-                case MasterData.Pages.HEAT_BALANCE:
-                    HeatBalanceState.IsEnabled = true;
-                    break;
-                case MasterData.Pages.GEOMETRY:
-                    GeometryState.IsEnabled = true;
-                    break;
-                case MasterData.Pages.BAFFLES:
-                    BafflesState.IsEnabled = true;
-                    break;
-                case MasterData.Pages.OVERALL_CALCULATION:
-                    OverallCalculationState.IsEnabled = true;
-                    break;
-                case MasterData.Pages.BATCH:
-                    BatchState.IsEnabled = true;
-                    break;
-                case MasterData.Pages.GRAPHS:
-                    GraphState.IsEnabled = true;
-                    break;
-                case MasterData.Pages.REPORTS:
-                    ReportsState.IsEnabled = true;
-                    break;
-                case MasterData.Pages.QUOTE:
-                    QuoteState.IsEnabled = true;
-                    break;
-                case MasterData.Pages.THREE_D:
-                    ThreeDState.IsEnabled = true;
-                    break;
-            }
-        }
     }
 }
