@@ -301,6 +301,16 @@ namespace Ahed_project.Services.Global
             _tubesFluidViewModel.Product = product;
             _contentPageViewModel.Validation();
         }
+        //ссылка на _tubesFluidViewModel.Product
+        public static ProductGet GetTubeProduct()
+        {
+            return _tubesFluidViewModel.Product;
+        }
+
+        public static ProductGet GetShellProduct()
+        {
+            return _shellFluidViewModel.Product;
+        }
 
         //Выбор продукта Shell
         public static void SelectProductShell(ProductGet product)

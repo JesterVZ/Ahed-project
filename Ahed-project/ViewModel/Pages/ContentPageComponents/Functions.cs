@@ -20,6 +20,20 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     _tabStateService.ChangeTab(MasterData.Pages.SHELL_FLUID);
                     _tabStateService.ChangeTab(MasterData.Pages.HEAT_BALANCE);
                     _tabStateService.ChangeTab(MasterData.Pages.GEOMETRY);
+                    if(GlobalFunctionsAndCallersService.GetTubeProduct() == null)
+                    {
+                        TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
+                    } else
+                    {
+                        TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
+                    }
+                    if (GlobalFunctionsAndCallersService.GetShellProduct() == null)
+                    {
+                        ShellFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
+                    } else
+                    {
+                        ShellFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
+                    }
                 } else
                 {
                     //GlobalDataCollectorService.Logs.Add(new LoggerMessage("warning", "Выберите калькуляцию!"));
