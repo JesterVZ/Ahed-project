@@ -77,7 +77,7 @@
                 <Frame Source="ProjectPage.xaml"/>
             </TabItem>
 
-            <TabItem FontSize="12" IsEnabled="{Binding Path=TubesFluidState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
+            <TabItem FontSize="12" IsEnabled="{Binding Path=TubesFluidState.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>

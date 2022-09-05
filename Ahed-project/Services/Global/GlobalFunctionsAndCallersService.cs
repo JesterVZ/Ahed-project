@@ -69,6 +69,7 @@ namespace Ahed_project.Services.Global
                 if (id != 0)
                     SetProject(projects.FirstOrDefault(x => x.project_id == id));
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Загрузка проекта выполнена успешно!")));
+                _contentPageViewModel.Validation();
             }
             Task.Factory.StartNew(DownLoadProducts);
             Task.Factory.StartNew(GetMaterials);
@@ -131,6 +132,11 @@ namespace Ahed_project.Services.Global
             _contentPageViewModel.SelectedPage = n;
         }
 
+        public static CalculationFull GetSelectedCalculation()
+        {
+            return _projectPageViewModel.SelectedCalculation;
+        }
+
         //Назначение последнего проекта юзеру
         public static void SetUserLastProject(int id)
         {
@@ -141,6 +147,7 @@ namespace Ahed_project.Services.Global
                 context.Update(user);
                 context.SaveChanges();
             }
+            _contentPageViewModel.Validation();
         }
 
         //Установка продукта
@@ -151,6 +158,7 @@ namespace Ahed_project.Services.Global
             SetUserLastProject(projectInfoGet.project_id);
             Task.Factory.StartNew(() => GetCalculations(projectInfoGet.project_id.ToString()));
             _mainViewModel.Title = $"{projectInfoGet.name} ({_heatBalanceViewModel.Calculation?.name})";
+            _contentPageViewModel.Validation();
         }
 
         //Получение рассчетов
@@ -228,6 +236,7 @@ namespace Ahed_project.Services.Global
             }
             CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
             Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations.Add(calculationGet));
+            _contentPageViewModel.Validation();
         }
         //изменение имени рассчета
         public static async void ChangeCalculationName(CalculationFull calc)
@@ -241,6 +250,7 @@ namespace Ahed_project.Services.Global
             string json = JsonConvert.SerializeObject(calculationUpdate);
 
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, calc.project_id.ToString(), calc.calculation_id.ToString()));
+            _contentPageViewModel.Validation();
         }
         //расчет температуры при условии того, что в поле pressure_shell_inlet введено значнеие
         public static async Task<string> CalculateTemperature(string pressure_shell_inlet_value, CalculationFull calc)
@@ -277,6 +287,7 @@ namespace Ahed_project.Services.Global
             _heatBalanceViewModel.ShellProductName = shellProduct?.name;
             _shellFluidViewModel.Product = shellProduct;
             _mainViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({_heatBalanceViewModel.Calculation?.name})";
+            _contentPageViewModel.Validation();
         }
         //Выбор продукта Tube
         public static void SelectProductTube(ProductGet product)
@@ -288,6 +299,7 @@ namespace Ahed_project.Services.Global
                 Task.Factory.StartNew(UpdateCalculationProducts);
             }
             _tubesFluidViewModel.Product = product;
+            _contentPageViewModel.Validation();
         }
 
         //Выбор продукта Shell
@@ -300,6 +312,7 @@ namespace Ahed_project.Services.Global
                 Task.Factory.StartNew(UpdateCalculationProducts);
             }
             _shellFluidViewModel.Product = product;
+            _contentPageViewModel.Validation();
         }
 
         //Обновить продукты в рассчете
@@ -324,6 +337,7 @@ namespace Ahed_project.Services.Global
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
             }
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Сохранение выполнено успешно!")));
+            _contentPageViewModel.Validation();
         }
 
         //Рассчитать
@@ -371,6 +385,7 @@ namespace Ahed_project.Services.Global
                 _heatBalanceViewModel.Calculation = calculationGet;
             }
             var saveResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CALCULATION, json, calculation.project_id.ToString(), calculation.calculation_id.ToString()));
+            _contentPageViewModel.Validation();
         }
 
         //Создать проект
@@ -390,6 +405,7 @@ namespace Ahed_project.Services.Global
                     var newProj = JsonConvert.DeserializeObject<ProjectInfoGet>(result.data.ToString());
                     GlobalDataCollectorService.ProjectsCollection.Add(newProj);
                     SetProject(newProj);
+                    _contentPageViewModel.Validation();
                 }
                 catch (Exception e)
                 {

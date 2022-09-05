@@ -10,47 +10,29 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         public void Validation()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            if (GlobalDataCollectorService.Project.name != null && GlobalDataCollectorService.Project.name != string.Empty)
+            
+            if (GlobalDataCollectorService.Project != null)
             {
-                ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
+                if (GlobalFunctionsAndCallersService.GetSelectedCalculation != null)
+                {
+                    ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
+                    _tabStateService.ChangeTab(MasterData.Pages.TUBES_FLUID);
+                    _tabStateService.ChangeTab(MasterData.Pages.SHELL_FLUID);
+                    _tabStateService.ChangeTab(MasterData.Pages.HEAT_BALANCE);
+                    _tabStateService.ChangeTab(MasterData.Pages.GEOMETRY);
+                } else
+                {
+                    //GlobalDataCollectorService.Logs.Add(new LoggerMessage("warning", "Выберите калькуляцию!"));
+                    ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
+                }
+                
             }
             else
             {
-                GlobalDataCollectorService.Logs.Add(new LoggerMessage("Error", "Введите имя проекта!"));
+                //GlobalDataCollectorService.Logs.Add(new LoggerMessage("Error", "Выберите проект!"));
                 ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/cancel.svg";
                 return;
             }
-
-            if (GlobalDataCollectorService.Project.description != null && GlobalDataCollectorService.Project.description != string.Empty)
-            {
-                ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
-
-            }
-            else
-            {
-                GlobalDataCollectorService.Logs.Add(new LoggerMessage("warning", "Введите описание проекта!"));
-                ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
-            }
-            /*
-            if (SingleProductGet != null)
-            {
-                if (SingleProductGet.name != null && SingleProductGet.name != string.Empty)
-                {
-                    TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
-                }
-                else
-                {
-                    _logs.AddMessage("warning", "Введите имя продукта!");
-                    TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
-                }
-            }
-            else
-            {
-                _logs.AddMessage("Error", "Выберете продукт!");
-                TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/cancel.svg";
-                return;
-            }
-            */
         }
     }
 }

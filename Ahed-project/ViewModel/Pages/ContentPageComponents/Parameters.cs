@@ -4,8 +4,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 {
     public partial class ContentPageViewModel
     {
-        private Visibility projectInfoVisibility = Visibility.Hidden;
-        public Visibility ProjectInfoVisibility { get => projectInfoVisibility; set => SetValue(ref projectInfoVisibility, value); }
         public int SelectedPage { get; set; }
         public string ProjectValidationStatusSource { get; set; }
         public string TubesFluidValidationStatusSource { get; set; }
