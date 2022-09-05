@@ -36,45 +36,57 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         }
 
 
-        private void ChangeTabState(Ahed_project.MasterData.Pages page)
+        private void ChangeTabState(MasterData.Pages page)
         {
             switch (page)
             {
                 case MasterData.Pages.PROJECT:
                     ProjectState.IsEnabled = true;
+                    RaisePropertiesChanged("ProjectState");
                     break;
                 case MasterData.Pages.TUBES_FLUID:
                     TubesFluidState.IsEnabled = true;
+                    RaisePropertiesChanged("TubesFluidState");
                     break;
                 case MasterData.Pages.SHELL_FLUID:
                     ShellFluidState.IsEnabled = true;
+                    RaisePropertiesChanged("ShellFluidState");
                     break;
                 case MasterData.Pages.HEAT_BALANCE:
                     HeatBalanceState.IsEnabled = true;
+                    RaisePropertiesChanged("HeatBalanceState");
                     break;
                 case MasterData.Pages.GEOMETRY:
                     GeometryState.IsEnabled = true;
+                    RaisePropertiesChanged("GeometryState");
                     break;
                 case MasterData.Pages.BAFFLES:
                     BafflesState.IsEnabled = true;
+                    RaisePropertiesChanged("BafflesState");
                     break;
                 case MasterData.Pages.OVERALL_CALCULATION:
                     OverallCalculationState.IsEnabled = true;
+                    RaisePropertiesChanged("OverallCalculationState");
                     break;
                 case MasterData.Pages.BATCH:
                     BatchState.IsEnabled = true;
+                    RaisePropertiesChanged("BatchState");
                     break;
                 case MasterData.Pages.GRAPHS:
                     GraphState.IsEnabled = true;
+                    RaisePropertiesChanged("GraphState");
                     break;
                 case MasterData.Pages.REPORTS:
                     ReportsState.IsEnabled = true;
+                    RaisePropertiesChanged("ReportsState");
                     break;
                 case MasterData.Pages.QUOTE:
                     QuoteState.IsEnabled = true;
+                    RaisePropertiesChanged("QuoteState");
                     break;
                 case MasterData.Pages.THREE_D:
                     ThreeDState.IsEnabled = true;
+                    RaisePropertiesChanged("ThreeDState");
                     break;
             }
         }
