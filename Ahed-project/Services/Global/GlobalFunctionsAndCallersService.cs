@@ -154,6 +154,10 @@ namespace Ahed_project.Services.Global
         public static void SetProject(ProjectInfoGet projectInfoGet)
         {
             _projectPageViewModel.ProjectInfo = projectInfoGet;
+            if (!(_heatBalanceViewModel.Calculation == null || _heatBalanceViewModel.Calculation?.calculation_id == 0))
+            {
+                _projectPageViewModel.SelectedCalculation = null;
+            }
             GlobalDataCollectorService.Project = projectInfoGet;
             SetUserLastProject(projectInfoGet.project_id);
             Task.Factory.StartNew(() => GetCalculations(projectInfoGet.project_id.ToString()));
@@ -280,10 +284,10 @@ namespace Ahed_project.Services.Global
             }
             _heatBalanceViewModel.Calculation = calc;
             var products = GlobalDataCollectorService.AllProducts.SelectMany(x => x.Value).ToList();
-            var tubeProduct = products.FirstOrDefault(x => x.product_id == calc.product_id_tube);
+            var tubeProduct = products.FirstOrDefault(x => x.product_id == calc?.product_id_tube);
             _heatBalanceViewModel.TubesProductName = tubeProduct?.name;
             _tubesFluidViewModel.Product = tubeProduct;
-            var shellProduct = products.FirstOrDefault(x => x.product_id == calc.product_id_shell);
+            var shellProduct = products.FirstOrDefault(x => x.product_id == calc?.product_id_shell);
             _heatBalanceViewModel.ShellProductName = shellProduct?.name;
             _shellFluidViewModel.Product = shellProduct;
             _mainViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({_heatBalanceViewModel.Calculation?.name})";
