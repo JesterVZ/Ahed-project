@@ -8,12 +8,12 @@
       xmlns:customGrid ="clr-namespace:Ahed_project.UserControl"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:SVG="http://sharpvectors.codeplex.com/svgc/"
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="927"
+
       Title="ProjectPage"
       
       DataContext="{Binding ProjectPageViewModel, Source={StaticResource ViewModelLocator}}" VerticalAlignment="Top">
 
-    <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" MinWidth="927" MinHeight="800">
+    <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" >
         <StackPanel Orientation="Vertical" Background="White">
             <Grid Background="White">
                 <Grid.ColumnDefinitions>
