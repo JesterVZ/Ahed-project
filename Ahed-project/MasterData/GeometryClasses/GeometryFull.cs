@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ahed_project.MasterData.GeometryClasses
 {
-    public class GeometryGet
+    public class GeometryFull
     {
         public int geometry_catalog_id { get; set; }
         public string name { get; set; }

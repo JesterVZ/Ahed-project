@@ -17,6 +17,8 @@ namespace Ahed_project.ViewModel.Pages
         public Visibility TextBoxVisibillity { get; set; }
         public Visibility LabelVisibillity { get; set; }
 
+        public string ButtonImagePath { get; set; }
+
         public bool IsOpen { get; set; }
 
         #region Props
