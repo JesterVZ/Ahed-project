@@ -19,7 +19,7 @@
             
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
-                    <Button Content="Calculate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
+                    <Button Content="Calculate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6" Command="{Binding Calculate}"/>
                 </StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>

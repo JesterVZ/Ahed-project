@@ -410,6 +410,8 @@ namespace Ahed_project.Services.Global
                 MessageBox.Show("Выберите рассчет", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
+            string json = JsonConvert.SerializeObject(Geometry);
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_GEOMETRY, json, ""));
         }
 
         //Создать проект

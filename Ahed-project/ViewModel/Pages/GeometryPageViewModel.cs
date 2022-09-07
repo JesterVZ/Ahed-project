@@ -1,4 +1,5 @@
 ﻿using Ahed_project.MasterData.GeometryClasses;
+using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -55,7 +56,7 @@ namespace Ahed_project.ViewModel.Pages
 
         public ICommand Calculate => new DelegateCommand(() =>
         {
-            Task.Factory.StartNew
+            Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateGeometry(Geometry));
         });
 
         #endregion
