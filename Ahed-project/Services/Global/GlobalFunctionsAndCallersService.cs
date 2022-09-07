@@ -1,5 +1,6 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.MasterData.CalculateClasses;
+using Ahed_project.MasterData.GeometryClasses;
 using Ahed_project.MasterData.Products;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services.EF;
@@ -400,6 +401,15 @@ namespace Ahed_project.Services.Global
             }
             var saveResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CALCULATION, json, calculation.project_id.ToString(), calculation.calculation_id.ToString()));
             _contentPageViewModel.Validation();
+        }
+        //расчет геометрии
+        public static async void CalculateGeometry(GeometrySend Geometry)
+        {
+            if (Geometry == null)
+            {
+                MessageBox.Show("Выберите рассчет", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
         }
 
         //Создать проект
