@@ -18,9 +18,11 @@ namespace Ahed_project.ViewModel.Pages
         public HeatBalanceViewModel()
         {
             Calculation = new CalculationFull();
-            TubesProcess = new Dictionary<int, string>();
-            TubesProcess.Add(1, "Sensible Heat");
-            TubesProcess.Add(2, "Condensation");
+            TubesProcess = new Dictionary<int, string>
+            {
+                { 1, "Sensible Heat" },
+                { 2, "Condensation" }
+            };
             ShellProcess = new Dictionary<int, string>
             {
                 { 1, "Sensible Heat" },
