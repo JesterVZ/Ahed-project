@@ -1,4 +1,5 @@
-﻿using DevExpress.Mvvm;
+﻿using Ahed_project.MasterData.GeometryClasses;
+using DevExpress.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,6 +15,7 @@ namespace Ahed_project.ViewModel.Pages
         public bool IsOpen { get; set; }
         public double GridColumnWidth { get; set; }
         public Dictionary<int, string> Exchangers { get; set; }
+        public GeometryFull Geometry { get; set; }
         private KeyValuePair<int, string> _exchangersSelector;
 
         public KeyValuePair<int, string> ExchangersSelector { 

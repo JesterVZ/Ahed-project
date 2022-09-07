@@ -76,22 +76,22 @@
                         <Label Grid.Column="3" Grid.Row="1" FontWeight="Bold">Shell side</Label>
 
                         <Label Grid.Column="0" Grid.Row="2">Name</Label>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2"/>
+                        <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" Text="{Binding Geometry.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label Grid.Column="0" Grid.Row="3">Outer Diameter (mm)</Label>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="3"/>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="2" Grid.Row="3"/>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="3" Grid.Row="3"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.outer_diameter_inner_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.outer_diameter_tubes_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="3"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.outer_diameter_shell_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="3"/>
 
                         <Label Grid.Column="0" Grid.Row="4">Thickness (mm)</Label>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="4"/>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="2" Grid.Row="4"/>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="3" Grid.Row="4"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.thickness_inner_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.thickness_tubes_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.thickness_shell_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="4"/>
 
                         <Label Grid.Column="0" Grid.Row="5">Inner Diameter (mm)</Label>
-                        <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="5"/>
-                        <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="5"/>
-                        <TextBox Style="{StaticResource Colored}" Grid.Column="3" Grid.Row="5"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.inner_diameter_inner_side}" Grid.Column="1" Grid.Row="5"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.inner_diameter_tubes_side}" Grid.Column="2" Grid.Row="5"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.inner_diameter_shell_side}" Grid.Column="3" Grid.Row="5"/>
 
                         <Label Grid.Column="0" Grid.Row="6">Material</Label>
                         <ComboBox Style="{StaticResource ComboboxDefault}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6"></ComboBox>
