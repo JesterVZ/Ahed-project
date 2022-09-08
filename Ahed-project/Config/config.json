@@ -8,5 +8,6 @@
 	"GetProductsList": "https://ahead-api.ru/api/he/product/list",
 	"GetProduct": "https://ahead-api.ru/api/he/product/get/",
 	"Calculate": "https://ahead-api.ru/api/he/heat-balance/calculate",
-	"Materials": "https://ahead-api.ru/api/he/material/list"
+	"Materials": "https://ahead-api.ru/api/he/material/list",
+	"GetGeometries": "https://ahead-api.ru/api/he/geometry-catalogs/list"
 }

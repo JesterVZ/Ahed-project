@@ -76,32 +76,32 @@
                         <Label Grid.Column="3" Grid.Row="1" FontWeight="Bold">Shell side</Label>
 
                         <Label Grid.Column="0" Grid.Row="2">Name</Label>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2"/>
+                        <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" Text="{Binding Geometry.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label Grid.Column="0" Grid.Row="3">Outer Diameter (mm)</Label>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="3"/>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="2" Grid.Row="3"/>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="3" Grid.Row="3"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.outer_diameter_inner_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.outer_diameter_tubes_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="3"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.outer_diameter_shell_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="3"/>
 
                         <Label Grid.Column="0" Grid.Row="4">Thickness (mm)</Label>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="4"/>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="2" Grid.Row="4"/>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="3" Grid.Row="4"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.thickness_inner_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.thickness_tubes_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.thickness_shell_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="4"/>
 
                         <Label Grid.Column="0" Grid.Row="5">Inner Diameter (mm)</Label>
-                        <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="5"/>
-                        <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="5"/>
-                        <TextBox Style="{StaticResource Colored}" Grid.Column="3" Grid.Row="5"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.inner_diameter_inner_side}" Grid.Column="1" Grid.Row="5"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.inner_diameter_tubes_side}" Grid.Column="2" Grid.Row="5"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.inner_diameter_shell_side}" Grid.Column="3" Grid.Row="5"/>
 
                         <Label Grid.Column="0" Grid.Row="6">Material</Label>
                         <ComboBox Style="{StaticResource ComboboxDefault}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6"></ComboBox>
                         <ComboBox Style="{StaticResource ComboboxDefault}" Grid.Column="3" Grid.Row="6"></ComboBox>
 
                         <Label Grid.Column="0" Grid.Row="7">Number of Tubes</Label>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="2" Grid.Row="7"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.number_of_tubes}" Grid.Column="2" Grid.Row="7"/>
 
                         <Label Grid.Column="0" Grid.Row="8">Tube Inner Length (mm)</Label>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="2" Grid.Row="8"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_inner_length}" Grid.Column="2" Grid.Row="8"/>
 
                         <Label Grid.Column="0" Grid.Row="9">Orientation</Label>
                         <ComboBox Style="{StaticResource ComboboxDefault}" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="9">
@@ -114,19 +114,19 @@
                         </ComboBox>
 
                         <Label Grid.Column="0" Grid.Row="10">Wetted Perimeter (per pass, mm)</Label>
-                        <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="10"/>
-                        <TextBox Style="{StaticResource Colored}" Grid.Column="3" Grid.Row="10"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.wetted_perimeter_tubes_side}" Grid.Column="2" Grid.Row="10"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.wetted_perimeter_shell_side}" Grid.Column="3" Grid.Row="10"/>
 
                         <Label Grid.Column="0" Grid.Row="11">Hydraulic Diameter (mm)</Label>
-                        <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="11"/>
-                        <TextBox Style="{StaticResource Colored}" Grid.Column="3" Grid.Row="11"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.hydraulic_diameter_tubes_side}" Grid.Column="2" Grid.Row="11"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.hydraulic_diameter_shell_side}" Grid.Column="3" Grid.Row="11"/>
 
                         <Label Grid.Column="0" Grid.Row="12">Area / Module (m^2)</Label>
-                        <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="12"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.area_module}" Grid.Column="2" Grid.Row="12"/>
 
                         <Label Grid.Column="0" Grid.Row="13">Volume / Module</Label>
-                        <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="13"/>
-                        <TextBox Style="{StaticResource Colored}" Grid.Column="3" Grid.Row="13"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.volume_module_tubes_side}" Grid.Column="2" Grid.Row="13"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.volume_module_shell_side}" Grid.Column="3" Grid.Row="13"/>
 
                         <Label Grid.Column="0" Grid.Row="14">Tube Profile</Label>
                         <ComboBox Style="{StaticResource ComboboxDefault}" Grid.Column="2" Grid.Row="14">
@@ -134,8 +134,8 @@
                         </ComboBox>
 
                         <Label Grid.Column="0" Grid.Row="15">Roughness</Label>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="2" Grid.Row="15"/>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="3" Grid.Row="15"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.roughness_tubes_side}" Grid.Column="2" Grid.Row="15"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.roughness_shell_side}" Grid.Column="3" Grid.Row="15"/>
 
                         <Label Grid.Column="0" Grid.Row="16">Bundle type</Label>
                         <RadioButton Grid.Column="2" Grid.Row="16" GroupName="BundleType" Content="Fixed" VerticalAlignment="Center"/>
@@ -180,20 +180,20 @@
 
                             <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">Tube Pitch (mm)</Label>
                             <Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">Tube Layout</Label>
-                            <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="0"/>
+                            <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_tube_pitch}" Grid.Column="1" Grid.Row="0"/>
                             <ComboBox Style="{StaticResource ComboboxDefault}" Grid.Column="1" Grid.Row="1"></ComboBox>
 
                             <Label Grid.Column="0" Grid.Row="2" VerticalAlignment="Center">Number of Passes</Label>
-                            <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="2"/>
+                            <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_number_of_passes}" Grid.Column="1" Grid.Row="2"/>
 
                             <Label Grid.Column="0" Grid.Row="3" VerticalAlignment="Center">Div.Plate Layout</Label>
                             <ComboBox Style="{StaticResource ComboboxDefault}" Grid.Column="1" Grid.Row="3"></ComboBox>
 
                             <Label Grid.Column="0" Grid.Row="4" VerticalAlignment="Center">Div.Plate Thickness (mm)</Label>
-                            <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="4"/>
+                            <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_div_plate_thickness}" Grid.Column="1" Grid.Row="4"/>
 
                             <Label Grid.Column="0" Grid.Row="5" VerticalAlignment="Center">TubePlate Thickness (mm)</Label>
-                            <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="5"/>
+                            <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_tubeplate_thickness}" Grid.Column="1" Grid.Row="5"/>
 
                             <Label Grid.Column="0" Grid.Row="6" VerticalAlignment="Center">Shell Cross Section(m^2)</Label>
                             <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="6"/>
@@ -265,54 +265,54 @@
 
                         </Grid.RowDefinitions>
                         <Label Grid.Column="0" Grid.Row="0">In Outer Diam (mm)</Label>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="0"/>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="2" Grid.Row="0"/>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="3" Grid.Row="0"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_outer_diam_inner_side}" Grid.Column="1" Grid.Row="0"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_outer_diam_tubes_side}" Grid.Column="2" Grid.Row="0"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_outer_diam_shell_side}" Grid.Column="3" Grid.Row="0"/>
 
                         <Label Grid.Column="0" Grid.Row="1">In Thickness (mm)</Label>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="1"/>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="2" Grid.Row="1"/>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="3" Grid.Row="1"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_thickness_inner_side}" Grid.Column="1" Grid.Row="1"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_thickness_tubes_side}"  Grid.Column="2" Grid.Row="1"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_thickness_shell_side}" Grid.Column="3" Grid.Row="1"/>
                         
                         <Label Grid.Column="0" Grid.Row="2">In Inner Diam (mm)</Label>
-                        <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="2"/>
+                        <TextBox Style="{StaticResource Colored}"  Grid.Column="1" Grid.Row="2"/>
                         <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="2"/>
                         <TextBox Style="{StaticResource Colored}" Grid.Column="3" Grid.Row="2"/>
 
                         <Label Grid.Column="0" Grid.Row="3">In Length (mm)</Label>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="2" Grid.Row="3"/>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="3" Grid.Row="3"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_length_tubes_side}" Grid.Column="2" Grid.Row="3"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_length_shell_side}" Grid.Column="3" Grid.Row="3"/>
 
                         <Label Grid.Column="0" Grid.Row="4">Out Outer Diam (mm)</Label>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="4"/>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="2" Grid.Row="4"/>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="3" Grid.Row="4"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_outer_diam_inner_side}" Grid.Column="1" Grid.Row="4"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_outer_diam_tubes_side}" Grid.Column="2" Grid.Row="4"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_outer_diam_shell_side}" Grid.Column="3" Grid.Row="4"/>
 
                         <Label Grid.Column="0" Grid.Row="5">Out Thickness (mm)</Label>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="5"/>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="2" Grid.Row="5"/>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="3" Grid.Row="5"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_thickness_inner_side}" Grid.Column="1" Grid.Row="5"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_thickness_tubes_side}" Grid.Column="2" Grid.Row="5"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_thickness_shell_side}" Grid.Column="3" Grid.Row="5"/>
 
                         <Label Grid.Column="0" Grid.Row="6">Out Inner Diam (mm)</Label>
-                        <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="6"/>
+                        <TextBox Style="{StaticResource Colored}"  Grid.Column="1" Grid.Row="6"/>
                         <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="6"/>
                         <TextBox Style="{StaticResource Colored}" Grid.Column="3" Grid.Row="6"/>
 
                         <Label Grid.Column="0" Grid.Row="7">Out Length (mm)</Label>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="2" Grid.Row="7"/>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="3" Grid.Row="7"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_length_tubes_side}" Grid.Column="2" Grid.Row="7"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_length_shell_side}" Grid.Column="3" Grid.Row="7"/>
 
                         <Label Grid.Column="0" Grid.Row="8">Number of Parallel Lines</Label>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="2" Grid.Row="8"/>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="3" Grid.Row="8"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_number_of_parallel_lines_tubes_side}" Grid.Column="2" Grid.Row="8"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_number_of_parallel_lines_shell_side}" Grid.Column="3" Grid.Row="8"/>
 
                         <Label Grid.Column="0" Grid.Row="9">Number of Modules per Block</Label>
                         <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="9"/>
 
                         <Label Grid.Column="0" Grid.Row="10">Shell Nozzle Orientation</Label>
 
-                        <RadioButton Grid.Column="2" Grid.Row="10" GroupName="NozzleOrientation" Content="Opposide side" VerticalAlignment="Center"/>
-                        <RadioButton Grid.Column="2" Grid.Row="11" GroupName="NozzleOrientation" Content="Same side" VerticalAlignment="Center"/>
+                        <RadioButton Grid.Column="2" Grid.Row="10" IsChecked="{Binding OppositeSide}" GroupName="NozzleOrientation" Content="Opposide side" VerticalAlignment="Center"/>
+                        <RadioButton Grid.Column="2" Grid.Row="11" IsChecked="{Binding SameSide}" GroupName="NozzleOrientation" Content="Same side" VerticalAlignment="Center"/>
                     </Grid>
                     
                     <Grid Grid.Column="1">
@@ -329,7 +329,7 @@
                         <materialDesign:PackIcon Kind="ChevronDown"/>
                     </Button>
                 </StackPanel>
-                <customGrid:CustomGrid IsOpen="{Binding IsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource AnimatedGrid}">
+                <customGrid:CustomGrid IsOpen="True" Style="{StaticResource AnimatedGrid}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>

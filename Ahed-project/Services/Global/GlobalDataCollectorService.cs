@@ -1,4 +1,5 @@
 ﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData.GeometryClasses;
 using Ahed_project.MasterData.Products;
 using Ahed_project.MasterData.ProjectClasses;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace Ahed_project.Services.Global
             AllProducts = new Dictionary<string, List<ProductGet>>();
             Nodes = new ObservableCollection<Node>();
             ProjectsCollection = new List<ProjectInfoGet>();
+            GeometryCollection = new ObservableCollection<GeometryFull>();
             Materials = new List<Material>();
         }
         #region Global
@@ -35,6 +37,9 @@ namespace Ahed_project.Services.Global
         #region Project
         public static List<ProjectInfoGet> ProjectsCollection { get; set; }
         public static ProjectInfoGet Project { get; set; }
+        #endregion
+        #region Geometry
+        public static ObservableCollection<GeometryFull> GeometryCollection { get; set; }
         #endregion
         #region Products
         public static Dictionary<string, List<ProductGet>> AllProducts { get; set; }
