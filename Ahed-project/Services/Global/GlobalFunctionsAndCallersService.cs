@@ -417,15 +417,47 @@ namespace Ahed_project.Services.Global
             _contentPageViewModel.Validation();
         }
         //расчет геометрии
-        public static async void CalculateGeometry(GeometrySend Geometry)
+        public static async void CalculateGeometry(GeometryFull geometry)
         {
-            if (Geometry == null)
+            if (geometry == null)
+            {
+                MessageBox.Show("Выберите геометрию", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            if (_heatBalanceViewModel.Calculation==null||_heatBalanceViewModel.Calculation.calculation_id==0)
             {
                 MessageBox.Show("Выберите рассчет", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-            string json = JsonConvert.SerializeObject(Geometry);
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_GEOMETRY, json, ""));
+            var g = new
+            {
+                head_exchange_type=geometry.head_exchange_type,
+                name = geometry.name,
+                outer_diameter_inner_side = geometry.outer_diameter_inner_side,
+                outer_diameter_tubes_side = geometry.outer_diameter_tubes_side,
+                outer_diameter_shell_side = geometry.outer_diameter_shell_side,
+                thickness_inner_side = geometry.thickness_inner_side,
+                thickness_tubes_side = geometry.thickness_tubes_side,
+                thickness_shell_side = geometry.thickness_shell_side,
+                material_tubes_side = geometry.material_tubes_side,
+                material_shell_side = geometry.material_shell_side,
+                number_of_tubes = geometry.number_of_tubes,
+                tube_inner_length = geometry.tube_inner_length,
+                orientation = geometry.orientation,
+                tube_profile_tubes_side = geometry.tube_profile_tubes_side,
+                roughness_tubes_side = geometry.roughness_tubes_side,
+                roughness_shell_side = geometry.roughness_tubes_side,
+                bundle_type = geometry.bundle_type,
+                roller_expanded = geometry.roller_expanded,
+                nozzles_in_outer_diam_inner_side = geometry.inlet_nozzle_OD_inner_side,
+                nozzles_in_outer_diam_tubes_side = geometry.inlet_nozzle_OD_tubes_side,
+                nozzles_in_outer_diam_shell_side = geometry.inlet_nozzle_OD_shell_side,
+                nozzles_in_thickness_inner_side = geometry.inlet_nozzle_wall_inner_side,
+                nozzles_in_thickness_tubes_side = geometry.inlet_nozzle_wall_tubes_side,
+                nozzles_in_thickness_shell_side = geometry.inlet_nozzle_wall_shell_side,
+            };
+            string json = JsonConvert.SerializeObject(g);
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_GEOMETRY, json,_heatBalanceViewModel.Calculation.project_id.ToString(),_heatBalanceViewModel.Calculation.calculation_id.ToString()));
         }
 
         //Создать проект
@@ -469,16 +501,6 @@ namespace Ahed_project.Services.Global
                 {
                     MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }
-        }
-
-        //Калькуляция геометрии
-        public static void CalculateGeometry()
-        {
-
-            var body = new
-            {
-                head_exchange_type=,
             }
         }
     }

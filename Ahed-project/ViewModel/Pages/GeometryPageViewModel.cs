@@ -16,7 +16,7 @@ namespace Ahed_project.ViewModel.Pages
         public bool IsOpen { get; set; }
         public double GridColumnWidth { get; set; }
         public Dictionary<int, string> Exchangers { get; set; }
-        public GeometrySend Geometry { get; set; }
+        public GeometryFull Geometry { get; set; }
         public bool OppositeSide { get; set; }
         public bool SameSide { get; set; }
         private KeyValuePair<int, string> _exchangersSelector;
