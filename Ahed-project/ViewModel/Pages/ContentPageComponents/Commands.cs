@@ -29,9 +29,9 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             Application.Current.Shutdown();
         });
 
-        public ICommand OpenPresetWindow => new DelegateCommand(() =>
+        public ICommand OpenGeometryWindow => new DelegateCommand(() =>
         {
-            _windowServise.OpenModalWindow(new Presets());
+            _windowServise.OpenModalWindow(new GeometryWindow());
         });
         public ICommand OpenProductsWindow => new DelegateCommand(() =>
         {

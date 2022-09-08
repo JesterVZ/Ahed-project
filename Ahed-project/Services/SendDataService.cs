@@ -206,6 +206,18 @@ namespace Ahed_project.Services
                             request.AddBody(body);
                         response = restClient.ExecuteAsync(request).Result;
                         break;
+                    case ProjectMethods.GET_GEOMETRIES:
+                        restClient = new RestClient(_serviceConfig.GetGeometries);
+                        request = new RestRequest("", Method.Get);
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        if (body != null)
+                            request.AddBody(body);
+                        response = restClient.ExecuteAsync(request).Result;
+                        break;
+
                 }
                 if (response.IsSuccessful)
                     return response.Content;

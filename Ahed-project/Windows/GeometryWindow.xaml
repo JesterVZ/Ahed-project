@@ -4,9 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ahed_project.Windows"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="GeometryWindow" Height="450" Width="800"
         DataContext="{Binding GeometryWindowViewModel, Source={StaticResource ViewModelLocator}}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding WindowLoaded}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -27,7 +33,7 @@
                     <RowDefinition/>
                     <RowDefinition Height="100"/>
                 </Grid.RowDefinitions>
-                <DataGrid Grid.Row="0" Margin="4" IsReadOnly="True" ItemsSource="{Binding }">
+                <DataGrid Grid.Row="0" Margin="4" IsReadOnly="True" ItemsSource="{Binding Geometries}">
 
                 </DataGrid>
                 <TextBlock Text="Description" Grid.Row="1" Margin="4"/>

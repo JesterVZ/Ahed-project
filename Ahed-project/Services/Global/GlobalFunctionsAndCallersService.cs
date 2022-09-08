@@ -27,6 +27,7 @@ namespace Ahed_project.Services.Global
     {
         private static SendDataService _sendDataService;
         private static bool _isProductsDownloaded = false;
+        private static bool _isGeometriesDownloaded = false;
         private static ContentPageViewModel _contentPageViewModel;
         private static ProjectPageViewModel _projectPageViewModel;
         private static IMapper _mapper;
@@ -72,8 +73,21 @@ namespace Ahed_project.Services.Global
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Загрузка проекта выполнена успешно!")));
                 _contentPageViewModel.Validation();
             }
-            Task.Factory.StartNew(DownLoadProducts);
-            Task.Factory.StartNew(GetMaterials);
+            await Task.Factory.StartNew(DownLoadProducts);
+            await Task.Factory.StartNew(GetMaterials);
+            await Task.Factory.StartNew(DownloadGeometries);
+        }
+        //загрузка геометрий
+        public static async Task DownloadGeometries()
+        {
+            if (_isGeometriesDownloaded)
+                return;
+            _isGeometriesDownloaded = true;
+            var template = _sendDataService.ReturnCopy();
+            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка геометрий...")));
+            var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.GET_GEOMETRIES, ""));
+            GlobalDataCollectorService.GeometryCollection = JsonConvert.DeserializeObject<ObservableCollection<GeometryFull>>(response);
+            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка геометрий завершена!")));
         }
 
         // Загрузка продуктов
@@ -83,7 +97,7 @@ namespace Ahed_project.Services.Global
                 return;
             _isProductsDownloaded = true;
             var template = _sendDataService.ReturnCopy();
-            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Start loading Products")));
+            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Начало загрузки продуктов...")));
             var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.GET_PRODUCTS, ""));
             List<Year> years = JsonConvert.DeserializeObject<List<Year>>(response);
             await DoNodes(years);
@@ -91,7 +105,7 @@ namespace Ahed_project.Services.Global
             {
                 x.Value?.Sort((z, c) => z.product_id.CompareTo(c.product_id));
             });
-            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "End loading Products")));
+            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Загрузка проектов завершена!")));
         }
 
         // Создание узлов в продуктах

@@ -49,7 +49,7 @@
                     <MenuItem Header="Products" Command="{Binding OpenProductsWindow}"></MenuItem>
                     <MenuItem Header="Material presets" Command="{Binding OpenMaterialsWindow}"></MenuItem>
                     <MenuItem Header="Fluid presets" Command="{Binding OpenPresetWindow}"></MenuItem>
-                    <MenuItem Header="Geomery presets" Command="{Binding OpenPresetWindow}"></MenuItem>
+                    <MenuItem Header="Geomery presets" Command="{Binding OpenGeometryWindow}"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Options"></MenuItem>
             </MenuItem>
