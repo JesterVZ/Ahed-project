@@ -49,6 +49,11 @@ namespace Ahed_project.ViewModel.Pages
 
         });
 
+        public ICommand Calculate => new DelegateCommand(async () =>
+        {
+
+        });
+
         #endregion
     }
 }

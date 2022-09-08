@@ -446,10 +446,14 @@ namespace Ahed_project.Services.Global
             }
         }
 
-        //Валидация
-        public static void Validate()
+        //Калькуляция геометрии
+        public static void CalculateGeometry()
         {
-            _contentPageViewModel.Validation();
+
+            var body = new
+            {
+                head_exchange_type=,
+            }
         }
     }
 }
