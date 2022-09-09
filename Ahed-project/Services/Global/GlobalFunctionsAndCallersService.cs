@@ -35,11 +35,12 @@ namespace Ahed_project.Services.Global
         private static HeatBalanceViewModel _heatBalanceViewModel;
         private static TubesFluidViewModel _tubesFluidViewModel;
         private static ShellFluidViewModel _shellFluidViewModel;
+        private static GeometryPageViewModel _geometryPageViewModel;
 
         public GlobalFunctionsAndCallersService(SendDataService sendDataService, ContentPageViewModel contentPage,
             ProjectPageViewModel projectPageViewModel, IMapper mapper,
             MainViewModel mainViewModel, HeatBalanceViewModel heatBalanceViewModel, TubesFluidViewModel tubesFluidViewModel,
-            ShellFluidViewModel shellFluidViewModel)
+            ShellFluidViewModel shellFluidViewModel, GeometryPageViewModel geometryPageViewModel)
         {
             _sendDataService = sendDataService;
             _contentPageViewModel = contentPage;
@@ -49,6 +50,7 @@ namespace Ahed_project.Services.Global
             _heatBalanceViewModel = heatBalanceViewModel;
             _tubesFluidViewModel = tubesFluidViewModel;
             _shellFluidViewModel = shellFluidViewModel;
+            _geometryPageViewModel = geometryPageViewModel;
         }
 
         //Первичная загрузка после входа
@@ -308,6 +310,12 @@ namespace Ahed_project.Services.Global
             _mainViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({_heatBalanceViewModel.Calculation?.name})";
             _contentPageViewModel.Validation();
         }
+        //выбор геометрии
+        public static void SelectGeometry(GeometryFull geometry)
+        {
+            _geometryPageViewModel.Geometry = geometry;
+        }
+
         //Выбор продукта Tube
         public static void SelectProductTube(ProductGet product)
         {
