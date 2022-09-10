@@ -487,6 +487,8 @@ namespace Ahed_project.Services.Global
                     GlobalDataCollectorService.ProjectsCollection.Add(newProj);
                     SetProject(newProj);
                     _contentPageViewModel.Validation();
+                    Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations.Clear());
+                    await Task.Factory.StartNew(() => CreateCalculation("Default"));
                 }
                 catch (Exception e)
                 {
