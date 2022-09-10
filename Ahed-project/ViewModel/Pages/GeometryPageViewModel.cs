@@ -16,6 +16,7 @@ namespace Ahed_project.ViewModel.Pages
         public bool IsOpen { get; set; }
         public double GridColumnWidth { get; set; }
         public Dictionary<int, string> Exchangers { get; set; }
+        public Dictionary<int, string> Materials { get; set; }
         public GeometryFull Geometry { get; set; }
         public bool OppositeSide { get; set; }
         public bool SameSide { get; set; }
@@ -40,6 +41,7 @@ namespace Ahed_project.ViewModel.Pages
         public GeometryPageViewModel()
         {
             Exchangers = new Dictionary<int, string>();
+            Materials = new Dictionary<int, string>();
             Exchangers.Add(0, "Tube/Shell");
             Exchangers.Add(1, "Annular Space");
             Exchangers.Add(2, "Unicus");

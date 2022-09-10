@@ -78,6 +78,7 @@ namespace Ahed_project.Services.Global
             await Task.Factory.StartNew(DownLoadProducts);
             await Task.Factory.StartNew(GetMaterials);
             await Task.Factory.StartNew(DownloadGeometries);
+
         }
         //загрузка геометрий
         public static async Task DownloadGeometries()
@@ -504,6 +505,7 @@ namespace Ahed_project.Services.Global
                 {
                     var materials = JsonConvert.DeserializeObject<IEnumerable<Material>>(response);
                     GlobalDataCollectorService.Materials = materials.ToList();
+                    _geometryPageViewModel.Materials = GlobalDataCollectorService.Materials.ToDictionary(keySelector: m => m.material_id, elementSelector: m => m.name_short);
                 }
                 catch (Exception e)
                 {
