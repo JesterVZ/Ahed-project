@@ -7,16 +7,11 @@ namespace Ahed_project.ViewModel.Windows
 {
     public class MainViewModel : BindableBase
     {
-        private readonly PageService _pageService;
-        public Page PageSource { get; set; }
-        private string _title = "";
-        public string Title { get => _title; set => _title = value; }
+        public Page FramePage { get; set; }
 
-        public MainViewModel(PageService pageService)
+        public MainViewModel()
         {
-            _pageService = pageService;
-            _pageService.OnPageChanged += (page) => PageSource = page;
-            _pageService.ChangePage(new LoginPage());
+
         }
     }
 }

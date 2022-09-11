@@ -13,6 +13,7 @@ namespace Ahed_project.ViewModel.Windows
 {
     public class GeometryWindowViewModel : BindableBase
     {
+        public GeometryWindowViewModel() { }
         public ObservableCollection<GeometryFull> Geometries {get; set;}
         public bool IsGeometrySelected { get; set;}
         private GeometryFull _geometry;

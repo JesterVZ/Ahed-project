@@ -19,6 +19,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Ahed_project.Services.Global
 {
@@ -33,22 +34,19 @@ namespace Ahed_project.Services.Global
         private static ContentPageViewModel _contentPageViewModel;
         private static ProjectPageViewModel _projectPageViewModel;
         private static IMapper _mapper;
-        private static MainViewModel _mainViewModel;
         private static HeatBalanceViewModel _heatBalanceViewModel;
         private static TubesFluidViewModel _tubesFluidViewModel;
         private static ShellFluidViewModel _shellFluidViewModel;
         private static GeometryPageViewModel _geometryPageViewModel;
 
         public GlobalFunctionsAndCallersService(SendDataService sendDataService, ContentPageViewModel contentPage,
-            ProjectPageViewModel projectPageViewModel, IMapper mapper,
-            MainViewModel mainViewModel, HeatBalanceViewModel heatBalanceViewModel, TubesFluidViewModel tubesFluidViewModel,
+            ProjectPageViewModel projectPageViewModel, IMapper mapper, HeatBalanceViewModel heatBalanceViewModel, TubesFluidViewModel tubesFluidViewModel,
             ShellFluidViewModel shellFluidViewModel, GeometryPageViewModel geometryPageViewModel)
         {
             _sendDataService = sendDataService;
             _contentPageViewModel = contentPage;
             _projectPageViewModel = projectPageViewModel;
             _mapper = mapper;
-            _mainViewModel = mainViewModel;
             _heatBalanceViewModel = heatBalanceViewModel;
             _tubesFluidViewModel = tubesFluidViewModel;
             _shellFluidViewModel = shellFluidViewModel;
@@ -181,7 +179,7 @@ namespace Ahed_project.Services.Global
             GlobalDataCollectorService.Project = projectInfoGet;
             SetUserLastProject(projectInfoGet.project_id);
             Task.Factory.StartNew(() => GetCalculations(projectInfoGet.project_id.ToString()));
-            _mainViewModel.Title = $"{projectInfoGet.name} ({_heatBalanceViewModel.Calculation?.name})";
+            _contentPageViewModel.Title = $"{projectInfoGet.name} ({_heatBalanceViewModel.Calculation?.name})";
             _contentPageViewModel.Validation();
         }
 
@@ -330,7 +328,7 @@ namespace Ahed_project.Services.Global
             var shellProduct = products.FirstOrDefault(x => x.product_id == calc?.product_id_shell);
             _heatBalanceViewModel.ShellProductName = shellProduct?.name;
             _shellFluidViewModel.Product = shellProduct;
-            _mainViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({_heatBalanceViewModel.Calculation?.name})";
+            _contentPageViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({_heatBalanceViewModel.Calculation?.name})";
             _contentPageViewModel.Validation();
         }
         //выбор геометрии

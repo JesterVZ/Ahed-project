@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using Ahed_project.ViewModel.Pages;
+using System.Windows.Controls;
 
 namespace Ahed_project.Pages
 {
@@ -7,9 +8,10 @@ namespace Ahed_project.Pages
     /// </summary>
     public partial class TubesFluidPage : Page
     {
-        public TubesFluidPage()
+        public TubesFluidPage(TubesFluidViewModel vm)
         {
             InitializeComponent();
+            DataContext = vm;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Ahed_project.Services.Global;
+using Ahed_project.ViewModel.ContentPageComponents;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,9 +11,10 @@ namespace Ahed_project.Pages
     /// </summary>
     public partial class ContentPage : Page
     {
-        public ContentPage()
+        public ContentPage(ContentPageViewModel vm)
         {
             InitializeComponent();
+            DataContext = vm;
             PrepareLogs();
         }
 

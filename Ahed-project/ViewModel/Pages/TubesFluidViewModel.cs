@@ -12,6 +12,7 @@ namespace Ahed_project.ViewModel.Pages
 {
     public class TubesFluidViewModel : BindableBase
     {
+        public TubesFluidViewModel() { }
         private ProductGet _product;
         public ProductGet Product
         {

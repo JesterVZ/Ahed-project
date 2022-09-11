@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Ahed_project.ViewModel.Pages;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Ahed_project.Pages
@@ -8,9 +9,10 @@ namespace Ahed_project.Pages
     /// </summary>
     public partial class LoginPage : Page
     {
-        public LoginPage()
+        public LoginPage(LoginPageViewModel vm)
         {
             InitializeComponent();
+            DataContext = vm;
         }
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)

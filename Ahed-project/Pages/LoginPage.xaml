@@ -7,7 +7,6 @@
       xmlns:gif="http://wpfanimatedgif.codeplex.com"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      DataContext="{Binding LoginPageViewModel, Source={StaticResource ViewModelLocator}}"
       Title="LoginPage">
 
     <Grid>

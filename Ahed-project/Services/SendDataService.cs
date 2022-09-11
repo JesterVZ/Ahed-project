@@ -19,16 +19,18 @@ namespace Ahed_project.Services
         }
         public string SendToServer(ProjectMethods projectMethod, string body = null, string projectId = null, string calculationId = null)
         {
-            System.Net.ServicePointManager.ServerCertificateValidationCallback += (object qq, System.Security.Cryptography.X509Certificates.X509Certificate certificate, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors) => true;
             Headers.TryAdd("Content-Type", "application/json");
             RestResponse response = null;
+            var request = new RestRequest();
+            if (body != null)
+                request.AddBody(body);
             try
             {
                 switch (projectMethod)
                 {
                     case ProjectMethods.LOGIN:
                         var restClient = new RestClient(_serviceConfig.LoginLink);
-                        var request = new RestRequest("", Method.Post);
+                        request.Method = Method.Post;
                         Headers.TryGetValue("Authorization", out var authHeader);
                         if (authHeader != null)
                         {
@@ -38,184 +40,153 @@ namespace Ahed_project.Services
                         {
                             request.AddHeader(header.Key, header.Value);
                         }
-                        request.Timeout = -1;
-                        if (body != null)
-                            request.AddBody(body);
-                        response = restClient.ExecuteAsync(request).Result;
+                        response = restClient.Execute(request);
                         if (authHeader != null)
                             AddHeader(authHeader.Split(' ').LastOrDefault());
                         break;
                     case ProjectMethods.AUTH:
                         restClient = new RestClient(_serviceConfig.AuthLink);
-                        request = new RestRequest("", Method.Get);
+                        request.Method = Method.Get;
                         foreach (var header in Headers)
                         {
                             request.AddHeader(header.Key, header.Value);
                         }
-                        response = restClient.ExecuteAsync(request).Result;
+                        response = restClient.Execute(request);
                         break;
                     case ProjectMethods.CREATE:
                         restClient = new RestClient(_serviceConfig.CreateLink);
-                        request = new RestRequest("", Method.Post);
+                        request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
                             request.AddHeader(header.Key, header.Value);
                         }
-                        if (body != null)
-                            request.AddBody(body);
-                        response = restClient.ExecuteAsync(request).Result;
+                        response = restClient.Execute(request);
                         break;
                     case ProjectMethods.GET:
                         restClient = new RestClient(_serviceConfig.GetLink);
-                        request = new RestRequest("", Method.Post);
+                        request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
                             request.AddHeader(header.Key, header.Value);
                         }
-                        if (body != null)
-                            request.AddBody(body);
-                        response = restClient.ExecuteAsync(request).Result;
+                        response = restClient.Execute(request);
                         break;
                     case ProjectMethods.UPDATE:
                         restClient = new RestClient(_serviceConfig.UpdateLink + $"/{projectId}");
-                        request = new RestRequest("", Method.Post);
+                        request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
                             request.AddHeader(header.Key, header.Value);
                         }
-                        if (body != null)
-                            request.AddBody(body);
-                        response = restClient.ExecuteAsync(request).Result;
+                        response = restClient.Execute(request);
                         break;
                     case ProjectMethods.GET_PROJECTS:
                         restClient = new RestClient(_serviceConfig.GetProjectsLink);
-                        request = new RestRequest("", Method.Post);
+                        request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
                             request.AddHeader(header.Key, header.Value);
                         }
-                        if (body != null)
-                            request.AddBody(body);
-                        response = restClient.ExecuteAsync(request).Result;
+                        response = restClient.Execute(request);
                         break;
                     case ProjectMethods.GET_PRODUCTS:
                         restClient = new RestClient(_serviceConfig.GetProductsList);
-                        request = new RestRequest("", Method.Get);
+                        request.Method = Method.Get;
                         foreach (var header in Headers)
                         {
                             request.AddHeader(header.Key, header.Value);
                         }
-                        if (body != null)
-                            request.AddBody(body);
-                        response = restClient.ExecuteAsync(request).Result;
+                        response = restClient.Execute(request);
                         break;
                     case ProjectMethods.GET_PRODUCT:
                         restClient = new RestClient(_serviceConfig.GetProduct + body);
-                        request = new RestRequest("", Method.Get);
+                        request.Method = Method.Get;
                         foreach (var header in Headers)
                         {
                             request.AddHeader(header.Key, header.Value);
                         }
-                        response = restClient.ExecuteAsync(request).Result;
+                        response = restClient.Execute(request);
                         break;
                     case ProjectMethods.CALCULATE:
                         restClient = new RestClient(_serviceConfig.Calculate);
-                        request = new RestRequest("", Method.Post);
+                        request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
                             request.AddHeader(header.Key, header.Value);
                         }
-                        if (body != null)
-                            request.AddBody(body);
-                        response = restClient.ExecuteAsync(request).Result;
+                        response = restClient.Execute(request);
                         break;
                     case ProjectMethods.CREATE_CALCULATION:
                         restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectId}/calculation/create");
-                        request = new RestRequest("", Method.Post);
+                        request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
                             request.AddHeader(header.Key, header.Value);
                         }
-                        if (body != null)
-                            request.AddBody(body);
-                        response = restClient.ExecuteAsync(request).Result;
+                        response = restClient.Execute(request);
                         break;
                     case ProjectMethods.UPDATE_CHOOSE:
                         restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectId}/calculation/update/{calculationId}");
-                        request = new RestRequest("", Method.Post);
+                        request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
                             request.AddHeader(header.Key, header.Value);
                         }
-                        if (body != null)
-                            request.AddBody(body);
-                        response = restClient.ExecuteAsync(request).Result;
+                        response = restClient.Execute(request);
                         break;
                     case ProjectMethods.CALCULATE_TEMPERATURE:
                         restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/getT");
-                        request = new RestRequest("", Method.Post);
+                        request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
                             request.AddHeader(header.Key, header.Value);
                         }
-                        if (body != null)
-                            request.AddBody(body);
-                        response = restClient.ExecuteAsync(request).Result;
+                        response = restClient.Execute(request);
                         break;
                     case ProjectMethods.GET_PRODUCT_CALCULATIONS:
                         restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectId}/calculation/list");
-                        request = new RestRequest("", Method.Get);
+                        request.Method = Method.Get;
                         foreach (var header in Headers)
                         {
                             request.AddHeader(header.Key, header.Value);
                         }
-                        if (body != null)
-                            request.AddBody(body);
-                        response = restClient.ExecuteAsync(request).Result;
+                        response = restClient.Execute(request);
                         break;
                     case ProjectMethods.UPDATE_CALCULATION:
                         restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/heat-balance/calculate");
-                        request = new RestRequest("", Method.Post);
+                        request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
                             request.AddHeader(header.Key, header.Value);
                         }
-                        if (body != null)
-                            request.AddBody(body);
-                        response = restClient.ExecuteAsync(request).Result;
+                        response = restClient.Execute(request);
                         break;
                     case ProjectMethods.GET_MATERIALS:
                         restClient = new RestClient(_serviceConfig.Materials);
-                        request = new RestRequest("", Method.Get);
+                        request.Method = Method.Get;
                         foreach (var header in Headers)
                         {
                             request.AddHeader(header.Key, header.Value);
                         }
-                        if (body != null)
-                            request.AddBody(body);
-                        response = restClient.ExecuteAsync(request).Result;
+                        response = restClient.Execute(request);
                         break;
                     case ProjectMethods.CALCULATE_GEOMETRY:
                         restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/geometry/calculate");
-                        request = new RestRequest("", Method.Post);
+                        request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
                             request.AddHeader(header.Key, header.Value);
                         }
-                        if (body != null)
-                            request.AddBody(body);
-                        response = restClient.ExecuteAsync(request).Result;
+                        response = restClient.Execute(request);
                         break;
                     case ProjectMethods.GET_GEOMETRIES:
                         restClient = new RestClient(_serviceConfig.GetGeometries);
-                        request = new RestRequest("", Method.Get);
+                        request.Method = Method.Get;
                         foreach (var header in Headers)
                         {
                             request.AddHeader(header.Key, header.Value);
                         }
-                        if (body != null)
-                            request.AddBody(body);
-                        response = restClient.ExecuteAsync(request).Result;
+                        response = restClient.Execute(request);
                         break;
 
                 }

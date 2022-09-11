@@ -16,10 +16,10 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 if (GlobalFunctionsAndCallersService.GetSelectedCalculation != null)
                 {
                     ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
-                    _tabStateService.ChangeTab(MasterData.Pages.TUBES_FLUID);
-                    _tabStateService.ChangeTab(MasterData.Pages.SHELL_FLUID);
-                    _tabStateService.ChangeTab(MasterData.Pages.HEAT_BALANCE);
-                    _tabStateService.ChangeTab(MasterData.Pages.GEOMETRY);
+                    ChangeTabState(MasterData.Pages.TUBES_FLUID);
+                    ChangeTabState(MasterData.Pages.SHELL_FLUID);
+                    ChangeTabState(MasterData.Pages.HEAT_BALANCE);
+                    ChangeTabState(MasterData.Pages.GEOMETRY);
                     if(GlobalFunctionsAndCallersService.GetTubeProduct() == null)
                     {
                         TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";

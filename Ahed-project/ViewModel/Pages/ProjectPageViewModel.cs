@@ -14,6 +14,7 @@ namespace Ahed_project.ViewModel.Pages
 {
     public class ProjectPageViewModel : BindableBase
     {
+        public ProjectPageViewModel() { }
         public Visibility TextBoxVisibillity { get; set; }
         public Visibility LabelVisibillity { get; set; }
 

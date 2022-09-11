@@ -4,12 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ahed_project"
-        xmlns:viewmodels="clr-namespace:Ahed_project.ViewModel"
-        DataContext="{Binding MainViewModel, Source={StaticResource ViewModelLocator}}"
         mc:Ignorable="d"
+        WindowState="Maximized"
         x:Name="AheadWindow"
-        Title="{Binding Path=Title, UpdateSourceTrigger=PropertyChanged}" WindowState="Maximized"
         Height="795"
         Width="795">
-    <Frame Name="MainFrame" Content="{Binding PageSource}" Background="White" NavigationUIVisibility="Hidden"/>
+    <Frame Source="{Binding Page}"/>
 </Window>

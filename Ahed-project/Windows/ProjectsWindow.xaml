@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:Ahed_project.Windows"
         xmlns:attach="clr-namespace:Ahed_project.Services"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        DataContext="{Binding ProjectsWindowViewModel, Source={StaticResource ViewModelLocator}}"
         mc:Ignorable="d"
         Title="ProjectsWindow" Height="450" Width="800">
     <i:Interaction.Triggers>

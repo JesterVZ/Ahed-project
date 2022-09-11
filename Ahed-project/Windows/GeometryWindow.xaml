@@ -6,8 +6,7 @@
         xmlns:local="clr-namespace:Ahed_project.Windows"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="GeometryWindow" Height="450" Width="800"
-        DataContext="{Binding GeometryWindowViewModel, Source={StaticResource ViewModelLocator}}">
+        Title="GeometryWindow" Height="450" Width="800">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding WindowLoaded}"/>

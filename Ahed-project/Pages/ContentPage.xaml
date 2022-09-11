@@ -7,8 +7,7 @@
       xmlns:attach="clr-namespace:Ahed_project.Services"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d"
-      DataContext="{Binding ContentPageViewModel, Source={StaticResource ViewModelLocator}}"
-      Title="ContentPage" >
+      Title="{Binding Path=Title, UpdateSourceTrigger=PropertyChanged}">
     <Page.Resources>
     </Page.Resources>
     <Page.InputBindings>
@@ -244,7 +243,7 @@
             </TabItem>
         </TabControl>
         <GridSplitter Grid.Row="1" VerticalAlignment="Bottom" Height="5" HorizontalAlignment="Stretch" />
-        <DataGrid x:Name="LogData" Grid.Row="2" DataContext="{Binding GlobalDataCollectorService, Source={StaticResource ViewModelLocator}}"  ItemsSource="{Binding Logs}" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" SizeChanged="LogData_SizeChanged" IsReadOnly="True" Margin="0,5,0,-5">
+        <DataGrid x:Name="LogData" Grid.Row="2" ItemsSource="{Binding Logs}" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" SizeChanged="LogData_SizeChanged" IsReadOnly="True" Margin="0,5,0,-5">
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
                     <Style.Triggers>

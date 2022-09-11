@@ -1,4 +1,5 @@
 ﻿using Ahed_project.Pages;
+using Ahed_project.Services;
 using Ahed_project.Services.EF;
 using Ahed_project.Services.Global;
 using Ahed_project.Windows;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace Ahed_project.ViewModel.ContentPageComponents
 {
@@ -21,7 +23,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 context.Update(active);
                 context.SaveChanges();
             }
-            _pageService.ChangePage(new LoginPage());
+            var page = _pageService.GetPage<LoginPage>();
         });
 
         public ICommand Exit => new DelegateCommand(() =>
@@ -31,21 +33,21 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
         public ICommand OpenGeometryWindow => new DelegateCommand(() =>
         {
-            _windowServise.OpenModalWindow(new GeometryWindow());
+            _pageService.OpenWindow<GeometryWindow>();
         });
         public ICommand OpenProductsWindow => new DelegateCommand(() =>
         {
-            _windowServise.OpenModalWindow(new ProductsWindow());
+            _pageService.OpenWindow<ProductsWindow>();
         });
 
         public ICommand OpenProjectsWindow => new DelegateCommand(() =>
         {
-            _windowServise.OpenModalWindow(new ProjectsWindow());
+            _pageService.OpenWindow<ProjectsWindow>();
         });
 
         public ICommand OpenMaterialsWindow => new DelegateCommand(() =>
         {
-            _windowServise.OpenModalWindow(new MaterialsWindow());
+
         });
 
         public ICommand NewProjectCommand => new AsyncCommand(async () =>

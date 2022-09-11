@@ -12,7 +12,12 @@ namespace Ahed_project.ViewModel.Windows
     public class ProductsViewModel : BindableBase
     {
 
-        public static ObservableCollection<Node> Nodes
+        public ProductsViewModel()
+        {
+
+        }
+
+        public ObservableCollection<Node> Nodes
         {
             get => GlobalDataCollectorService.Nodes;
         }

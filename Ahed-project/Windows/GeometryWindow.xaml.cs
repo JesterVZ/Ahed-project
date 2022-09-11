@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ahed_project.ViewModel.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,10 @@ namespace Ahed_project.Windows
     /// </summary>
     public partial class GeometryWindow : Window
     {
-        public GeometryWindow()
+        public GeometryWindow(GeometryWindowViewModel vm)
         {
             InitializeComponent();
+            DataContext = vm;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

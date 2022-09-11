@@ -10,7 +10,6 @@ namespace Ahed_project.ViewModel.Pages
 {
     public class ShellFluidViewModel : BindableBase
     {
-
         public ShellFluidViewModel()
         {
             FirstChart = new PlotModel();

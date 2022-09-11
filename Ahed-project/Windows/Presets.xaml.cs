@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Ahed_project.ViewModel.Windows;
+using System.Windows;
 
 namespace Ahed_project.Windows
 {
@@ -7,10 +8,10 @@ namespace Ahed_project.Windows
     /// </summary>
     public partial class Presets : Window
     {
-        public Presets()
+        public Presets(PresetsWindowViewModel vm)
         {
             InitializeComponent();
-
+            DataContext = vm;
         }
     }
 }

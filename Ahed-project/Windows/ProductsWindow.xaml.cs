@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Ahed_project.ViewModel.Windows;
+using System.Windows;
 
 namespace Ahed_project.Windows
 {
@@ -7,9 +8,10 @@ namespace Ahed_project.Windows
     /// </summary>
     public partial class ProductsWindow : Window
     {
-        public ProductsWindow()
+        public ProductsWindow(ProductsViewModel vm)
         {
             InitializeComponent();
+            DataContext = vm;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

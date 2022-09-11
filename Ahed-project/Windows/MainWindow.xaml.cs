@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Ahed_project.ViewModel.Windows;
+using System.Windows;
 
 namespace Ahed_project
 {
@@ -7,10 +8,10 @@ namespace Ahed_project
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(MainViewModel vm)
         {
             InitializeComponent();
+            DataContext = vm;
         }
-
     }
 }

@@ -3,13 +3,17 @@ using Ahed_project.Pages;
 using Ahed_project.Services;
 using Ahed_project.Services.EF;
 using Ahed_project.Services.EF.Model;
+using Ahed_project.Services.Global;
 using Ahed_project.ViewModel.ContentPageComponents;
 using DevExpress.Mvvm;
+using System;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace Ahed_project.ViewModel.Pages
 {
@@ -17,13 +21,11 @@ namespace Ahed_project.ViewModel.Pages
     {
         private readonly PageService _pageService;
         private readonly JsonWebTokenLocal _jwt;
-        private readonly ContentPageViewModel _contentPageViewModel;
 
-        public LoginPageViewModel(PageService pageService, JsonWebTokenLocal jwt,
-            ContentPageViewModel contentPageViewModel)
+        public LoginPageViewModel(JsonWebTokenLocal jwt,
+            PageService pageService)
         {
             _pageService = pageService;
-            _contentPageViewModel = contentPageViewModel;
             _jwt = jwt;
             UserEF active = null;
             using (var context = new EFContext())
@@ -53,7 +55,9 @@ namespace Ahed_project.ViewModel.Pages
             Loading = Visibility.Hidden;
             if (result.Result is User)
             {
-                _pageService.ChangePage(new ContentPage());
+                var page = _pageService.GetPage<ContentPage>();
+                var nav = NavigationService.GetNavigationService(page);
+                nav.Navigate(page);
             }
             else if (result.Result is null || result.Result is string)
             {
