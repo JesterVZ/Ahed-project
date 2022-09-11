@@ -5,6 +5,7 @@ using Ahed_project.Services.EF;
 using Ahed_project.Services.EF.Model;
 using Ahed_project.Services.Global;
 using Ahed_project.ViewModel.ContentPageComponents;
+using Ahed_project.ViewModel.Windows;
 using DevExpress.Mvvm;
 using System;
 using System.Linq;
@@ -27,6 +28,10 @@ namespace Ahed_project.ViewModel.Pages
         {
             _pageService = pageService;
             _jwt = jwt;
+        }
+
+        public ICommand Loaded => new DelegateCommand(() =>
+        {
             UserEF active = null;
             using (var context = new EFContext())
             {
@@ -38,7 +43,7 @@ namespace Ahed_project.ViewModel.Pages
                 pass = active.Password;
                 Auth();
             }
-        }
+        });
 
         public ICommand GoToContent => new AsyncCommand(async () =>
         {
@@ -56,8 +61,7 @@ namespace Ahed_project.ViewModel.Pages
             if (result.Result is User)
             {
                 var page = _pageService.GetPage<ContentPage>();
-                var nav = NavigationService.GetNavigationService(page);
-                nav.Navigate(page);
+                (Application.Current.MainWindow.DataContext as MainViewModel).FramePage = page;
             }
             else if (result.Result is null || result.Result is string)
             {

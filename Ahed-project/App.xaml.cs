@@ -22,8 +22,8 @@ namespace Ahed_project
             var login = cont.Resolve<LoginPage>();
             var main = cont.Resolve<MainWindow>();
             var vm = cont.Resolve<MainViewModel>();
-            this.MainWindow = main;
             vm.FramePage = login;
+            main.Show();
         }
     }
 }

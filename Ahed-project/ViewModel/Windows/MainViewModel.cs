@@ -11,7 +11,7 @@ namespace Ahed_project.ViewModel.Windows
 
         public MainViewModel()
         {
-
+            FramePage = new Page();
         }
     }
 }
