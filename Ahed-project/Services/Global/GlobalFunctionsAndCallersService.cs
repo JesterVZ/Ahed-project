@@ -3,12 +3,14 @@ using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.GeometryClasses;
 using Ahed_project.MasterData.Products;
 using Ahed_project.MasterData.ProjectClasses;
+using Ahed_project.Migrations;
 using Ahed_project.Services.EF;
 using Ahed_project.Services.EF.Model;
 using Ahed_project.ViewModel.ContentPageComponents;
 using Ahed_project.ViewModel.Pages;
 using Ahed_project.ViewModel.Windows;
 using AutoMapper;
+using DevExpress.Internal.WinApi.Windows.UI.Notifications;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -280,16 +282,31 @@ namespace Ahed_project.Services.Global
             _contentPageViewModel.Validation();
         }
         //расчет температуры при условии того, что в поле pressure_shell_inlet введено значнеие
-        public static async Task<string> CalculateTemperature(string pressure_shell_inlet_value, CalculationFull calc)
+        public static async void CalculateTemperature(string pressure_shell_inlet_value, CalculationFull calc,bool shell)
         {
             var calculationTemperatureSend = new
             {
-                pressure_shell_inlet = double.Parse(pressure_shell_inlet_value)
+                pressure_data = double.Parse(pressure_shell_inlet_value),
+                product_id = shell ? _heatBalanceViewModel.Calculation.product_id_shell.Value : _heatBalanceViewModel.Calculation.product_id_tube.Value,
             };
             string json = JsonConvert.SerializeObject(calculationTemperatureSend);
             string response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_TEMPERATURE, json, calc.project_id.ToString(), calc.calculation_id.ToString()));
-            return response;
-            //Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)))
+            CalculationTemperatureGet data = JsonConvert.DeserializeObject<CalculationTemperatureGet>(response);
+            if (shell)
+            {
+                _heatBalanceViewModel.Pressure_shell_inlet_value = data.pressure;
+                _heatBalanceViewModel.Calculation.temperature_shell_inlet = data.temperature_inlet;
+                _heatBalanceViewModel.Calculation.temperature_shell_outlet = data.temperature_outlet;
+                _heatBalanceViewModel.Calculation.pressure_shell_inlet = data.pressure;
+            }
+            else
+            {
+                _heatBalanceViewModel.Pressure_tube_inlet_value = data.pressure;
+                _heatBalanceViewModel.Calculation.temperature_tube_inlet = data.temperature_inlet;
+                _heatBalanceViewModel.Calculation.temperature_tube_outlet = data.temperature_outlet;
+                _heatBalanceViewModel.Calculation.pressure_tube_inlet = data.pressure;
+            }
+            _heatBalanceViewModel.Raise("Calculation");
         }
 
         //Выбор рассчета

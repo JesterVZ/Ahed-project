@@ -55,20 +55,38 @@ namespace Ahed_project.ViewModel.Pages
                 _pressure_shell_inlet_value = value;
                 if (Calculation != null && Calculation.calculation_id != 0 && Calculation.process_shell.Contains("Condensation") && double.TryParse(value, out var res))
                 {
-                    GetTemperatureCalculation();
+                    GetTemperatureCalculation(true,value);
                 }
             }
         }
-        private async void GetTemperatureCalculation()
-        {
-            var result = await Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateTemperature(_pressure_shell_inlet_value, Calculation));
-            Calculation.pressure_shell_inlet = _pressure_shell_inlet_value;
-            CalculationTemperatureGet data = JsonConvert.DeserializeObject<CalculationTemperatureGet>(result.Result);
 
-            Calculation.temperature_shell_inlet = data.temperature_shell_inlet; //биндинг не происходит
-            Calculation.temperature_shell_outlet = data.temperature_shell_outlet;
-            RaisePropertiesChanged("Calculation");
+        private string _pressure_tube_inlet_value;
+        public string Pressure_tube_inlet_value
+        {
+            get
+            {
+                return _pressure_tube_inlet_value;
+            }
+            set
+            {
+                _pressure_tube_inlet_value = value;
+                if (Calculation != null && Calculation.calculation_id != 0 && Calculation.process_tube.Contains("Condensation") && double.TryParse(value, out var res))
+                {
+                    GetTemperatureCalculation(false,value);
+                }
+            }
         }
+
+        private async void GetTemperatureCalculation(bool shell,string value)
+        {
+            await Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateTemperature(value, Calculation,shell));
+        }
+
+        public void Raise(string param)
+        {
+            RaisePropertiesChanged(param);
+        }
+
         private CalculationFull _calculation;
         public CalculationFull Calculation
         {

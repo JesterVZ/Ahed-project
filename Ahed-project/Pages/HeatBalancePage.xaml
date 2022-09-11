@@ -158,7 +158,7 @@
                     </StackPanel>
                     <TextBox Style="{StaticResource TextBoxHeatBalance}" Text="{Binding Calculation.duty_tube, UpdateSourceTrigger=PropertyChanged}"/>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Style="{StaticResource SubEnabled}" Text="{Binding Calculation.pressure_tube_inlet, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Style="{StaticResource SubEnabled}" Text="{Binding Pressure_tube_inlet_value, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
                         <TextBox Style="{StaticResource Sub}" Margin="0,3,0,3" Text="{Binding Calculation.pressure_shell_outlet, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                     <StackPanel Margin="0,36,0,0" Style="{StaticResource HeatBalanceChild}">
