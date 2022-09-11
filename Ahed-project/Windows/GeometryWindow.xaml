@@ -32,8 +32,11 @@
                     <RowDefinition/>
                     <RowDefinition Height="100"/>
                 </Grid.RowDefinitions>
-                <DataGrid Grid.Row="0" Margin="4" IsReadOnly="True" ItemsSource="{Binding Geometries}" SelectedItem="{Binding SelectedGeometry, UpdateSourceTrigger=PropertyChanged}">
-
+                <DataGrid Grid.Row="0" Margin="4" IsReadOnly="True" ItemsSource="{Binding Geometries}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedGeometry, UpdateSourceTrigger=PropertyChanged}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=name}" Header="Name" Width="150"/>
+                        <DataGridTextColumn Binding="{Binding Path=geometry_catalog_id}" Header="Id" />
+                    </DataGrid.Columns>
                 </DataGrid>
                 <TextBlock Text="Description" Grid.Row="1" Margin="4"/>
 

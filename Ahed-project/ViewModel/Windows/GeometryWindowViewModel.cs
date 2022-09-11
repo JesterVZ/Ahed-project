@@ -37,7 +37,8 @@ namespace Ahed_project.ViewModel.Windows
             set
             {
                 _textBox = value;
-                Geometries = new ObservableCollection<GeometryFull>(BeforeSearch.Where(x => x.name.ToLower().Contains(value)));
+                var low = value.ToLower();
+                Geometries = new ObservableCollection<GeometryFull>(BeforeSearch.Where(x => x.name.ToLower().Contains(low)));
             }
         }
             #region coms
