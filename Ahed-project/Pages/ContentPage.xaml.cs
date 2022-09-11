@@ -3,6 +3,7 @@ using Ahed_project.ViewModel.ContentPageComponents;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Ahed_project.Pages
 {
@@ -16,6 +17,8 @@ namespace Ahed_project.Pages
             InitializeComponent();
             DataContext = vm;
             PrepareLogs();
+            NavigationCommands.BrowseBack.InputGestures.Clear();
+            NavigationCommands.BrowseForward.InputGestures.Clear();
         }
 
         public void PrepareLogs()
