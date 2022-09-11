@@ -15,6 +15,7 @@ namespace Ahed_project.ViewModel.Windows
     {
         public GeometryWindowViewModel() { }
         public ObservableCollection<GeometryFull> Geometries {get; set;}
+        public List<GeometryFull> BeforeSearch { get; set; }
         public bool IsGeometrySelected { get; set;}
         private GeometryFull _geometry;
         public GeometryFull SelectedGeometry
@@ -29,10 +30,21 @@ namespace Ahed_project.ViewModel.Windows
                 _geometry = value;
             }
         }
-        #region coms
+        private string _textBox;
+        public string TextBox
+        {
+            get => _textBox;
+            set
+            {
+                _textBox = value;
+                Geometries = new ObservableCollection<GeometryFull>(BeforeSearch.Where(x => x.name.ToLower().Contains(value)));
+            }
+        }
+            #region coms
         public ICommand WindowLoaded => new DelegateCommand(() =>
         {
-            Geometries = new ObservableCollection<GeometryFull>(GlobalDataCollectorService.GeometryCollection);
+            BeforeSearch = new List<GeometryFull>(GlobalDataCollectorService.GeometryCollection);
+            Geometries = new ObservableCollection<GeometryFull>(BeforeSearch);
         });
 
         public ICommand SelectGeometryCommand => new DelegateCommand(() =>

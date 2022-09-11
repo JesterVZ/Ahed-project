@@ -65,10 +65,10 @@ namespace Ahed_project
             #endregion
             #region Windows
             builder.RegisterType<MainWindow>().AsSelf().SingleInstance();
-            builder.RegisterType<GeometryWindow>().AsSelf().SingleInstance();
-            builder.RegisterType<Presets>().AsSelf().SingleInstance();
-            builder.RegisterType<ProductsWindow>().AsSelf().SingleInstance();
-            builder.RegisterType<ProjectsWindow>().AsSelf().SingleInstance();
+            builder.RegisterType<GeometryWindow>().AsSelf();
+            builder.RegisterType<Presets>().AsSelf();
+            builder.RegisterType<ProductsWindow>().AsSelf();
+            builder.RegisterType<ProjectsWindow>().AsSelf();
             #endregion
             #region Services
             builder.RegisterType<SendDataService>().AsSelf().SingleInstance();

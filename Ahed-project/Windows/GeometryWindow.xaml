@@ -45,7 +45,7 @@
                     <ColumnDefinition Width="80"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Search" VerticalAlignment="Center" Margin="4"/>
-                <TextBox Grid.Column="1" Margin="4"/>
+                <TextBox Grid.Column="1" Margin="4" Text="{Binding TextBox, UpdateSourceTrigger=PropertyChanged}"/>
                 <Button IsCancel="True" Click="Button_Click" IsEnabled="{Binding IsGeometrySelected, UpdateSourceTrigger=PropertyChanged}" Command="{Binding SelectGeometryCommand}" Grid.Column="2" Margin="4">Select</Button>
             </Grid>
         </Grid>
