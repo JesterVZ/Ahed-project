@@ -73,7 +73,7 @@
                         <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=ProjectValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <Frame Source="ProjectPage.xaml"/>
+                <Frame Content="{Binding ProjectPage}"/>
             </TabItem>
 
             <TabItem FontSize="12" IsEnabled="{Binding Path=TubesFluidState.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
@@ -89,7 +89,7 @@
                         <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=TubesFluidValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <Frame Source="TubesFluidPage.xaml"/>
+                <Frame Content="{Binding TubesFluidPage}"/>
             </TabItem>
             <TabItem  FontSize="12" IsEnabled="{Binding Path=ShellFluidState.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
@@ -104,7 +104,7 @@
                         <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=ShellFluidValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <Frame Source="ShellFluidPage.xaml"/>
+                <Frame Content="{Binding ShellFluidPage}"/>
             </TabItem>
             <TabItem IsEnabled="{Binding Path=HeatBalanceState.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="12" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
@@ -119,7 +119,7 @@
                         <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=HeatBalanceValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <Frame Source="HeatBalancePage.xaml"/>
+                <Frame Content="{Binding HeatBalancePage}"/>
             </TabItem>
             <TabItem IsEnabled="{Binding Path=GeometryState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
@@ -134,7 +134,7 @@
                         <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=GeometryValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <Frame Source="GeometryPage.xaml"/>
+                <Frame Content="{Binding GeometryPage}"/>
             </TabItem>
             <TabItem IsEnabled="{Binding Path=BafflesState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
@@ -149,7 +149,7 @@
                         <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=BafflesValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <Frame Source="BafflesPage.xaml"/>
+                <Frame Content="{Binding BafflesPage}"/>
             </TabItem>
             <TabItem IsEnabled="{Binding Path=OverallCalculationState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
@@ -164,7 +164,7 @@
                         <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=OverallValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <Frame Source="OverallCalculationPage.xaml"/>
+                <Frame Content="{Binding OveralCalculationPage}"/>
             </TabItem>
             <TabItem IsEnabled="{Binding Path=BatchState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
@@ -179,7 +179,7 @@
                         <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=BatchValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <Frame Source="BatchPage.xaml"/>
+                <Frame Content="{Binding BatchPage}"/>
             </TabItem>
             <TabItem IsEnabled="{Binding Path=GraphState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
@@ -194,7 +194,7 @@
                         <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=GraphsValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <Frame Source="GraphsPage.xaml"/>
+                <Frame Content="{Binding GraphsPage}"/>
             </TabItem>
             <TabItem IsEnabled="{Binding Path=ReportsState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
@@ -209,7 +209,7 @@
                         <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=ReportsValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <Frame Source="ReportsPage.xaml"/>
+                <Frame Content="{Binding ReportsPage}"/>
             </TabItem>
             <TabItem IsEnabled="{Binding Path=QuoteState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
@@ -224,7 +224,7 @@
                         <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=QuoteValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <Frame Source="QuotePage.xaml"/>
+                <Frame Content="{Binding QuotePage}"/>
             </TabItem>
             <TabItem IsEnabled="{Binding Path=ThreeDState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
@@ -239,7 +239,7 @@
                         <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=ThreeDValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
-                <Frame Source="3DPage.xaml"/>
+                <Frame Content="{Binding _3DPage}"/>
             </TabItem>
         </TabControl>
         <GridSplitter Grid.Row="1" VerticalAlignment="Bottom" Height="5" HorizontalAlignment="Stretch" />

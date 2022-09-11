@@ -2,6 +2,7 @@
 using Ahed_project.Services;
 using Ahed_project.Services.EF;
 using Ahed_project.Services.Global;
+using Ahed_project.ViewModel.Windows;
 using Ahed_project.Windows;
 using DevExpress.Mvvm;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 context.SaveChanges();
             }
             var page = _pageService.GetPage<LoginPage>();
+            (Application.Current.MainWindow.DataContext as MainViewModel).FramePage = page;
         });
 
         public ICommand Exit => new DelegateCommand(() =>
