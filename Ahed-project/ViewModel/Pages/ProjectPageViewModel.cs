@@ -33,6 +33,18 @@ namespace Ahed_project.ViewModel.Pages
             set => SetValue(ref _projectInfo, value);
         }
 
+        private string _projectName;
+        public string ProjectName
+        {
+            get => _projectName;
+            set
+            {
+                _projectName = value;
+                ProjectInfo.name = value;
+                GlobalFunctionsAndCallersService.SetWindowName(value);
+            }
+        }
+
         private CalculationFull _selectedCalculation;
         public CalculationFull SelectedCalculation
         {

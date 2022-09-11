@@ -537,5 +537,10 @@ namespace Ahed_project.Services.Global
                 }
             }
         }
+
+        public static void SetWindowName(string name)
+        {
+            _mainViewModel.Title = $"{name} ({_heatBalanceViewModel.Calculation?.name})";
+        }
     }
 }
