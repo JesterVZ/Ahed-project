@@ -6,8 +6,7 @@
       xmlns:SVG="http://sharpvectors.codeplex.com/svgc/"
       xmlns:attach="clr-namespace:Ahed_project.Services"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      mc:Ignorable="d"
-      Title="{Binding Path=Title, UpdateSourceTrigger=PropertyChanged}">
+      mc:Ignorable="d">
     <Page.Resources>
     </Page.Resources>
     <Page.InputBindings>

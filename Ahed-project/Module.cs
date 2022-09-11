@@ -100,11 +100,6 @@ namespace Ahed_project
             builder.RegisterInstance(mapper).As<IMapper>().SingleInstance();
 
             builder.RegisterType<GlobalFunctionsAndCallersService>().AsSelf().SingleInstance().AutoActivate();
-
-            //builder.Register(x => new GlobalFunctionsAndCallersService(x.Resolve<SendDataService>(),
-            //    x.Resolve<ContentPageViewModel>(), x.Resolve<ProjectPageViewModel>(), x.Resolve<IMapper>(),
-            //    x.Resolve<MainViewModel>(), x.Resolve<HeatBalanceViewModel>(), x.Resolve<TubesFluidViewModel>(),
-            //    x.Resolve<ShellFluidViewModel>(), x.Resolve<GeometryPageViewModel>())).As<GlobalFunctionsAndCallersService>().SingleInstance();
         }
     }
 }

@@ -72,7 +72,7 @@
                     </Grid>
                     <TabControl SelectedIndex="{Binding TabIndex, UpdateSourceTrigger=PropertyChanged}">
                         <TabItem Header="Liquid Phase">
-                            <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" Height="500" ItemsSource="{Binding Product.product_properties}">
+                            <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" Height="500" ItemsSource="{Binding Product.product_properties}">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=liquid_phase_temperature}"/>
                                     <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=liquid_phase_density}"/>
@@ -85,7 +85,7 @@
                             </DataGrid>
                         </TabItem>
                         <TabItem Header="Gas Phase">
-                            <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" Height="500" ItemsSource="{Binding Product.product_properties}">
+                            <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" IsReadOnly="True" Height="500" ItemsSource="{Binding Product.product_properties}">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=gas_phase_temperature}"/>
                                     <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=gas_phase_density}"/>

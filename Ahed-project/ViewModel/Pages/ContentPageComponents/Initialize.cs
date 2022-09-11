@@ -21,7 +21,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         public ContentState ReportsState { get; set; }
         public ContentState QuoteState { get; set; }
         public ContentState ThreeDState { get; set; }
-        public string Title { get; set; }
         public ObservableCollection<LoggerMessage> Logs { get => GlobalDataCollectorService.Logs; }
         public ContentPageViewModel(PageService pageService)
         {

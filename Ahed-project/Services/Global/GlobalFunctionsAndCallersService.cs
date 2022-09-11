@@ -38,10 +38,11 @@ namespace Ahed_project.Services.Global
         private static TubesFluidViewModel _tubesFluidViewModel;
         private static ShellFluidViewModel _shellFluidViewModel;
         private static GeometryPageViewModel _geometryPageViewModel;
+        private static MainViewModel _mainViewModel;
 
         public GlobalFunctionsAndCallersService(SendDataService sendDataService, ContentPageViewModel contentPage,
             ProjectPageViewModel projectPageViewModel, IMapper mapper, HeatBalanceViewModel heatBalanceViewModel, TubesFluidViewModel tubesFluidViewModel,
-            ShellFluidViewModel shellFluidViewModel, GeometryPageViewModel geometryPageViewModel)
+            ShellFluidViewModel shellFluidViewModel, GeometryPageViewModel geometryPageViewModel, MainViewModel mainViewModel)
         {
             _sendDataService = sendDataService;
             _contentPageViewModel = contentPage;
@@ -51,6 +52,7 @@ namespace Ahed_project.Services.Global
             _tubesFluidViewModel = tubesFluidViewModel;
             _shellFluidViewModel = shellFluidViewModel;
             _geometryPageViewModel = geometryPageViewModel;
+            _mainViewModel = mainViewModel;
         }
 
         //Первичная загрузка после входа
@@ -179,7 +181,7 @@ namespace Ahed_project.Services.Global
             GlobalDataCollectorService.Project = projectInfoGet;
             SetUserLastProject(projectInfoGet.project_id);
             Task.Factory.StartNew(() => GetCalculations(projectInfoGet.project_id.ToString()));
-            _contentPageViewModel.Title = $"{projectInfoGet.name} ({_heatBalanceViewModel.Calculation?.name})";
+            _mainViewModel.Title = $"{projectInfoGet.name} ({_heatBalanceViewModel.Calculation?.name})";
             _contentPageViewModel.Validation();
         }
 
@@ -328,7 +330,7 @@ namespace Ahed_project.Services.Global
             var shellProduct = products.FirstOrDefault(x => x.product_id == calc?.product_id_shell);
             _heatBalanceViewModel.ShellProductName = shellProduct?.name;
             _shellFluidViewModel.Product = shellProduct;
-            _contentPageViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({_heatBalanceViewModel.Calculation?.name})";
+            _mainViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({_heatBalanceViewModel.Calculation?.name})";
             _contentPageViewModel.Validation();
         }
         //выбор геометрии
