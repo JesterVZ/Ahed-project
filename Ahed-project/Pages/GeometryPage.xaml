@@ -14,7 +14,7 @@
         <customGrid:GridLengthConverter x:Key="gridLengthConverter"/>
     </Page.Resources>
 
-    <ScrollViewer>
+    <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
         <Grid Background="White" Width="1200" HorizontalAlignment="Left">
             
             <StackPanel Orientation="Vertical">
