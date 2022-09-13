@@ -30,21 +30,6 @@ namespace Ahed_project.ViewModel.Pages
             _jwt = jwt;
         }
 
-        public ICommand Loaded => new DelegateCommand(() =>
-        {
-            UserEF active = null;
-            using (var context = new EFContext())
-            {
-                active = context.Users.FirstOrDefault(x => x.IsActive);
-            }
-            if (active != null)
-            {
-                email = active.Email;
-                pass = active.Password;
-                Auth();
-            }
-        });
-
         public ICommand GoToContent => new AsyncCommand(async () =>
         {
             {
@@ -54,7 +39,7 @@ namespace Ahed_project.ViewModel.Pages
 
         private async void Auth()
         {
-            var assembly = Assembly.GetExecutingAssembly();
+            Assembly assembly = Assembly.GetExecutingAssembly();
             Loading = Visibility.Visible;
             var result = await Task.Factory.StartNew(() => _jwt.AuthenticateUser(email, pass));
             Loading = Visibility.Hidden;

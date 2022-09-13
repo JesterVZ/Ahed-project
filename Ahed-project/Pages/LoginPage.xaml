@@ -9,11 +9,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="LoginPage">
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding Loaded}"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
     <Grid>
         <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid.Resources>
