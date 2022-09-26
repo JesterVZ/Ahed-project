@@ -178,6 +178,7 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
+                                <RowDefinition/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
@@ -210,20 +211,23 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
 
-                            <Label Grid.Column="0" Grid.Row="5" VerticalAlignment="Center">Div.Plate Thickness (mm)</Label>
-                            <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_div_plate_thickness}" Grid.Column="1" Grid.Row="5"/>
+                            <Label Grid.Column="0" Grid.Row="5" Visibility="{Binding HousingSpaceVis, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center">Housing Space (mm)</Label>
+                            <TextBox Style="{StaticResource Colored}" Visibility="{Binding HousingSpaceVis, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" Text="NaN" Grid.Column="1" Grid.Row="5"/>
 
-                            <Label Grid.Column="0" Grid.Row="6" VerticalAlignment="Center">TubePlate Thickness (mm)</Label>
-                            <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_tubeplate_thickness}" Grid.Column="1" Grid.Row="6"/>
+                            <Label Grid.Column="0" Grid.Row="6" VerticalAlignment="Center">Div.Plate Thickness (mm)</Label>
+                            <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_div_plate_thickness}" Grid.Column="1" Grid.Row="6"/>
 
-                            <Label Grid.Column="0" Grid.Row="7" VerticalAlignment="Center">Shell Cross Section(m^2)</Label>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="7"/>
+                            <Label Grid.Column="0" Grid.Row="7" VerticalAlignment="Center">TubePlate Thickness (mm)</Label>
+                            <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_tubeplate_thickness}" Grid.Column="1" Grid.Row="7"/>
 
-                            <Label Grid.Column="0" Grid.Row="8" VerticalAlignment="Center">Tubes Cross Section(per pass) (m^2)</Label>
+                            <Label Grid.Column="0" Grid.Row="8" VerticalAlignment="Center">Shell Cross Section(m^2)</Label>
                             <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="8"/>
 
-                            <Label Grid.Column="0" Grid.Row="9" VerticalAlignment="Center">Perimeter (mm)</Label>
+                            <Label Grid.Column="0" Grid.Row="9" VerticalAlignment="Center">Tubes Cross Section(per pass) (m^2)</Label>
                             <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="9"/>
+
+                            <Label Grid.Column="0" Grid.Row="10" VerticalAlignment="Center">Perimeter (mm)</Label>
+                            <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="10"/>
                         </Grid>
                         <Grid Grid.Column="0" Grid.Row="1">
                             <Grid.RowDefinitions>

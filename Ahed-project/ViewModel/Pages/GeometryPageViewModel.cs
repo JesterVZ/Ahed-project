@@ -80,6 +80,24 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _sealingTypeItem = value;
+                if (_sealingTypeItem.Value== "O'Rings + Housing")
+                {
+                    HousingSpaceVis = Visibility.Visible;
+                }
+                else
+                {
+                    HousingSpaceVis = Visibility.Hidden;
+                }
+            }
+        }
+
+        private Visibility _housingSpaceVis;
+        public Visibility HousingSpaceVis
+        {
+            get => _housingSpaceVis;
+            set
+            {
+                _housingSpaceVis = value;
             }
         }
 
@@ -98,6 +116,7 @@ namespace Ahed_project.ViewModel.Pages
             SealingTypeItems.Add(0, "O'Rings + Housing");
             SealingTypeItems.Add(1, "Gasket");
             SealingTypeVis = Visibility.Hidden;
+            HousingSpaceVis = Visibility.Hidden;
         }
 
 
