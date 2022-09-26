@@ -177,6 +177,7 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
+                                <RowDefinition/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
@@ -192,22 +193,37 @@
                             <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_number_of_passes}" Grid.Column="1" Grid.Row="2"/>
 
                             <Label Grid.Column="0" Grid.Row="3" VerticalAlignment="Center">Div.Plate Layout</Label>
-                            <ComboBox Style="{StaticResource ComboboxDefault}" Grid.Column="1" Grid.Row="3"></ComboBox>
+                            <ComboBox Style="{StaticResource ComboboxDefault}" ItemsSource="{Binding DivPlateItems,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding DivPlateItem,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Value}"></TextBlock>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
 
-                            <Label Grid.Column="0" Grid.Row="4" VerticalAlignment="Center">Div.Plate Thickness (mm)</Label>
-                            <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_div_plate_thickness}" Grid.Column="1" Grid.Row="4"/>
+                            <Label Visibility="{Binding SealingTypeVis}" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center">Sealing Type</Label>
+                            <ComboBox Visibility="{Binding SealingTypeVis}" ItemsSource="{Binding SealingTypeItems,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SealingTypeItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="1" Grid.Row="4">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Value}"></TextBlock>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
 
-                            <Label Grid.Column="0" Grid.Row="5" VerticalAlignment="Center">TubePlate Thickness (mm)</Label>
-                            <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_tubeplate_thickness}" Grid.Column="1" Grid.Row="5"/>
+                            <Label Grid.Column="0" Grid.Row="5" VerticalAlignment="Center">Div.Plate Thickness (mm)</Label>
+                            <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_div_plate_thickness}" Grid.Column="1" Grid.Row="5"/>
 
-                            <Label Grid.Column="0" Grid.Row="6" VerticalAlignment="Center">Shell Cross Section(m^2)</Label>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="6"/>
+                            <Label Grid.Column="0" Grid.Row="6" VerticalAlignment="Center">TubePlate Thickness (mm)</Label>
+                            <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_tubeplate_thickness}" Grid.Column="1" Grid.Row="6"/>
 
-                            <Label Grid.Column="0" Grid.Row="7" VerticalAlignment="Center">Tubes Cross Section(per pass) (m^2)</Label>
+                            <Label Grid.Column="0" Grid.Row="7" VerticalAlignment="Center">Shell Cross Section(m^2)</Label>
                             <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="7"/>
 
-                            <Label Grid.Column="0" Grid.Row="8" VerticalAlignment="Center">Perimeter (mm)</Label>
+                            <Label Grid.Column="0" Grid.Row="8" VerticalAlignment="Center">Tubes Cross Section(per pass) (m^2)</Label>
                             <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="8"/>
+
+                            <Label Grid.Column="0" Grid.Row="9" VerticalAlignment="Center">Perimeter (mm)</Label>
+                            <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="9"/>
                         </Grid>
                         <Grid Grid.Column="0" Grid.Row="1">
                             <Grid.RowDefinitions>
