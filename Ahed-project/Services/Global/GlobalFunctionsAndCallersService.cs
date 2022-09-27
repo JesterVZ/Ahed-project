@@ -337,6 +337,8 @@ namespace Ahed_project.Services.Global
         public static void SelectGeometry(GeometryFull geometry)
         {
             _geometryPageViewModel.Geometry = geometry;
+            _contentPageViewModel.GeometryCalculated = false;
+            _contentPageViewModel.Validation();
         }
 
         //Выбор продукта Tube
@@ -479,6 +481,8 @@ namespace Ahed_project.Services.Global
                     MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+            _contentPageViewModel.GeometryCalculated = true;
+            _contentPageViewModel.Validation();
         }
 
         //Создать проект

@@ -115,7 +115,7 @@
                         </Grid.ColumnDefinitions>
                         <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=HeatBalanceState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}" />
                         <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">Heat Balance</Label>
-                        <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=HeatBalanceValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=HeatBalanceValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding HeatBalancePage}"/>
@@ -130,7 +130,7 @@
                         </Grid.ColumnDefinitions>
                         <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=GeometryState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">Geometry</Label>
-                        <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=GeometryValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=GeometryValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding GeometryPage}"/>
@@ -145,7 +145,7 @@
                         </Grid.ColumnDefinitions>
                         <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=BafflesState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">Baffles</Label>
-                        <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=BafflesValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=BafflesValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding BafflesPage}"/>
@@ -160,7 +160,7 @@
                         </Grid.ColumnDefinitions>
                         <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=OverallCalculationState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">Overall Calculation</Label>
-                        <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=OverallValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3"  Grid.Column="2" Source="{Binding Path=OverallValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding OveralCalculationPage}"/>
@@ -175,7 +175,7 @@
                         </Grid.ColumnDefinitions>
                         <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=BatchState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">Batch</Label>
-                        <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=BatchValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=BatchValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding BatchPage}"/>
@@ -190,7 +190,7 @@
                         </Grid.ColumnDefinitions>
                         <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=GraphState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">Graphs</Label>
-                        <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=GraphsValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=GraphsValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding GraphsPage}"/>
@@ -205,7 +205,7 @@
                         </Grid.ColumnDefinitions>
                         <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=ReportsState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">Reports</Label>
-                        <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=ReportsValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=ReportsValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding ReportsPage}"/>
@@ -220,7 +220,7 @@
                         </Grid.ColumnDefinitions>
                         <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=QuoteState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">Quote</Label>
-                        <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=QuoteValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=QuoteValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding QuotePage}"/>
@@ -235,7 +235,7 @@
                         </Grid.ColumnDefinitions>
                         <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=ThreeDState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">3D</Label>
-                        <SVG:SvgViewbox  Grid.Column="2" Source="{Binding Path=ThreeDValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=ThreeDValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding _3DPage}"/>

@@ -34,6 +34,14 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     {
                         ShellFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
                     }
+                    if (GeometryCalculated)
+                    {
+                        GeometryValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
+                    }
+                    else
+                    {
+                        GeometryValidationStatusSource = null;
+                    }
                 } else
                 {
                     //GlobalDataCollectorService.Logs.Add(new LoggerMessage("warning", "Выберите калькуляцию!"));
@@ -49,6 +57,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             }
         }
 
+        public bool GeometryCalculated;
 
         private void ChangeTabState(MasterData.Pages page)
         {
