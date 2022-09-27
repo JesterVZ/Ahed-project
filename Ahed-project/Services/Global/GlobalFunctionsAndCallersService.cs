@@ -460,29 +460,25 @@ namespace Ahed_project.Services.Global
                 MessageBox.Show("Выберите рассчет", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-            var g = new
-            {
-                head_exchange_type=geometry.head_exchange_type,
-                name = geometry.name,
-                outer_diameter_inner_side = geometry.outer_diameter_inner_side,
-                outer_diameter_tubes_side = geometry.outer_diameter_tubes_side,
-                outer_diameter_shell_side = geometry.outer_diameter_shell_side,
-                thickness_inner_side = geometry.thickness_inner_side,
-                thickness_tubes_side = geometry.thickness_tubes_side,
-                thickness_shell_side = geometry.thickness_shell_side,
-                material_tubes_side = geometry.material_tubes_side,
-                material_shell_side = geometry.material_shell_side,
-                number_of_tubes = geometry.number_of_tubes,
-                tube_inner_length = geometry.tube_inner_length,
-                orientation = geometry.orientation,
-                tube_profile_tubes_side = geometry.tube_profile_tubes_side,
-                roughness_tubes_side = geometry.roughness_tubes_side,
-                roughness_shell_side = geometry.roughness_tubes_side,
-                bundle_type = geometry.bundle_type,
-                roller_expanded = geometry.roller_expanded,
-            };
-            string json = JsonConvert.SerializeObject(g);
+            string json = JsonConvert.SerializeObject(_geometryPageViewModel.Geometry);
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_GEOMETRY, json,_heatBalanceViewModel.Calculation.project_id.ToString(),_heatBalanceViewModel.Calculation.calculation_id.ToString()));
+            if (response != null)
+            {
+                try
+                {
+                    Responce result = JsonConvert.DeserializeObject<Responce>(response);
+                    for (int i = 0; i < result.logs.Count; i++)
+                    {
+                        Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
+                    }
+                    var geom = JsonConvert.DeserializeObject<GeometryFull>(result.data.ToString());
+                    _geometryPageViewModel.Geometry = geom;
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
 
         //Создать проект
