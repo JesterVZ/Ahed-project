@@ -41,8 +41,47 @@ namespace Ahed_project.ViewModel.Pages
                         ExchangersSelector = Exchangers.FirstOrDefault(x => x.Key == 3);
                         break;
                 }
+                ShellMaterial = Materials.FirstOrDefault(x => x.Value == value.material_shell_side);
+                TubesMaterial = Materials.FirstOrDefault(x => x.Value == value.material_tubes_side);
             }
         }
+
+        private KeyValuePair<int, string> _shellMaterial;
+
+        public KeyValuePair<int,string> ShellMaterial
+        {
+            get => _shellMaterial;
+            set
+            {
+                _shellMaterial = value;
+                if (Geometry!=null)
+                {
+                    if (Geometry.material_shell_side != value.Value)
+                    {
+                        Geometry.material_shell_side = value.Value;
+                    }
+                }
+            }
+        }
+
+        private KeyValuePair<int, string> _tubesMaterial;
+
+        public KeyValuePair<int,string> TubesMaterial
+        {
+            get => _tubesMaterial;
+            set
+            {
+                _tubesMaterial = value;
+                if (Geometry!=null)
+                {
+                    if (Geometry.material_tubes_side!=value.Value)
+                    {
+                        Geometry.material_tubes_side = value.Value;
+                    }
+                }
+            }
+        }
+
         public bool OppositeSide { get; set; }
         public bool SameSide { get; set; }
         private KeyValuePair<int, string> _exchangersSelector;

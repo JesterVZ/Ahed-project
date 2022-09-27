@@ -93,14 +93,14 @@
                         <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.inner_diameter_shell_side}" Grid.Column="3" Grid.Row="5"/>
 
                         <Label Grid.Column="0" Grid.Row="6">Material</Label>
-                        <ComboBox Style="{StaticResource ComboboxDefault}" ItemsSource="{Binding Materials}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6" SelectedIndex="0">
+                        <ComboBox Style="{StaticResource ComboboxDefault}" SelectedItem="{Binding TubesMaterial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Materials}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6" SelectedIndex="0">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Value}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Style="{StaticResource ComboboxDefault}" ItemsSource="{Binding Materials}" Grid.Column="3" Grid.Row="6" SelectedIndex="0">
+                        <ComboBox Style="{StaticResource ComboboxDefault}" SelectedItem="{Binding ShellMaterial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Materials}" Grid.Column="3" Grid.Row="6" SelectedIndex="0">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Value}"/>
