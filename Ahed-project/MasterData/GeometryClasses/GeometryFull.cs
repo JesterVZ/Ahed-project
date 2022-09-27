@@ -11,9 +11,9 @@ namespace Ahed_project.MasterData.GeometryClasses
         public int geometry_catalog_id { get; set; }
         public string name { get; set; }
         public string head_exchange_type { get; set; }
-        public object owner { get; set; }
-        public object comment { get; set; }
-        public object date_created { get; set; }
+        public string owner { get; set; }
+        public string comment { get; set; }
+        public DateTime? date_created { get; set; }
         public string outer_diameter_inner_side { get; set; }
         public string outer_diameter_tubes_side { get; set; }
         public string outer_diameter_shell_side { get; set; }
@@ -38,65 +38,45 @@ namespace Ahed_project.MasterData.GeometryClasses
         public string tube_profile_tubes_side { get; set; }
         public string roughness_tubes_side { get; set; }
         public string roughness_shell_side { get; set; }
+        public string scraping_frequency_tubes_side { get; set; }
+        public string motor_power_tubes_side { get; set; }
         public string bundle_type { get; set; }
         public string roller_expanded { get; set; }
-        public string tube_pitch_inner_side { get; set; }
-        public string tube_pitch_tubes_side { get; set; }
-        public string tube_pitch_shell_side { get; set; }
-        public string tube_layout_inner_side { get; set; }
-        public string tube_layout_tubes_side { get; set; }
-        public string tube_layout_shell_side { get; set; }
-        public string number_of_passes_inner_side { get; set; }
-        public string number_of_passes_tubes_side { get; set; }
-        public string number_of_passes_shell_side { get; set; }
-        public string div_plate_layout_inner_side { get; set; }
-        public string div_plate_layout_tubes_side { get; set; }
-        public string div_plate_layout_shell_side { get; set; }
-        public string div_plate_thickness_inner_side { get; set; }
-        public string div_plate_thickness_tubes_side { get; set; }
-        public string div_plate_thickness_shell_side { get; set; }
-        public string flow_cross_section_inner_side { get; set; }
-        public string flow_cross_section_tubes_side { get; set; }
-        public string flow_cross_section_shell_side { get; set; }
-        public string perimeter_inner_side { get; set; }
-        public string perimeter_tubes_side { get; set; }
-        public string perimeter_shell_side { get; set; }
-        public string max_nr_tubes_inner_side { get; set; }
-        public string max_nr_tubes_tubes_side { get; set; }
-        public string max_nr_tubes_shell_side { get; set; }
-        public string tube_distribution_inner_side { get; set; }
-        public string tube_distribution_tubes_side { get; set; }
-        public string tube_distribution_shell_side { get; set; }
-        public string tube_tube_spacing_inner_side { get; set; }
-        public string tube_tube_spacing_tubes_side { get; set; }
-        public string tube_tube_spacing_shell_side { get; set; }
-        public string inlet_nozzle_OD_inner_side { get; set; }
-        public string inlet_nozzle_OD_tubes_side { get; set; }
-        public string inlet_nozzle_OD_shell_side { get; set; }
-        public string inlet_nozzle_wall_inner_side { get; set; }
-        public string inlet_nozzle_wall_tubes_side { get; set; }
-        public string inlet_nozzle_wall_shell_side { get; set; }
-        public string inlet_nozzle_ID_inner_side { get; set; }
-        public string inlet_nozzle_ID_tubes_side { get; set; }
-        public string inlet_nozzle_ID_shell_side { get; set; }
-        public string outlet_nozzle_OD_inner_side { get; set; }
-        public string outlet_nozzle_OD_tubes_side { get; set; }
-        public string outlet_nozzle_OD_shell_side { get; set; }
-        public string outlet_nozzle_wall_inner_side { get; set; }
-        public string outlet_nozzle_wall_tubes_side { get; set; }
-        public string outlet_nozzle_wall_shell_side { get; set; }
-        public string outlet_nozzle_ID_inner_side { get; set; }
-        public string outlet_nozzle_ID_tubes_side { get; set; }
-        public string outlet_nozzle_ID_shell_side { get; set; }
-        public string number_of_parallel_lines_inner_side { get; set; }
-        public string number_of_parallel_lines_tubes_side { get; set; }
-        public string number_of_parallel_lines_shell_side { get; set; }
-        public string number_of_modules_per_block_inner_side { get; set; }
-        public string number_of_modules_per_block_tubes_side { get; set; }
-        public string number_of_modules_per_block_shell_side { get; set; }
-        public string shell_nozzle_orientation_inner_side { get; set; }
-        public string shell_nozzle_orientation_tubes_side { get; set; }
-        public string shell_nozzle_orientation_shell_side { get; set; }
+        public string tube_plate_layout_tube_pitch { get; set; }
+        public string tube_plate_layout_tube_layout { get; set; }
+        public string tube_plate_layout_number_of_passes { get; set; }
+        public string tube_plate_layout_div_plate_layout { get; set; }
+        public string tube_plate_layout_sealing_type { get; set; }
+        public string tube_plate_layout_housings_space { get; set; }
+        public string tube_plate_layout_div_plate_thickness { get; set; }
+        public string tube_plate_layout_tubes_cross_section_pre_pass { get; set; }
+        public string tube_plate_layout_shell_cross_section { get; set; }
+        public string tube_plate_layout_perimeter { get; set; }
+        public string tube_plate_layout_max_nr_tubes { get; set; }
+        public string tube_plate_layout_tube_distribution { get; set; }
+        public string tube_plate_layout_tube_tube_spacing { get; set; }
+        public string nozzles_in_outer_diam_inner_side { get; set; }
+        public string nozzles_in_outer_diam_tubes_side { get; set; }
+        public string nozzles_in_outer_diam_shell_side { get; set; }
+        public string nozzles_in_thickness_inner_side { get; set; }
+        public string nozzles_in_thickness_tubes_side { get; set; }
+        public string nozzles_in_thickness_shell_side { get; set; }
+        public string nozzles_in_inner_diam_inner_side { get; set; }
+        public string nozzles_in_inner_diam_tubes_side { get; set; }
+        public string nozzles_in_inner_diam_shell_side { get; set; }
+        public string nozzles_out_outer_diam_inner_side { get; set; }
+        public string nozzles_out_outer_diam_tubes_side { get; set; }
+        public string nozzles_out_outer_diam_shell_side { get; set; }
+        public string nozzles_out_thickness_inner_side { get; set; }
+        public string nozzles_out_thickness_tubes_side { get; set; }
+        public string nozzles_out_thickness_shell_side { get; set; }
+        public string nozzles_out_inner_diam_inner_side { get; set; }
+        public string nozzles_out_inner_diam_tubes_side { get; set; }
+        public string nozzles_out_inner_diam_shell_side { get; set; }
+        public string nozzles_number_of_parallel_lines_tubes_side { get; set; }
+        public string nozzles_number_of_parallel_lines_shell_side { get; set; }
+        public string nozzles_number_of_modules_pre_block { get; set; }
+        public string shell_nozzle_orientation { get; set; }
         public string nr_baffles { get; set; }
         public string baffle_cut { get; set; }
         public string inlet_baffle_spacing { get; set; }
@@ -104,9 +84,9 @@ namespace Ahed_project.MasterData.GeometryClasses
         public string outlet_baffle_spacing { get; set; }
         public string baffle_thickness { get; set; }
         public string pairs_of_sealing_strips { get; set; }
-        public object image { get; set; }
-        public object createdAt { get; set; }
-        public object updatedAt { get; set; }
+        public string image { get; set; }
+        public DateTime? createdAt { get; set; }
+        public DateTime? updatedAt { get; set; }
     }
 
 }
