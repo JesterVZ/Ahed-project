@@ -480,12 +480,6 @@ namespace Ahed_project.Services.Global
                 roughness_shell_side = geometry.roughness_tubes_side,
                 bundle_type = geometry.bundle_type,
                 roller_expanded = geometry.roller_expanded,
-                nozzles_in_outer_diam_inner_side = geometry.inlet_nozzle_OD_inner_side,
-                nozzles_in_outer_diam_tubes_side = geometry.inlet_nozzle_OD_tubes_side,
-                nozzles_in_outer_diam_shell_side = geometry.inlet_nozzle_OD_shell_side,
-                nozzles_in_thickness_inner_side = geometry.inlet_nozzle_wall_inner_side,
-                nozzles_in_thickness_tubes_side = geometry.inlet_nozzle_wall_tubes_side,
-                nozzles_in_thickness_shell_side = geometry.inlet_nozzle_wall_shell_side,
             };
             string json = JsonConvert.SerializeObject(g);
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_GEOMETRY, json,_heatBalanceViewModel.Calculation.project_id.ToString(),_heatBalanceViewModel.Calculation.calculation_id.ToString()));

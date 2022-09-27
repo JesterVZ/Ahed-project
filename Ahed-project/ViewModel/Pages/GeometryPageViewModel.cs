@@ -1,5 +1,6 @@
 ﻿using Ahed_project.MasterData.GeometryClasses;
 using Ahed_project.Services.Global;
+using DevExpress.DXBinding.Native;
 using DevExpress.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,30 @@ namespace Ahed_project.ViewModel.Pages
         public double GridColumnWidth { get; set; }
         public Dictionary<int, string> Exchangers { get; set; }
         public Dictionary<int, string> Materials { get; set; }
-        public GeometryFull Geometry { get; set; }
+        private GeometryFull _geometry;
+        public GeometryFull Geometry 
+        { 
+            get =>_geometry; 
+            set
+            {
+                _geometry = value;
+                switch (value.head_exchange_type)
+                {
+                    case "tube_shell":
+                        ExchangersSelector = Exchangers.FirstOrDefault(x => x.Key == 0);
+                        break;
+                    case "annular_space":
+                        ExchangersSelector = Exchangers.FirstOrDefault(x => x.Key == 1);
+                        break;
+                    case "unicus":
+                        ExchangersSelector = Exchangers.FirstOrDefault(x => x.Key == 2);
+                        break;
+                    case "r_series":
+                        ExchangersSelector = Exchangers.FirstOrDefault(x => x.Key == 3);
+                        break;
+                }
+            }
+        }
         public bool OppositeSide { get; set; }
         public bool SameSide { get; set; }
         private KeyValuePair<int, string> _exchangersSelector;
@@ -35,8 +59,38 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     GridColumnWidth = 0;
                 }
-                _exchangersSelector = value; 
-            } 
+                _exchangersSelector = value;
+                if (Geometry != null)
+                {
+                    switch (value.Key)
+                    {
+                        case 0:
+                            if (Geometry.head_exchange_type != "tube_shell")
+                            {
+                                Geometry.head_exchange_type = "tube_shell";
+                            }
+                            break;
+                        case 1:
+                            if (Geometry.head_exchange_type != "annular_space")
+                            {
+                                Geometry.head_exchange_type = "annular_space";
+                            }
+                            break;
+                        case 2:
+                            if (Geometry.head_exchange_type != "unicus")
+                            {
+                                Geometry.head_exchange_type = "unicus";
+                            }
+                            break;
+                        case 3:
+                            if (Geometry.head_exchange_type != "r_series")
+                            {
+                                Geometry.head_exchange_type = "r_series";
+                            }
+                            break;
+                    }
+                }
+            }
         }
 
         private Visibility _sealingTypeVis;
