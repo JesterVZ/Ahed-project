@@ -10,9 +10,33 @@
   <ItemGroup>
     <None Remove="Visual\check.svg" />
     <None Remove="Visual\Diagram.png" />
+    <None Remove="Visual\Rotated_Squared.png" />
+    <None Remove="Visual\Rotated_Squared_centred.png" />
+    <None Remove="Visual\Squared.png" />
+    <None Remove="Visual\Squared_centred.png" />
+    <None Remove="Visual\Triangilar.png" />
+    <None Remove="Visual\Triangular_centred.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Visual\check.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Visual\Rotated_Squared.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Visual\Rotated_Squared_centred.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Visual\Squared.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Visual\Squared_centred.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Visual\Triangilar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Visual\Triangular_centred.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

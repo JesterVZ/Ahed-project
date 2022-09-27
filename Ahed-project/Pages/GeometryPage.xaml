@@ -188,7 +188,16 @@
                             <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">Tube Pitch (mm)</Label>
                             <Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">Tube Layout</Label>
                             <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_tube_pitch}" Grid.Column="1" Grid.Row="0"/>
-                            <ComboBox Style="{StaticResource ComboboxDefault}" Grid.Column="1" Grid.Row="1"></ComboBox>
+                            <ComboBox ItemsSource="{Binding TubePlateLayouts}" Style="{StaticResource ComboboxDefault}" Grid.Column="1" Grid.Row="1">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="{Binding Value.ImageUrl}" VerticalAlignment="Center" Width="20" Height="20"/>
+                                            <Label Content="{Binding Value.Name}" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
 
                             <Label Grid.Column="0" Grid.Row="2" VerticalAlignment="Center">Number of Passes</Label>
                             <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_number_of_passes}" Grid.Column="1" Grid.Row="2"/>
@@ -354,7 +363,7 @@
                         <materialDesign:PackIcon Kind="ChevronDown"/>
                     </Button>
                 </StackPanel>
-                <customGrid:CustomGrid IsOpen="True" Style="{StaticResource AnimatedGrid}">
+                <customGrid:CustomGrid IsOpen="{Binding IsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource AnimatedGrid}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>

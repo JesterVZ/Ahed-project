@@ -19,6 +19,7 @@ namespace Ahed_project.ViewModel.Pages
         public double GridColumnWidth { get; set; }
         public Dictionary<int, string> Exchangers { get; set; }
         public Dictionary<int, string> Materials { get; set; }
+        public Dictionary<int, TubeplateLayout> TubePlateLayouts { get; set; }
         private GeometryFull _geometry;
         public GeometryFull Geometry 
         { 
@@ -200,6 +201,38 @@ namespace Ahed_project.ViewModel.Pages
             Materials = new Dictionary<int, string>();
             DivPlateItems = new Dictionary<int, string>();
             SealingTypeItems = new Dictionary<int, string>();
+            TubePlateLayouts = new Dictionary<int, TubeplateLayout>();
+            TubeplateLayout triangular = new TubeplateLayout
+            {
+                ImageUrl = "../Visual/Triangilar.png",
+                Name = "Triangular"
+            };
+            TubeplateLayout triangularCentred = new TubeplateLayout
+            {
+                ImageUrl = "../Visual/Triangular_centred.png",
+                Name = "Triangular Centred"
+            };
+            TubeplateLayout squared = new TubeplateLayout
+            {
+                ImageUrl = "../Visual/Squared.png",
+                Name = "Squared"
+            };
+            TubeplateLayout squaredCentred = new TubeplateLayout
+            {
+                ImageUrl = "../Visual/Squared_centred.png",
+                Name = "Squared Centred"
+            };
+            TubeplateLayout rotatedSquared = new TubeplateLayout
+            {
+                ImageUrl = "../Visual/Rotated_Squared.png",
+                Name = "Rotated Squared"
+            };
+            TubeplateLayout rotatedSquaredCentred = new TubeplateLayout
+            {
+                ImageUrl = "../Visual/Rotated_Squared_centred.png",
+                Name = "Rotated Squared Centred"
+            };
+
             Exchangers.Add(0, "Tube/Shell");
             Exchangers.Add(1, "Annular Space");
             Exchangers.Add(2, "Unicus");
@@ -208,6 +241,12 @@ namespace Ahed_project.ViewModel.Pages
             DivPlateItems.Add(1, "Mechanised");
             SealingTypeItems.Add(0, "O'Rings + Housing");
             SealingTypeItems.Add(1, "Gasket");
+            TubePlateLayouts.Add(0, triangular);
+            TubePlateLayouts.Add(1, triangularCentred);
+            TubePlateLayouts.Add(2, squared);
+            TubePlateLayouts.Add(3, squaredCentred);
+            TubePlateLayouts.Add(4, rotatedSquared);
+            TubePlateLayouts.Add(5, rotatedSquaredCentred);
             SealingTypeVis = Visibility.Hidden;
             HousingSpaceVis = Visibility.Hidden;
         }
