@@ -19,6 +19,7 @@ namespace Ahed_project.ViewModel.Pages
         public double GridColumnWidth { get; set; }
         public Dictionary<int, string> Exchangers { get; set; }
         public Dictionary<int, string> Materials { get; set; }
+        public Dictionary<int, string> TubeProfile { get; set; }
         public Dictionary<int, TubeplateLayout> TubePlateLayouts { get; set; }
         private GeometryFull _geometry;
         public GeometryFull Geometry 
@@ -133,6 +134,15 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
 
+        private KeyValuePair<int, string> _tubeProfileSelector;
+        public KeyValuePair<int, string> TubeProfileSelector
+        {
+            get => _tubeProfileSelector;
+            set
+            {
+                _tubeProfileSelector = value;
+            }
+        }
         private Visibility _sealingTypeVis;
 
         public Visibility SealingTypeVis
@@ -202,6 +212,7 @@ namespace Ahed_project.ViewModel.Pages
             DivPlateItems = new Dictionary<int, string>();
             SealingTypeItems = new Dictionary<int, string>();
             TubePlateLayouts = new Dictionary<int, TubeplateLayout>();
+            TubeProfile = new Dictionary<int, string>();
             TubeplateLayout triangular = new TubeplateLayout
             {
                 ImageUrl = "../Visual/Triangilar.png",
@@ -237,10 +248,16 @@ namespace Ahed_project.ViewModel.Pages
             Exchangers.Add(1, "Annular Space");
             Exchangers.Add(2, "Unicus");
             Exchangers.Add(3, "R Series");
+
             DivPlateItems.Add(0, "Horizontal");
             DivPlateItems.Add(1, "Mechanised");
+
             SealingTypeItems.Add(0, "O'Rings + Housing");
             SealingTypeItems.Add(1, "Gasket");
+
+            TubeProfile.Add(0, "Smooth Tube");
+            TubeProfile.Add(1, "Hard Corrugation");
+
             TubePlateLayouts.Add(0, triangular);
             TubePlateLayouts.Add(1, triangularCentred);
             TubePlateLayouts.Add(2, squared);

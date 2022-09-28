@@ -140,8 +140,12 @@
                         <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.volume_module_shell_side}" Grid.Column="3" Grid.Row="13"/>
 
                         <Label Grid.Column="0" Grid.Row="14">Tube Profile</Label>
-                        <ComboBox Style="{StaticResource ComboboxDefault}" Grid.Column="2" Grid.Row="14">
-
+                        <ComboBox ItemsSource="{Binding TubeProfile}" SelectedItem="{Binding TubeProfileSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="2" Grid.Row="14">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Value}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
 
                         <Label Grid.Column="0" Grid.Row="15">Roughness</Label>
