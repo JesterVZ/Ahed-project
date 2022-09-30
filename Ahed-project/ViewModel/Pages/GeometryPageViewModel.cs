@@ -21,6 +21,67 @@ namespace Ahed_project.ViewModel.Pages
         public Dictionary<int, string> Materials { get; set; }
         public Dictionary<int, string> TubeProfile { get; set; }
         public Dictionary<int, TubeplateLayout> TubePlateLayouts { get; set; }
+        private string _tube_plate_layout_number_of_passes { get; set; }
+        public string Tube_plate_layout_number_of_passes {
+            get => _tube_plate_layout_number_of_passes;
+            set {
+                _tube_plate_layout_number_of_passes = value;
+                switch (value)
+                {
+                    case "1":
+                        DivPlateItems.Clear();
+                        DivPlateItems.Add(0, "None");
+                        break;
+                    case "2":
+                        DivPlateItems.Clear();
+                        DivPlateItems.Add(0, "Horizontal");
+                        DivPlateItems.Add(1, "Vertical");
+                        DivPlateItems.Add(2, "Mechanised");
+                        break;
+                    case "3":
+                        DivPlateItems.Clear();
+                        DivPlateItems.Add(0, "Horizontal");
+                        DivPlateItems.Add(1, "Vertical");
+                        DivPlateItems.Add(2, "Mechanised");
+                        break;
+                    case "4":
+                        DivPlateItems.Clear();
+                        DivPlateItems.Add(0, "Horizontal");
+                        DivPlateItems.Add(1, "Horizontal + Vertical");
+                        DivPlateItems.Add(2, "Type 3");
+                        DivPlateItems.Add(3, "Mechanised");
+                        break;
+                    case "5":
+                        DivPlateItems.Clear();
+                        DivPlateItems.Add(0, "Horizontal");
+                        DivPlateItems.Add(3, "Mechanised");
+                        break;
+                    case "6":
+                        DivPlateItems.Clear();
+                        DivPlateItems.Add(0, "Type 1");
+                        DivPlateItems.Add(1, "Type 2");
+                        DivPlateItems.Add(2, "Type 3");
+                        DivPlateItems.Add(3, "Mechanised");
+                        break;
+                    case "7":
+                        DivPlateItems.Clear();
+                        DivPlateItems.Add(1, "Mechanised");
+                        break;
+                    case "8":
+                        DivPlateItems.Clear();
+                        DivPlateItems.Add(0, "Type 1");
+                        DivPlateItems.Add(1, "Type 2");
+                        DivPlateItems.Add(2, "Type 3");
+                        DivPlateItems.Add(3, "Mechanised");
+                        break;
+                    case "9":
+                        DivPlateItems.Clear();
+                        DivPlateItems.Add(3, "Mechanised");
+                        break;
+                }
+
+            } 
+        }
         private GeometryFull _geometry;
         public GeometryFull Geometry 
         { 
@@ -249,8 +310,8 @@ namespace Ahed_project.ViewModel.Pages
             Exchangers.Add(2, "Unicus");
             Exchangers.Add(3, "R Series");
 
-            DivPlateItems.Add(0, "Horizontal");
-            DivPlateItems.Add(1, "Mechanised");
+            //DivPlateItems.Add(0, "Horizontal");
+            //DivPlateItems.Add(1, "Mechanised");
 
             SealingTypeItems.Add(0, "O'Rings + Housing");
             SealingTypeItems.Add(1, "Gasket");
