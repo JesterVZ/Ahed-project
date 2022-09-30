@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 
 namespace Ahed_project.ViewModel.Pages
 {
@@ -26,60 +27,52 @@ namespace Ahed_project.ViewModel.Pages
             get => _tube_plate_layout_number_of_passes;
             set {
                 _tube_plate_layout_number_of_passes = value;
+                List<string> divplate = new List<string>(); ;
                 switch (value)
                 {
                     case "1":
-                        DivPlateItems.Clear();
-                        DivPlateItems.Add(0, "None");
+                        divplate.Add("None");
                         break;
                     case "2":
-                        DivPlateItems.Clear();
-                        DivPlateItems.Add(0, "Horizontal");
-                        DivPlateItems.Add(1, "Vertical");
-                        DivPlateItems.Add(2, "Mechanised");
+                        divplate.Add( "Horizontal");
+                        divplate.Add( "Vertical");
+                        divplate.Add( "Mechanised");
                         break;
                     case "3":
-                        DivPlateItems.Clear();
-                        DivPlateItems.Add(0, "Horizontal");
-                        DivPlateItems.Add(1, "Vertical");
-                        DivPlateItems.Add(2, "Mechanised");
+                        divplate.Add( "Horizontal");
+                        divplate.Add( "Vertical");
+                        divplate.Add( "Mechanised");
                         break;
                     case "4":
-                        DivPlateItems.Clear();
-                        DivPlateItems.Add(0, "Horizontal");
-                        DivPlateItems.Add(1, "Horizontal + Vertical");
-                        DivPlateItems.Add(2, "Type 3");
-                        DivPlateItems.Add(3, "Mechanised");
+                        divplate.Add("Horizontal");
+                        divplate.Add("Horizontal + Vertical");
+                        divplate.Add( "Type 3");
+                        divplate.Add( "Mechanised");
                         break;
                     case "5":
-                        DivPlateItems.Clear();
-                        DivPlateItems.Add(0, "Horizontal");
-                        DivPlateItems.Add(3, "Mechanised");
+                        divplate.Add("Horizontal");
+                        divplate.Add( "Mechanised");
                         break;
                     case "6":
-                        DivPlateItems.Clear();
-                        DivPlateItems.Add(0, "Type 1");
-                        DivPlateItems.Add(1, "Type 2");
-                        DivPlateItems.Add(2, "Type 3");
-                        DivPlateItems.Add(3, "Mechanised");
+                        divplate.Add( "Type 1");
+                        divplate.Add( "Type 2");
+                        divplate.Add( "Type 3");
+                        divplate.Add( "Mechanised");
                         break;
                     case "7":
-                        DivPlateItems.Clear();
-                        DivPlateItems.Add(1, "Mechanised");
+                        divplate.Add( "Mechanised");
                         break;
                     case "8":
-                        DivPlateItems.Clear();
-                        DivPlateItems.Add(0, "Type 1");
-                        DivPlateItems.Add(1, "Type 2");
-                        DivPlateItems.Add(2, "Type 3");
-                        DivPlateItems.Add(3, "Mechanised");
+                        divplate.Add("Type 1");
+                        divplate.Add( "Type 2");
+                        divplate.Add( "Type 3");
+                        divplate.Add( "Mechanised");
                         break;
                     case "9":
-                        DivPlateItems.Clear();
-                        DivPlateItems.Add(3, "Mechanised");
+                        divplate.Add("Mechanised");
                         break;
                 }
-
+                DivPlateItems = new ObservableCollection<string>(divplate);
             } 
         }
         private GeometryFull _geometry;
@@ -214,17 +207,16 @@ namespace Ahed_project.ViewModel.Pages
                 _sealingTypeVis = value;
             }
         }
+        public ObservableCollection<string> DivPlateItems { get; set; }
 
-        public Dictionary<int,string> DivPlateItems { get; set; }
-
-        private KeyValuePair<int, string> _divPlateItem;
-        public KeyValuePair<int,string> DivPlateItem
+        private string _divPlateItem;
+        public string DivPlateItem
         {
             get => _divPlateItem;
             set
             {
                 _divPlateItem = value;
-                if (_divPlateItem.Value == "Mechanised")
+                if (value == "Mechanised")
                 {
                     SealingTypeVis = Visibility.Visible;
                 }
@@ -270,7 +262,7 @@ namespace Ahed_project.ViewModel.Pages
         {
             Exchangers = new Dictionary<int, string>();
             Materials = new Dictionary<int, string>();
-            DivPlateItems = new Dictionary<int, string>();
+            DivPlateItems = new ObservableCollection<string>();
             SealingTypeItems = new Dictionary<int, string>();
             TubePlateLayouts = new Dictionary<int, TubeplateLayout>();
             TubeProfile = new Dictionary<int, string>();
