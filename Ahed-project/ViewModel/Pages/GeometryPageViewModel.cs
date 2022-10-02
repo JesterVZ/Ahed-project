@@ -137,9 +137,69 @@ namespace Ahed_project.ViewModel.Pages
                 }
             }
         }
+        private KeyValuePair<int, TubeplateLayout> _tubeLayout;
+        public KeyValuePair<int, TubeplateLayout> TubeLayout
+        {
+            get => _tubeLayout;
+            set
+            {
+                _tubeLayout = value;
+                if(Geometry != null)
+                {
+                    Geometry.tube_plate_layout_tube_layout = value.Value.Name;
+                }
+            }
 
-        public bool OppositeSide { get; set; }
-        public bool SameSide { get; set; }
+        }
+
+        private KeyValuePair<int, string> _orientation;
+        public KeyValuePair<int, string> Orientation
+        {
+            get => _orientation;
+            set
+            {
+                _orientation = value;
+                if (Geometry != null)
+                {
+                    if(Geometry.orientation != value.Value)
+                    {
+                        Geometry.orientation = value.Value;
+                    }
+                }
+            }
+        }
+        private bool _oppositeSide;
+        public bool OppositeSide {
+            get => _oppositeSide;
+            set
+            {
+                _oppositeSide = value;
+                if(Geometry != null)
+                {
+                    if(value == true)
+                    {
+                        Geometry.shell_nozzle_orientation = "Opposide side";
+                    }
+                    
+                }
+                
+            }
+        }
+        private bool _sameSide;
+        public bool SameSide {
+            get => _sameSide;
+            set
+            {
+                _sameSide = value;
+                if(Geometry != null)
+                {
+                    if(value == true)
+                    {
+                        Geometry.shell_nozzle_orientation = "Same side";
+                    }
+                }
+            }
+        }
         private KeyValuePair<int, string> _exchangersSelector;
 
         public KeyValuePair<int, string> ExchangersSelector { 
@@ -195,6 +255,71 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _tubeProfileSelector = value;
+                if(Geometry != null)
+                {
+                    if(Geometry.tube_profile_tubes_side != value.Value)
+                    {
+                        Geometry.tube_profile_tubes_side = value.Value;
+                    }
+                }
+            }
+        }
+        private bool _fixed;
+        public bool Fixed
+        {
+            get => _fixed;
+            set
+            {
+                _fixed = value;
+                if(value == true)
+                {
+                    if(Geometry != null)
+                    {
+                        Geometry.bundle_type = "Fixed";
+                    }
+                    
+                }
+                
+            }
+        }
+        private bool _removable;
+        public bool Removable
+        {
+            get => _removable;
+            set
+            {
+                _removable = value;
+                if(Geometry != null)
+                {
+                    if (value == true)
+                    {
+                        Geometry.bundle_type = "Removable";
+
+                    }
+                }
+                
+            }
+        }
+        private bool _rollerExpanded;
+        public bool RollerExpanded
+        {
+            get => _rollerExpanded;
+            set
+            {
+                _rollerExpanded = value;
+                if(Geometry != null)
+                {
+                    if (value == true)
+                    {
+                        Geometry.roller_expanded = "Yes";
+                    }
+                    else
+                    {
+                        Geometry.roller_expanded = "No";
+                    }
+                }
+
+                
             }
         }
         private Visibility _sealingTypeVis;
@@ -216,6 +341,10 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _divPlateItem = value;
+                if (Geometry != null)
+                {
+                    Geometry.tube_plate_layout_div_plate_layout = value;
+                }
                 if (value == "Mechanised")
                 {
                     SealingTypeVis = Visibility.Visible;
@@ -237,6 +366,10 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _sealingTypeItem = value;
+                if(Geometry != null)
+                {
+                    Geometry.tube_plate_layout_sealing_type = value.Value;
+                }
                 if (_sealingTypeItem.Value== "O'Rings + Housing")
                 {
                     HousingSpaceVis = Visibility.Visible;
