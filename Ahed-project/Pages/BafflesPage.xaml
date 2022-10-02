@@ -23,6 +23,16 @@
                         </ComboBox>
                         <CheckBox VerticalAlignment="Center" Content="Show Dimensions"/>
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical">
+                            <Label Grid.Column="1" FontWeight="Bold">Basic Baffle Geometry Relations</Label>
+                            <Image Width="400" Height="400" Source="../Visual/baffles-1.png"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical">
+                            <Label Grid.Column="1" FontWeight="Bold">Basic Baffle Geometry Relations</Label>
+                            <Image Width="600" Height="400" Source="../Visual/baffles-2.png"/>
+                        </StackPanel>
+                    </StackPanel>
                 </StackPanel>
             </Grid>
         </ScrollViewer>

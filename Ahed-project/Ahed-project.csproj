@@ -8,6 +8,8 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Visual\baffles-1.png" />
+    <None Remove="Visual\baffles-2.png" />
     <None Remove="Visual\check.svg" />
     <None Remove="Visual\Diagram.png" />
     <None Remove="Visual\Rotated_Squared.png" />
@@ -64,6 +66,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Visual\arrow.png" />
+    <Resource Include="Visual\baffles-1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Visual\baffles-2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Visual\Diagram.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

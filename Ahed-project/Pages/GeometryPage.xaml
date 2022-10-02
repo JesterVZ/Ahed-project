@@ -15,7 +15,7 @@
 
     <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
         <Grid Background="White" Width="1200" HorizontalAlignment="Left">
-            
+
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
                     <Button Content="Calculate" Command="{Binding Calculate}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
@@ -36,10 +36,11 @@
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="{Binding Path=GridColumnWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource gridLengthConverter}}"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="119*"/>
+                            <ColumnDefinition Width="122*"/>
+                            <ColumnDefinition Width="120*"/>
+                            <ColumnDefinition Width="120*"/>
+                            <ColumnDefinition Width="120*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
@@ -61,46 +62,46 @@
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <Label Grid.Column="0" Grid.Row="0">Heat Exchanger Type</Label>
-                        <ComboBox ItemsSource="{Binding Exchangers}" SelectedItem="{Binding ExchangersSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0" SelectedIndex="0">
+                        <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">Heat Exchanger Type</Label>
+                        <ComboBox ItemsSource="{Binding Exchangers}" SelectedItem="{Binding ExchangersSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="0" SelectedIndex="0" Margin="3,3,3,3">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Value}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Button Grid.Column="0" Grid.Row="1" Content="Tubes Assistant" HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
-                        <Label Grid.Column="1" Grid.Row="1" FontWeight="Bold">Inner Side</Label>
-                        <Label Grid.Column="2" Grid.Row="1" FontWeight="Bold">Tubes side</Label>
-                        <Label Grid.Column="3" Grid.Row="1" FontWeight="Bold">Shell side</Label>
+                        <Button Grid.Column="0" Grid.Row="1" Content="Tubes Assistant" HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6" Grid.ColumnSpan="2"/>
+                        <Label Grid.Column="2" Grid.Row="1" FontWeight="Bold" Margin="0,0,0,36" Grid.RowSpan="2">Inner Side</Label>
+                        <Label Grid.Column="3" Grid.Row="1" FontWeight="Bold" Margin="0,0,0,36" Grid.RowSpan="2">Tubes side</Label>
+                        <Label Grid.Column="4" Grid.Row="1" FontWeight="Bold" Margin="0,0,0,36" Grid.RowSpan="2">Shell side</Label>
 
-                        <Label Grid.Column="0" Grid.Row="2">Name</Label>
-                        <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" Text="{Binding Geometry.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Name</Label>
+                        <TextBox Style="{StaticResource Default}" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="2" Text="{Binding Geometry.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="3,3,3,3"/>
 
-                        <Label Grid.Column="0" Grid.Row="3">Outer Diameter (mm)</Label>
-                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.outer_diameter_inner_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3"/>
-                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.outer_diameter_tubes_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="3"/>
-                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.outer_diameter_shell_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="3"/>
+                        <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Outer Diameter (mm)</Label>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.outer_diameter_inner_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="3" Margin="3,3,3,3"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.outer_diameter_tubes_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="3" Margin="3,3,3,3"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.outer_diameter_shell_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="3" Margin="3,3,3,3"/>
 
-                        <Label Grid.Column="0" Grid.Row="4">Thickness (mm)</Label>
-                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.thickness_inner_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
-                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.thickness_tubes_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4"/>
-                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.thickness_shell_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="4"/>
+                        <Label Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Thickness (mm)</Label>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.thickness_inner_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4" Margin="3,3,3,3"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.thickness_tubes_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="4" Margin="3,3,3,3"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.thickness_shell_side, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="4" Margin="3,3,3,3"/>
 
-                        <Label Grid.Column="0" Grid.Row="5">Inner Diameter (mm)</Label>
-                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.inner_diameter_inner_side}" Grid.Column="1" Grid.Row="5"/>
-                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.inner_diameter_tubes_side}" Grid.Column="2" Grid.Row="5"/>
-                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.inner_diameter_shell_side}" Grid.Column="3" Grid.Row="5"/>
+                        <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Inner Diameter (mm)</Label>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.inner_diameter_inner_side}" Grid.Column="2" Grid.Row="5" Margin="3,3,3,3"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.inner_diameter_tubes_side}" Grid.Column="3" Grid.Row="5" Margin="3,3,3,3"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.inner_diameter_shell_side}" Grid.Column="4" Grid.Row="5" Margin="3,3,3,3"/>
 
-                        <Label Grid.Column="0" Grid.Row="6">Material</Label>
-                        <ComboBox Style="{StaticResource ComboboxDefault}" SelectedItem="{Binding TubesMaterial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Materials}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6" SelectedIndex="0">
+                        <Label Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Material</Label>
+                        <ComboBox Style="{StaticResource ComboboxDefault}" SelectedItem="{Binding TubesMaterial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Materials}" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="6" SelectedIndex="0" Margin="3,3,3,3">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Value}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Style="{StaticResource ComboboxDefault}" SelectedItem="{Binding ShellMaterial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Materials}" Grid.Column="3" Grid.Row="6" SelectedIndex="0">
+                        <ComboBox Style="{StaticResource ComboboxDefault}" SelectedItem="{Binding ShellMaterial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Materials}" Grid.Column="4" Grid.Row="6" SelectedIndex="0" Margin="3,3,3,3">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Value}"/>
@@ -108,14 +109,14 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
 
-                        <Label Grid.Column="0" Grid.Row="7">Number of Tubes</Label>
-                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.number_of_tubes}" Grid.Column="2" Grid.Row="7"/>
+                        <Label Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Number of Tubes</Label>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.number_of_tubes}" Grid.Column="3" Grid.Row="7" Margin="3,3,3,3"/>
 
-                        <Label Grid.Column="0" Grid.Row="8">Tube Inner Length (mm)</Label>
-                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_inner_length}" Grid.Column="2" Grid.Row="8"/>
+                        <Label Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Tube Inner Length (mm)</Label>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_inner_length}" Grid.Column="3" Grid.Row="8" Margin="3,3,3,3"/>
 
-                        <Label Grid.Column="0" Grid.Row="9">Orientation</Label>
-                        <ComboBox Style="{StaticResource ComboboxDefault}" SelectedItem="{Binding Orientation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="9">
+                        <Label Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Orientation</Label>
+                        <ComboBox Style="{StaticResource ComboboxDefault}" SelectedItem="{Binding Orientation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="9" Margin="3,3,3,3">
                             <ComboBoxItem IsSelected="True">
                                 Horizontal
                             </ComboBoxItem>
@@ -124,23 +125,23 @@
                             </ComboBoxItem>
                         </ComboBox>
 
-                        <Label Grid.Column="0" Grid.Row="10">Wetted Perimeter (per pass, mm)</Label>
-                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.wetted_perimeter_tubes_side}" Grid.Column="2" Grid.Row="10"/>
-                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.wetted_perimeter_shell_side}" Grid.Column="3" Grid.Row="10"/>
+                        <Label Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Wetted Perimeter (per pass, mm)</Label>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.wetted_perimeter_tubes_side}" Grid.Column="3" Grid.Row="10" Margin="3,3,3,3"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.wetted_perimeter_shell_side}" Grid.Column="4" Grid.Row="10" Margin="3,3,3,3"/>
 
-                        <Label Grid.Column="0" Grid.Row="11">Hydraulic Diameter (mm)</Label>
-                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.hydraulic_diameter_tubes_side}" Grid.Column="2" Grid.Row="11"/>
-                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.hydraulic_diameter_shell_side}" Grid.Column="3" Grid.Row="11"/>
+                        <Label Grid.Column="0" Grid.Row="11" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Hydraulic Diameter (mm)</Label>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.hydraulic_diameter_tubes_side}" Grid.Column="3" Grid.Row="11" Margin="3,3,3,3"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.hydraulic_diameter_shell_side}" Grid.Column="4" Grid.Row="11" Margin="3,3,3,3"/>
 
-                        <Label Grid.Column="0" Grid.Row="12">Area / Module (m^2)</Label>
-                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.area_module}" Grid.Column="2" Grid.Row="12"/>
+                        <Label Grid.Column="0" Grid.Row="12" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Area / Module (m^2)</Label>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.area_module}" Grid.Column="3" Grid.Row="12" Margin="3,3,3,3"/>
 
-                        <Label Grid.Column="0" Grid.Row="13">Volume / Module</Label>
-                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.volume_module_tubes_side}" Grid.Column="2" Grid.Row="13"/>
-                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.volume_module_shell_side}" Grid.Column="3" Grid.Row="13"/>
+                        <Label Grid.Column="0" Grid.Row="13" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Volume / Module</Label>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.volume_module_tubes_side}" Grid.Column="3" Grid.Row="13" Margin="3,3,3,3"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.volume_module_shell_side}" Grid.Column="4" Grid.Row="13" Margin="3,3,3,3"/>
 
-                        <Label Grid.Column="0" Grid.Row="14">Tube Profile</Label>
-                        <ComboBox ItemsSource="{Binding TubeProfile}" SelectedItem="{Binding TubeProfileSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="2" Grid.Row="14">
+                        <Label Grid.Column="0" Grid.Row="14" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Tube Profile</Label>
+                        <ComboBox ItemsSource="{Binding TubeProfile}" SelectedItem="{Binding TubeProfileSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="3" Grid.Row="14" Margin="3,3,3,3">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Value}"/>
@@ -148,15 +149,15 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
 
-                        <Label Grid.Column="0" Grid.Row="15">Roughness</Label>
-                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.roughness_tubes_side}" Grid.Column="2" Grid.Row="15"/>
-                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.roughness_shell_side}" Grid.Column="3" Grid.Row="15"/>
+                        <Label Grid.Column="0" Grid.Row="15" Grid.ColumnSpan="2" Margin="0,0,0,26" Grid.RowSpan="2">Roughness</Label>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.roughness_tubes_side}" Grid.Column="3" Grid.Row="15" Margin="3,3,3,3"/>
+                        <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.roughness_shell_side}" Grid.Column="4" Grid.Row="15" Margin="3,3,3,3"/>
 
-                        <Label Grid.Column="0" Grid.Row="16">Bundle type</Label>
-                        <RadioButton IsChecked="{Binding Fixed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="16" GroupName="BundleType" Content="Fixed" VerticalAlignment="Center"/>
-                        <RadioButton IsChecked="{Binding Removable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="16" GroupName="BundleType" Content="Removable" VerticalAlignment="Center"/>
+                        <Label Grid.Column="0" Grid.Row="16" Grid.ColumnSpan="2" Margin="0,0,0,15" Grid.RowSpan="2">Bundle type</Label>
+                        <RadioButton IsChecked="{Binding Fixed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="16" GroupName="BundleType" Content="Fixed" VerticalAlignment="Center"/>
+                        <RadioButton IsChecked="{Binding Removable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="16" GroupName="BundleType" Content="Removable" VerticalAlignment="Center"/>
 
-                        <CheckBox IsChecked="{Binding RollerExpanded}" Grid.Column="2" Grid.Row="17" Content="Roller Expanded"/>
+                        <CheckBox IsChecked="{Binding RollerExpanded}" Grid.Column="3" Grid.Row="17" Content="Roller Expanded"/>
                     </Grid>
                     <Grid Grid.Column="1">
                         <Grid.ColumnDefinitions>
@@ -266,7 +267,7 @@
                         <Label Grid.Column="0" FontWeight="Bold">Nozzles</Label>
                         <Button Grid.Column="0" Content="Tubes Assistant" HorizontalAlignment="Left" VerticalAlignment="Center" Width="121" Background="#fc6"/>
                     </StackPanel>
-                    
+
                     <Label Grid.Column="1" FontWeight="Bold">Parallel Lines Distribution Diagram (per block)</Label>
                 </Grid>
                 <Grid>
@@ -306,7 +307,7 @@
                         <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_thickness_inner_side}" Grid.Column="1" Grid.Row="1"/>
                         <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_thickness_tubes_side}"  Grid.Column="2" Grid.Row="1"/>
                         <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_thickness_shell_side}" Grid.Column="3" Grid.Row="1"/>
-                        
+
                         <Label Grid.Column="0" Grid.Row="2">In Inner Diam (mm)</Label>
                         <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_in_inner_diam_inner_side}" Grid.Column="1" Grid.Row="2"/>
                         <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_in_inner_diam_tubes_side}" Grid.Column="2" Grid.Row="2"/>
@@ -347,7 +348,7 @@
                         <RadioButton Grid.Column="2" Grid.Row="10" IsChecked="{Binding OppositeSide}" GroupName="NozzleOrientation" Content="Opposide side" VerticalAlignment="Center"/>
                         <RadioButton Grid.Column="2" Grid.Row="11" IsChecked="{Binding SameSide}" GroupName="NozzleOrientation" Content="Same side" VerticalAlignment="Center"/>
                     </Grid>
-                    
+
                     <Grid Grid.Column="1">
 
                         <Image Source="../Visual/Diagram.png" Grid.Column="0" Grid.Row="0">
@@ -415,7 +416,7 @@
                         <Button Grid.Column="1" Margin="3" Grid.Row="10" Content="Show Template" VerticalAlignment="Center" Background="#fc6"/>
                     </Grid>
                 </customGrid:CustomGrid>
-                
+
             </StackPanel>
 
         </Grid>

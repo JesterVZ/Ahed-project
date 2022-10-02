@@ -20,7 +20,8 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     ChangeTabState(MasterData.Pages.SHELL_FLUID);
                     ChangeTabState(MasterData.Pages.HEAT_BALANCE);
                     ChangeTabState(MasterData.Pages.GEOMETRY);
-                    if(GlobalFunctionsAndCallersService.GetTubeProduct() == null)
+                    ChangeTabState(MasterData.Pages.BAFFLES);
+                    if (GlobalFunctionsAndCallersService.GetTubeProduct() == null)
                     {
                         TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
                     } else
