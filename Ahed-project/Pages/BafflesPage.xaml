@@ -9,6 +9,22 @@
       Title="BafflesPage">
 
     <Grid>
-        
+        <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+            <Grid Background="White" Width="1200" HorizontalAlignment="Left">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Calculate" Command="{Binding Calculate}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" >
+                        <ComboBox Style="{StaticResource ComboboxDefault}">
+                            <ComboBoxItem IsSelected="True">
+                                Full baffles heat transfer calculation
+                            </ComboBoxItem>
+                        </ComboBox>
+                        <CheckBox VerticalAlignment="Center" Content="Show Dimensions"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>
