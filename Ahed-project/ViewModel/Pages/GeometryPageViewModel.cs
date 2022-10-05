@@ -82,21 +82,8 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _geometry = value;
-                switch (value.head_exchange_type)
-                {
-                    case "tube_shell":
-                        ExchangersSelector = Exchangers.FirstOrDefault(x => x.Key == 0);
-                        break;
-                    case "annular_space":
-                        ExchangersSelector = Exchangers.FirstOrDefault(x => x.Key == 1);
-                        break;
-                    case "unicus":
-                        ExchangersSelector = Exchangers.FirstOrDefault(x => x.Key == 2);
-                        break;
-                    case "r_series":
-                        ExchangersSelector = Exchangers.FirstOrDefault(x => x.Key == 3);
-                        break;
-                }
+                var exchangeType = ToNormalCase(value.head_exchange_type);
+                ExchangersSelector = Exchangers.FirstOrDefault(x => x.Value == exchangeType);
                 ShellMaterial = Materials.FirstOrDefault(x => x.Value == value.material_shell_side);
                 TubesMaterial = Materials.FirstOrDefault(x => x.Value == value.material_tubes_side);
             }
@@ -217,33 +204,7 @@ namespace Ahed_project.ViewModel.Pages
                 _exchangersSelector = value;
                 if (Geometry != null)
                 {
-                    switch (value.Key)
-                    {
-                        case 0:
-                            if (Geometry.head_exchange_type != "tube_shell")
-                            {
-                                Geometry.head_exchange_type = "tube_shell";
-                            }
-                            break;
-                        case 1:
-                            if (Geometry.head_exchange_type != "annular_space")
-                            {
-                                Geometry.head_exchange_type = "annular_space";
-                            }
-                            break;
-                        case 2:
-                            if (Geometry.head_exchange_type != "unicus")
-                            {
-                                Geometry.head_exchange_type = "unicus";
-                            }
-                            break;
-                        case 3:
-                            if (Geometry.head_exchange_type != "r_series")
-                            {
-                                Geometry.head_exchange_type = "r_series";
-                            }
-                            break;
-                    }
+                    Geometry.head_exchange_type = ToSnakeCase(value.Value);
                 }
             }
         }
@@ -455,6 +416,21 @@ namespace Ahed_project.ViewModel.Pages
         }
 
 
+        private string ToSnakeCase(string s)
+        {
+            return s.Replace(" ", "_").ToLower();
+        }
+
+        private string ToNormalCase(string s)
+        {
+            var splitted = s.Split("_").ToList();
+            for (int i=0;i<splitted.Count;i++)
+            {
+                var c = splitted[i][0];
+                splitted[i] = Char.ToUpper(c).ToString() + splitted[i].Substring(1);
+            }
+            return String.Join(" ", splitted);
+        }
 
         #region coms
 
