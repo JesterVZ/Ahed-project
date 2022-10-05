@@ -19,6 +19,7 @@ namespace Ahed_project.ViewModel.Pages
         public bool IsOpen { get; set; }
         public double GridColumnWidth { get; set; }
         public Dictionary<int, string> Exchangers { get; set; }
+        public Dictionary<int, string> Orientations { get; set; }
         public Dictionary<int, string> Materials { get; set; }
         public Dictionary<int, string> TubeProfile { get; set; }
         public Dictionary<int, TubeplateLayout> TubePlateLayouts { get; set; }
@@ -84,6 +85,7 @@ namespace Ahed_project.ViewModel.Pages
                 _geometry = value;
                 var exchangeType = ToNormalCase(value.head_exchange_type);
                 ExchangersSelector = Exchangers.FirstOrDefault(x => x.Value == exchangeType);
+                Orientation = Orientations.FirstOrDefault(x => x.Value == value.orientation);
                 ShellMaterial = Materials.FirstOrDefault(x => x.Value == value.material_shell_side);
                 TubesMaterial = Materials.FirstOrDefault(x => x.Value == value.material_tubes_side);
             }
@@ -355,6 +357,7 @@ namespace Ahed_project.ViewModel.Pages
         public GeometryPageViewModel()
         {
             Exchangers = new Dictionary<int, string>();
+            Orientations = new Dictionary<int, string>();
             Materials = new Dictionary<int, string>();
             DivPlateItems = new ObservableCollection<string>();
             SealingTypeItems = new Dictionary<int, string>();
@@ -396,6 +399,9 @@ namespace Ahed_project.ViewModel.Pages
             Exchangers.Add(2, "Unicus");
             Exchangers.Add(3, "R Series");
 
+            Orientations.Add(0, "Horizontal");
+            Orientations.Add(1, "Vertical");
+
             //DivPlateItems.Add(0, "Horizontal");
             //DivPlateItems.Add(1, "Mechanised");
 
@@ -418,7 +424,12 @@ namespace Ahed_project.ViewModel.Pages
 
         private string ToSnakeCase(string s)
         {
-            return s.Replace(" ", "_").ToLower();
+            if (s != null)
+            {
+                return s.Replace(" ", "_").ToLower();
+            }
+            else return "null";
+            
         }
 
         private string ToNormalCase(string s)

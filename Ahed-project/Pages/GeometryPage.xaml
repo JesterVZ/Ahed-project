@@ -38,7 +38,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="119*"/>
                             <ColumnDefinition Width="122*"/>
-                            <ColumnDefinition Width="120*"/>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="120*"/>
                             <ColumnDefinition Width="120*"/>
                         </Grid.ColumnDefinitions>
@@ -116,13 +116,12 @@
                         <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_inner_length}" Grid.Column="3" Grid.Row="8" Margin="3,3,3,3"/>
 
                         <Label Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Orientation</Label>
-                        <ComboBox Style="{StaticResource ComboboxDefault}" SelectedItem="{Binding Orientation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="9" Margin="3,3,3,3">
-                            <ComboBoxItem IsSelected="True">
-                                Horizontal
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                Vertical
-                            </ComboBoxItem>
+                        <ComboBox Style="{StaticResource ComboboxDefault}" ItemsSource="{Binding Orientations}" SelectedItem="{Binding Orientation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="9" Margin="3,3,3,3">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Value}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
 
                         <Label Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Wetted Perimeter (per pass, mm)</Label>
