@@ -37,5 +37,9 @@ namespace Ahed_project.Services.EF.Model
         /// Последний рассчет пользователя
         /// </summary>
         public int? LastCalculationId { get; set; }
+        /// <summary>
+        /// Последняя геометрия пользователя
+        /// </summary>
+        public int? LastGeometryId { get; set; }
     }
 }

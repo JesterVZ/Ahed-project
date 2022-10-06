@@ -93,6 +93,21 @@ namespace Ahed_project.Services.Global
             var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.GET_GEOMETRIES, ""));
             GlobalDataCollectorService.GeometryCollection = JsonConvert.DeserializeObject<ObservableCollection<GeometryFull>>(response);
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка геометрий завершена!")));
+            int userId = GlobalDataCollectorService.UserId;
+            int id = 0;
+            using (var context = new EFContext())
+            {
+                var user = context.Users.FirstOrDefault(x => x.Id == userId);
+                id = user.LastGeometryId ?? 0;
+            }
+            if(id != 0)
+            {
+                Task.Factory.StartNew(() =>
+                {
+                    Thread.Sleep(new TimeSpan(0, 0, 5));
+                    _geometryPageViewModel.Geometry = GlobalDataCollectorService.GeometryCollection.FirstOrDefault(x => x.geometry_catalog_id == id);
+                });
+            }
         }
 
         // Загрузка продуктов
@@ -336,6 +351,16 @@ namespace Ahed_project.Services.Global
         //выбор геометрии
         public static void SelectGeometry(GeometryFull geometry)
         {
+            if (geometry != null)
+            {
+                using (var context = new EFContext())
+                {
+                    var user = context.Users.FirstOrDefault(x => x.Id == GlobalDataCollectorService.UserId);
+                    user.LastGeometryId = geometry.geometry_catalog_id;
+                    context.Users.Update(user);
+                    context.SaveChanges();
+                }
+            }
             _geometryPageViewModel.Geometry = geometry;
             _contentPageViewModel.GeometryCalculated = false;
             _contentPageViewModel.Validation();
