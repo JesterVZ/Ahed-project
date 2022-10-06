@@ -34,12 +34,16 @@ namespace Ahed_project.Services.Global
             }
         }
         #endregion
+        #region Heat
+        public static bool HeatBalanceCalculated { get; set; }
+        #endregion
         #region Project
         public static List<ProjectInfoGet> ProjectsCollection { get; set; }
         public static ProjectInfoGet Project { get; set; }
         #endregion
         #region Geometry
         public static ObservableCollection<GeometryFull> GeometryCollection { get; set; }
+        public static bool GeometryCalculated { get; set; }
         #endregion
         #region Products
         public static Dictionary<string, List<ProductGet>> AllProducts { get; set; }

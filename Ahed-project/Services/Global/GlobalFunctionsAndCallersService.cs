@@ -362,7 +362,7 @@ namespace Ahed_project.Services.Global
                 }
             }
             _geometryPageViewModel.Geometry = geometry;
-            _contentPageViewModel.GeometryCalculated = false;
+            GlobalDataCollectorService.GeometryCalculated = false;
             _contentPageViewModel.Validation();
         }
 
@@ -506,7 +506,7 @@ namespace Ahed_project.Services.Global
                     MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            _contentPageViewModel.GeometryCalculated = true;
+            GlobalDataCollectorService.GeometryCalculated = true;
             _contentPageViewModel.Validation();
         }
 

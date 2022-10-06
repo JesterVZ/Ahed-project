@@ -89,6 +89,7 @@ namespace Ahed_project.ViewModel.Pages
                 TubeProfileSelector = TubeProfile.FirstOrDefault(x => x.Value == value.tube_profile_tubes_side);
                 ShellMaterial = Materials.FirstOrDefault(x => x.Value == value.material_shell_side);
                 TubesMaterial = Materials.FirstOrDefault(x => x.Value == value.material_tubes_side);
+                TubeLayout = TubePlateLayouts.FirstOrDefault(x => x.Value.Name == value.tube_plate_layout_tube_layout);
             }
         }
 
@@ -136,6 +137,7 @@ namespace Ahed_project.ViewModel.Pages
                 _tubeLayout = value;
                 if(Geometry != null)
                 {
+                    string name = ToSnakeCase(value.Value.Name);
                     Geometry.tube_plate_layout_tube_layout = value.Value.Name;
                 }
             }
@@ -364,6 +366,11 @@ namespace Ahed_project.ViewModel.Pages
             SealingTypeItems = new Dictionary<int, string>();
             TubePlateLayouts = new Dictionary<int, TubeplateLayout>();
             TubeProfile = new Dictionary<int, string>();
+            TubeplateLayout optimize = new TubeplateLayout
+            {
+                ImageUrl = "",
+                Name = "<Optimize>"
+            };
             TubeplateLayout triangular = new TubeplateLayout
             {
                 ImageUrl = "../Visual/Triangilar.png",
@@ -418,6 +425,7 @@ namespace Ahed_project.ViewModel.Pages
             TubePlateLayouts.Add(3, squaredCentred);
             TubePlateLayouts.Add(4, rotatedSquared);
             TubePlateLayouts.Add(5, rotatedSquaredCentred);
+            TubePlateLayouts.Add(6, optimize);
             SealingTypeVis = Visibility.Hidden;
             HousingSpaceVis = Visibility.Hidden;
         }
@@ -427,6 +435,11 @@ namespace Ahed_project.ViewModel.Pages
         {
             if (s != null)
             {
+                if (s.First() =='<' && s.Last() == '>')
+                {
+                    s.Replace("<", "");
+                    s.Replace(">", "");
+                }
                 return s.Replace(" ", "_").ToLower();
             }
             else return "null";
@@ -439,7 +452,7 @@ namespace Ahed_project.ViewModel.Pages
             for (int i=0;i<splitted.Count;i++)
             {
                 var c = splitted[i][0];
-                splitted[i] = Char.ToUpper(c).ToString() + splitted[i].Substring(1);
+                splitted[i] = char.ToUpper(c).ToString() + splitted[i].Substring(1);
             }
             return String.Join(" ", splitted);
         }
