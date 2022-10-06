@@ -137,8 +137,12 @@ namespace Ahed_project.ViewModel.Pages
                 _tubeLayout = value;
                 if(Geometry != null)
                 {
-                    string name = ToSnakeCase(value.Value.Name);
-                    Geometry.tube_plate_layout_tube_layout = value.Value.Name;
+                    if(value.Value != null)
+                    {
+                        string name = ToSnakeCase(value.Value.Name);
+                        Geometry.tube_plate_layout_tube_layout = name;
+                    }
+                    
                 }
             }
 
@@ -374,22 +378,22 @@ namespace Ahed_project.ViewModel.Pages
             TubeplateLayout triangular = new TubeplateLayout
             {
                 ImageUrl = "../Visual/Triangilar.png",
-                Name = "Triangular"
+                Name = "Triangular (30º)"
             };
             TubeplateLayout triangularCentred = new TubeplateLayout
             {
                 ImageUrl = "../Visual/Triangular_centred.png",
-                Name = "Triangular Centred"
+                Name = "Triangular Centered (30º)"
             };
             TubeplateLayout squared = new TubeplateLayout
             {
                 ImageUrl = "../Visual/Squared.png",
-                Name = "Squared"
+                Name = "Squared (90º)"
             };
             TubeplateLayout squaredCentred = new TubeplateLayout
             {
                 ImageUrl = "../Visual/Squared_centred.png",
-                Name = "Squared Centred"
+                Name = "Squared Centred (90º)"
             };
             TubeplateLayout rotatedSquared = new TubeplateLayout
             {

@@ -472,6 +472,7 @@ namespace Ahed_project.Services.Global
                 _heatBalanceViewModel.Calculation = calculationGet;
             }
             var saveResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CALCULATION, json, calculation.project_id.ToString(), calculation.calculation_id.ToString()));
+            GlobalDataCollectorService.HeatBalanceCalculated = true;
             _contentPageViewModel.Validation();
         }
         //расчет геометрии

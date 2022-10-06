@@ -35,6 +35,14 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     {
                         ShellFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
                     }
+                    if (GlobalDataCollectorService.HeatBalanceCalculated)
+                    {
+                        HeatBalanceValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
+                    }
+                    else
+                    {
+                        HeatBalanceValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
+                    }
                     if (GlobalDataCollectorService.GeometryCalculated)
                     {
                         GeometryValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";

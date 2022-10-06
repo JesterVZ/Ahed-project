@@ -37,6 +37,7 @@
                         <DataGridTextColumn Binding="{Binding Path=name}" Header="Name" Width="150"/>
                         <DataGridTextColumn Binding="{Binding Path=geometry_catalog_id}" Header="Id" />
                         <DataGridTextColumn Binding="{Binding Path=head_exchange_type}" Header="Head Exchange Type" />
+                        <DataGridTextColumn Binding="{Binding Path=tube_plate_layout_tube_layout}" Header="Tube Plate"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <TextBlock Text="Description" Grid.Row="1" Margin="4"/>
