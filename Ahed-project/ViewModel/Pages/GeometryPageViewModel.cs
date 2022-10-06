@@ -86,6 +86,7 @@ namespace Ahed_project.ViewModel.Pages
                 var exchangeType = ToNormalCase(value.head_exchange_type);
                 ExchangersSelector = Exchangers.FirstOrDefault(x => x.Value == exchangeType);
                 Orientation = Orientations.FirstOrDefault(x => x.Value == value.orientation);
+                TubeProfileSelector = TubeProfile.FirstOrDefault(x => x.Value == value.tube_profile_tubes_side);
                 ShellMaterial = Materials.FirstOrDefault(x => x.Value == value.material_shell_side);
                 TubesMaterial = Materials.FirstOrDefault(x => x.Value == value.material_tubes_side);
             }
