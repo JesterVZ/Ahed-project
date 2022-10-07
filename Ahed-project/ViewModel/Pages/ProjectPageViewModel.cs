@@ -24,6 +24,7 @@ namespace Ahed_project.ViewModel.Pages
         public string ButtonImagePath { get; set; }
 
         public bool IsOpen { get; set; }
+        public bool FieldsState { get; set; } //enabled/disabled
 
         #region Props
         private ProjectInfoGet _projectInfo = new();

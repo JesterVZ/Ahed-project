@@ -73,9 +73,16 @@ namespace Ahed_project.Services.Global
                     id = user.LastProjectId ?? 0;
                 }
                 if (id != 0)
+                {
                     SetProject(projects.FirstOrDefault(x => x.project_id == id));
+                    _projectPageViewModel.FieldsState = true;
+                } else
+                {
+                    _projectPageViewModel.FieldsState = false;
+                }
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Загрузка проекта выполнена успешно!")));
                 _contentPageViewModel.Validation();
+                
             }
             await Task.Factory.StartNew(DownLoadProducts);
             await Task.Factory.StartNew(GetMaterials);
@@ -198,6 +205,7 @@ namespace Ahed_project.Services.Global
             Task.Factory.StartNew(() => GetCalculations(projectInfoGet.project_id.ToString()));
             _mainViewModel.Title = $"{projectInfoGet.name} ({_heatBalanceViewModel.Calculation?.name})";
             _contentPageViewModel.Validation();
+            _projectPageViewModel.FieldsState = true;
         }
 
         //Получение рассчетов
