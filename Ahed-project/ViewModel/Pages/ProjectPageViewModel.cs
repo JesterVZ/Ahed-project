@@ -16,7 +16,7 @@ namespace Ahed_project.ViewModel.Pages
     {
         public ProjectPageViewModel() 
         {
-            
+            Calculations = new ObservableCollection<CalculationFull>();
         }
         public Visibility TextBoxVisibillity { get; set; }
         public Visibility LabelVisibillity { get; set; }
