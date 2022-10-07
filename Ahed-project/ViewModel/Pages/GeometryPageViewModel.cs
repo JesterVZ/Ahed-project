@@ -18,7 +18,7 @@ namespace Ahed_project.ViewModel.Pages
     {
         public bool IsOpen { get; set; }
         public double GridColumnWidth { get; set; }
-        public Dictionary<int, string> Exchangers { get; set; }
+        public Dictionary<string, string> Exchangers { get; set; }
         public Dictionary<int, string> Orientations { get; set; }
         public Dictionary<int, string> Materials { get; set; }
         public Dictionary<int, string> TubeProfile { get; set; }
@@ -83,8 +83,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _geometry = value;
-                var exchangeType = ToNormalCase(value.head_exchange_type);
-                ExchangersSelector = Exchangers.FirstOrDefault(x => x.Value == exchangeType);
+                ExchangersSelector = Exchangers.FirstOrDefault(x=>x.Key==value.head_exchange_type);
                 Orientation = Orientations.FirstOrDefault(x => x.Value == value.orientation);
                 TubeProfileSelector = TubeProfile.FirstOrDefault(x => x.Value == value.tube_profile_tubes_side);
                 ShellMaterial = Materials.FirstOrDefault(x => x.Value == value.material_shell_side);
@@ -139,8 +138,7 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     if(value.Value != null)
                     {
-                        string name = ToSnakeCase(value.Value.Name);
-                        Geometry.tube_plate_layout_tube_layout = name;
+                        Geometry.tube_plate_layout_tube_layout = value.Value.Name;
                     }
                     
                 }
@@ -196,14 +194,14 @@ namespace Ahed_project.ViewModel.Pages
                 }
             }
         }
-        private KeyValuePair<int, string> _exchangersSelector;
+        private KeyValuePair<string, string> _exchangersSelector;
 
-        public KeyValuePair<int, string> ExchangersSelector { 
+        public KeyValuePair<string, string> ExchangersSelector { 
             get { 
                 return _exchangersSelector; 
             } 
             set {
-                if(value.Key == 1)
+                if(value.Key == "annular_space")
                 {
                     GridColumnWidth = 120;
                 } else
@@ -213,7 +211,7 @@ namespace Ahed_project.ViewModel.Pages
                 _exchangersSelector = value;
                 if (Geometry != null)
                 {
-                    Geometry.head_exchange_type = ToSnakeCase(value.Value);
+                    Geometry.head_exchange_type = value.Key;
                 }
             }
         }
@@ -363,7 +361,7 @@ namespace Ahed_project.ViewModel.Pages
 
         public GeometryPageViewModel()
         {
-            Exchangers = new Dictionary<int, string>();
+            Exchangers = new Dictionary<string, string>();
             Orientations = new Dictionary<int, string>();
             Materials = new Dictionary<int, string>();
             DivPlateItems = new ObservableCollection<string>();
@@ -406,10 +404,10 @@ namespace Ahed_project.ViewModel.Pages
                 Name = "Rotated Squared Centred"
             };
 
-            Exchangers.Add(0, "Tube/Shell");
-            Exchangers.Add(1, "Annular Space");
-            Exchangers.Add(2, "Unicus");
-            Exchangers.Add(3, "R Series");
+            Exchangers.Add("tube_shell", "Tube/Shell");
+            Exchangers.Add("annular_space", "Annular Space");
+            Exchangers.Add("unicus", "Unicus");
+            Exchangers.Add("r_series", "R Series");
 
             Orientations.Add(0, "Horizontal");
             Orientations.Add(1, "Vertical");
@@ -432,33 +430,6 @@ namespace Ahed_project.ViewModel.Pages
             TubePlateLayouts.Add(6, optimize);
             SealingTypeVis = Visibility.Hidden;
             HousingSpaceVis = Visibility.Hidden;
-        }
-
-
-        private string ToSnakeCase(string s)
-        {
-            if (s != null)
-            {
-                if (s.First() =='<' && s.Last() == '>')
-                {
-                    s.Replace("<", "");
-                    s.Replace(">", "");
-                }
-                return s.Replace(" ", "_").ToLower();
-            }
-            else return "null";
-            
-        }
-
-        private string ToNormalCase(string s)
-        {
-            var splitted = s.Split("_").ToList();
-            for (int i=0;i<splitted.Count;i++)
-            {
-                var c = splitted[i][0];
-                splitted[i] = char.ToUpper(c).ToString() + splitted[i].Substring(1);
-            }
-            return String.Join(" ", splitted);
         }
 
         #region coms
