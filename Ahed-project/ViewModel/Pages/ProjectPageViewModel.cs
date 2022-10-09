@@ -31,7 +31,10 @@ namespace Ahed_project.ViewModel.Pages
         public ProjectInfoGet ProjectInfo
         {
             get => _projectInfo;
-            set => SetValue(ref _projectInfo, value);
+            set { 
+                SetValue(ref _projectInfo, value);
+                ProjectName = value.name;
+            }
         }
 
         private string _projectName;

@@ -19,10 +19,10 @@ namespace Ahed_project.ViewModel.Pages
         public bool IsOpen { get; set; }
         public double GridColumnWidth { get; set; }
         public Dictionary<string, string> Exchangers { get; set; }
-        public Dictionary<int, string> Orientations { get; set; }
+        public Dictionary<string, string> Orientations { get; set; }
         public Dictionary<int, string> Materials { get; set; }
-        public Dictionary<int, string> TubeProfile { get; set; }
-        public Dictionary<int, TubeplateLayout> TubePlateLayouts { get; set; }
+        public Dictionary<string, string> TubeProfile { get; set; }
+        public Dictionary<string, TubeplateLayout> TubePlateLayouts { get; set; }
         private string _tube_plate_layout_number_of_passes { get; set; }
         public string Tube_plate_layout_number_of_passes {
             get => _tube_plate_layout_number_of_passes;
@@ -89,6 +89,45 @@ namespace Ahed_project.ViewModel.Pages
                 ShellMaterial = Materials.FirstOrDefault(x => x.Value == value.material_shell_side);
                 TubesMaterial = Materials.FirstOrDefault(x => x.Value == value.material_tubes_side);
                 TubeLayout = TubePlateLayouts.FirstOrDefault(x => x.Value.Name == value.tube_plate_layout_tube_layout);
+
+                switch (value.bundle_type)
+                {
+                    case "Fixed":
+                        Fixed = true;
+                        Removable = false;
+                        break;
+                    case "Removable":
+                        Removable = true;
+                        Fixed = false;
+                        break;
+                    case "":
+                        Fixed = true;
+                        Removable = false;
+                        break;
+                }
+
+                switch (value.shell_nozzle_orientation)
+                {
+                    case "Opposite side":
+                        OppositeSide = true;
+                        SameSide = false;
+                        break;
+                    case "Same side":
+                        SameSide = true;
+                        OppositeSide = false;
+                        break;
+                }
+                if(value.bundle_type == null || value.bundle_type == "")
+                {
+                    Fixed = true;
+                    Removable = false;
+                }
+                if (value.shell_nozzle_orientation == null || value.shell_nozzle_orientation == "")
+                {
+                    OppositeSide = true;
+                    SameSide = false;
+                }
+
             }
         }
 
@@ -100,12 +139,9 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _shellMaterial = value;
-                if (Geometry!=null)
+                if (value.Value != null)
                 {
-                    if (Geometry.material_shell_side != value.Value)
-                    {
-                        Geometry.material_shell_side = value.Value;
-                    }
+                    Geometry.material_shell_side = value.Value;
                 }
             }
         }
@@ -118,17 +154,14 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _tubesMaterial = value;
-                if (Geometry!=null)
+                if (value.Value != null)
                 {
-                    if (Geometry.material_tubes_side!=value.Value)
-                    {
-                        Geometry.material_tubes_side = value.Value;
-                    }
+                    Geometry.material_tubes_side = value.Value;
                 }
             }
         }
-        private KeyValuePair<int, TubeplateLayout> _tubeLayout;
-        public KeyValuePair<int, TubeplateLayout> TubeLayout
+        private KeyValuePair<string, TubeplateLayout> _tubeLayout;
+        public KeyValuePair<string, TubeplateLayout> TubeLayout
         {
             get => _tubeLayout;
             set
@@ -138,7 +171,7 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     if(value.Value != null)
                     {
-                        Geometry.tube_plate_layout_tube_layout = value.Value.Name;
+                        Geometry.tube_plate_layout_tube_layout = value.Key;
                     }
                     
                 }
@@ -146,20 +179,14 @@ namespace Ahed_project.ViewModel.Pages
 
         }
 
-        private KeyValuePair<int, string> _orientation;
-        public KeyValuePair<int, string> Orientation
+        private KeyValuePair<string, string> _orientation;
+        public KeyValuePair<string, string> Orientation
         {
             get => _orientation;
             set
             {
                 _orientation = value;
-                if (Geometry != null)
-                {
-                    if(Geometry.orientation != value.Value)
-                    {
-                        Geometry.orientation = value.Value;
-                    }
-                }
+                Geometry.orientation = value.Key;
             }
         }
         private bool _oppositeSide;
@@ -172,7 +199,7 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     if(value == true)
                     {
-                        Geometry.shell_nozzle_orientation = "Opposide side";
+                        Geometry.shell_nozzle_orientation = "opposite_side";
                     }
                     
                 }
@@ -189,7 +216,7 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     if(value == true)
                     {
-                        Geometry.shell_nozzle_orientation = "Same side";
+                        Geometry.shell_nozzle_orientation = "same_side";
                     }
                 }
             }
@@ -216,8 +243,8 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
 
-        private KeyValuePair<int, string> _tubeProfileSelector;
-        public KeyValuePair<int, string> TubeProfileSelector
+        private KeyValuePair<string, string> _tubeProfileSelector;
+        public KeyValuePair<string, string> TubeProfileSelector
         {
             get => _tubeProfileSelector;
             set
@@ -225,10 +252,7 @@ namespace Ahed_project.ViewModel.Pages
                 _tubeProfileSelector = value;
                 if(Geometry != null)
                 {
-                    if(Geometry.tube_profile_tubes_side != value.Value)
-                    {
-                        Geometry.tube_profile_tubes_side = value.Value;
-                    }
+                    Geometry.tube_profile_tubes_side = value.Key;
                 }
             }
         }
@@ -324,11 +348,11 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
 
-        public Dictionary<int,string> SealingTypeItems { get; set; }
+        public Dictionary<string, string> SealingTypeItems { get; set; }
 
-        private KeyValuePair<int, string> _sealingTypeItem;
+        private KeyValuePair<string, string> _sealingTypeItem;
 
-        public KeyValuePair<int,string> SealingTypeItem
+        public KeyValuePair<string, string> SealingTypeItem
         {
             get => _sealingTypeItem;
             set
@@ -336,7 +360,7 @@ namespace Ahed_project.ViewModel.Pages
                 _sealingTypeItem = value;
                 if(Geometry != null)
                 {
-                    Geometry.tube_plate_layout_sealing_type = value.Value;
+                    Geometry.tube_plate_layout_sealing_type = value.Key;
                 }
                 if (_sealingTypeItem.Value== "O'Rings + Housing")
                 {
@@ -362,12 +386,13 @@ namespace Ahed_project.ViewModel.Pages
         public GeometryPageViewModel()
         {
             Exchangers = new Dictionary<string, string>();
-            Orientations = new Dictionary<int, string>();
+            Orientations = new Dictionary<string, string>();
             Materials = new Dictionary<int, string>();
             DivPlateItems = new ObservableCollection<string>();
-            SealingTypeItems = new Dictionary<int, string>();
-            TubePlateLayouts = new Dictionary<int, TubeplateLayout>();
-            TubeProfile = new Dictionary<int, string>();
+            SealingTypeItems = new Dictionary<string, string>();
+            TubePlateLayouts = new Dictionary<string, TubeplateLayout>();
+            TubeProfile = new Dictionary<string, string>();
+            Geometry = new GeometryFull();
             TubeplateLayout optimize = new TubeplateLayout
             {
                 ImageUrl = "",
@@ -409,25 +434,25 @@ namespace Ahed_project.ViewModel.Pages
             Exchangers.Add("unicus", "Unicus");
             Exchangers.Add("r_series", "R Series");
 
-            Orientations.Add(0, "Horizontal");
-            Orientations.Add(1, "Vertical");
+            Orientations.Add("horizontal", "Horizontal");
+            Orientations.Add("vertical", "Vertical");
 
             //DivPlateItems.Add(0, "Horizontal");
             //DivPlateItems.Add(1, "Mechanised");
 
-            SealingTypeItems.Add(0, "O'Rings + Housing");
-            SealingTypeItems.Add(1, "Gasket");
+            SealingTypeItems.Add("o_rings_housing", "O'Rings + Housing");
+            SealingTypeItems.Add("gasket", "Gasket");
 
-            TubeProfile.Add(0, "Smooth Tube");
-            TubeProfile.Add(1, "Hard Corrugation");
+            TubeProfile.Add("smooth_tube", "Smooth Tube");
+            TubeProfile.Add("hard_corrugation", "Hard Corrugation");
 
-            TubePlateLayouts.Add(0, triangular);
-            TubePlateLayouts.Add(1, triangularCentred);
-            TubePlateLayouts.Add(2, squared);
-            TubePlateLayouts.Add(3, squaredCentred);
-            TubePlateLayouts.Add(4, rotatedSquared);
-            TubePlateLayouts.Add(5, rotatedSquaredCentred);
-            TubePlateLayouts.Add(6, optimize);
+            TubePlateLayouts.Add("triangular", triangular);
+            TubePlateLayouts.Add("triangular_centered", triangularCentred);
+            TubePlateLayouts.Add("squared", squared);
+            TubePlateLayouts.Add("squared_centered", squaredCentred);
+            TubePlateLayouts.Add("rotated_squared", rotatedSquared);
+            TubePlateLayouts.Add("rotated_squared_centered", rotatedSquaredCentred);
+            TubePlateLayouts.Add("optimize", optimize);
             SealingTypeVis = Visibility.Hidden;
             HousingSpaceVis = Visibility.Hidden;
         }
