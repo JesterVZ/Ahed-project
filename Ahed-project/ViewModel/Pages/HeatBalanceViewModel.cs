@@ -3,10 +3,12 @@ using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Color = System.Windows.Media.Color;
@@ -34,6 +36,7 @@ namespace Ahed_project.ViewModel.Pages
             FlowShellTB = false;
             TemperatureShellInLetTB = true;
             TemperatureShellOutLetTB = true;
+            TemperatureTubesOut = true;
             TSIE = true;
             TSOE = true;
         }
@@ -124,24 +127,67 @@ namespace Ahed_project.ViewModel.Pages
                         ShellProcessSelector = ShellProcess.Last();
                         RaisePropertiesChanged("ShellProcessSelector");
                     }
+                    Double.TryParse(value.temperature_tube_inlet.Replace('.',','), out var temperatureTubeInlet);
+                    TubesInletTemp = temperatureTubeInlet;
+                    Double.TryParse(value.temperature_shell_inlet.Replace('.', ','), out var temperatureShellInlet);
+                    ShellInletTemp = temperatureShellInlet;
                 }
             }
         }
         public Dictionary<int, string> TubesProcess { get; set; }
         public Dictionary<int, string> ShellProcess { get; set; }
 
+        private KeyValuePair<int, string> _tubesProcessSelector;
+
         public KeyValuePair<int, string> TubesProcessSelector
         {
-            get
-            {
-                if (Calculation != null && Calculation.calculation_id != 0)
-                    return Calculation.process_tube?.Contains("condensation") ?? false ? TubesProcess.Last() : TubesProcess.First();
-                else return default;
-            }
+            get => _tubesProcessSelector;
             set
             {
+                _tubesProcessSelector = value;
                 Calculation.process_tube = value.Value;
-                RaisePropertiesChanged("Calculation");
+                if (value.Value == "Condensation")
+                {
+                    TemperatureTubesOut = false;
+                }
+                else
+                {
+                    TemperatureTubesOut = true;
+                }
+            }
+        }
+
+        public bool TemperatureTubesOut { get; set; }
+
+        private double _tubesInletTemp;
+        public double TubesInletTemp
+        {
+            get => _tubesInletTemp;
+            set
+            {
+                _tubesInletTemp = value;
+                Calculation.temperature_tube_inlet = value.ToString().Replace(',', '.');
+                if (!TemperatureTubesOut)
+                {
+                    Calculation.temperature_tube_outlet = value.ToString().Replace(',', '.');
+                    RaisePropertiesChanged("Calculation");
+                }
+            }
+        }
+
+        private double _shellInletTemp;
+        public double ShellInletTemp
+        {
+            get => _shellInletTemp;
+            set
+            {
+                _shellInletTemp = value;
+                Calculation.temperature_shell_inlet = value.ToString().Replace(',', '.');
+                if (ShellProcessSelector.Value== "Condensation")
+                {
+                    Calculation.temperature_shell_outlet = value.ToString().Replace(',', '.');
+                    RaisePropertiesChanged("Calculation");
+                }
             }
         }
 
@@ -154,7 +200,7 @@ namespace Ahed_project.ViewModel.Pages
                 TSOE = false;
                 TOB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
                 FB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
-                if (double.TryParse(Calculation.temperature_tube_outlet, out double res))
+                if (double.TryParse(Calculation.temperature_tube_outlet.Replace('.',','), out double res))
                     Calculation.temperature_shell_outlet = res.ToString();
                 RaisePropertiesChanged("Calculation");
             }
@@ -167,17 +213,23 @@ namespace Ahed_project.ViewModel.Pages
             }
         });
 
+        private KeyValuePair<int, string> _shellProcessSelector;
+
         public KeyValuePair<int, string> ShellProcessSelector
         {
-            get
-            {
-                if (Calculation != null && Calculation.calculation_id != 0)
-                    return Calculation.process_shell?.ToLower().Contains("condensation") ?? false ? ShellProcess.Last() : ShellProcess.First();
-                else return default;
-            }
+            get => _shellProcessSelector;
             set
             {
+                _shellProcessSelector = value;
                 Calculation.process_shell = value.Value;
+                if (value.Value=="Condensation")
+                {
+                    TemperatureShellOutLetTB = false;
+                }
+                else
+                {
+                    TemperatureShellOutLetTB = true;
+                }
             }
         }
 

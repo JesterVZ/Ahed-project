@@ -152,8 +152,8 @@
                     </ComboBox>
                     <TextBox Style="{StaticResource Enabled}" Margin="0,3,0,3" Text="{Binding Calculation.flow_tube, UpdateSourceTrigger=PropertyChanged}"/>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Style="{StaticResource SubEnabled}" Text="{Binding Calculation.temperature_tube_inlet, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBox Style="{StaticResource SubEnabled}" Margin="0,3,0,3" Text="{Binding Calculation.temperature_tube_outlet, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Style="{StaticResource SubEnabled}" Text="{Binding TubesInletTemp, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Style="{StaticResource SubEnabled}" Margin="0,3,0,3" Text="{Binding Calculation.temperature_tube_outlet, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding TemperatureTubesOut, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                     <TextBox Style="{StaticResource TextBoxHeatBalance}" Text="{Binding Calculation.duty_tube, UpdateSourceTrigger=PropertyChanged}"/>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
@@ -251,7 +251,7 @@
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}" Margin="0,3,0,3" Height="30">
                         <RadioButton IsEnabled="{Binding TSIE}" IsChecked="{Binding TemperatureShellInLet, UpdateSourceTrigger=PropertyChanged}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                        <TextBox Background="{Binding TIB, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding TemperatureShellInLetTB, UpdateSourceTrigger=PropertyChanged}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Calculation.temperature_shell_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Background="{Binding TIB, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding TemperatureShellInLetTB, UpdateSourceTrigger=PropertyChanged}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding ShellInletTemp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <RadioButton IsEnabled="{Binding TSOE}" IsChecked="{Binding TemperatureShellOutLet, UpdateSourceTrigger=PropertyChanged}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
                         <TextBox Background="{Binding TOB, UpdateSourceTrigger=PropertyChanged}"  IsEnabled="{Binding TemperatureShellOutLetTB, UpdateSourceTrigger=PropertyChanged}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Calculation.temperature_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
