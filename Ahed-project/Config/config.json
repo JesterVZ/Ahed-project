@@ -3,11 +3,17 @@
 	"AuthLink": "https://ahead-api.ru/api/user/auth",
 	"CreateLink": "https://ahead-api.ru/api/he/project/create",
 	"GetLink": "https://ahead-api.ru/api/he/project/get",
-	"UpdateLink": "https://ahead-api.ru/api/he/project/update",
+	"UpdateLink": "https://ahead-api.ru/api/he/project/update/{projectId}",
 	"GetProjectsLink": "https://ahead-api.ru/api/he/project/list",
 	"GetProductsList": "https://ahead-api.ru/api/he/product/list",
 	"GetProduct": "https://ahead-api.ru/api/he/product/get/",
 	"Calculate": "https://ahead-api.ru/api/he/heat-balance/calculate",
 	"Materials": "https://ahead-api.ru/api/he/material/list",
-	"GetGeometries": "https://ahead-api.ru/api/he/geometry-catalogs/list"
+	"GetGeometries": "https://ahead-api.ru/api/he/geometry-catalogs/list",
+	"CreateCalculationLink": "https://ahead-api.ru/api/he/project/{projectId}/calculation/create",
+	"UpdateChooseLink": "https://ahead-api.ru/api/he/project/{projectId}/calculation/update/{calculationId}",
+	"CalculateTemperatureLink": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/getT",
+	"GetProductCalculationLink": "https://ahead-api.ru/api/he/project/{projectId}/calculation/list",
+	"UpdateCalculationLink": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/heat-balance/calculate",
+	"CalculateGeometryLink": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/geometry/calculate"
 }

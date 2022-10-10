@@ -24,12 +24,13 @@ namespace Ahed_project.Services
             var request = new RestRequest();
             if (body != null)
                 request.AddBody(body);
+            RestClient restClient = null;
             try
             {
                 switch (projectMethod)
                 {
                     case ProjectMethods.LOGIN:
-                        var restClient = new RestClient(_serviceConfig.LoginLink);
+                        restClient = new RestClient(_serviceConfig.LoginLink);
                         request.Method = Method.Post;
                         Headers.TryGetValue("Authorization", out var authHeader);
                         if (authHeader != null)
@@ -43,7 +44,12 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         if (authHeader != null)
                             AddHeader(authHeader.Split(' ').LastOrDefault());
-                        break;
+                        if (response.IsSuccessful)
+                            return response.Content;
+                        else
+                        {
+                            return JsonConvert.SerializeObject(new object());
+                        }
                     case ProjectMethods.AUTH:
                         restClient = new RestClient(_serviceConfig.AuthLink);
                         request.Method = Method.Get;
@@ -72,7 +78,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.UPDATE:
-                        restClient = new RestClient(_serviceConfig.UpdateLink + $"/{projectId}");
+                        restClient = new RestClient(_serviceConfig.UpdateLink.Replace("{projectId}",projectId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -117,7 +123,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.CREATE_CALCULATION:
-                        restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectId}/calculation/create");
+                        restClient = new RestClient(_serviceConfig.CreateCalculationLink.Replace("{projectId}",projectId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -126,7 +132,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.UPDATE_CHOOSE:
-                        restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectId}/calculation/update/{calculationId}");
+                        restClient = new RestClient(_serviceConfig.UpdateChooseLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -135,7 +141,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.CALCULATE_TEMPERATURE:
-                        restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/getT");
+                        restClient = new RestClient(_serviceConfig.CalculateTemperatureLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -144,7 +150,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.GET_PRODUCT_CALCULATIONS:
-                        restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectId}/calculation/list");
+                        restClient = new RestClient(_serviceConfig.GetProductCalculationLink.Replace("{projectId}", projectId));
                         request.Method = Method.Get;
                         foreach (var header in Headers)
                         {
@@ -153,7 +159,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.UPDATE_CALCULATION:
-                        restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/heat-balance/calculate");
+                        restClient = new RestClient(_serviceConfig.UpdateCalculationLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -170,8 +176,8 @@ namespace Ahed_project.Services
                         }
                         response = restClient.Execute(request);
                         break;
-                    case ProjectMethods.CALCULATE_GEOMETRY:
-                        restClient = new RestClient($"https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/geometry/calculate");
+                    case ProjectMethods.CALCULATE_GEOMETRY:       
+                        restClient = new RestClient(_serviceConfig.CalculateGeometryLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -194,8 +200,6 @@ namespace Ahed_project.Services
                     return response.Content;
                 else
                 {
-                    if (projectMethod == ProjectMethods.LOGIN)
-                        return JsonConvert.SerializeObject(new object());
                     Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Error", $"Message: {response.ErrorMessage}\r\nCode: {response.StatusCode}\r\nExcep: {response.ErrorException}")));
                     return JsonConvert.SerializeObject(new object());
                 }
