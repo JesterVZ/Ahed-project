@@ -564,8 +564,8 @@ namespace Ahed_project.Services.Global
                     {
                         Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
                     }
-                    var geom = JsonConvert.DeserializeObject<GeometryFull>(result.data.ToString());
-                    _geometryPageViewModel.Geometry = geom;
+                    var g = JsonConvert.DeserializeObject<GeometryFull>(result.data.ToString());
+                    _geometryPageViewModel.Geometry = g;
                 }
                 catch (Exception e)
                 {
