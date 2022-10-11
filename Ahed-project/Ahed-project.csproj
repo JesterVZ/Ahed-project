@@ -8,18 +8,6 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Visual\baffles-1.png" />
-    <None Remove="Visual\baffles-2.png" />
-    <None Remove="Visual\check.svg" />
-    <None Remove="Visual\Diagram.png" />
-    <None Remove="Visual\Rotated_Squared.png" />
-    <None Remove="Visual\Rotated_Squared_centred.png" />
-    <None Remove="Visual\Squared.png" />
-    <None Remove="Visual\Squared_centred.png" />
-    <None Remove="Visual\Triangilar.png" />
-    <None Remove="Visual\Triangular_centred.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Visual\check.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -51,7 +39,7 @@
     <None Update="Config\config.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Services\EF\DB\AHED.db">
+    <None Update="Services\EF\DB\AHEAD.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Visual\cancel.svg">
