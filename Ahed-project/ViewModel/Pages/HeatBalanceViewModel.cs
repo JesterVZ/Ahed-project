@@ -127,9 +127,9 @@ namespace Ahed_project.ViewModel.Pages
                         ShellProcessSelector = ShellProcess.Last();
                         RaisePropertiesChanged("ShellProcessSelector");
                     }
-                    Double.TryParse(value.temperature_tube_inlet.Replace('.',','), out var temperatureTubeInlet);
+                    Double.TryParse(value?.temperature_tube_inlet?.Replace('.',','), out var temperatureTubeInlet);
                     TubesInletTemp = temperatureTubeInlet;
-                    Double.TryParse(value.temperature_shell_inlet.Replace('.', ','), out var temperatureShellInlet);
+                    Double.TryParse(value?.temperature_shell_inlet?.Replace('.', ','), out var temperatureShellInlet);
                     ShellInletTemp = temperatureShellInlet;
                 }
             }
@@ -200,7 +200,7 @@ namespace Ahed_project.ViewModel.Pages
                 TSOE = false;
                 TOB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
                 FB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
-                if (double.TryParse(Calculation.temperature_tube_outlet.Replace('.',','), out double res))
+                if (double.TryParse(Calculation?.temperature_tube_outlet?.Replace('.',','), out double res))
                     Calculation.temperature_shell_outlet = res.ToString();
                 RaisePropertiesChanged("Calculation");
             }
