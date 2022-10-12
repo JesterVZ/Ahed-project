@@ -24,9 +24,11 @@ namespace Ahed_project.ViewModel.Pages
         public Dictionary<string, string> TubeProfile { get; set; }
         public Dictionary<string, TubeplateLayout> TubePlateLayouts { get; set; }
         private string _tube_plate_layout_number_of_passes { get; set; }
-        public string Tube_plate_layout_number_of_passes {
+        public string Tube_plate_layout_number_of_passes
+        {
             get => _tube_plate_layout_number_of_passes;
-            set {
+            set
+            {
                 _tube_plate_layout_number_of_passes = value;
                 List<string> divplate = new List<string>(); ;
                 switch (value)
@@ -35,55 +37,55 @@ namespace Ahed_project.ViewModel.Pages
                         divplate.Add("None");
                         break;
                     case "2":
-                        divplate.Add( "Horizontal");
-                        divplate.Add( "Vertical");
-                        divplate.Add( "Mechanised");
+                        divplate.Add("Horizontal");
+                        divplate.Add("Vertical");
+                        divplate.Add("Mechanised");
                         break;
                     case "3":
-                        divplate.Add( "Horizontal");
-                        divplate.Add( "Vertical");
-                        divplate.Add( "Mechanised");
+                        divplate.Add("Horizontal");
+                        divplate.Add("Vertical");
+                        divplate.Add("Mechanised");
                         break;
                     case "4":
                         divplate.Add("Horizontal");
                         divplate.Add("Horizontal + Vertical");
-                        divplate.Add( "Type 3");
-                        divplate.Add( "Mechanised");
+                        divplate.Add("Type 3");
+                        divplate.Add("Mechanised");
                         break;
                     case "5":
                         divplate.Add("Horizontal");
-                        divplate.Add( "Mechanised");
+                        divplate.Add("Mechanised");
                         break;
                     case "6":
-                        divplate.Add( "Type 1");
-                        divplate.Add( "Type 2");
-                        divplate.Add( "Type 3");
-                        divplate.Add( "Mechanised");
+                        divplate.Add("Type 1");
+                        divplate.Add("Type 2");
+                        divplate.Add("Type 3");
+                        divplate.Add("Mechanised");
                         break;
                     case "7":
-                        divplate.Add( "Mechanised");
+                        divplate.Add("Mechanised");
                         break;
                     case "8":
                         divplate.Add("Type 1");
-                        divplate.Add( "Type 2");
-                        divplate.Add( "Type 3");
-                        divplate.Add( "Mechanised");
+                        divplate.Add("Type 2");
+                        divplate.Add("Type 3");
+                        divplate.Add("Mechanised");
                         break;
                     case "9":
                         divplate.Add("Mechanised");
                         break;
                 }
                 DivPlateItems = new ObservableCollection<string>(divplate);
-            } 
+            }
         }
         private GeometryFull _geometry;
-        public GeometryFull Geometry 
-        { 
-            get =>_geometry; 
+        public GeometryFull Geometry
+        {
+            get => _geometry;
             set
             {
                 _geometry = value;
-                ExchangersSelector = Exchangers.FirstOrDefault(x=>x.Key==value.head_exchange_type);
+                ExchangersSelector = Exchangers.FirstOrDefault(x => x.Key == value.head_exchange_type);
                 Orientation = Orientations.FirstOrDefault(x => x.Value == value.orientation);
                 TubeProfileSelector = TubeProfile.FirstOrDefault(x => x.Value == value.tube_profile_tubes_side);
                 ShellMaterial = Materials.FirstOrDefault(x => x.Value == value.material_shell_side);
@@ -117,7 +119,7 @@ namespace Ahed_project.ViewModel.Pages
                         OppositeSide = false;
                         break;
                 }
-                if(value.bundle_type == null || value.bundle_type == "")
+                if (value.bundle_type == null || value.bundle_type == "")
                 {
                     Fixed = true;
                     Removable = false;
@@ -127,13 +129,17 @@ namespace Ahed_project.ViewModel.Pages
                     OppositeSide = true;
                     SameSide = false;
                 }
+                if (value.tube_plate_layout_number_of_passes == null || value.tube_plate_layout_number_of_passes == "")
+                {
+                    Tube_plate_layout_number_of_passes = "1";
+                }
 
             }
         }
 
         private KeyValuePair<int, string> _shellMaterial;
 
-        public KeyValuePair<int,string> ShellMaterial
+        public KeyValuePair<int, string> ShellMaterial
         {
             get => _shellMaterial;
             set
@@ -148,7 +154,7 @@ namespace Ahed_project.ViewModel.Pages
 
         private KeyValuePair<int, string> _tubesMaterial;
 
-        public KeyValuePair<int,string> TubesMaterial
+        public KeyValuePair<int, string> TubesMaterial
         {
             get => _tubesMaterial;
             set
@@ -167,13 +173,13 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _tubeLayout = value;
-                if(Geometry != null)
+                if (Geometry != null)
                 {
-                    if(value.Value != null)
+                    if (value.Value != null)
                     {
                         Geometry.tube_plate_layout_tube_layout = value.Key;
                     }
-                    
+
                 }
             }
 
@@ -190,31 +196,33 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
         private bool _oppositeSide;
-        public bool OppositeSide {
+        public bool OppositeSide
+        {
             get => _oppositeSide;
             set
             {
                 _oppositeSide = value;
-                if(Geometry != null)
+                if (Geometry != null)
                 {
-                    if(value == true)
+                    if (value == true)
                     {
                         Geometry.shell_nozzle_orientation = "opposite_side";
                     }
-                    
+
                 }
-                
+
             }
         }
         private bool _sameSide;
-        public bool SameSide {
+        public bool SameSide
+        {
             get => _sameSide;
             set
             {
                 _sameSide = value;
-                if(Geometry != null)
+                if (Geometry != null)
                 {
-                    if(value == true)
+                    if (value == true)
                     {
                         Geometry.shell_nozzle_orientation = "same_side";
                     }
@@ -223,15 +231,19 @@ namespace Ahed_project.ViewModel.Pages
         }
         private KeyValuePair<string, string> _exchangersSelector;
 
-        public KeyValuePair<string, string> ExchangersSelector { 
-            get { 
-                return _exchangersSelector; 
-            } 
-            set {
-                if(value.Key == "annular_space")
+        public KeyValuePair<string, string> ExchangersSelector
+        {
+            get
+            {
+                return _exchangersSelector;
+            }
+            set
+            {
+                if (value.Key == "annular_space")
                 {
                     GridColumnWidth = 120;
-                } else
+                }
+                else
                 {
                     GridColumnWidth = 0;
                 }
@@ -250,7 +262,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _tubeProfileSelector = value;
-                if(Geometry != null)
+                if (Geometry != null)
                 {
                     Geometry.tube_profile_tubes_side = value.Key;
                 }
@@ -263,15 +275,15 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _fixed = value;
-                if(value == true)
+                if (value == true)
                 {
-                    if(Geometry != null)
+                    if (Geometry != null)
                     {
                         Geometry.bundle_type = "Fixed";
                     }
-                    
+
                 }
-                
+
             }
         }
         private bool _removable;
@@ -281,7 +293,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _removable = value;
-                if(Geometry != null)
+                if (Geometry != null)
                 {
                     if (value == true)
                     {
@@ -289,7 +301,7 @@ namespace Ahed_project.ViewModel.Pages
 
                     }
                 }
-                
+
             }
         }
         private bool _rollerExpanded;
@@ -299,7 +311,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _rollerExpanded = value;
-                if(Geometry != null)
+                if (Geometry != null)
                 {
                     if (value == true)
                     {
@@ -311,7 +323,7 @@ namespace Ahed_project.ViewModel.Pages
                     }
                 }
 
-                
+
             }
         }
         private Visibility _sealingTypeVis;
@@ -332,11 +344,13 @@ namespace Ahed_project.ViewModel.Pages
             get => _divPlateItem;
             set
             {
+                /*
                 _divPlateItem = value;
                 if (Geometry != null)
                 {
                     Geometry.tube_plate_layout_div_plate_layout = value;
                 }
+                */
                 if (value == "Mechanised")
                 {
                     SealingTypeVis = Visibility.Visible;
@@ -358,11 +372,11 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _sealingTypeItem = value;
-                if(Geometry != null)
+                if (Geometry != null)
                 {
                     Geometry.tube_plate_layout_sealing_type = value.Key;
                 }
-                if (_sealingTypeItem.Value== "O'Rings + Housing")
+                if (_sealingTypeItem.Value == "O'Rings + Housing")
                 {
                     HousingSpaceVis = Visibility.Visible;
                 }
@@ -428,7 +442,7 @@ namespace Ahed_project.ViewModel.Pages
                 ImageUrl = "../Visual/Rotated_Squared_centred.png",
                 Name = "Rotated Squared Centred"
             };
-
+            Tube_plate_layout_number_of_passes = "1";
             Exchangers.Add("tube_shell", "Tube/Shell");
             Exchangers.Add("annular_space", "Annular Space");
             Exchangers.Add("unicus", "Unicus");
@@ -467,6 +481,28 @@ namespace Ahed_project.ViewModel.Pages
 
         public ICommand Calculate => new DelegateCommand(() =>
         {
+            if (OppositeSide == true) //небольшой костыль, я потом поправлю
+            {
+                Geometry.shell_nozzle_orientation = "opposite_side";
+            }
+            if (SameSide == true)
+            {
+                Geometry.shell_nozzle_orientation = "same_side";
+            }
+
+            switch (DivPlateItem)
+            {
+                case "None":
+                    Geometry.tube_plate_layout_div_plate_layout = "none";
+                    break;
+                case "Horizontal":
+                    Geometry.tube_plate_layout_div_plate_layout = "horizontal";
+                    break;
+                case "Vertical":
+                    Geometry.tube_plate_layout_div_plate_layout = "vertical";
+                    break;
+
+            }
             Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateGeometry(Geometry));
         });
 
