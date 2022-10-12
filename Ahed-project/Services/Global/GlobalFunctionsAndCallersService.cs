@@ -3,6 +3,7 @@ using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.GeometryClasses;
 using Ahed_project.MasterData.Products;
 using Ahed_project.MasterData.ProjectClasses;
+using Ahed_project.MasterData.TabClasses;
 using Ahed_project.Migrations;
 using Ahed_project.Services.EF;
 using Ahed_project.Services.EF.Model;
@@ -87,8 +88,38 @@ namespace Ahed_project.Services.Global
             await Task.Factory.StartNew(DownLoadProducts);
             await Task.Factory.StartNew(GetMaterials);
             await Task.Factory.StartNew(DownloadGeometries);
+            //await Task.Factory.StartNew(GetTabState);
 
         }
+        //получение состояний вкладок
+        public static async Task GetTabState()
+        {
+            int calculation_id;
+            using (var context = new EFContext())
+            {
+                var user = context.Users.FirstOrDefault(x => x.Id == GlobalDataCollectorService.UserId);
+                calculation_id = user.LastCalculationId ?? 0;
+            }
+            var template = _sendDataService.ReturnCopy();
+            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка состояний вкладок...")));
+            var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.GET_TAB_STATE, null, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString()));
+            _contentPageViewModel.SetTabState(response);
+            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка состояний вкладок завершена!")));
+        }
+        //сохранение состояния вкладок
+        public static async void SetTabState(TabsState tabs)
+        {
+            int calculation_id;
+            using (var context = new EFContext())
+            {
+                var user = context.Users.FirstOrDefault(x => x.Id == GlobalDataCollectorService.UserId);
+                calculation_id = user.LastCalculationId ?? 0;
+            }
+            string json = JsonConvert.SerializeObject(tabs);
+            var template = _sendDataService.ReturnCopy();
+            var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.SET_TAB_STATE, json, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString()));
+        }
+
         //загрузка геометрий
         public static async Task DownloadGeometries()
         {
@@ -354,6 +385,7 @@ namespace Ahed_project.Services.Global
             _heatBalanceViewModel.ShellProductName = shellProduct?.name;
             _shellFluidViewModel.Product = shellProduct;
             _mainViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({_heatBalanceViewModel.Calculation?.name})";
+            await Task.Factory.StartNew(GetTabState);
             _contentPageViewModel.Validation();
         }
         //выбор геометрии

@@ -194,6 +194,24 @@ namespace Ahed_project.Services
                         }
                         response = restClient.Execute(request);
                         break;
+                    case ProjectMethods.GET_TAB_STATE:
+                        restClient = new RestClient(_serviceConfig.GetTabStateLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        request.Method = Method.Get;
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        response = restClient.Execute(request);
+                        break;
+                    case ProjectMethods.SET_TAB_STATE:
+                        restClient = new RestClient(_serviceConfig.SetTabStateLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        request.Method = Method.Post;
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        response = restClient.Execute(request);
+                        break;
 
                 }
                 if (response.IsSuccessful)

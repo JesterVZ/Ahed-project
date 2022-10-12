@@ -24,13 +24,14 @@
                 <MenuItem Header="New" InputGestureText="Ctrl + N" Command="{Binding NewProjectCommand}"></MenuItem>
                 <MenuItem Header="Manage">
                     <MenuItem Header="Project" Command="{Binding OpenProjectsWindow}"></MenuItem>
+                    <MenuItem Header="Product" Command="{Binding OpenProductsWindow}"></MenuItem>
                     <MenuItem Header="Fluid"></MenuItem>
-                    <MenuItem Header="Geometry"></MenuItem>
+                    <MenuItem Header="Geometry" Command="{Binding OpenGeometryWindow}"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Save">
                     <MenuItem Header="Project" InputGestureText="Ctrl + S" Command="{Binding SaveCommand}"></MenuItem>
                     <MenuItem Header="Fluid"></MenuItem>
-                    <MenuItem Header="Geometry"></MenuItem>
+                    <MenuItem Header="Geometry" Command="{Binding OpenGeometryWindow}"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Save as">
                     <MenuItem Header="Save project as"></MenuItem>
@@ -43,12 +44,6 @@
                 <MenuItem Header="Exit" Command="{Binding Exit}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Tools">
-                <MenuItem Header="Select presets">
-                    <MenuItem Header="Products" Command="{Binding OpenProductsWindow}"></MenuItem>
-                    <MenuItem Header="Material presets" Command="{Binding OpenMaterialsWindow}"></MenuItem>
-                    <MenuItem Header="Fluid presets" Command="{Binding OpenPresetWindow}"></MenuItem>
-                    <MenuItem Header="Geomery presets" Command="{Binding OpenGeometryWindow}"></MenuItem>
-                </MenuItem>
                 <MenuItem Header="Options"></MenuItem>
             </MenuItem>
             <MenuItem Header="Help">

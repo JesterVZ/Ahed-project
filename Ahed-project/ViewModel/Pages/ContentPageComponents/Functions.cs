@@ -1,5 +1,7 @@
 ﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData.TabClasses;
 using Ahed_project.Services.Global;
+using Newtonsoft.Json;
 using System.IO;
 using System.Reflection;
 
@@ -10,7 +12,9 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         public void Validation()
         {
             var assembly = Assembly.GetExecutingAssembly();
-            
+            TabsState tabs = new();
+
+
             if (GlobalDataCollectorService.Project != null)
             {
                 if (GlobalFunctionsAndCallersService.GetSelectedCalculation != null)
@@ -26,6 +30,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                         TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
                     } else
                     {
+                        tabs.tube_fluid = "1";
                         TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
                     }
                     if (GlobalFunctionsAndCallersService.GetShellProduct() == null)
@@ -33,10 +38,12 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                         ShellFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
                     } else
                     {
+                        tabs.shell_fluid = "1";
                         ShellFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
                     }
                     if (GlobalDataCollectorService.HeatBalanceCalculated)
                     {
+                        tabs.shell_fluid = "1";
                         HeatBalanceValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
                     }
                     else
@@ -45,11 +52,13 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     }
                     if (GlobalDataCollectorService.GeometryCalculated)
                     {
+                        tabs.shell_fluid = "1";
                         GeometryValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
                     } else
                     {
                         GeometryValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
                     }
+                    GlobalFunctionsAndCallersService.SetTabState(tabs);
                 } else
                 {
                     //GlobalDataCollectorService.Logs.Add(new LoggerMessage("warning", "Выберите калькуляцию!"));
@@ -63,6 +72,12 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/cancel.svg";
                 return;
             }
+        }
+
+        public void SetTabState(string json)
+        {
+            TabsState tabs = JsonConvert.DeserializeObject<TabsState>(json);
+
         }
 
         private void ChangeTabState(MasterData.Pages page)

@@ -40,5 +40,7 @@ namespace Ahed_project.Services
         public string GetProductCalculationLink { get; set; }
         public string UpdateCalculationLink { get; set; }
         public string CalculateGeometryLink { get; set; }
+        public string GetTabStateLink { get; set; }
+        public string SetTabStateLink { get; set; }
     }
 }
