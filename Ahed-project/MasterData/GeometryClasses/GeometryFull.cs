@@ -51,6 +51,7 @@ namespace Ahed_project.MasterData.GeometryClasses
         public string tube_plate_layout_div_plate_thickness { get; set; }
         public string tube_plate_layout_tubes_cross_section_pre_pass { get; set; }
         public string tube_plate_layout_shell_cross_section { get; set; }
+        public string tube_plate_layout_tubeplate_thickness { get; set; }
         public string tube_plate_layout_perimeter { get; set; }
         public string tube_plate_layout_max_nr_tubes { get; set; }
         public string tube_plate_layout_tube_distribution { get; set; }
@@ -58,8 +59,12 @@ namespace Ahed_project.MasterData.GeometryClasses
         public string nozzles_in_outer_diam_inner_side { get; set; }
         public string nozzles_in_outer_diam_tubes_side { get; set; }
         public string nozzles_in_outer_diam_shell_side { get; set; }
+        public string nozzles_in_length_tubes_side { get; set; }
+        public string nozzles_in_length_shell_side { get; set; }
         public string nozzles_in_thickness_inner_side { get; set; }
         public string nozzles_in_thickness_tubes_side { get; set; }
+        public string nozzles_out_length_tubes_side { get; set; }
+        public string nozzles_out_length_shell_side { get; set; }
         public string nozzles_in_thickness_shell_side { get; set; }
         public string nozzles_in_inner_diam_inner_side { get; set; }
         public string nozzles_in_inner_diam_tubes_side { get; set; }
@@ -84,6 +89,13 @@ namespace Ahed_project.MasterData.GeometryClasses
         public string outlet_baffle_spacing { get; set; }
         public string baffle_thickness { get; set; }
         public string pairs_of_sealing_strips { get; set; }
+        public string clearances_spacing_tube_to_tubeplate { get; set; }
+        public string clearances_spacing_tubeplate_to_shell { get; set; }
+        public string clearances_spacing_division_plate_to_shell { get; set; }
+        public string clearances_spacing_minimum_tube_hole_to_tubeplate_edge { get; set; }
+        public string clearances_spacing_min_tube_hole_to_division_plate_groove { get; set; }
+        public string clearances_spacing_division_plate_to_tubeplate { get; set; }
+        public string clearances_spacing_minimum_tube_in_tube_spacing { get; set; }
         public string image { get; set; }
         public DateTime? createdAt { get; set; }
         public DateTime? updatedAt { get; set; }

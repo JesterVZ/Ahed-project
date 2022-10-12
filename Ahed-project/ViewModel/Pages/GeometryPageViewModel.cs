@@ -91,7 +91,7 @@ namespace Ahed_project.ViewModel.Pages
                 ShellMaterial = Materials.FirstOrDefault(x => x.Value == value.material_shell_side);
                 TubesMaterial = Materials.FirstOrDefault(x => x.Value == value.material_tubes_side);
                 TubeLayout = TubePlateLayouts.FirstOrDefault(x => x.Value.Name == value.tube_plate_layout_tube_layout);
-
+                DivPlateItem = DivPlateItems.FirstOrDefault(x => x == value.tube_plate_layout_div_plate_layout);
                 switch (value.bundle_type)
                 {
                     case "Fixed":
@@ -344,8 +344,9 @@ namespace Ahed_project.ViewModel.Pages
             get => _divPlateItem;
             set
             {
-                /*
                 _divPlateItem = value;
+                /*
+                
                 if (Geometry != null)
                 {
                     Geometry.tube_plate_layout_div_plate_layout = value;
@@ -501,7 +502,30 @@ namespace Ahed_project.ViewModel.Pages
                 case "Vertical":
                     Geometry.tube_plate_layout_div_plate_layout = "vertical";
                     break;
-
+                case "Mechanised":
+                    Geometry.tube_plate_layout_div_plate_layout = "mechanised";
+                    break;
+                case "Type_1":
+                    Geometry.tube_plate_layout_div_plate_layout = "type_1";
+                    break;
+                case "Type_2":
+                    Geometry.tube_plate_layout_div_plate_layout = "type_2";
+                    break;
+                case "Type_3":
+                    Geometry.tube_plate_layout_div_plate_layout = "type_3";
+                    break;
+                case "Horizontal + Vertical":
+                    Geometry.tube_plate_layout_div_plate_layout = "horizontal_vertical";
+                    break;
+            }
+            switch(SealingTypeItem.Value)
+            {
+                case "O'Rings + Housing":
+                    Geometry.tube_plate_layout_sealing_type = "o_rings_housing";
+                    break;
+                case "Gasket":
+                    Geometry.tube_plate_layout_sealing_type = "gasket";
+                    break;
             }
             Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateGeometry(Geometry));
         });
