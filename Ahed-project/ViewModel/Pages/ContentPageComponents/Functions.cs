@@ -27,6 +27,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     ChangeTabState(MasterData.Pages.BAFFLES);
                     if (GlobalFunctionsAndCallersService.GetTubeProduct() == null)
                     {
+                        tabs.tube_fluid = "0";
                         TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
                     } else
                     {
@@ -35,6 +36,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     }
                     if (GlobalFunctionsAndCallersService.GetShellProduct() == null)
                     {
+                        tabs.shell_fluid = "0";
                         ShellFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
                     } else
                     {
@@ -43,22 +45,24 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     }
                     if (GlobalDataCollectorService.HeatBalanceCalculated)
                     {
-                        tabs.shell_fluid = "1";
+                        tabs.head_balance = "1";
                         HeatBalanceValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
                     }
                     else
                     {
+                        tabs.head_balance = "0";
                         HeatBalanceValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
                     }
                     if (GlobalDataCollectorService.GeometryCalculated)
                     {
-                        tabs.shell_fluid = "1";
+                        tabs.geometry = "1";
                         GeometryValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
                     } else
                     {
+                        tabs.geometry = "0";
                         GeometryValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
                     }
-                    GlobalFunctionsAndCallersService.SetTabState(tabs);
+                    GlobalFunctionsAndCallersService.SetTabState(tabs); //отправить состояник вкладок по api
                 } else
                 {
                     //GlobalDataCollectorService.Logs.Add(new LoggerMessage("warning", "Выберите калькуляцию!"));
@@ -74,10 +78,27 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             }
         }
 
-        public void SetTabState(string json)
+        public void SetTabState(string json) //расставить галочки
         {
+            var assembly = Assembly.GetExecutingAssembly();
             TabsState tabs = JsonConvert.DeserializeObject<TabsState>(json);
+            if(tabs.tube_fluid != null && tabs.tube_fluid == "1")
+            {
+                TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
+            } else
+            {
+                ShellFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
+            }
 
+            if(tabs.shell_fluid != null && tabs.shell_fluid == "1")
+            {
+                ShellFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
+            } else
+            {
+                ShellFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
+            }
+
+            
         }
 
         private void ChangeTabState(MasterData.Pages page)
