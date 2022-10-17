@@ -279,7 +279,7 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     if (Geometry != null)
                     {
-                        Geometry.bundle_type = "Fixed";
+                        Geometry.bundle_type = "fixed";
                     }
 
                 }
@@ -297,7 +297,7 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     if (value == true)
                     {
-                        Geometry.bundle_type = "Removable";
+                        Geometry.bundle_type = "removable";
 
                     }
                 }
@@ -315,11 +315,11 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     if (value == true)
                     {
-                        Geometry.roller_expanded = "Yes";
+                        Geometry.roller_expanded = "1";
                     }
                     else
                     {
-                        Geometry.roller_expanded = "No";
+                        Geometry.roller_expanded = "0";
                     }
                 }
 

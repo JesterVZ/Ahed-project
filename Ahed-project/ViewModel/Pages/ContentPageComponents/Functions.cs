@@ -45,12 +45,12 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     }
                     if (GlobalDataCollectorService.HeatBalanceCalculated)
                     {
-                        tabs.head_balance = "1";
+                        tabs.heat_balance = "1";
                         HeatBalanceValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
                     }
                     else
                     {
-                        tabs.head_balance = "0";
+                        tabs.heat_balance = "0";
                         HeatBalanceValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
                     }
                     if (GlobalDataCollectorService.GeometryCalculated)
