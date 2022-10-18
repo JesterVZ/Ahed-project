@@ -9,7 +9,12 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 {
     public partial class ContentPageViewModel
     {
-        public void Validation()
+        /// <summary>
+        /// needSetData - если нужно отправлять состояния вкладок (это нужно далеко не всегда, но валидация нужна).
+        /// 
+        /// </summary>
+        /// <param name="needSetData"></param>
+        public void Validation(bool needSetData)
         {
             var assembly = Assembly.GetExecutingAssembly();
             TabsState tabs = new();
@@ -45,12 +50,12 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     }
                     if (GlobalDataCollectorService.HeatBalanceCalculated)
                     {
-                        tabs.heat_balance = "1";
+                        tabs.head_balance = "1";
                         HeatBalanceValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
                     }
                     else
                     {
-                        tabs.heat_balance = "0";
+                        tabs.head_balance = "0";
                         HeatBalanceValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
                     }
                     if (GlobalDataCollectorService.GeometryCalculated)
@@ -62,6 +67,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                         tabs.geometry = "0";
                         GeometryValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
                     }
+                    if(needSetData)
                     GlobalFunctionsAndCallersService.SetTabState(tabs); //отправить состояник вкладок по api
                 } else
                 {
@@ -87,7 +93,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
             } else
             {
-                ShellFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
+                TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
             }
 
             if(tabs.shell_fluid != null && tabs.shell_fluid == "1")
@@ -98,7 +104,25 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 ShellFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
             }
 
-            
+            if (tabs.head_balance != null && tabs.head_balance == "1")
+            {
+                HeatBalanceValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
+            }
+            else
+            {
+                HeatBalanceValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
+            }
+
+            if (tabs.geometry != null && tabs.geometry == "1")
+            {
+                GeometryValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
+            }
+            else
+            {
+                GeometryValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
+            }
+
+
         }
 
         private void ChangeTabState(MasterData.Pages page)

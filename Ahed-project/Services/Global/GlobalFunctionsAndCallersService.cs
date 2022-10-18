@@ -82,7 +82,7 @@ namespace Ahed_project.Services.Global
                     _projectPageViewModel.FieldsState = false;
                 }
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Загрузка проекта выполнена успешно!")));
-                _contentPageViewModel.Validation();
+                _contentPageViewModel.Validation(false);
                 
             }
             await Task.Factory.StartNew(DownLoadProducts);
@@ -115,6 +115,8 @@ namespace Ahed_project.Services.Global
                 var user = context.Users.FirstOrDefault(x => x.Id == GlobalDataCollectorService.UserId);
                 calculation_id = user.LastCalculationId ?? 0;
             }
+            tabs.calculation_id = calculation_id.ToString();
+            tabs.project_id = GlobalDataCollectorService.Project.project_id.ToString();
             string json = JsonConvert.SerializeObject(tabs);
             var template = _sendDataService.ReturnCopy();
             var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.SET_TAB_STATE, json, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString()));
@@ -220,7 +222,7 @@ namespace Ahed_project.Services.Global
                 context.Update(user);
                 context.SaveChanges();
             }
-            _contentPageViewModel.Validation();
+            _contentPageViewModel.Validation(false);
         }
 
         //Установка продукта
@@ -235,7 +237,7 @@ namespace Ahed_project.Services.Global
             SetUserLastProject(projectInfoGet.project_id);
             Task.Factory.StartNew(() => GetCalculations(projectInfoGet.project_id.ToString()));
             _mainViewModel.Title = $"{projectInfoGet.name} ({_heatBalanceViewModel.Calculation?.name})";
-            _contentPageViewModel.Validation();
+            _contentPageViewModel.Validation(false);
             _projectPageViewModel.FieldsState = true;
         }
 
@@ -314,7 +316,7 @@ namespace Ahed_project.Services.Global
             }
             CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
             Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations.Add(calculationGet));
-            _contentPageViewModel.Validation();
+            _contentPageViewModel.Validation(true);
         }
         //изменение имени рассчета
         public static async void ChangeCalculationName(CalculationFull calc)
@@ -333,7 +335,7 @@ namespace Ahed_project.Services.Global
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", $"Имя расчета {calc.calculation_id} изменено!")));
             }
             
-            _contentPageViewModel.Validation();
+            //_contentPageViewModel.Validation();
         }
         //расчет температуры при условии того, что в поле pressure_shell_inlet введено значнеие
         public static async void CalculateTemperature(string pressure_shell_inlet_value, CalculationFull calc,bool shell)
@@ -386,7 +388,7 @@ namespace Ahed_project.Services.Global
             _shellFluidViewModel.Product = shellProduct;
             _mainViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({_heatBalanceViewModel.Calculation?.name})";
             await Task.Factory.StartNew(GetTabState);
-            _contentPageViewModel.Validation();
+            //_contentPageViewModel.Validation(false);
         }
         //выбор геометрии
         public static void SelectGeometry(GeometryFull geometry)
@@ -403,7 +405,7 @@ namespace Ahed_project.Services.Global
             }
             _geometryPageViewModel.Geometry = geometry;
             GlobalDataCollectorService.GeometryCalculated = false;
-            _contentPageViewModel.Validation();
+            _contentPageViewModel.Validation(false);
         }
 
         //Выбор продукта Tube
@@ -416,7 +418,7 @@ namespace Ahed_project.Services.Global
                 Task.Factory.StartNew(UpdateCalculationProducts);
             }
             _tubesFluidViewModel.Product = product;
-            _contentPageViewModel.Validation();
+            _contentPageViewModel.Validation(true);
         }
         //ссылка на _tubesFluidViewModel.Product
         public static ProductGet GetTubeProduct()
@@ -439,7 +441,7 @@ namespace Ahed_project.Services.Global
                 Task.Factory.StartNew(UpdateCalculationProducts);
             }
             _shellFluidViewModel.Product = product;
-            _contentPageViewModel.Validation();
+            _contentPageViewModel.Validation(true);
         }
 
         //Обновить продукты в рассчете
@@ -464,7 +466,7 @@ namespace Ahed_project.Services.Global
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
             }
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Сохранение выполнено успешно!")));
-            _contentPageViewModel.Validation();
+            _contentPageViewModel.Validation(false);
         }
 
         //Рассчитать
@@ -513,7 +515,7 @@ namespace Ahed_project.Services.Global
             }
             var saveResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CALCULATION, json, calculation.project_id.ToString(), calculation.calculation_id.ToString()));
             GlobalDataCollectorService.HeatBalanceCalculated = true;
-            _contentPageViewModel.Validation();
+            _contentPageViewModel.Validation(true);
         }
         //расчет геометрии
         public static async void CalculateGeometry(GeometryFull geometry)
@@ -604,7 +606,7 @@ namespace Ahed_project.Services.Global
                 }
             }
             GlobalDataCollectorService.GeometryCalculated = true;
-            _contentPageViewModel.Validation();
+            _contentPageViewModel.Validation(true);
         }
 
         //Создать проект
@@ -624,7 +626,7 @@ namespace Ahed_project.Services.Global
                     var newProj = JsonConvert.DeserializeObject<ProjectInfoGet>(result.data.ToString());
                     GlobalDataCollectorService.ProjectsCollection.Add(newProj);
                     SetProject(newProj);
-                    _contentPageViewModel.Validation();
+                    _contentPageViewModel.Validation(true);
                     Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations.Clear());
                     await Task.Factory.StartNew(() => CreateCalculation("Default"));
                 }
