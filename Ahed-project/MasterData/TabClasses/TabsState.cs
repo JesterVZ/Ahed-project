@@ -13,7 +13,7 @@ namespace Ahed_project.MasterData.TabClasses
         public string project_id { get; set; }
         public string tube_fluid { get; set; }
         public string shell_fluid { get; set; }
-        public string heat_balance { get; set; }
+        public string head_balance { get; set; }
         public string geometry { get; set; }
         public string baffles { get; set; }
         public string overall_calculation { get; set; }

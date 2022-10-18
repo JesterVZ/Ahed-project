@@ -97,10 +97,12 @@ namespace Ahed_project.ViewModel.Pages
                     case "Fixed":
                         Fixed = true;
                         Removable = false;
+                        _geometry.bundle_type = "fixed";
                         break;
                     case "Removable":
                         Removable = true;
                         Fixed = false;
+                        _geometry.bundle_type = "removable";
                         break;
                     case "":
                         Fixed = true;
