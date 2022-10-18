@@ -7,12 +7,6 @@
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
-  <PropertyGroup>
-    <PublishSingleFile>true</PublishSingleFile>
-    <SelfContained>true</SelfContained>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-    <PublishReadyToRun>true</PublishReadyToRun>
-  </PropertyGroup>
   <ItemGroup>
     <Content Include="Visual\check.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
