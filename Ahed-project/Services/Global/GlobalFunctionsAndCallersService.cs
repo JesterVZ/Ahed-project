@@ -625,6 +625,8 @@ namespace Ahed_project.Services.Global
                     }
                     var newProj = JsonConvert.DeserializeObject<ProjectInfoGet>(result.data.ToString());
                     GlobalDataCollectorService.ProjectsCollection.Add(newProj);
+                    GlobalDataCollectorService.GeometryCalculated = false;
+                    GlobalDataCollectorService.HeatBalanceCalculated = false;
                     SetProject(newProj);
                     _contentPageViewModel.Validation(true);
                     Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations.Clear());
