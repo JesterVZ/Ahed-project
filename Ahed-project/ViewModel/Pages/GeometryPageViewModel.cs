@@ -1,4 +1,5 @@
-﻿using Ahed_project.MasterData.GeometryClasses;
+﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData.GeometryClasses;
 using Ahed_project.Services.Global;
 using DevExpress.DXBinding.Native;
 using DevExpress.Mvvm;
@@ -20,7 +21,7 @@ namespace Ahed_project.ViewModel.Pages
         public double GridColumnWidth { get; set; }
         public Dictionary<string, string> Exchangers { get; set; }
         public Dictionary<string, string> Orientations { get; set; }
-        public Dictionary<int, string> Materials { get; set; }
+        public Dictionary<int, Material> Materials { get; set; }
         public Dictionary<string, string> TubeProfile { get; set; }
         public Dictionary<string, TubeplateLayout> TubePlateLayouts { get; set; }
         private string _tube_plate_layout_number_of_passes { get; set; }
@@ -88,8 +89,8 @@ namespace Ahed_project.ViewModel.Pages
                 ExchangersSelector = Exchangers.FirstOrDefault(x => x.Key == value.head_exchange_type);
                 Orientation = Orientations.FirstOrDefault(x => x.Value == value.orientation);
                 TubeProfileSelector = TubeProfile.FirstOrDefault(x => x.Value == value.tube_profile_tubes_side);
-                ShellMaterial = Materials.FirstOrDefault(x => x.Value == value.material_shell_side);
-                TubesMaterial = Materials.FirstOrDefault(x => x.Value == value.material_tubes_side);
+                ShellMaterial = Materials.FirstOrDefault(x => x.Value.name == value.material_shell_side);
+                TubesMaterial = Materials.FirstOrDefault(x => x.Value.name == value.material_tubes_side);
                 TubeLayout = TubePlateLayouts.FirstOrDefault(x => x.Value.Name == value.tube_plate_layout_tube_layout);
                 DivPlateItem = DivPlateItems.FirstOrDefault(x => x == value.tube_plate_layout_div_plate_layout);
                 switch (value.bundle_type)
@@ -107,6 +108,16 @@ namespace Ahed_project.ViewModel.Pages
                     case "":
                         Fixed = true;
                         Removable = false;
+                        break;
+                }
+
+                switch (value.roller_expanded)
+                {
+                    case "No":
+                            RollerExpanded = false;
+                        break;
+                    case "Yes":
+                            RollerExpanded = true;
                         break;
                 }
 
@@ -139,9 +150,9 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
 
-        private KeyValuePair<int, string> _shellMaterial;
+        private KeyValuePair<int, Material> _shellMaterial;
 
-        public KeyValuePair<int, string> ShellMaterial
+        public KeyValuePair<int, Material> ShellMaterial
         {
             get => _shellMaterial;
             set
@@ -149,14 +160,14 @@ namespace Ahed_project.ViewModel.Pages
                 _shellMaterial = value;
                 if (value.Value != null)
                 {
-                    Geometry.material_shell_side = value.Value;
+                    Geometry.material_shell_side = value.Value.name_short;
                 }
             }
         }
 
-        private KeyValuePair<int, string> _tubesMaterial;
+        private KeyValuePair<int, Material> _tubesMaterial;
 
-        public KeyValuePair<int, string> TubesMaterial
+        public KeyValuePair<int, Material> TubesMaterial
         {
             get => _tubesMaterial;
             set
@@ -164,7 +175,7 @@ namespace Ahed_project.ViewModel.Pages
                 _tubesMaterial = value;
                 if (value.Value != null)
                 {
-                    Geometry.material_tubes_side = value.Value;
+                    Geometry.material_tubes_side = value.Value.name_short;
                 }
             }
         }
@@ -404,7 +415,7 @@ namespace Ahed_project.ViewModel.Pages
         {
             Exchangers = new Dictionary<string, string>();
             Orientations = new Dictionary<string, string>();
-            Materials = new Dictionary<int, string>();
+            Materials = new Dictionary<int, Material>();
             DivPlateItems = new ObservableCollection<string>();
             SealingTypeItems = new Dictionary<string, string>();
             TubePlateLayouts = new Dictionary<string, TubeplateLayout>();
@@ -491,6 +502,16 @@ namespace Ahed_project.ViewModel.Pages
             if (SameSide == true)
             {
                 Geometry.shell_nozzle_orientation = "same_side";
+            }
+
+            switch (Geometry.roller_expanded)
+            {
+                case "No":
+                    Geometry.roller_expanded = "0";
+                    break;
+                case "Yes":
+                    Geometry.roller_expanded = "1";
+                    break;
             }
 
             switch (DivPlateItem)

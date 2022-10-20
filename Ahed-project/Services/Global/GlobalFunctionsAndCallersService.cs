@@ -649,7 +649,7 @@ namespace Ahed_project.Services.Global
                 {
                     var materials = JsonConvert.DeserializeObject<IEnumerable<Material>>(response);
                     GlobalDataCollectorService.Materials = materials.ToList();
-                    _geometryPageViewModel.Materials = GlobalDataCollectorService.Materials.ToDictionary(keySelector: m => m.material_id, elementSelector: m => m.name_short);
+                    _geometryPageViewModel.Materials = GlobalDataCollectorService.Materials.ToDictionary(keySelector: m => m.material_id, elementSelector: m => new Material {material_id = m.material_id, name = m.name, name_short = m.name_short, createdAt = m.createdAt, updatedAt = m.updatedAt});
                 }
                 catch (Exception e)
                 {

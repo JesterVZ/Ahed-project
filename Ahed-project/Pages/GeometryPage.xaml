@@ -97,14 +97,14 @@
                         <ComboBox Style="{StaticResource ComboboxDefault}" SelectedItem="{Binding TubesMaterial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Materials}" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="6" SelectedIndex="0" Margin="3,3,3,3">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Label Content="{Binding Value}"/>
+                                    <Label Content="{Binding Value.name_short}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                         <ComboBox Style="{StaticResource ComboboxDefault}" SelectedItem="{Binding ShellMaterial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Materials}" Grid.Column="4" Grid.Row="6" SelectedIndex="0" Margin="3,3,3,3">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Label Content="{Binding Value}"/>
+                                    <Label Content="{Binding Value.name_short}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
