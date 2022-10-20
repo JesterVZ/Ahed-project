@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using Ahed_project.ViewModel.Pages;
+using System.Windows.Controls;
 
 namespace Ahed_project.Pages
 {
@@ -7,9 +8,10 @@ namespace Ahed_project.Pages
     /// </summary>
     public partial class BafflesPage : Page
     {
-        public BafflesPage()
+        public BafflesPage(BufflesPageViewModel vm)
         {
             InitializeComponent();
+            DataContext = vm;
         }
     }
 }

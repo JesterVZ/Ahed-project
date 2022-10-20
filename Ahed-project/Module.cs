@@ -46,6 +46,7 @@ namespace Ahed_project
             builder.RegisterType<HeatBalanceViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<TubesFluidViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<ShellFluidViewModel>().AsSelf().SingleInstance();
+            builder.RegisterType<BufflesPageViewModel>().AsSelf().SingleInstance();
             #endregion
             #region Pages
             builder.RegisterType<_3DPage>().AsSelf().SingleInstance();
