@@ -17,5 +17,6 @@
 	"UpdateCalculationLink": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/heat-balance/calculate",
 	"CalculateGeometryLink": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/geometry/calculate",
 	"GetTabStateLink": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/get_tab_state",
-	"SetTabStateLink": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/set_tab_state"
+	"SetTabStateLink": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/set_tab_state",
+	"CalculateBaffle": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/baffles/calculate"
 }

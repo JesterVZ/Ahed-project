@@ -20,6 +20,7 @@
         UPDATE_CALCULATION,
         CALCULATE_GEOMETRY,
         GET_TAB_STATE,
-        SET_TAB_STATE
+        SET_TAB_STATE,
+        CALCULATE_BAFFLE
     }
 }
