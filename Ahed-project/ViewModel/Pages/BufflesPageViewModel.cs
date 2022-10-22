@@ -17,5 +17,15 @@ namespace Ahed_project.ViewModel.Pages
             Type.Add("single_segmental", "Single Segmental");
             Type.Add("double_segmental", "Double Segmental");
         }
+
+        private KeyValuePair<string, string>[] _selectedType;
+        public KeyValuePair<string, string>[] SelectedType
+        {
+            get => _selectedType; 
+            set
+            {
+                _selectedType = value;
+            }
+        }
     }
 }
