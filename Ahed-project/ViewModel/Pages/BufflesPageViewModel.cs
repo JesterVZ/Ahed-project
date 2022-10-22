@@ -27,6 +27,16 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _selectedType = value;
+                if(value.Key == "single_segmental")
+                {
+                    SingleSegmentalIsEnables = 37;
+                    DoubleSegmentalIsEnables = 0;
+                }
+                if(value.Key == "double_segmental")
+                {
+                    SingleSegmentalIsEnables = 0;
+                    DoubleSegmentalIsEnables = 37;
+                }
             }
         }
     }
