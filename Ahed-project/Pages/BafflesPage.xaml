@@ -56,6 +56,9 @@
                                     <RowDefinition/>
                                     <RowDefinition/>
                                     <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="{Binding SingleSegmentalIsEnables}"/>
+                                    <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 <Label Grid.Column="0" Grid.Row="0">Type</Label>
                                 <ComboBox Grid.Column="1" Grid.Row="0" Style="{StaticResource ComboboxDefault}" ItemsSource="{Binding Type, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedType, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0">
@@ -69,13 +72,13 @@
                                 <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="1"/>
 
                                 <Label Grid.Column="0" Grid.Row="2">Tubes Outer Diameter (Dt)(mm)</Label>
-                                <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="2"/>
+                                <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="2"/> <!--здесь разделение-->
 
-                                <Label Grid.Column="0" Grid.Row="3">Baffle Cut (Bc)(%)</Label>
-                                <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="3"/>
+                                <Label Grid.Column="0" Grid.Row="6">Baffle Cut (Bc)(%)</Label>
+                                <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="6"/>
 
-                                <Label Grid.Column="0" Grid.Row="4">Baffle Cut (Bc)(%)</Label>
-                                <ComboBox Grid.Column="1" Grid.Row="4" Style="{StaticResource ComboboxDefault}">
+                                <Label Grid.Column="0" Grid.Row="7">Baffle Cut Direction (%)</Label>
+                                <ComboBox Grid.Column="1" Grid.Row="7" Style="{StaticResource ComboboxDefault}">
                                     <ComboBoxItem IsSelected="True">
                                         Horizontal
                                     </ComboBoxItem>
@@ -84,30 +87,30 @@
                                     </ComboBoxItem>
                                 </ComboBox>
 
-                                <Label Grid.Column="0" Grid.Row="5">Pairs Of Sealing Strips (Nss)</Label>
-                                <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="5"/>
-
-                                <Label Grid.Column="0" Grid.Row="6">Shell Diameter Angle (0ds)</Label>
-                                <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="6"/>
-                                
-                                <Label Grid.Column="0" Grid.Row="7">Center Tube Angle (0ct)</Label>
-                                <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="7"/>
-
-                                <Label Grid.Column="0" Grid.Row="8">Diameter To Tube Center (Dct)</Label>
+                                <Label Grid.Column="0" Grid.Row="8">Pairs Of Sealing Strips (Nss)</Label>
                                 <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="8"/>
-                                
-                                <Label Grid.Column="0" Grid.Row="9">Diameter To Tube Outer Side (Dot)</Label>
-                                <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="9"/>
 
-                                <Label Grid.Column="0" Grid.Row="10">Bypass Lines (Lp)</Label>
+                                <Label Grid.Column="0" Grid.Row="9">Shell Diameter Angle (0ds)</Label>
+                                <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="9"/>
+                                
+                                <Label Grid.Column="0" Grid.Row="10">Center Tube Angle (0ct)</Label>
                                 <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="10"/>
 
-                                <Label Grid.Column="0" Grid.Row="11">Inner Shell To Outer Tube Bypass Clearance</Label>
+                                <Label Grid.Column="0" Grid.Row="11">Diameter To Tube Center (Dct)</Label>
                                 <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="11"/>
-
-                                <Label Grid.Column="0" Grid.Row="12">Average Tubes in Baffle Windows</Label>
+                                
+                                <Label Grid.Column="0" Grid.Row="12">Diameter To Tube Outer Side (Dot)</Label>
                                 <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="12"/>
-                                <Button Grid.Column="1" Margin="3" Grid.Row="13" Content="Show Template" HorizontalAlignment="Left" VerticalAlignment="Center" Width="121" Background="#fc6"/>
+
+                                <Label Grid.Column="0" Grid.Row="13">Bypass Lines (Lp)</Label>
+                                <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="13"/>
+
+                                <Label Grid.Column="0" Grid.Row="14">Inner Shell To Outer Tube Bypass Clearance</Label>
+                                <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="14"/>
+
+                                <Label Grid.Column="0" Grid.Row="15">Average Tubes in Baffle Windows</Label>
+                                <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="15"/>
+                                <Button Grid.Column="1" Margin="3" Grid.Row="16" Content="Show Template" HorizontalAlignment="Left" VerticalAlignment="Center" Width="121" Background="#fc6"/>
                             </Grid>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Width="400" Margin="0 0 100 0">

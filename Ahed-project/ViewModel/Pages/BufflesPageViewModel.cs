@@ -9,7 +9,9 @@ namespace Ahed_project.ViewModel.Pages
 {
     public class BufflesPageViewModel : BindableBase
     {
-        public Dictionary<string, string> Type;
+        public Dictionary<string, string> Type { get; set; }
+        public double SingleSegmentalIsEnables { get; set; }
+        public double DoubleSegmentalIsEnables { get; set; }
         public BufflesPageViewModel()
         {
             Type = new Dictionary<string, string>();
@@ -18,8 +20,8 @@ namespace Ahed_project.ViewModel.Pages
             Type.Add("double_segmental", "Double Segmental");
         }
 
-        private KeyValuePair<string, string>[] _selectedType;
-        public KeyValuePair<string, string>[] SelectedType
+        private KeyValuePair<string, string> _selectedType;
+        public KeyValuePair<string, string> SelectedType
         {
             get => _selectedType; 
             set
