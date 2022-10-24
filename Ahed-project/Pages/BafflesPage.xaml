@@ -20,7 +20,7 @@
                         <Button Content="Calculate" Command="{Binding Calculate}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" >
-                        <ComboBox Style="{StaticResource ComboboxDefault}" ItemsSource="{Binding BaffleType, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedBaffleType, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0">
+                        <ComboBox Width="300" Style="{StaticResource ComboboxDefault}" ItemsSource="{Binding BaffleType, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedBaffleType, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Value}"/>
