@@ -20,10 +20,12 @@
                         <Button Content="Calculate" Command="{Binding Calculate}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" >
-                        <ComboBox Style="{StaticResource ComboboxDefault}">
-                            <ComboBoxItem IsSelected="True">
-                                Full baffles heat transfer calculation
-                            </ComboBoxItem>
+                        <ComboBox Style="{StaticResource ComboboxDefault}" ItemsSource="{Binding BaffleType, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedBaffleType, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Value}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
                         <CheckBox VerticalAlignment="Center" Content="Show Dimensions"/>
                     </StackPanel>
@@ -250,7 +252,7 @@
                     <StackPanel Orientation="Horizontal">
                         
                         <StackPanel Orientation="Vertical" Width="400">
-                            <customGrid:CustomGrid IsOpen="True" Style="{StaticResource AnimatedGrid}">
+                            <customGrid:CustomGrid IsOpen="{Binding IsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource AnimatedGrid}">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="2*"/>
