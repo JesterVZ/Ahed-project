@@ -36,6 +36,7 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     case "1":
                         divplate.Add("None");
+                        DivPlateLayoutSelectedIndex = 0;
                         break;
                     case "2":
                         divplate.Add("Horizontal");
@@ -65,6 +66,7 @@ namespace Ahed_project.ViewModel.Pages
                         break;
                     case "7":
                         divplate.Add("Mechanised");
+                        DivPlateLayoutSelectedIndex = 0;
                         break;
                     case "8":
                         divplate.Add("Type 1");
@@ -350,6 +352,8 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
         public ObservableCollection<string> DivPlateItems { get; set; }
+
+        public int DivPlateLayoutSelectedIndex { get; set; }
 
         private string _divPlateItem;
         public string DivPlateItem

@@ -45,10 +45,10 @@
                                     <RowDefinition/>
                                     <RowDefinition/>
                                     <RowDefinition/>
-                                    <RowDefinition Height="*"/>
                                     <RowDefinition Height="{Binding DoubleSegmentalIsEnables}"/>
                                     <RowDefinition Height="{Binding DoubleSegmentalIsEnables}"/>
-                                    <RowDefinition/>
+                                    <RowDefinition Height="{Binding DoubleSegmentalIsEnables}"/>
+                                    <RowDefinition Height="{Binding SingleSegmentalIsEnables}"/>
                                     <RowDefinition/>
                                     <RowDefinition/>
                                     <RowDefinition/>
@@ -75,13 +75,13 @@
                                 <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="2"/> <!--здесь разделение-->
 
                                 <Label Grid.Column="0" Grid.Row="3">Central Baffle Cut (Bc1)(%)</Label>
-                                <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="3"/>
+                                <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="3"/>
                                 
                                 <Label Grid.Column="0" Grid.Row="4">Overlap (%)</Label>
                                 <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="4"/>
 
                                 <Label Grid.Column="0" Grid.Row="5">Side Baffle Cut(Bc2)</Label>
-                                <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="5"/>
+                                <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="5"/>
 
                                 <Label Grid.Column="0" Grid.Row="6">Baffle Cut (Bc)(%)</Label>
                                 <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="6"/>
