@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Ahed_project.ViewModel.Pages
 {
     public class BufflesPageViewModel : BindableBase
     {
         public Dictionary<string, string> Type { get; set; }
+        public bool IsOpen { get; set; }
         public double SingleSegmentalIsEnables { get; set; }
         public double DoubleSegmentalIsEnables { get; set; }
         public BufflesPageViewModel()
@@ -39,5 +41,12 @@ namespace Ahed_project.ViewModel.Pages
                 }
             }
         }
+
+        public ICommand ToggleCommand => new DelegateCommand(async () =>
+        {
+            IsOpen = !IsOpen;
+
+        });
+
     }
 }
