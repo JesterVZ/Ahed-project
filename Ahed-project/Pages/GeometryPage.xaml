@@ -207,7 +207,7 @@
                             <TextBox Style="{StaticResource Default}" Text="{Binding Tube_plate_layout_number_of_passes, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Column="1" Grid.Row="2"/>
 
                             <Label Grid.Column="0" Grid.Row="3" VerticalAlignment="Center">Div.Plate Layout</Label>
-                            <ComboBox Style="{StaticResource ComboboxDefault}" ItemsSource="{Binding DivPlateItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding DivPlateItem,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" SelectedIndex="{Binding DivPlateLayoutSelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3">
+                            <ComboBox Style="{StaticResource ComboboxDefault}" ItemsSource="{Binding DivPlateItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding DivPlateItem,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3">
                             </ComboBox>
 
                             <Label Visibility="{Binding SealingTypeVis}" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center">Sealing Type</Label>
