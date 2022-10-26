@@ -26,6 +26,7 @@ namespace Ahed_project.Services.Global
         }
         #region Global
         public static ObservableCollection<LoggerMessage> Logs { get; set; }
+        public static bool IsAllSave { get; set; }
         public static bool IsProjectSave { get; set; } // сохранен ли проект
         public static bool IsTubetSave { get; set; } // сохранен ли tube
         public static bool IsShelltSave { get; set; } // сохранен ли shell

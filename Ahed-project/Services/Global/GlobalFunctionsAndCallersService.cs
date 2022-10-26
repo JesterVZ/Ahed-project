@@ -106,6 +106,7 @@ namespace Ahed_project.Services.Global
             var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.GET_TAB_STATE, null, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString()));
             _contentPageViewModel.SetTabState(response);
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка состояний вкладок завершена!")));
+            GlobalDataCollectorService.IsAllSave = true;
         }
         //сохранение состояния вкладок
         public static async void SetTabState(TabsState tabs)
@@ -289,7 +290,7 @@ namespace Ahed_project.Services.Global
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE, json, GlobalDataCollectorService.Project.project_id.ToString()));
             Responce result = JsonConvert.DeserializeObject<Responce>(response);
             GlobalDataCollectorService.IsProjectSave = true; //проект сохранен
-            if()
+
             if (result.logs != null)
                 for (int i = 0; i < result.logs.Count; i++)
                 {
