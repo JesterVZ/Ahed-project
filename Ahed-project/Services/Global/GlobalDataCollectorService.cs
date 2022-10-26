@@ -18,9 +18,20 @@ namespace Ahed_project.Services.Global
             ProjectsCollection = new List<ProjectInfoGet>();
             GeometryCollection = new ObservableCollection<GeometryFull>();
             Materials = new List<Material>();
+            IsProjectSave = true;
+            IsTubetSave = true;
+            IsShelltSave = true;
+            IsHeatBalancetSave = true;
+            IsGeometrytSave = true;
         }
         #region Global
         public static ObservableCollection<LoggerMessage> Logs { get; set; }
+        public static bool IsProjectSave { get; set; } // сохранен ли проект
+        public static bool IsTubetSave { get; set; } // сохранен ли tube
+        public static bool IsShelltSave { get; set; } // сохранен ли shell
+        public static bool IsHeatBalancetSave { get; set; } // сохранен ли heat balance
+        public static bool IsGeometrytSave { get; set; } // сохранена ли geometry
+
         #endregion
         #region User
         private static int _userId;

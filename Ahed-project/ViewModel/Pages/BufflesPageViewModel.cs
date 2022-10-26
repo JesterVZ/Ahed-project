@@ -1,4 +1,6 @@
-﻿using DevExpress.Mvvm;
+﻿using Ahed_project.MasterData.BafflesClasses;
+using Ahed_project.Services.Global;
+using DevExpress.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,7 @@ namespace Ahed_project.ViewModel.Pages
         public bool IsOpen { get; set; }
         public double SingleSegmentalIsEnables { get; set; }
         public double DoubleSegmentalIsEnables { get; set; }
+        public BaffleFull Baffle { get; set; }
         public BufflesPageViewModel()
         {
             Type = new Dictionary<string, string>();
@@ -64,6 +67,10 @@ namespace Ahed_project.ViewModel.Pages
         {
             IsOpen = !IsOpen;
 
+        });
+
+        public ICommand CalculateCommand => new DelegateCommand(async () => {
+            Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateBaffle(Baffle));
         });
         #endregion
     }

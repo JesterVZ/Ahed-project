@@ -1,4 +1,5 @@
 ﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData.BafflesClasses;
 using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.GeometryClasses;
 using Ahed_project.MasterData.Products;
@@ -279,7 +280,7 @@ namespace Ahed_project.Services.Global
             }
         }
 
-        //Сохранение продукта
+        //Сохранение проекта
         public async static void SaveProject()
         {
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Идет сохранение проекта...")));
@@ -287,6 +288,8 @@ namespace Ahed_project.Services.Global
             string json = JsonConvert.SerializeObject(projectInfoSend);
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE, json, GlobalDataCollectorService.Project.project_id.ToString()));
             Responce result = JsonConvert.DeserializeObject<Responce>(response);
+            GlobalDataCollectorService.IsProjectSave = true; //проект сохранен
+            if()
             if (result.logs != null)
                 for (int i = 0; i < result.logs.Count; i++)
                 {
@@ -520,11 +523,6 @@ namespace Ahed_project.Services.Global
         //расчет геометрии
         public static async void CalculateGeometry(GeometryFull geometry)
         {
-            if (geometry == null)
-            {
-                MessageBox.Show("Выберите геометрию", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
             if (_heatBalanceViewModel.Calculation==null||_heatBalanceViewModel.Calculation.calculation_id==0)
             {
                 MessageBox.Show("Выберите рассчет", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -607,6 +605,24 @@ namespace Ahed_project.Services.Global
             }
             GlobalDataCollectorService.GeometryCalculated = true;
             _contentPageViewModel.Validation(true);
+        }
+
+        //расчет перегородок
+        public static async void CalculateBaffle(BaffleFull baffle)
+        {
+            if (_heatBalanceViewModel.Calculation == null || _heatBalanceViewModel.Calculation.calculation_id == 0)
+            {
+                MessageBox.Show("Выберите рассчет", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            string json = JsonConvert.SerializeObject(new
+            { 
+                type = baffle.type,
+                buffle_cut = baffle.buffle_cut,
+                baffle_cut_direction = baffle.baffle_cut_direction
+            });
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_BAFFLE, json, _heatBalanceViewModel.Calculation.project_id.ToString(), _heatBalanceViewModel.Calculation.calculation_id.ToString()));
+
         }
 
         //Создать проект

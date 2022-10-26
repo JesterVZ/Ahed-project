@@ -489,7 +489,7 @@ namespace Ahed_project.ViewModel.Pages
             HousingSpaceVis = Visibility.Hidden;
         }
 
-        #region coms
+        #region commands
 
         public ICommand ToggleCommand => new DelegateCommand(async () =>
         {
