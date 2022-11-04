@@ -40,11 +40,12 @@ namespace Ahed_project.Services.Global
         private static TubesFluidViewModel _tubesFluidViewModel;
         private static ShellFluidViewModel _shellFluidViewModel;
         private static GeometryPageViewModel _geometryPageViewModel;
+        private static BufflesPageViewModel _bufflesPageViewModel;
         private static MainViewModel _mainViewModel;
 
         public GlobalFunctionsAndCallersService(SendDataService sendDataService, ContentPageViewModel contentPage,
             ProjectPageViewModel projectPageViewModel, IMapper mapper, HeatBalanceViewModel heatBalanceViewModel, TubesFluidViewModel tubesFluidViewModel,
-            ShellFluidViewModel shellFluidViewModel, GeometryPageViewModel geometryPageViewModel, MainViewModel mainViewModel)
+            ShellFluidViewModel shellFluidViewModel, GeometryPageViewModel geometryPageViewModel, BufflesPageViewModel bufflesPageViewModel, MainViewModel mainViewModel)
         {
             _sendDataService = sendDataService;
             _contentPageViewModel = contentPage;
@@ -55,6 +56,7 @@ namespace Ahed_project.Services.Global
             _shellFluidViewModel = shellFluidViewModel;
             _geometryPageViewModel = geometryPageViewModel;
             _mainViewModel = mainViewModel;
+            _bufflesPageViewModel = bufflesPageViewModel;
         }
 
         //Первичная загрузка после входа
@@ -617,13 +619,29 @@ namespace Ahed_project.Services.Global
                 return;
             }
             string json = JsonConvert.SerializeObject(new
-            { 
+            {
                 type = baffle.type,
                 buffle_cut = baffle.buffle_cut,
                 baffle_cut_direction = baffle.baffle_cut_direction
             });
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_BAFFLE, json, _heatBalanceViewModel.Calculation.project_id.ToString(), _heatBalanceViewModel.Calculation.calculation_id.ToString()));
+            if (response != null)
+            {
+                try
+                {
+                    Responce result = JsonConvert.DeserializeObject<Responce>(response);
+                    for (int i = 0; i < result.logs.Count; i++)
+                    {
+                        Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
+                    }
+                    var b = JsonConvert.DeserializeObject<BaffleFull>(result.data.ToString());
+                    _bufflesPageViewModel.Baffle = b;
+                }
+                catch(Exception e)
+                {
 
+                }
+            }
         }
 
         //Создать проект
