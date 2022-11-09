@@ -97,6 +97,11 @@ namespace Ahed_project.ViewModel.Pages
                 TubesMaterial = Materials.FirstOrDefault(x => x.Value.name == value.material_tubes_side);
                 TubeLayout = TubePlateLayouts.FirstOrDefault(x => x.Value.Name == value.tube_plate_layout_tube_layout);
                 DivPlateItem = DivPlateItems.FirstOrDefault(x => x == value.tube_plate_layout_div_plate_layout);
+                int outer_diameter_tubes_side = Convert.ToInt32(_geometry.outer_diameter_tubes_side);
+                if(outer_diameter_tubes_side < 25)
+                {
+
+                }
                 switch (value.bundle_type)
                 {
                     case "Fixed":
@@ -292,13 +297,11 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _fixed = value;
+                
                 if (value == true)
                 {
-                    if (Geometry != null)
-                    {
-                        Geometry.bundle_type = "fixed";
-                    }
-
+                    GlobalFunctionsAndCallersService.SetBaffle("3", "0");
+                    Geometry.bundle_type = "fixed";
                 }
 
             }
@@ -310,13 +313,10 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _removable = value;
-                if (Geometry != null)
+                if (value == true)
                 {
-                    if (value == true)
-                    {
-                        Geometry.bundle_type = "removable";
-
-                    }
+                    GlobalFunctionsAndCallersService.SetBaffle("6", "0");
+                    Geometry.bundle_type = "removable";
                 }
 
             }

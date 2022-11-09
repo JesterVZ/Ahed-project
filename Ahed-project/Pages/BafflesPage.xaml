@@ -251,7 +251,7 @@
                     <StackPanel Orientation="Horizontal">
                         
                         <StackPanel Orientation="Vertical" Width="400">
-                            <customGrid:CustomGrid IsOpen="{Binding IsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource AnimatedGrid}">
+                            <customGrid:CustomGrid IsOpen="True" Style="{StaticResource AnimatedGrid}">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="2*"/>
@@ -264,10 +264,10 @@
                                     </Grid.RowDefinitions>
                                         
                                     <Label Grid.Column="0" Grid.Row="0">Diametral Clearance Shell-Baffle</Label>
-                                    <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="0"/>
+                                    <TextBox Style="{StaticResource Default}" Text="{Binding Baffle.diametral_clearance_shell_baffle, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="0"/>
 
                                     <Label Grid.Column="0" Grid.Row="1">Diametral Clearance Tube-Baffle</Label>
-                                    <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="1"/>
+                                    <TextBox Style="{StaticResource Default}" Text="{Binding Baffle.diametral_clearance_tube_baffle, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1"/>
                                     <Button Grid.Column="1" Margin="3" Grid.Row="2" Content="Restore Defaults" HorizontalAlignment="Left" VerticalAlignment="Center" Width="121" Background="#fc6"/>
 
                                 </Grid>

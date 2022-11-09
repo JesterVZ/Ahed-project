@@ -24,6 +24,8 @@ namespace Ahed_project.MasterData.BafflesClasses
         public string bypass_lanes { get; set; }
         public string inner_shell_to_outer_tube_bypass_clearance { get; set; }
         public string average_tubes_in_baffle_windows { get; set; }
+        public string diametral_clearance_shell_baffle { get; set; }
+        public string diametral_clearance_tube_baffle { get; set; }
 
     }
 }

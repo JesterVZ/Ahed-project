@@ -697,5 +697,11 @@ namespace Ahed_project.Services.Global
         {
             _mainViewModel.Title = $"{name} ({_heatBalanceViewModel.Calculation?.name})";
         }
+
+        public static void SetBaffle(string diametral_clearance_shell_baffle, string diametral_clearance_tube_baffle)
+        {
+            _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = diametral_clearance_shell_baffle;
+            _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = diametral_clearance_tube_baffle;
+        }
     }
 }
