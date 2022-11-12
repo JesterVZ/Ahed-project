@@ -702,9 +702,16 @@ namespace Ahed_project.Services.Global
 
         public static void SetBaffle(string diametral_clearance_shell_baffle, string diametral_clearance_tube_baffle)
         {
-            _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = diametral_clearance_shell_baffle;
-            _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = diametral_clearance_tube_baffle;
-
+            Timer timer = null;
+            timer = new Timer((x) =>
+            {
+                if (_bufflesPageViewModel?.Baffle != null)
+                {
+                    _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = diametral_clearance_shell_baffle;
+                    _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = diametral_clearance_tube_baffle;
+                    timer.Dispose();
+                }
+            }, null, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(2));
         }
     }
 }
