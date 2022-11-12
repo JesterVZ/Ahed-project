@@ -15,7 +15,19 @@ namespace Ahed_project.MasterData.BafflesClasses
         public string outlet_baffle_spacing { get; set; }
         public string number_of_baffles { get; set; }
         public string baffle_thickness { get; set; }
-
+        public string tubeplate_thickness { get; set; }
+        public string tube_inner_length { get; set; }
+        public string tube_outer_length { get; set; }
+        public string central_baffle_spacing { get; set; }
+        public string cut_effect_inlet { get; set;} 
+        public string cut_effect_outlet { get; set; }
+        public string leackages_effect_inlet { get; set; }
+        public string leackages_effect_outlet { get; set; }
+        public string bundle_bypass_effect_inlet { get; set; }
+        public string bundle_bypass_effect_outlet { get; set; }
+        public string adverce_temperature_gradient_inlet { get; set; }
+        public string adverce_temperature_gradient_outlet { get; set; }
+        public string uneven_baffle_spacing_inlet { get; set;}
         public string shell_inner_diameter { get; set; }
         public string tubes_outer_diameter { get; set; }
         public string central_baffle_cut_bc1 { get; set; }
