@@ -77,6 +77,7 @@ namespace Ahed_project.ViewModel.Pages
             get => _selectedBaffleType;
             set
             {
+                Baffle.method = value.Key;
                 _selectedBaffleType = value;
             }
         }
@@ -90,6 +91,12 @@ namespace Ahed_project.ViewModel.Pages
         });
 
         public ICommand CalculateCommand => new DelegateCommand(() => {
+            if(Baffle.method == null)
+            {
+                Baffle.method = "no_baffles";
+                Baffle.type = "single_segmental";
+                Baffle.baffle_cut_direction = "horizontal";
+            }
             Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateBaffle(Baffle));
         });
         #endregion

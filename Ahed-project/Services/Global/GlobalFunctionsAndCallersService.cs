@@ -54,9 +54,10 @@ namespace Ahed_project.Services.Global
             _heatBalanceViewModel = heatBalanceViewModel;
             _tubesFluidViewModel = tubesFluidViewModel;
             _shellFluidViewModel = shellFluidViewModel;
+            _bufflesPageViewModel = bufflesPageViewModel;
             _geometryPageViewModel = geometryPageViewModel;
             _mainViewModel = mainViewModel;
-            _bufflesPageViewModel = bufflesPageViewModel;
+            
         }
 
         //Первичная загрузка после входа
@@ -622,6 +623,7 @@ namespace Ahed_project.Services.Global
             {
                 type = baffle.type,
                 buffle_cut = baffle.buffle_cut,
+                method = "no_baffles",
                 baffle_cut_direction = baffle.baffle_cut_direction
             });
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_BAFFLE, json, _heatBalanceViewModel.Calculation.project_id.ToString(), _heatBalanceViewModel.Calculation.calculation_id.ToString()));
@@ -700,8 +702,12 @@ namespace Ahed_project.Services.Global
 
         public static void SetBaffle(string diametral_clearance_shell_baffle, string diametral_clearance_tube_baffle)
         {
-            _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = diametral_clearance_shell_baffle;
-            _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = diametral_clearance_tube_baffle;
+            if(_bufflesPageViewModel != null)
+            {
+                _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = diametral_clearance_shell_baffle;
+                _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = diametral_clearance_tube_baffle;
+            }
+            
         }
     }
 }

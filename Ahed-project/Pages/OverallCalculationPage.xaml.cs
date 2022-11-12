@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using Ahed_project.ViewModel;
+using System.Windows.Controls;
 
 namespace Ahed_project.Pages
 {
@@ -7,9 +8,10 @@ namespace Ahed_project.Pages
     /// </summary>
     public partial class OverallCalculationPage : Page
     {
-        public OverallCalculationPage()
+        public OverallCalculationPage(OverallCalculationViewModel vm)
         {
             InitializeComponent();
+            DataContext = vm;
         }
     }
 }

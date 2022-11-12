@@ -18,6 +18,7 @@ using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Pages;
 using Ahed_project.Windows;
 using System.Windows.Navigation;
+using Ahed_project.ViewModel;
 
 namespace Ahed_project
 {
@@ -38,6 +39,7 @@ namespace Ahed_project
             builder.RegisterType<LoginPageViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<ContentPageViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<PresetsWindowViewModel>().AsSelf().SingleInstance();
+            builder.RegisterType<OverallCalculationViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<ProjectsWindowViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<GeometryWindowViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<GeometryPageViewModel>().AsSelf().SingleInstance();

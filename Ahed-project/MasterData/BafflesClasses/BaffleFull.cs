@@ -9,6 +9,13 @@ namespace Ahed_project.MasterData.BafflesClasses
     public class BaffleFull
     {
         public string type { get; set; }
+        public string method { get; set; }
+        public int show_dimensions { get; set; }
+        public string inlet_baffle_spacing { get; set; }
+        public string outlet_baffle_spacing { get; set; }
+        public string number_of_baffles { get; set; }
+        public string baffle_thickness { get; set; }
+
         public string shell_inner_diameter { get; set; }
         public string tubes_outer_diameter { get; set; }
         public string central_baffle_cut_bc1 { get; set; }
