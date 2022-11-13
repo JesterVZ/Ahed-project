@@ -152,6 +152,9 @@ namespace Ahed_project.Services.Global
                     Thread.Sleep(new TimeSpan(0, 0, 5));
                     _geometryPageViewModel.Geometry = GlobalDataCollectorService.GeometryCollection.FirstOrDefault(x => x.geometry_catalog_id == id);
                 });
+            } else
+            {
+                _geometryPageViewModel.Geometry = new GeometryFull();
             }
         }
 
@@ -702,6 +705,7 @@ namespace Ahed_project.Services.Global
 
         public static void SetBaffle(string diametral_clearance_shell_baffle, string diametral_clearance_tube_baffle)
         {
+            /*
             Timer timer = null;
             timer = new Timer((x) =>
             {
@@ -711,7 +715,10 @@ namespace Ahed_project.Services.Global
                     _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = diametral_clearance_tube_baffle;
                     timer.Dispose();
                 }
-            }, null, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(2));
+            }, null, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(2));*/
+            _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = diametral_clearance_shell_baffle;
+            _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = diametral_clearance_tube_baffle;
+
         }
     }
 }

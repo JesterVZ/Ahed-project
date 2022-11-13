@@ -18,7 +18,13 @@ namespace Ahed_project.ViewModel.Pages
         public bool IsOpen { get; set; }
         public double SingleSegmentalIsEnables { get; set; }
         public double DoubleSegmentalIsEnables { get; set; }
-        public BaffleFull Baffle { get; set; }
+        private BaffleFull _baffle;
+        public BaffleFull Baffle {
+            get => _baffle;
+            set { 
+                _baffle = value;
+            } 
+        }
         public BufflesPageViewModel()
         {
             Type = new Dictionary<string, string>();

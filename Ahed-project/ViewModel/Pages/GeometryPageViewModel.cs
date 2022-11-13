@@ -6,6 +6,7 @@ using DevExpress.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -97,11 +98,25 @@ namespace Ahed_project.ViewModel.Pages
                 TubesMaterial = Materials.FirstOrDefault(x => x.Value.name == value.material_tubes_side);
                 TubeLayout = TubePlateLayouts.FirstOrDefault(x => x.Value.Name == value.tube_plate_layout_tube_layout);
                 DivPlateItem = DivPlateItems.FirstOrDefault(x => x == value.tube_plate_layout_div_plate_layout);
-                int outer_diameter_tubes_side = Convert.ToInt32(_geometry.outer_diameter_tubes_side);
-                if(outer_diameter_tubes_side < 25)
+                try
                 {
-
+                    double outer_diameter_tubes_side = Convert.ToDouble(_geometry.outer_diameter_tubes_side, CultureInfo.InvariantCulture);
+                    if (outer_diameter_tubes_side <= 25)
+                    {
+                        GlobalFunctionsAndCallersService.SetBaffle("0", "0.3");
+                    }
+                    if (outer_diameter_tubes_side > 25)
+                    {
+                        GlobalFunctionsAndCallersService.SetBaffle("0", "0.4");
+                    }
+                    RaisePropertiesChanged("GeometryPageViewModel");
                 }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
+                
+
                 switch (value.bundle_type)
                 {
                     case "Fixed":
@@ -167,7 +182,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _shellMaterial = value;
-                if (value.Value != null)
+                if (value.Value != null && Geometry != null)
                 {
                     Geometry.material_shell_side = value.Value.name_short;
                 }
@@ -182,7 +197,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _tubesMaterial = value;
-                if (value.Value != null)
+                if (value.Value != null && Geometry != null)
                 {
                     Geometry.material_tubes_side = value.Value.name_short;
                 }
@@ -424,7 +439,6 @@ namespace Ahed_project.ViewModel.Pages
             SealingTypeItems = new Dictionary<string, string>();
             TubePlateLayouts = new Dictionary<string, TubeplateLayout>();
             TubeProfile = new Dictionary<string, string>();
-            Geometry = new GeometryFull();
             TubeplateLayout optimize = new TubeplateLayout
             {
                 ImageUrl = "",
