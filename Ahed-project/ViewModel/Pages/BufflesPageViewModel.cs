@@ -106,5 +106,12 @@ namespace Ahed_project.ViewModel.Pages
             Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateBaffle(Baffle));
         });
         #endregion
+
+
+
+        public void Raise(string name)
+        {
+            RaisePropertiesChanged(name);
+        }
     }
 }

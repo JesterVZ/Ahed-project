@@ -718,7 +718,7 @@ namespace Ahed_project.Services.Global
             }, null, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(2));*/
             _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = diametral_clearance_shell_baffle;
             _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = diametral_clearance_tube_baffle;
-
+            _bufflesPageViewModel.Raise("Baffle");
         }
     }
 }
