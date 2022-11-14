@@ -103,11 +103,11 @@ namespace Ahed_project.ViewModel.Pages
                     double outer_diameter_tubes_side = Convert.ToDouble(_geometry.outer_diameter_tubes_side, CultureInfo.InvariantCulture);
                     if (outer_diameter_tubes_side <= 25)
                     {
-                        GlobalFunctionsAndCallersService.SetBaffle("0", "0.3");
+                        GlobalFunctionsAndCallersService.SetDiametralTubeDefaultValue("0.3");
                     }
                     if (outer_diameter_tubes_side > 25)
                     {
-                        GlobalFunctionsAndCallersService.SetBaffle("0", "0.4");
+                        GlobalFunctionsAndCallersService.SetDiametralTubeDefaultValue("0.4");
                     }
                     RaisePropertiesChanged("GeometryPageViewModel");
                 }
@@ -315,7 +315,7 @@ namespace Ahed_project.ViewModel.Pages
                 
                 if (value == true)
                 {
-                    GlobalFunctionsAndCallersService.SetBaffle("3", "0");
+                    GlobalFunctionsAndCallersService.SetDiametralShellDefaultValue("3");
                     Geometry.bundle_type = "fixed";
                 }
 
@@ -330,7 +330,7 @@ namespace Ahed_project.ViewModel.Pages
                 _removable = value;
                 if (value == true)
                 {
-                    GlobalFunctionsAndCallersService.SetBaffle("6", "0");
+                    GlobalFunctionsAndCallersService.SetDiametralShellDefaultValue("6");
                     Geometry.bundle_type = "removable";
                 }
 

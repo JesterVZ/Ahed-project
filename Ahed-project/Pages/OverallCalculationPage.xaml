@@ -5,92 +5,192 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Ahed_project.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="1800"
+      d:DesignHeight="1080" d:DesignWidth="1800"
       Title="OverallCalculationPage">
 
     <Grid>
         <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
             <Grid Background="White" Width="1800" HorizontalAlignment="Left">
                 <StackPanel Orientation="Horizontal">
-                    <StackPanel Orientation="Vertical" Width="600">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Label Grid.Column="0" FontWeight="Bold">Heat Transfer Data</Label>
-                        </Grid>
+                    <Grid Width="800" Height="400" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="198*"/>
+                            <ColumnDefinition Width="120*"/>
+                            <ColumnDefinition Width="120*"/>
+                            <ColumnDefinition Width="30*"/>
+                            <ColumnDefinition Width="120*"/>
+                            <ColumnDefinition Width="120*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        
+                        <Label FontWeight="Bold" Grid.Column="0" Grid.Row="0">Haet Transfer Data</Label>
+                        <Label Grid.Column="0" Grid.Row="1">Wall temperature</Label>
+                        <Label Grid.Column="0" Grid.Row="2">Wall Consistency Index</Label>
+                        <Label Grid.Column="0" Grid.Row="3">Nusselt</Label>
+                        <Label Grid.Column="0" Grid.Row="4">K Side</Label>
+                        <Label Grid.Column="0" Grid.Row="5">Fouling Factor</Label>
 
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="0"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="0"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="1"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="1"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="2"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="2"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="3"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="3"/>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right">
+                            <CheckBox VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource Colored}" Width="110"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="4" HorizontalAlignment="Right">
+                            <CheckBox VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource Colored}" Width="110"/>
+                        </StackPanel>
+                        <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2"/>
 
-                            </Grid.RowDefinitions>
-                            <Label Grid.Column="0" Grid.Row="0">Wall temperature</Label>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="0"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="0"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="4" Grid.Row="0"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="5" Grid.Row="0"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="4" Grid.Row="1"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="5" Grid.Row="1"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="4" Grid.Row="2"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="5" Grid.Row="2"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="4" Grid.Row="3"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="5" Grid.Row="3"/>
+                        <StackPanel Orientation="Horizontal" Grid.Column="4" Grid.Row="4" HorizontalAlignment="Right">
+                            <CheckBox VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource Colored}" Width="110"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Column="5" Grid.Row="4" HorizontalAlignment="Right">
+                            <CheckBox VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource Colored}" Width="110"/>
+                        </StackPanel>
+                        <TextBox Style="{StaticResource Default}" Grid.Column="4" Grid.Row="5" Grid.ColumnSpan="2"/>
 
-                            <Label Grid.Column="0" Grid.Row="1">Wall consistency index</Label>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="1"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="1"/>
+                        <Label Grid.Column="2" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center">Inlet</Label>
+                        <Label Grid.Column="4" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center">Outlet</Label>
 
-                            <Label Grid.Column="0" Grid.Row="2">Nusselt</Label>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="2"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="2"/>
+                        <Label Grid.Row="7" Grid.Column="0">K Unfouled</Label>
+                        <Label Grid.Row="8" Grid.Column="0">K Fouled</Label>
+                        <Label Grid.Row="9" Grid.Column="0">K Global Fouled</Label>
+                        <Label Grid.Row="10" Grid.Column="0">K Effective</Label>
 
-                            <Label Grid.Column="0" Grid.Row="3">K Side</Label>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="3"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="3"/>
 
-                            <Label Grid.Column="0" Grid.Row="4">Fouling factor</Label>
-                            <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Row="7" Grid.Column="2"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Row="7" Grid.Column="4"/>
+                        <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="8" HorizontalAlignment="Right">
+                            <CheckBox VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource Colored}" Width="110"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Column="4" Grid.Row="8" HorizontalAlignment="Right">
+                            <CheckBox VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource Colored}" Width="110"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="9" HorizontalAlignment="Right" Grid.ColumnSpan="3">
+                            <CheckBox VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource Colored}" Width="279"/>
+                        </StackPanel>
+                        <TextBox Style="{StaticResource Colored}" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="3"/>
+                    </Grid>
+                    <Grid Width="800" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Column="0" Grid.Row="0" FontWeight="Bold">Vibrations</Label>
+                        <Label Grid.Column="1" Grid.Row="0" FontWeight="Bold">Inlet</Label>
+                        <Label Grid.Column="2" Grid.Row="0" FontWeight="Bold">Central</Label>
+                        <Label Grid.Column="3" Grid.Row="0" FontWeight="Bold">Outlet</Label>
 
-                        </Grid>
-                    </StackPanel>
-                    <StackPanel Orientation="Vertical" Width="300" Margin="25 26 0 0">
+                        <Label Grid.Column="0" Grid.Row="1">Span Length</Label>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="1"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="1"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="3" Grid.Row="1"/>
 
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
+                        <Label Grid.Column="0" Grid.Row="2">Span Length / TEMA lb, max</Label>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="2"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="2"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="3" Grid.Row="2"/>
 
-                            </Grid.RowDefinitions>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="0" Grid.Row="0"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="0"/>
+                        <Label Grid.Column="0" Grid.Row="3">Tubes Natural Frequency (Hz)</Label>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="3"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="3"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="3" Grid.Row="3"/>
 
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="0" Grid.Row="1"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="1"/>
+                        <Label Grid.Column="0" Grid.Row="4">Shell Acoustic Frequency (gases)(Hz)</Label>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="4"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="4"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="3" Grid.Row="4"/>
 
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="0" Grid.Row="2"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="2"/>
+                        <Label Grid.Column="0" Grid.Row="5" FontWeight="Bold">Fluidelastic Instability</Label>
 
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="0" Grid.Row="3"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="3"/>
+                        <Label Grid.Column="0" Grid.Row="6">Cross Flow Velocity (m/s)</Label>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="6"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="6"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="3" Grid.Row="6"/>
 
-                            <TextBox Style="{StaticResource Default}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4"/>
+                        <Label Grid.Column="0" Grid.Row="7">Critical Velocity (m/s)</Label>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="7"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="7"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="3" Grid.Row="7"/>
+                        
+                        <Label Grid.Column="0" Grid.Row="8">Average Cross Flow Velocity Ratio</Label>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="8"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="8"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="3" Grid.Row="8"/>
 
-                        </Grid>
-                    </StackPanel>
+                        <Label Grid.Column="0" Grid.Row="9" FontWeight="Bold">Vibration Amplitude</Label>
+
+                        <Label Grid.Column="0" Grid.Row="10">Vitrex Shedding Ratio</Label>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="10"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="10"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="3" Grid.Row="10"/>
+
+                        <Label Grid.Column="0" Grid.Row="11">Turbulent Buffeting Ratio</Label>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="11"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="11"/>
+                        <TextBox Style="{StaticResource Colored}" Grid.Column="3" Grid.Row="11"/>
+
+                        <Label Grid.Column="0" Grid.Row="12" FontWeight="Bold">Acoustic Vibrations (gases)</Label>
+                        <Label Grid.Column="0" Grid.Row="13">Acoustic Vibrations Exists</Label>
+
+                        <CheckBox Grid.Column="1" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <CheckBox Grid.Column="2" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <CheckBox Grid.Column="3" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        <Label Grid.Column="0" Grid.Row="14" FontWeight="Bold">Vibrations Exists</Label>
+                        <CheckBox Grid.Column="1" Grid.Row="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
                 </StackPanel>
             </Grid>
         </ScrollViewer>
