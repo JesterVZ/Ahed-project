@@ -1,5 +1,6 @@
 ﻿using Ahed_project.MasterData.CalculateClasses;
-using Ahed_project.Services.Global;
+using Ahed_project.Services.Global.Content;
+using Ahed_project.Services.Global.Interface;
 using DevExpress.Mvvm;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -17,9 +18,10 @@ namespace Ahed_project.ViewModel.Pages
 {
     public class HeatBalanceViewModel : BindableBase
     {
-        public HeatBalanceViewModel()
+        private readonly IUnitedStorage _storage;
+        public HeatBalanceViewModel(IUnitedStorage storage)
         {
-            Calculation = new CalculationFull();
+            _storage = storage;
             TubesProcess = new Dictionary<int, string>
             {
                 { 1, "Sensible Heat" },
@@ -43,37 +45,33 @@ namespace Ahed_project.ViewModel.Pages
         public Brush FB { get; set; }
         public Brush TIB { get; set; }
         public Brush TOB { get; set; }
-        public string TubesProductName { get; set; }
-        public string ShellProductName { get; set; }
 
-        private string _pressure_shell_inlet_value;
         public string Pressure_shell_inlet_value
         {
             get
             {
-                return _pressure_shell_inlet_value;
+                return Data.Pressure_shell_inlet_value;
             }
             set
             {
-                _pressure_shell_inlet_value = value;
-                if (Calculation != null && Calculation.calculation_id != 0 && Calculation.process_shell.Contains("Condensation") && double.TryParse(value, out var res))
+                Data.Pressure_shell_inlet_value = value;
+                if (Data.Calculation != null && Data.Calculation.calculation_id != 0 && Data.Calculation.process_shell.Contains("Condensation") && double.TryParse(value, out var res))
                 {
                     GetTemperatureCalculation(true,value);
                 }
             }
         }
 
-        private string _pressure_tube_inlet_value;
         public string Pressure_tube_inlet_value
         {
             get
             {
-                return _pressure_tube_inlet_value;
+                return Data.Pressure_tube_inlet_value;
             }
             set
             {
-                _pressure_tube_inlet_value = value;
-                if (Calculation != null && Calculation.calculation_id != 0 && Calculation.process_tube.Contains("Condensation") && double.TryParse(value, out var res))
+                Data.Pressure_tube_inlet_value = value;
+                if (Data.Calculation != null && Data.Calculation.calculation_id != 0 && Data.Calculation.process_tube.Contains("Condensation") && double.TryParse(value, out var res))
                 {
                     GetTemperatureCalculation(false,value);
                 }
@@ -82,58 +80,53 @@ namespace Ahed_project.ViewModel.Pages
 
         private async void GetTemperatureCalculation(bool shell,string value)
         {
-            await Task.Factory.StartNew(() => UnitedStorage.CalculateTemperature(value, Calculation,shell));
+            await Task.Factory.StartNew(() => _storage.CalculateTemperature(value, Data.Calculation, shell));
         }
 
-        public void Raise(string param)
+        public CalculationInGlobal Data
         {
-            RaisePropertiesChanged(param);
-        }
-
-        private CalculationFull _calculation;
-        public CalculationFull Calculation
-        {
-            get => _calculation;
+            get => _storage.GetCalculation();
             set
             {
-                _calculation = value;
-                if (value!=null&&value?.calculation_id != 0)
+                _storage.SetCalculation(value);
+                if (value != null && value?.Calculation.calculation_id != 0)
                 {
-                    if (value.process_tube == null)
+                    if (value.Calculation.process_tube == null)
                     {
-                        value.process_tube = "Sensible Heat";
+                        value.Calculation.process_tube = "Sensible Heat";
                     }
-                    if (value.process_shell == null)
+                    if (value.Calculation.process_shell == null)
                     {
-                        value.process_shell = "Sensible Heat";
+                        value.Calculation.process_shell = "Sensible Heat";
                     }
-                    if (value.process_tube == "sensible_heat")
+                    if (value.Calculation.process_tube == "sensible_heat")
                     {
                         TubesProcessSelector = TubesProcess.First();
                         RaisePropertiesChanged("TubesProcessSelector");
                     }
-                    else if (value.process_tube == "condensation")
+                    else if (value.Calculation.process_tube == "condensation")
                     {
                         TubesProcessSelector = TubesProcess.Last();
                         RaisePropertiesChanged("TubesProcessSelector");
                     }
-                    if (value.process_shell == "sensible_heat")
+                    if (value.Calculation.process_shell == "sensible_heat")
                     {
                         ShellProcessSelector = ShellProcess.First();
                         RaisePropertiesChanged("ShellProcessSelector");
                     }
-                    else if (value.process_shell == "condensation")
+                    else if (value.Calculation.process_shell == "condensation")
                     {
                         ShellProcessSelector = ShellProcess.Last();
                         RaisePropertiesChanged("ShellProcessSelector");
                     }
-                    Double.TryParse(value?.temperature_tube_inlet?.Replace('.',','), out var temperatureTubeInlet);
+                    Double.TryParse(value?.Calculation.temperature_tube_inlet?.Replace('.', ','), out var temperatureTubeInlet);
                     TubesInletTemp = temperatureTubeInlet;
-                    Double.TryParse(value?.temperature_shell_inlet?.Replace('.', ','), out var temperatureShellInlet);
+                    Double.TryParse(value?.Calculation.temperature_shell_inlet?.Replace('.', ','), out var temperatureShellInlet);
                     ShellInletTemp = temperatureShellInlet;
                 }
             }
         }
+
         public Dictionary<int, string> TubesProcess { get; set; }
         public Dictionary<int, string> ShellProcess { get; set; }
 
@@ -145,7 +138,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _tubesProcessSelector = value;
-                Calculation.process_tube = value.Value;
+                Data.Calculation.process_tube = value.Value;
                 if (value.Value == "Condensation")
                 {
                     TemperatureTubesOut = false;
@@ -166,10 +159,10 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _tubesInletTemp = value;
-                Calculation.temperature_tube_inlet = value.ToString().Replace(',', '.');
+                Data.Calculation.temperature_tube_inlet = value.ToString().Replace(',', '.');
                 if (!TemperatureTubesOut)
                 {
-                    Calculation.temperature_tube_outlet = value.ToString().Replace(',', '.');
+                    Data.Calculation.temperature_tube_outlet = value.ToString().Replace(',', '.');
                     RaisePropertiesChanged("Calculation");
                 }
             }
@@ -182,10 +175,10 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _shellInletTemp = value;
-                Calculation.temperature_shell_inlet = value.ToString().Replace(',', '.');
+                Data.Calculation.temperature_shell_inlet = value.ToString().Replace(',', '.');
                 if (ShellProcessSelector.Value== "Condensation")
                 {
-                    Calculation.temperature_shell_outlet = value.ToString().Replace(',', '.');
+                    Data.Calculation.temperature_shell_outlet = value.ToString().Replace(',', '.');
                     RaisePropertiesChanged("Calculation");
                 }
             }
@@ -200,8 +193,8 @@ namespace Ahed_project.ViewModel.Pages
                 TSOE = false;
                 TOB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
                 FB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
-                if (double.TryParse(Calculation?.temperature_tube_outlet?.Replace('.',','), out double res))
-                    Calculation.temperature_shell_outlet = res.ToString();
+                if (double.TryParse(Data.Calculation?.temperature_tube_outlet?.Replace('.',','), out double res))
+                    Data.Calculation.temperature_shell_outlet = res.ToString();
                 RaisePropertiesChanged("Calculation");
             }
             else
@@ -221,7 +214,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _shellProcessSelector = value;
-                Calculation.process_shell = value.Value;
+                Data.Calculation.process_shell = value.Value;
                 if (value.Value=="Condensation")
                 {
                     TemperatureShellOutLetTB = false;
@@ -235,16 +228,15 @@ namespace Ahed_project.ViewModel.Pages
 
         public ICommand Calculate => new DelegateCommand(() =>
         {
-            Task.Factory.StartNew(() => UnitedStorage.Calculate(Calculation));
+            Task.Factory.StartNew(() => _storage.CalculateCalculation(Data.Calculation));
         });
 
-        private bool _flowShell;
         public bool FlowShell
         {
-            get => _flowShell;
+            get => Data.FlowShell;
             set
             {
-                _flowShell = value;
+                Data.FlowShell = value;
                 FlowShellTB = !value;
                 if (value)
                 {
@@ -257,13 +249,12 @@ namespace Ahed_project.ViewModel.Pages
         public bool FlowShellTB { get; set; }
         public bool TSIE { get; set; }
         public bool TSOE { get; set; }
-        private bool _temperatureShellInLet;
         public bool TemperatureShellInLet
         {
-            get => _temperatureShellInLet;
+            get => Data.TemperatureShellInLet;
             set
             {
-                _temperatureShellInLet = value;
+                Data.TemperatureShellInLet = value;
                 TemperatureShellInLetTB = !value;
                 if (value)
                 {

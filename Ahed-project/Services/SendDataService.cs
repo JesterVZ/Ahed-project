@@ -1,5 +1,6 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.Services.Global;
+using Ahed_project.Services.Interfaces;
 using Newtonsoft.Json;
 using RestSharp;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Windows;
 
 namespace Ahed_project.Services
 {
-    public class SendDataService
+    public class SendDataService:ISendDataService
     {
         private readonly ServiceConfig _serviceConfig;
         public Dictionary<string, string> Headers = new Dictionary<string, string>();
@@ -17,7 +18,7 @@ namespace Ahed_project.Services
         {
             _serviceConfig = serviceConfig;
         }
-        public string SendToServer(ProjectMethods projectMethod, string body = null, string projectId = null, string calculationId = null)
+        public RestResponse SendToServer(ProjectMethods projectMethod, string body = null, string projectId = null, string calculationId = null)
         {
             Headers.TryAdd("Content-Type", "application/json");
             RestResponse response = null;
@@ -45,11 +46,8 @@ namespace Ahed_project.Services
                         if (authHeader != null)
                             AddHeader(authHeader.Split(' ').LastOrDefault());
                         if (response.IsSuccessful)
-                            return response.Content;
-                        else
-                        {
-                            return JsonConvert.SerializeObject(new object());
-                        }
+                            return response;
+                        break;
                     case ProjectMethods.AUTH:
                         restClient = new RestClient(_serviceConfig.AuthLink);
                         request.Method = Method.Get;
@@ -220,22 +218,13 @@ namespace Ahed_project.Services
                             request.AddHeader(header.Key, header.Value);
                         }
                         response = restClient.Execute(request);
-
                         break;
-
                 }
-                if (response.IsSuccessful)
-                    return response.Content;
-                else
-                {
-                    Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Error", $"Message: {response.ErrorMessage}\r\nCode: {response.StatusCode}\r\nExcep: {response.ErrorException}")));
-                    return JsonConvert.SerializeObject(new object());
-                }
+                return response;
             }
             catch
             {
-                Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Error", $"Message: {response.ErrorMessage}\r\nCode: {response.StatusCode}\r\nExcep: {response.ErrorException}")));
-                return JsonConvert.SerializeObject(new object());
+                return response;
             }
         }
         public void AddHeader(string token)

@@ -42,10 +42,10 @@ namespace Ahed_project
                 string password = active.Password;
                 var result = await Task.Factory.StartNew(() => jwt.AuthenticateUser(email, password));
 
-                vm.FramePage = content;
+                vm.Data.FramePage = content;
             } else
             {
-                vm.FramePage = login;
+                vm.Data.FramePage = login;
             }
             main.Show();
         }

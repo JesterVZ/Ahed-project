@@ -1,5 +1,7 @@
 ﻿using Ahed_project.MasterData.Products;
+using Ahed_project.MasterData.TubesClasses;
 using Ahed_project.Services.Global;
+using Ahed_project.Services.Global.Interface;
 using DevExpress.Mvvm;
 using OxyPlot;
 using OxyPlot.Axes;
@@ -12,14 +14,19 @@ namespace Ahed_project.ViewModel.Pages
 {
     public class TubesFluidViewModel : BindableBase
     {
-        public TubesFluidViewModel() { }
-        private ProductGet _product;
+        private readonly IUnitedStorage _storage;
+        public TubesFluidViewModel(IUnitedStorage storage) { _storage = storage; }
+
+        public TubesInGlobal Data
+        {
+            get => _storage.GetTubesData();
+        }
         public ProductGet Product
         {
-            get => _product;
+            get => Data.Product;
             set
             {
-                _product = value;
+                Data.Product = value;
                 Task.Factory.StartNew(CreateCharts);
             }
         }

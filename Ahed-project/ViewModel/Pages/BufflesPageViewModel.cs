@@ -1,5 +1,6 @@
 ﻿using Ahed_project.MasterData.BafflesClasses;
-using Ahed_project.Services.Global;
+using Ahed_project.Services.Global.Content;
+using Ahed_project.Services.Global.Interface;
 using DevExpress.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -18,19 +19,21 @@ namespace Ahed_project.ViewModel.Pages
         public bool IsOpen { get; set; }
         public double SingleSegmentalIsEnables { get; set; }
         public double DoubleSegmentalIsEnables { get; set; }
-        private BaffleFull _baffle;
-        public BaffleFull Baffle {
-            get => _baffle;
-            set { 
-                _baffle = value;
-            } 
-        }
-        public BufflesPageViewModel()
+
+        public BaffleInGlobal Data
         {
+            get => _storage.GetBafflesData();
+            set => _storage.SetBafflesData(value);
+        }
+
+        private readonly IUnitedStorage _storage;
+
+        public BufflesPageViewModel(IUnitedStorage storage)
+        {
+            _storage = storage;
             Type = new Dictionary<string, string>();
             BaffleType = new Dictionary<string, string>();
             CutDirection = new Dictionary<string, string>();
-            Baffle = new BaffleFull();
 
             Type.Add("single_segmental", "Single Segmental");
             Type.Add("double_segmental", "Double Segmental");
@@ -51,7 +54,7 @@ namespace Ahed_project.ViewModel.Pages
             get => _selectedCutDirection;
             set
             {
-                Baffle.baffle_cut_direction = value.Key;
+                Data.Baffle.baffle_cut_direction = value.Key;
                 _selectedCutDirection = value;
             }
         }
@@ -63,7 +66,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _selectedType = value;
-                Baffle.type = value.Key;
+                Data.Baffle.type = value.Key;
                 if (value.Key == "single_segmental")
                 {
                     SingleSegmentalIsEnables = 37;
@@ -83,7 +86,7 @@ namespace Ahed_project.ViewModel.Pages
             get => _selectedBaffleType;
             set
             {
-                Baffle.method = value.Key;
+                Data.Baffle.method = value.Key;
                 _selectedBaffleType = value;
             }
         }
@@ -97,21 +100,14 @@ namespace Ahed_project.ViewModel.Pages
         });
 
         public ICommand CalculateCommand => new DelegateCommand(() => {
-            if(Baffle.method == null)
+            if(Data.Baffle.method == null)
             {
-                Baffle.method = "no_baffles";
-                Baffle.type = "single_segmental";
-                Baffle.baffle_cut_direction = "horizontal";
+                Data.Baffle.method = "no_baffles";
+                Data.Baffle.type = "single_segmental";
+                Data.Baffle.baffle_cut_direction = "horizontal";
             }
-            Task.Factory.StartNew(() => UnitedStorage.CalculateBaffle(Baffle));
+            Task.Factory.StartNew(() => _storage.CalculateBaffle(Data.Baffle));
         });
         #endregion
-
-
-
-        public void Raise(string name)
-        {
-            RaisePropertiesChanged(name);
-        }
     }
 }

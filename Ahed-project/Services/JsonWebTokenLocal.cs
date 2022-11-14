@@ -2,11 +2,14 @@ using Ahed_project.MasterData;
 using Ahed_project.Services.EF;
 using Ahed_project.Services.EF.Model;
 using Ahed_project.Services.Global;
+using Ahed_project.Services.Global.Interface;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace Ahed_project.Services
 {
@@ -14,10 +17,14 @@ namespace Ahed_project.Services
     {
         private readonly ServiceConfig _serviceConfig;
         private readonly SendDataService _sendDataService;
-        public JsonWebTokenLocal(ServiceConfig serviceConfig, SendDataService sendDataService)
+        private readonly IUnitedStorage _storage;
+        private readonly LogsStorage Logs;
+        public JsonWebTokenLocal(ServiceConfig serviceConfig, SendDataService sendDataService, IUnitedStorage storage, LogsStorage logs)
         {
             _serviceConfig = serviceConfig;
             _sendDataService = sendDataService;
+            _storage = storage;
+            Logs = logs;
         }
 
         /// <summary>
@@ -40,14 +47,39 @@ namespace Ahed_project.Services
                     pass = password
                 });
                 Token token = null;
-                var login = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.LOGIN, json));
+                var login = await Task.Factory.StartNew(() =>
+                {
+                    var resp = _sendDataService.SendToServer(ProjectMethods.LOGIN, json);
+                    if (resp.IsSuccessful)
+                    {
+                        return resp.Content;
+                    }
+                    else
+                    {
+                        Application.Current.Dispatcher.Invoke(()=>Logs.Logs.Add(new LoggerMessage("Error", $"Message: {resp.ErrorMessage}\r\nCode: {resp.StatusCode}\r\nExcep: {resp.ErrorException}")));
+                        return null;
+                    }
+                });
                 if (!login.Contains("token"))
                     return null;
                 token = JsonConvert.DeserializeObject<Token>(login);
                 _sendDataService.AddHeader(token.token);
-                var auth = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.AUTH));
+                var auth = await Task.Factory.StartNew(() =>
+                {
+                    var resp = _sendDataService.SendToServer(ProjectMethods.AUTH);
+                    if (resp.IsSuccessful)
+                    {
+                        return resp.Content;
+                    }
+                    else
+                    {
+                        Application.Current.Dispatcher.Invoke(() => Logs.Logs.Add(new LoggerMessage("Error", $"Message: {resp.ErrorMessage}\r\nCode: {resp.StatusCode}\r\nExcep: {resp.ErrorException}")));
+                        return null;
+                    }
+                });
                 token = JsonConvert.DeserializeObject<Token>(auth);
                 _sendDataService.AddHeader(token.token);
+                Task.Factory.StartNew(() => _storage.SetupUserDataAsync());
                 if (user == null)
                 {
                     using var context = new EFContext();
@@ -59,7 +91,7 @@ namespace Ahed_project.Services
                     };
                     context.Users.Add(user);
                     context.SaveChanges();
-                    GlobalDataCollectorService.UserId = context.Users.ToList().LastOrDefault().Id;
+                    _storage.SelectUser(context.Users.ToList().LastOrDefault().Id);
                 }
                 else
                 {
@@ -70,7 +102,7 @@ namespace Ahed_project.Services
                         context.SaveChanges();
                         context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
                     }
-                    GlobalDataCollectorService.UserId = user.Id;
+                    _storage.SelectUser(user.Id);
                 }
                 return GetUserData(token.token);
             }

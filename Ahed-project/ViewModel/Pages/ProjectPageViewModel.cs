@@ -1,7 +1,8 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.ProjectClasses;
-using Ahed_project.Services.Global;
+using Ahed_project.Services.Global.Content;
+using Ahed_project.Services.Global.Interface;
 using DevExpress.Mvvm;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
@@ -14,9 +15,11 @@ namespace Ahed_project.ViewModel.Pages
 {
     public class ProjectPageViewModel : BindableBase
     {
-        public ProjectPageViewModel() 
+
+        private readonly IUnitedStorage _storage;
+        public ProjectPageViewModel(IUnitedStorage storage) 
         {
-            Calculations = new ObservableCollection<CalculationFull>();
+            _storage = storage;
         }
         public Visibility TextBoxVisibillity { get; set; }
         public Visibility LabelVisibillity { get; set; }
@@ -24,18 +27,8 @@ namespace Ahed_project.ViewModel.Pages
         public string ButtonImagePath { get; set; }
 
         public bool IsOpen { get; set; }
-        public bool FieldsState { get; set; } //enabled/disabled
 
         #region Props
-        private ProjectInfoGet _projectInfo = new();
-        public ProjectInfoGet ProjectInfo
-        {
-            get => _projectInfo;
-            set { 
-                SetValue(ref _projectInfo, value);
-                ProjectName = value.name;
-            }
-        }
 
         private string _projectName;
         public string ProjectName
@@ -44,28 +37,27 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _projectName = value;
-                ProjectInfo.name = value;
-                UnitedStorage.SetWindowName(value);
+                Data.Project.name = value;
             }
+        }
+        public ProjectInGlobal Data
+        {
+            get => _storage.GetProjectData();
+            set=>_storage.SetProjectData(value);
         }
 
-        private CalculationFull _selectedCalculation;
-        public CalculationFull SelectedCalculation
+        public CalculationFull Calculation
         {
-            get => _selectedCalculation;
-            set
-            {
-                _selectedCalculation = value;
-                UnitedStorage.SetCalculation(SelectedCalculation);
-            }
+            get => Data.Calculation;
+            set => _storage.SetCalculation(value?.calculation_id);
         }
-        public ObservableCollection<CalculationFull> Calculations { get; set; }
+
         public string CalculationName { get; set; }
         #endregion
         #region Comms
         public ICommand CreateCalculationCommand => new AsyncCommand(async () =>
         {
-            await Task.Factory.StartNew(() => UnitedStorage.CreateCalculation(CalculationName));
+            await Task.Factory.StartNew(() => _storage.CreateCalculation(CalculationName));
         });
 
         public ICommand ToggleCommand => new DelegateCommand(async () =>

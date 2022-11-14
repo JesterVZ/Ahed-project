@@ -1,4 +1,4 @@
-﻿using Ahed_project.Services.Global;
+﻿using Ahed_project.Services.Global.Content;
 using DevExpress.Mvvm;
 using System;
 using System.ComponentModel;
@@ -771,11 +771,7 @@ namespace Ahed_project.MasterData.CalculateClasses
             }
         }
 
-        public ICommand ChangeNameCommand => new AsyncCommand<object>((calc) =>
-        {
-            var c = (CalculationFull)calc;
-            return Task.Factory.StartNew(() => UnitedStorage.ChangeCalculationName(c));
-        });
+        public ICommand ChangeNameCommand { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")

@@ -19,6 +19,9 @@ using Ahed_project.Pages;
 using Ahed_project.Windows;
 using System.Windows.Navigation;
 using Ahed_project.ViewModel;
+using Ahed_project.Services.Global.Content;
+using Ahed_project.Services.Global.Interface;
+using Ahed_project.Services.Interfaces;
 
 namespace Ahed_project
 {
@@ -74,13 +77,13 @@ namespace Ahed_project
             builder.RegisterType<ProjectsWindow>().AsSelf();
             #endregion
             #region Services
-            builder.RegisterType<SendDataService>().AsSelf().SingleInstance();
+            builder.RegisterType<LogsStorage>().AsSelf().SingleInstance();
+            builder.RegisterType<SendDataService>().As<ISendDataService>().AsSelf().SingleInstance();
             builder.Register(x=>new PageService(x.Resolve<IComponentContext>())).As<PageService>().SingleInstance();
             builder.RegisterType<WebClient>().AsSelf().SingleInstance();
             builder.RegisterType<JsonWebTokenLocal>().AsSelf().SingleInstance();
             builder.RegisterType<WindowTitleService>().AsSelf().SingleInstance();
-            var data = new GlobalDataCollectorService();
-            builder.RegisterInstance(data).As<GlobalDataCollectorService>().SingleInstance();
+            builder.RegisterType<UnitedStorage>().As<IUnitedStorage>().SingleInstance();
             #endregion
             //Маппер
             var configuration = new MapperConfiguration(cfg =>

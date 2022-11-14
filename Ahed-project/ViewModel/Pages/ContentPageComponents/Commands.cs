@@ -1,7 +1,7 @@
 ﻿using Ahed_project.Pages;
 using Ahed_project.Services;
 using Ahed_project.Services.EF;
-using Ahed_project.Services.Global;
+using Ahed_project.Services.Global.Content;
 using Ahed_project.ViewModel.Windows;
 using Ahed_project.Windows;
 using DevExpress.Mvvm;
@@ -25,7 +25,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 context.SaveChanges();
             }
             var page = _pageService.GetPage<LoginPage>();
-            (Application.Current.MainWindow.DataContext as MainViewModel).FramePage = page;
+            (Application.Current.MainWindow.DataContext as MainViewModel).Data.FramePage = page;
         });
 
         public ICommand Exit => new DelegateCommand(() =>
@@ -54,12 +54,12 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
         public ICommand NewProjectCommand => new AsyncCommand(async () =>
         {
-            Task.Factory.StartNew(() => UnitedStorage.CreateNewProject());
+            Task.Factory.StartNew(() => _storage.CreateNewProject());
         });
 
         public ICommand SaveCommand => new AsyncCommand(async () =>
         {
-            Task.Factory.StartNew(UnitedStorage.SaveProject);
+            Task.Factory.StartNew(_storage.SaveProject);
         });
     }
 }

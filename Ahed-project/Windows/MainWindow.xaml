@@ -9,6 +9,6 @@
         x:Name="AheadWindow"
         Height="795"
         Width="795"
-        Title="{Binding Title}">
-    <Frame Content="{Binding FramePage}" NavigationUIVisibility="Hidden"/>
+        Title="{Binding Data.Title}">
+    <Frame Content="{Binding Data.FramePage}" NavigationUIVisibility="Hidden"/>
 </Window>

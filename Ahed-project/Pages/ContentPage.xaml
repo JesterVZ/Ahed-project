@@ -53,7 +53,7 @@
                 <MenuItem Header="Release Notes"></MenuItem>
             </MenuItem>
         </Menu>
-        <TabControl Grid.Row="1" x:Name="Tabs" VerticalAlignment="Stretch" TabStripPlacement="Left" HorizontalAlignment="Stretch" FontSize="20" SelectedIndex="{Binding SelectedPage, UpdateSourceTrigger=PropertyChanged}">
+        <TabControl Grid.Row="1" x:Name="Tabs" VerticalAlignment="Stretch" TabStripPlacement="Left" HorizontalAlignment="Stretch" FontSize="20" SelectedIndex="{Binding Data.SelectedPage, UpdateSourceTrigger=PropertyChanged}">
             <TabItem FontSize="12" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
@@ -62,15 +62,15 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="17"/>
                         </Grid.ColumnDefinitions>
-                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=ProjectState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=PageStates.ProjectState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="1" HorizontalAlignment="Center" FontSize="12">Project</Label>
-                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=ProjectValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=PageStates.ProjectState.ValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding ProjectPage}"/>
             </TabItem>
 
-            <TabItem FontSize="12" IsEnabled="{Binding Path=TubesFluidState.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
+            <TabItem FontSize="12" IsEnabled="{Binding Path=PageStates.TubesFluidState.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -78,14 +78,14 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="17"/>
                         </Grid.ColumnDefinitions>
-                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=TubesFluidState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=PageStates.TubesFluidState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="1" HorizontalAlignment="Center" FontSize="12">Tubes fluid</Label>
-                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=TubesFluidValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=PageStates.TubesFluidState.ValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding TubesFluidPage}"/>
             </TabItem>
-            <TabItem  FontSize="12" IsEnabled="{Binding Path=ShellFluidState.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
+            <TabItem  FontSize="12" IsEnabled="{Binding Path=PageStates.ShellFluidState.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -93,14 +93,14 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="17"/>
                         </Grid.ColumnDefinitions>
-                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=ShellFluidState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=PageStates.ShellFluidState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="1" HorizontalAlignment="Center" FontSize="12">Shell fluid</Label>
-                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=ShellFluidValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=PageStates.ShellFluidState.ValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding ShellFluidPage}"/>
             </TabItem>
-            <TabItem IsEnabled="{Binding Path=HeatBalanceState.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="12" Style="{StaticResource TabItemMain}">
+            <TabItem IsEnabled="{Binding Path=PageStates.HeatBalanceState.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="12" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -108,14 +108,14 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="17"/>
                         </Grid.ColumnDefinitions>
-                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=HeatBalanceState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}" />
+                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=PageStates.HeatBalanceState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}" />
                         <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">Heat Balance</Label>
-                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=HeatBalanceValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=PageStates.HeatBalanceState.ValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding HeatBalancePage}"/>
             </TabItem>
-            <TabItem IsEnabled="{Binding Path=GeometryState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
+            <TabItem IsEnabled="{Binding Path=PageStates.GeometryState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -123,14 +123,14 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="17"/>
                         </Grid.ColumnDefinitions>
-                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=GeometryState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=PageStates.GeometryState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">Geometry</Label>
-                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=GeometryValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=PageStates.GeometryState.ValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding GeometryPage}"/>
             </TabItem>
-            <TabItem IsEnabled="{Binding Path=BafflesState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
+            <TabItem IsEnabled="{Binding Path=PageStates.BafflesState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -138,14 +138,14 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="17"/>
                         </Grid.ColumnDefinitions>
-                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=BafflesState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=PageStates.BafflesState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">Baffles</Label>
-                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=BafflesValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=PageStates.BafflesState.ValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding BafflesPage}"/>
             </TabItem>
-            <TabItem IsEnabled="{Binding Path=OverallCalculationState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
+            <TabItem IsEnabled="{Binding Path=PageStates.OverallCalculationState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -153,14 +153,14 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="17"/>
                         </Grid.ColumnDefinitions>
-                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=OverallCalculationState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=PageStates.OverallCalculationState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">Overall Calculation</Label>
-                        <SVG:SvgViewbox Margin="3"  Grid.Column="2" Source="{Binding Path=OverallValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3"  Grid.Column="2" Source="{Binding Path=PageStates.OverallCalculationState.ValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding OveralCalculationPage}"/>
             </TabItem>
-            <TabItem IsEnabled="{Binding Path=BatchState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
+            <TabItem IsEnabled="{Binding Path=PageStates.BatchState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -168,14 +168,14 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="17"/>
                         </Grid.ColumnDefinitions>
-                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=BatchState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=PageStates.BatchState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">Batch</Label>
-                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=BatchValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=PageStates.BatchState.ValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding BatchPage}"/>
             </TabItem>
-            <TabItem IsEnabled="{Binding Path=GraphState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
+            <TabItem IsEnabled="{Binding Path=PageStates.GraphState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -183,14 +183,14 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="17"/>
                         </Grid.ColumnDefinitions>
-                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=GraphState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=PageStates.GraphState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">Graphs</Label>
-                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=GraphsValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=PageStates.GraphState.ValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding GraphsPage}"/>
             </TabItem>
-            <TabItem IsEnabled="{Binding Path=ReportsState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
+            <TabItem IsEnabled="{Binding Path=PageStates.ReportsState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -198,14 +198,14 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="17"/>
                         </Grid.ColumnDefinitions>
-                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=ReportsState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=PageStates.ReportsState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">Reports</Label>
-                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=ReportsValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=PageStates.ReportsState.ValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding ReportsPage}"/>
             </TabItem>
-            <TabItem IsEnabled="{Binding Path=QuoteState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
+            <TabItem IsEnabled="{Binding Path=PageStates.QuoteState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -213,14 +213,14 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="17"/>
                         </Grid.ColumnDefinitions>
-                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=QuoteState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=PageStates.QuoteState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">Quote</Label>
-                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=QuoteValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=PageStates.QuoteState.ValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding QuotePage}"/>
             </TabItem>
-            <TabItem IsEnabled="{Binding Path=ThreeDState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
+            <TabItem IsEnabled="{Binding Path=PageStates.ThreeDState.IsEnabled, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -228,9 +228,9 @@
                             <ColumnDefinition />
                             <ColumnDefinition Width="17"/>
                         </Grid.ColumnDefinitions>
-                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=ThreeDState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
+                        <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=PageStates.ThreeDState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
                         <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">3D</Label>
-                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=ThreeDValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
+                        <SVG:SvgViewbox Margin="3" Grid.Column="2" Source="{Binding Path=PageStates.ThreeDState.ValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
                 <Frame Content="{Binding _3DPage}"/>

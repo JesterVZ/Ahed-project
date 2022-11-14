@@ -46,7 +46,7 @@ namespace Ahed_project.ViewModel.Pages
             if (result.Result is User)
             {
                 var page = _pageService.GetPage<ContentPage>();
-                (Application.Current.MainWindow.DataContext as MainViewModel).FramePage = page;
+                (Application.Current.MainWindow.DataContext as MainViewModel).Data.FramePage = page;
             }
             else if (result.Result is null || result.Result is string)
             {

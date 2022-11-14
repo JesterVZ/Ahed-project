@@ -1,6 +1,8 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.MasterData.Products;
 using Ahed_project.Services.Global;
+using Ahed_project.Services.Global.Content;
+using Ahed_project.Services.Global.Interface;
 using DevExpress.Mvvm;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,15 +13,15 @@ namespace Ahed_project.ViewModel.Windows
 {
     public class ProductsViewModel : BindableBase
     {
-
-        public ProductsViewModel()
+        private readonly IUnitedStorage _storage;
+        public ProductsViewModel(IUnitedStorage storage)
         {
-
+            _storage= storage;
         }
 
         public ObservableCollection<Node> Nodes
         {
-            get => GlobalDataCollectorService.Nodes;
+            get => _storage.GetNodes();
         }
         public ObservableCollection<ProductGet> Products { get; set; }
         private List<ProductGet> _productsBeforeSearch = null;
@@ -28,7 +30,7 @@ namespace Ahed_project.ViewModel.Windows
         {
             get
             {
-                _productsBeforeSearch ??= GlobalDataCollectorService.AllProducts.SelectMany(x => x.Value).ToList();
+                _productsBeforeSearch ??= _storage.GetProducts().SelectMany(x => x.Value).ToList();
                 return _productsBeforeSearch;
             }
             set
@@ -62,26 +64,26 @@ namespace Ahed_project.ViewModel.Windows
             var selected = (Node)val;
             if (selected.Nodes == null && selected.Id != null)
             {
-                ProductsBeforeSearch = GlobalDataCollectorService.AllProducts[selected.Id];
+                ProductsBeforeSearch = _storage.GetProducts()[selected.Id];
                 SearchCondition();
             }
         });
 
         public ICommand GetCurrentProducts => new DelegateCommand(() =>
         {
-            _productsBeforeSearch = GlobalDataCollectorService.AllProducts.SelectMany(x => x.Value).ToList();
+            _productsBeforeSearch = _storage.GetProducts().SelectMany(x => x.Value).ToList();
             Products = new ObservableCollection<ProductGet>(ProductsBeforeSearch);
         });
 
         public ICommand OpenInTubesCommand => new DelegateCommand(() =>
         {
-            UnitedStorage.SelectProductTube(SelectedProduct);
-            UnitedStorage.ChangePage(1);
+            _storage.ChangePage(1);
+            _storage.SelectProductTube(SelectedProduct.product_id);
         });
         public ICommand OpenInShellCommand => new DelegateCommand(() =>
         {
-            UnitedStorage.SelectProductShell(SelectedProduct);
-            UnitedStorage.ChangePage(2);
+            _storage.SelectProductShell(SelectedProduct.product_id);
+            _storage.ChangePage(2);
         });
         public ICommand NewfluidCommand => new DelegateCommand(() => { });
         public ICommand EditfluidCommand => new DelegateCommand(() => { });

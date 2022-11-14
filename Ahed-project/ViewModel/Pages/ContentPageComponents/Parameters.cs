@@ -6,21 +6,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 {
     public partial class ContentPageViewModel
     {
-        public int SelectedPage { get; set; }
-        public string ProjectValidationStatusSource { get; set; }
-        public string TubesFluidValidationStatusSource { get; set; }
-        public string ShellFluidValidationStatusSource { get; set; }
-        public string HeatBalanceValidationStatusSource { get; set; }
-        public string GeometryValidationStatusSource { get; set; }
-        public string BafflesValidationStatusSource { get; set; }
-        public string OverallValidationStatusSource { get; set; }
-        public string BatchValidationStatusSource { get; set; }
-        public string GraphsValidationStatusSource { get; set; }
-        public string ReportsValidationStatusSource { get; set; }
-        public string QuoteValidationStatusSource { get; set; }
-        public string ThreeDValidationStatusSource { get; set; }
-
-
         public Page _3DPage { get => _pageService.GetPage<_3DPage>(); }
         public Page BafflesPage { get => _pageService.GetPage<BafflesPage>(); }
         public Page BatchPage { get => _pageService.GetPage<BatchPage>(); }

@@ -1,5 +1,7 @@
 ﻿using Ahed_project.MasterData.GeometryClasses;
 using Ahed_project.Services.Global;
+using Ahed_project.Services.Global.Content;
+using Ahed_project.Services.Global.Interface;
 using DevExpress.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,11 @@ namespace Ahed_project.ViewModel.Windows
 {
     public class GeometryWindowViewModel : BindableBase
     {
-        public GeometryWindowViewModel() { }
+        private IUnitedStorage _storage;
+        public GeometryWindowViewModel(IUnitedStorage storage)
+        {
+            _storage= storage;
+        }
         public ObservableCollection<GeometryFull> Geometries {get; set;}
         public List<GeometryFull> BeforeSearch { get; set; }
         public bool IsGeometrySelected { get; set;}
@@ -44,14 +50,14 @@ namespace Ahed_project.ViewModel.Windows
             #region coms
         public ICommand WindowLoaded => new DelegateCommand(() =>
         {
-            BeforeSearch = new List<GeometryFull>(GlobalDataCollectorService.GeometryCollection);
+            BeforeSearch = new List<GeometryFull>(_storage.GetGeometries());
             Geometries = new ObservableCollection<GeometryFull>(BeforeSearch);
         });
 
         public ICommand SelectGeometryCommand => new DelegateCommand(() =>
         {
-            UnitedStorage.SelectGeometry(SelectedGeometry);
-            UnitedStorage.ChangePage(4);
+            _storage.UpdateGeometry(SelectedGeometry);
+            _storage.ChangePage(4);
         });
         #endregion
 

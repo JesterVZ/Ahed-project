@@ -1,5 +1,7 @@
-﻿using Ahed_project.Pages;
+﻿using Ahed_project.MasterData.MainClasses;
+using Ahed_project.Pages;
 using Ahed_project.Services;
+using Ahed_project.Services.Global.Interface;
 using DevExpress.Mvvm;
 using System.Windows.Controls;
 
@@ -7,11 +9,16 @@ namespace Ahed_project.ViewModel.Windows
 {
     public class MainViewModel : BindableBase
     {
-        public Page FramePage { get; set; }
-        public string Title { get; set; }
-        public MainViewModel()
+        private readonly IUnitedStorage _unitedStorage;
+        public MainInGlobal Data
         {
-            FramePage = new Page();
+            get => _unitedStorage.GetMainData();
+            set => _unitedStorage.SetMainData(value);
+        }
+        public MainViewModel(IUnitedStorage unitedStorage)
+        {            
+            _unitedStorage= unitedStorage;
+            Data.FramePage = new Page();
         }
     }
 }

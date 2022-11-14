@@ -142,7 +142,7 @@
                             <Label>--Select Fluid--</Label>
                         </ComboBoxItem>
                     </ComboBox>
-                    <TextBox Style="{StaticResource TextBoxHeatBalance}" Text="{Binding TubesProductName, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Style="{StaticResource TextBoxHeatBalance}" Text="{Binding Data.TubesProductName, UpdateSourceTrigger=PropertyChanged}"/>
                     <ComboBox ItemsSource="{Binding Path=TubesProcess}" SelectedItem="{Binding TubesProcessSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
@@ -150,63 +150,63 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <TextBox Style="{StaticResource Enabled}" Margin="0,3,0,3" Text="{Binding Calculation.flow_tube, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Style="{StaticResource Enabled}" Margin="0,3,0,3" Text="{Binding Data.Calculation.flow_tube, UpdateSourceTrigger=PropertyChanged}"/>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
                         <TextBox Style="{StaticResource SubEnabled}" Text="{Binding TubesInletTemp, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBox Style="{StaticResource SubEnabled}" Margin="0,3,0,3" Text="{Binding Calculation.temperature_tube_outlet, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding TemperatureTubesOut, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Style="{StaticResource SubEnabled}" Margin="0,3,0,3" Text="{Binding Data.Calculation.temperature_tube_outlet, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding TemperatureTubesOut, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
-                    <TextBox Style="{StaticResource TextBoxHeatBalance}" Text="{Binding Calculation.duty_tube, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Style="{StaticResource TextBoxHeatBalance}" Text="{Binding Data.Calculation.duty_tube, UpdateSourceTrigger=PropertyChanged}"/>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
                         <TextBox Style="{StaticResource SubEnabled}" Text="{Binding Pressure_tube_inlet_value, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
-                        <TextBox Style="{StaticResource Sub}" Margin="0,3,0,3" Text="{Binding Calculation.pressure_shell_outlet, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Style="{StaticResource Sub}" Margin="0,3,0,3" Text="{Binding Data.Calculation.pressure_shell_outlet, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                     <StackPanel Margin="0,36,0,0" Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.liquid_density_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                        <TextBox Text="{Binding Calculation.liquid_density_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_density_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_density_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.liquid_specific_heat_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                        <TextBox Text="{Binding Calculation.liquid_specific_heat_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,-3,3"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_specific_heat_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_specific_heat_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,-3,3"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.liquid_thermal_conductivity_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                        <TextBox Text="{Binding Calculation.liquid_thermal_conductivity_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_thermal_conductivity_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_thermal_conductivity_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.liquid_consistency_index_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                        <TextBox Text="{Binding Calculation.liquid_consistency_index_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_consistency_index_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_consistency_index_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.liquid_flow_index_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                        <TextBox Text="{Binding Calculation.liquid_flow_index_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_flow_index_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_flow_index_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.liquid_latent_heat_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                        <TextBox Text="{Binding Calculation.liquid_latent_heat_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_latent_heat_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_latent_heat_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                     </StackPanel>
                     <StackPanel Margin="0,36,0,0" Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.gas_density_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                        <TextBox Text="{Binding Calculation.gas_density_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_density_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_density_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.gas_specific_heat_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                        <TextBox Text="{Binding Calculation.gas_specific_heat_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_specific_heat_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_specific_heat_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.gas_thermal_conductivity_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                        <TextBox Text="{Binding Calculation.gas_thermal_conductivity_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_thermal_conductivity_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_thermal_conductivity_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.gas_dynamic_viscosity_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                        <TextBox Text="{Binding Calculation.gas_dynamic_viscosity_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_dynamic_viscosity_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_dynamic_viscosity_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.gas_vapour_pressure_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                        <TextBox Text="{Binding Calculation.gas_vapour_pressure_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_vapour_pressure_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_vapour_pressure_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.gas_mass_vapour_fraction_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
-                        <TextBox Text="{Binding Calculation.gas_mass_vapour_fraction_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_mass_vapour_fraction_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_mass_vapour_fraction_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Margin="10,0,0,0" HorizontalAlignment="Center">
@@ -232,7 +232,7 @@
                             <Label>--Select Fluid--</Label>
                         </ComboBoxItem>
                     </ComboBox>
-                    <TextBox Style="{StaticResource TextBoxHeatBalance}" Text="{Binding ShellProductName, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Style="{StaticResource TextBoxHeatBalance}" Text="{Binding Data.ShellProductName, UpdateSourceTrigger=PropertyChanged}"/>
                     <ComboBox ItemsSource="{Binding Path=ShellProcess}" SelectedItem="{Binding ShellProcessSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
@@ -247,66 +247,66 @@
                     </ComboBox>
                     <StackPanel Orientation="Horizontal" Height="30">
                         <RadioButton IsChecked="{Binding FlowShell}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                        <TextBox Background="{Binding FB, UpdateSourceTrigger=PropertyChanged}" Width="235" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Calculation.flow_shell, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding FlowShellTB }"/>
+                        <TextBox Background="{Binding FB, UpdateSourceTrigger=PropertyChanged}" Width="235" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Data.Calculation.flow_shell, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding FlowShellTB }"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}" Margin="0,3,0,3" Height="30">
                         <RadioButton IsEnabled="{Binding TSIE}" IsChecked="{Binding TemperatureShellInLet, UpdateSourceTrigger=PropertyChanged}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
                         <TextBox Background="{Binding TIB, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding TemperatureShellInLetTB, UpdateSourceTrigger=PropertyChanged}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding ShellInletTemp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <RadioButton IsEnabled="{Binding TSOE}" IsChecked="{Binding TemperatureShellOutLet, UpdateSourceTrigger=PropertyChanged}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                        <TextBox Background="{Binding TOB, UpdateSourceTrigger=PropertyChanged}"  IsEnabled="{Binding TemperatureShellOutLetTB, UpdateSourceTrigger=PropertyChanged}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Calculation.temperature_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Background="{Binding TOB, UpdateSourceTrigger=PropertyChanged}"  IsEnabled="{Binding TemperatureShellOutLetTB, UpdateSourceTrigger=PropertyChanged}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Data.Calculation.temperature_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
-                    <TextBox Style="{StaticResource TextBoxHeatBalance}" Text="{Binding Calculation.duty_shell, UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FFABADB3"/>
+                    <TextBox Style="{StaticResource TextBoxHeatBalance}" Text="{Binding Data.Calculation.duty_shell, UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FFABADB3"/>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
                         <TextBox Style="{StaticResource SubEnabled}" Margin="0,0,3,0" Text="{Binding Pressure_shell_inlet_value, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
-                        <TextBox Style="{StaticResource Sub}" Text="{Binding Calculation.pressure_shell_outlet, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Style="{StaticResource Sub}" Text="{Binding Data.Calculation.pressure_shell_outlet, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                     <StackPanel Margin="0,36,0,0" Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.liquid_density_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                        <TextBox Text="{Binding Calculation.liquid_density_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_density_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_density_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.liquid_specific_heat_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                        <TextBox Text="{Binding Calculation.liquid_specific_heat_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_specific_heat_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_specific_heat_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.liquid_thermal_conductivity_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                        <TextBox Text="{Binding Calculation.liquid_thermal_conductivity_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_thermal_conductivity_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_thermal_conductivity_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.liquid_consistency_index_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                        <TextBox Text="{Binding Calculation.liquid_consistency_index_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_consistency_index_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_consistency_index_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.liquid_flow_index_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                        <TextBox Text="{Binding Calculation.liquid_flow_index_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_flow_index_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_flow_index_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.liquid_latent_heat_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                        <TextBox Text="{Binding Calculation.liquid_latent_heat_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_latent_heat_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                        <TextBox Text="{Binding Data.Calculation.liquid_latent_heat_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                     </StackPanel>
                     <StackPanel Margin="0,36,0,0" Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.gas_density_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                        <TextBox Text="{Binding Calculation.gas_density_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_density_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_density_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.gas_specific_heat_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                        <TextBox Text="{Binding Calculation.gas_specific_heat_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_specific_heat_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_specific_heat_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.gas_thermal_conductivity_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                        <TextBox Text="{Binding Calculation.gas_thermal_conductivity_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_thermal_conductivity_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_thermal_conductivity_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.gas_dynamic_viscosity_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                        <TextBox Text="{Binding Calculation.gas_dynamic_viscosity_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_dynamic_viscosity_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_dynamic_viscosity_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.gas_vapour_pressure_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                        <TextBox Text="{Binding Calculation.gas_vapour_pressure_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_vapour_pressure_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_vapour_pressure_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.gas_mass_vapour_fraction_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
-                        <TextBox Text="{Binding Calculation.gas_mass_vapour_fraction_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_mass_vapour_fraction_shell_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,3,3"/>
+                        <TextBox Text="{Binding Data.Calculation.gas_mass_vapour_fraction_shell_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

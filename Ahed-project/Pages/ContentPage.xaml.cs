@@ -1,6 +1,8 @@
 ﻿using Ahed_project.Services.Global;
+using Ahed_project.Services.Global.Interface;
 using Ahed_project.ViewModel.ContentPageComponents;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,10 +14,12 @@ namespace Ahed_project.Pages
     /// </summary>
     public partial class ContentPage : Page
     {
-        public ContentPage(ContentPageViewModel vm)
+        private readonly LogsStorage Logs;
+        public ContentPage(ContentPageViewModel vm, LogsStorage logs)
         {
             InitializeComponent();
             DataContext = vm;
+            Logs = logs;
             PrepareLogs();
             NavigationCommands.BrowseBack.InputGestures.Clear();
             NavigationCommands.BrowseForward.InputGestures.Clear();
@@ -23,16 +27,16 @@ namespace Ahed_project.Pages
 
         public void PrepareLogs()
         {
-            GlobalDataCollectorService.Logs.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(
-                delegate (object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-                {
-                    LogData.ItemsSource = GlobalDataCollectorService.Logs.OrderByDescending(x => x.DateTime);
-                });
+            Logs.Logs.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(
+            delegate (object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+            {
+                LogData.ItemsSource = Logs.Logs.OrderByDescending(x=>x.DateTime);
+            });
         }
 
         private void ClearLogs(object sender, RoutedEventArgs e)
         {
-            GlobalDataCollectorService.Logs.Clear();
+            Application.Current.Dispatcher.Invoke(() => Logs.Logs.Clear());
         }
 
         private void LogData_SizeChanged(object sender, SizeChangedEventArgs e)
