@@ -82,7 +82,7 @@ namespace Ahed_project.ViewModel.Pages
 
         private async void GetTemperatureCalculation(bool shell,string value)
         {
-            await Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateTemperature(value, Calculation,shell));
+            await Task.Factory.StartNew(() => UnitedStorage.CalculateTemperature(value, Calculation,shell));
         }
 
         public void Raise(string param)
@@ -235,7 +235,7 @@ namespace Ahed_project.ViewModel.Pages
 
         public ICommand Calculate => new DelegateCommand(() =>
         {
-            Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.Calculate(Calculation));
+            Task.Factory.StartNew(() => UnitedStorage.Calculate(Calculation));
         });
 
         private bool _flowShell;

@@ -103,7 +103,7 @@ namespace Ahed_project.ViewModel.Pages
                 Baffle.type = "single_segmental";
                 Baffle.baffle_cut_direction = "horizontal";
             }
-            Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateBaffle(Baffle));
+            Task.Factory.StartNew(() => UnitedStorage.CalculateBaffle(Baffle));
         });
         #endregion
 

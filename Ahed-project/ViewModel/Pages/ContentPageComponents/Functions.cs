@@ -22,7 +22,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
             if (GlobalDataCollectorService.Project != null)
             {
-                if (GlobalFunctionsAndCallersService.GetSelectedCalculation != null)
+                if (UnitedStorage.GetSelectedCalculation != null)
                 {
                     ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
                     ChangeTabState(MasterData.Pages.TUBES_FLUID);
@@ -31,7 +31,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     ChangeTabState(MasterData.Pages.GEOMETRY);
                     ChangeTabState(MasterData.Pages.BAFFLES);
                     ChangeTabState(MasterData.Pages.OVERALL_CALCULATION);
-                    if (GlobalFunctionsAndCallersService.GetTubeProduct() == null)
+                    if (UnitedStorage.GetTubeProduct() == null)
                     {
                         tabs.tube_fluid = "0";
                         TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
@@ -40,7 +40,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                         tabs.tube_fluid = "1";
                         TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
                     }
-                    if (GlobalFunctionsAndCallersService.GetShellProduct() == null)
+                    if (UnitedStorage.GetShellProduct() == null)
                     {
                         tabs.shell_fluid = "0";
                         ShellFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
@@ -69,7 +69,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                         GeometryValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
                     }
                     if(needSetData)
-                    GlobalFunctionsAndCallersService.SetTabState(tabs); //отправить состояник вкладок по api
+                    UnitedStorage.SetTabState(tabs); //отправить состояник вкладок по api
                 } else
                 {
                     //GlobalDataCollectorService.Logs.Add(new LoggerMessage("warning", "Выберите калькуляцию!"));

@@ -102,7 +102,7 @@ namespace Ahed_project
             IMapper mapper = configuration.CreateMapper();
             builder.RegisterInstance(mapper).As<IMapper>().SingleInstance();
 
-            builder.RegisterType<GlobalFunctionsAndCallersService>().AsSelf().SingleInstance().AutoActivate();
+            builder.RegisterType<UnitedStorage>().AsSelf().SingleInstance().AutoActivate();
         }
     }
 }

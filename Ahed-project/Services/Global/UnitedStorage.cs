@@ -28,7 +28,7 @@ namespace Ahed_project.Services.Global
     /// <summary>
     /// Сервис для прогрузки данных после логина в потоке отдельном планируется
     /// </summary>
-    public class GlobalFunctionsAndCallersService
+    public class UnitedStorage:IUnitedStorage
     {
         private static SendDataService _sendDataService;
         private static bool _isProductsDownloaded = false;
@@ -43,7 +43,7 @@ namespace Ahed_project.Services.Global
         private static BufflesPageViewModel _bufflesPageViewModel;
         private static MainViewModel _mainViewModel;
 
-        public GlobalFunctionsAndCallersService(SendDataService sendDataService, ContentPageViewModel contentPage,
+        public UnitedStorage(SendDataService sendDataService, ContentPageViewModel contentPage,
             ProjectPageViewModel projectPageViewModel, IMapper mapper, HeatBalanceViewModel heatBalanceViewModel, TubesFluidViewModel tubesFluidViewModel,
             ShellFluidViewModel shellFluidViewModel, GeometryPageViewModel geometryPageViewModel, BufflesPageViewModel bufflesPageViewModel, MainViewModel mainViewModel)
         {

@@ -54,12 +54,12 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
         public ICommand NewProjectCommand => new AsyncCommand(async () =>
         {
-            Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CreateNewProject());
+            Task.Factory.StartNew(() => UnitedStorage.CreateNewProject());
         });
 
         public ICommand SaveCommand => new AsyncCommand(async () =>
         {
-            Task.Factory.StartNew(GlobalFunctionsAndCallersService.SaveProject);
+            Task.Factory.StartNew(UnitedStorage.SaveProject);
         });
     }
 }

@@ -103,11 +103,11 @@ namespace Ahed_project.ViewModel.Pages
                     double outer_diameter_tubes_side = Convert.ToDouble(_geometry.outer_diameter_tubes_side, CultureInfo.InvariantCulture);
                     if (outer_diameter_tubes_side <= 25)
                     {
-                        GlobalFunctionsAndCallersService.SetBaffle("0", "0.3");
+                        UnitedStorage.SetBaffle("0", "0.3");
                     }
                     if (outer_diameter_tubes_side > 25)
                     {
-                        GlobalFunctionsAndCallersService.SetBaffle("0", "0.4");
+                        UnitedStorage.SetBaffle("0", "0.4");
                     }
                     RaisePropertiesChanged("GeometryPageViewModel");
                 }
@@ -315,7 +315,7 @@ namespace Ahed_project.ViewModel.Pages
                 
                 if (value == true)
                 {
-                    GlobalFunctionsAndCallersService.SetBaffle("3", "0");
+                    UnitedStorage.SetBaffle("3", "0");
                     Geometry.bundle_type = "fixed";
                 }
 
@@ -330,7 +330,7 @@ namespace Ahed_project.ViewModel.Pages
                 _removable = value;
                 if (value == true)
                 {
-                    GlobalFunctionsAndCallersService.SetBaffle("6", "0");
+                    UnitedStorage.SetBaffle("6", "0");
                     Geometry.bundle_type = "removable";
                 }
 
@@ -568,7 +568,7 @@ namespace Ahed_project.ViewModel.Pages
                     Geometry.tube_plate_layout_sealing_type = "gasket";
                     break;
             }
-            Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateGeometry(Geometry));
+            Task.Factory.StartNew(() => UnitedStorage.CalculateGeometry(Geometry));
         });
 
         #endregion

@@ -50,8 +50,8 @@ namespace Ahed_project.ViewModel.Windows
 
         public ICommand SelectGeometryCommand => new DelegateCommand(() =>
         {
-            GlobalFunctionsAndCallersService.SelectGeometry(SelectedGeometry);
-            GlobalFunctionsAndCallersService.ChangePage(4);
+            UnitedStorage.SelectGeometry(SelectedGeometry);
+            UnitedStorage.ChangePage(4);
         });
         #endregion
 

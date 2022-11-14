@@ -88,7 +88,7 @@ namespace Ahed_project.MasterData.CalculateClasses
         public ICommand ChangeNameCommand => new AsyncCommand<object>((calc) =>
         {
             var c = (CalculationFull)calc;
-            return Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.ChangeCalculationName(c));
+            return Task.Factory.StartNew(() => UnitedStorage.ChangeCalculationName(c));
         });
 
     }

@@ -45,7 +45,7 @@ namespace Ahed_project.ViewModel.Pages
             {
                 _projectName = value;
                 ProjectInfo.name = value;
-                GlobalFunctionsAndCallersService.SetWindowName(value);
+                UnitedStorage.SetWindowName(value);
             }
         }
 
@@ -56,7 +56,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _selectedCalculation = value;
-                GlobalFunctionsAndCallersService.SetCalculation(SelectedCalculation);
+                UnitedStorage.SetCalculation(SelectedCalculation);
             }
         }
         public ObservableCollection<CalculationFull> Calculations { get; set; }
@@ -65,7 +65,7 @@ namespace Ahed_project.ViewModel.Pages
         #region Comms
         public ICommand CreateCalculationCommand => new AsyncCommand(async () =>
         {
-            await Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CreateCalculation(CalculationName));
+            await Task.Factory.StartNew(() => UnitedStorage.CreateCalculation(CalculationName));
         });
 
         public ICommand ToggleCommand => new DelegateCommand(async () =>

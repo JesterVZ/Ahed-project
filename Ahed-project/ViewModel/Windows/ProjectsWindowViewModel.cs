@@ -16,8 +16,8 @@ namespace Ahed_project.ViewModel.Windows
 
         public ICommand SelectProject => new DelegateCommand(() =>
         {
-            GlobalFunctionsAndCallersService.SetProject(SelectedProject);
-            GlobalFunctionsAndCallersService.ChangePage(0);
+            UnitedStorage.SetProject(SelectedProject);
+            UnitedStorage.ChangePage(0);
         });
 
         public ProjectInfoGet SelectedProject { get; set; }
