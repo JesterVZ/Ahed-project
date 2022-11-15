@@ -8,6 +8,9 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Visual\splash_screen.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Visual\check.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -97,5 +100,8 @@
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
     <PackageReference Include="System.ServiceModel.Federation" Version="4.10.0" />
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Visual\splash_screen.png" />
   </ItemGroup>
 </Project>
