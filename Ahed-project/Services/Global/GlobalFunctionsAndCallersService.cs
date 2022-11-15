@@ -654,6 +654,8 @@ namespace Ahed_project.Services.Global
 
                 }
             }
+            GlobalDataCollectorService.IsBaffleCalculated = true;
+            _contentPageViewModel.Validation(true);
         }
 
         //Создать проект

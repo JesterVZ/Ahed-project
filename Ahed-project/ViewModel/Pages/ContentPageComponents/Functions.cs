@@ -68,6 +68,15 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                         tabs.geometry = "0";
                         GeometryValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
                     }
+                    if (GlobalDataCollectorService.IsBaffleCalculated)
+                    {
+                        tabs.baffles = "1";
+                        BafflesValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
+                    } else
+                    {
+                        tabs.baffles = "0";
+                        BafflesValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
+                    }
                     if(needSetData)
                     GlobalFunctionsAndCallersService.SetTabState(tabs); //отправить состояник вкладок по api
                 } else
@@ -123,6 +132,13 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 GeometryValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
             }
 
+            if(tabs.baffles != null && tabs.baffles == "1")
+            {
+                BafflesValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
+            } else
+            {
+                GeometryValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
+            }
 
         }
 

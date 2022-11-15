@@ -32,6 +32,7 @@ namespace Ahed_project.Services.Global
         public static bool IsShelltSave { get; set; } // сохранен ли shell
         public static bool IsHeatBalancetSave { get; set; } // сохранен ли heat balance
         public static bool IsGeometrytSave { get; set; } // сохранена ли geometry
+        public static bool IsBaffleSave { get; set; } // произведен ли расчет перегородок
 
         #endregion
         #region User
@@ -63,6 +64,9 @@ namespace Ahed_project.Services.Global
         #endregion
         #region Materials
         public static List<Material> Materials { get; set; }
+        #endregion
+        #region Baffle
+        public static bool IsBaffleCalculated { get; set;}
         #endregion
     }
 }
