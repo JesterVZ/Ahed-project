@@ -51,7 +51,7 @@ namespace Ahed_project.ViewModel.Pages
             get => _selectedCutDirection;
             set
             {
-                Baffle.baffle_cut_direction = value.Key;
+                Baffle.buffle_cut_diraction = value.Key;
                 _selectedCutDirection = value;
             }
         }
@@ -101,7 +101,7 @@ namespace Ahed_project.ViewModel.Pages
             {
                 Baffle.method = "no_baffles";
                 Baffle.type = "single_segmental";
-                Baffle.baffle_cut_direction = "horizontal";
+                Baffle.buffle_cut_diraction = "horizontal";
             }
             Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateBaffle(Baffle));
         });

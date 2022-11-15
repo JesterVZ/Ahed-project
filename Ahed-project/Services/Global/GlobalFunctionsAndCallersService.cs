@@ -627,7 +627,14 @@ namespace Ahed_project.Services.Global
                 type = baffle.type,
                 buffle_cut = baffle.buffle_cut,
                 method = "no_baffles",
-                baffle_cut_direction = baffle.baffle_cut_direction
+                buffle_cut_diraction = baffle.buffle_cut_diraction,
+                diametral_clearance_shell_baffle = baffle.diametral_clearance_shell_baffle,
+                diametral_clearance_tube_baffle = baffle.diametral_clearance_tube_baffle,
+                inlet_baffle_spacing = baffle.inlet_baffle_spacing,
+                outlet_baffle_spacing = baffle.outlet_baffle_spacing,
+                number_of_baffles = baffle.number_of_baffles,
+                baffle_thickness = baffle.baffle_thickness,
+
             });
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_BAFFLE, json, _heatBalanceViewModel.Calculation.project_id.ToString(), _heatBalanceViewModel.Calculation.calculation_id.ToString()));
             if (response != null)
@@ -702,13 +709,7 @@ namespace Ahed_project.Services.Global
         {
             _mainViewModel.Title = $"{name} ({_heatBalanceViewModel.Calculation?.name})";
         }
-        /*
-        public static void SetBaffle(string diametral_clearance_shell_baffle, string diametral_clearance_tube_baffle)
-        {
-            _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = diametral_clearance_shell_baffle;
-            _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = diametral_clearance_tube_baffle;
-            _bufflesPageViewModel.Raise("Baffle");
-        }*/
+
 
         public static void SetDiametralShellDefaultValue(string value)
         {
