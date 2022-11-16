@@ -97,7 +97,7 @@ namespace Ahed_project.ViewModel.Pages
                 ShellMaterial = Materials.FirstOrDefault(x => x.Value.name == value.material_shell_side);
                 TubesMaterial = Materials.FirstOrDefault(x => x.Value.name == value.material_tubes_side);
                 TubeLayout = TubePlateLayouts.FirstOrDefault(x => x.Value.Name == value.tube_plate_layout_tube_layout);
-                DivPlateItem = DivPlateItems.FirstOrDefault(x => x == value.tube_plate_layout_div_plate_layout);
+               
                 try
                 {
                     double outer_diameter_tubes_side = Convert.ToDouble(_geometry.outer_diameter_tubes_side, CultureInfo.InvariantCulture);
@@ -169,7 +169,13 @@ namespace Ahed_project.ViewModel.Pages
                 if (value.tube_plate_layout_number_of_passes == null || value.tube_plate_layout_number_of_passes == "")
                 {
                     Tube_plate_layout_number_of_passes = "1";
+                } else
+                {
+                    Tube_plate_layout_number_of_passes = value.tube_plate_layout_number_of_passes;
                 }
+                DivPlateItem = DivPlateItems.FirstOrDefault(x => x == value.tube_plate_layout_div_plate_layout);
+                SealingTypeItem = SealingTypeItems.FirstOrDefault(x => x == value.tube_plate_layout_sealing_type);
+                RaisePropertiesChanged("GeometryPageViewModel");
 
             }
         }
@@ -384,6 +390,10 @@ namespace Ahed_project.ViewModel.Pages
                     Geometry.tube_plate_layout_div_plate_layout = value;
                 }
                 */
+                if(value == null)
+                {
+                    return;
+                }
                 if (value == "Mechanised")
                 {
                     SealingTypeVis = Visibility.Visible;
