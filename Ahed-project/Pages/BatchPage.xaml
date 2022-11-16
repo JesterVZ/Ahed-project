@@ -5,10 +5,113 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Ahed_project.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="1080" d:DesignWidth="1800"
       Title="BatchPage">
 
     <Grid>
-        
+        <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+            <Grid Background="White" Width="1800" HorizontalAlignment="Left">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Calculate" Command="{Binding Calculate}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
+                    </StackPanel>
+                    <Label FontWeight="Bold" Margin="0 24 0 24">Batch</Label>
+                    <StackPanel Orientation="Horizontal">
+                        <Grid Width="400" Height="400" VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="57*"/>
+                                <ColumnDefinition Width="43*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            
+                            <Label Grid.Column="0" Grid.Row="0">Batch mass</Label>
+                            <TextBox Style="{StaticResource Default}" Grid.Row="0" Grid.Column="1"/>
+                            
+                            <Label Grid.Column="0" Grid.Row="1">Tubes Flow</Label>
+                            <TextBox Style="{StaticResource Default}" Grid.Row="1" Grid.Column="1"/>
+                            
+                            <Label Grid.Column="0" Grid.Row="2">Tubes Spec.Heat</Label>
+                            <TextBox Style="{StaticResource Default}" Grid.Row="2" Grid.Column="1"/>
+
+                            <Label Grid.Column="0" Grid.Row="3">Batch start temp</Label>
+                            <TextBox Style="{StaticResource Default}" Grid.Row="3" Grid.Column="1"/>
+
+                            <Label Grid.Column="0" Grid.Row="4">Batch end temp</Label>
+                            <TextBox Style="{StaticResource Default}" Grid.Row="4" Grid.Column="1"/>
+
+                            <Label Grid.Column="0" Grid.Row="5">Duty Limitation</Label>
+                            <TextBox Style="{StaticResource Default}" Grid.Row="5" Grid.Column="1"/>
+
+                            <Label Grid.Column="0" Grid.Row="7">System mass</Label>
+                            <TextBox Style="{StaticResource Default}" Grid.Row="7" Grid.Column="1"/>
+
+                            <Label Grid.Column="0" Grid.Row="8">System spec. heat</Label>
+                            <TextBox Style="{StaticResource Default}" Grid.Row="8" Grid.Column="1"/>
+
+                            <Label Grid.Column="0" Grid.Row="10">Batch time</Label>
+                            <TextBox Style="{StaticResource Colored}" Grid.Row="10" Grid.Column="1"/>
+                        </Grid>
+                        <Grid Width="400" Height="400" VerticalAlignment="Top" Margin="25 0 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="57*"/>
+                                <ColumnDefinition Width="43*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0">Shell Inlet Temp</Label>
+                            <TextBox Style="{StaticResource Default}" Grid.Row="0" Grid.Column="1"/>
+
+                            <Label Grid.Column="0" Grid.Row="1">Shell Flow</Label>
+                            <TextBox Style="{StaticResource Default}" Grid.Row="1" Grid.Column="1"/>
+
+                            <Label Grid.Column="0" Grid.Row="2">Shell Spec.Heat</Label>
+                            <TextBox Style="{StaticResource Default}" Grid.Row="2" Grid.Column="1"/>
+
+                            <Label Grid.Column="0" Grid.Row="3">Isothermal Service Fluid</Label>
+                            <CheckBox VerticalAlignment="Center" Grid.Row="3" Grid.Column="1"/>
+
+                            <Label Grid.Column="0" Grid.Row="4">Heat exchanger ared</Label>
+                            <TextBox Style="{StaticResource Default}" Grid.Row="4" Grid.Column="1"/>
+
+                            <Label Grid.Column="0" Grid.Row="5">Heat transfer coeff</Label>
+                            <TextBox Style="{StaticResource Default}" Grid.Row="5" Grid.Column="1"/>
+
+                            <Label Grid.Column="0" Grid.Row="7">Include filling</Label>
+                            <CheckBox VerticalAlignment="Center" Grid.Row="7" Grid.Column="1"/>
+
+                            <Label Grid.Column="0" Grid.Row="8">Filling Flow</Label>
+                            <TextBox Style="{StaticResource Colored}" Grid.Row="8" Grid.Column="1"/>
+
+                            <Label Grid.Column="0" Grid.Row="9">Recurculation start level</Label>
+                            <TextBox Style="{StaticResource Colored}" Grid.Row="9" Grid.Column="1"/>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>

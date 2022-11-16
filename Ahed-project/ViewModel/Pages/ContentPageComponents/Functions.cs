@@ -31,6 +31,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     ChangeTabState(MasterData.Pages.GEOMETRY);
                     ChangeTabState(MasterData.Pages.BAFFLES);
                     ChangeTabState(MasterData.Pages.OVERALL_CALCULATION);
+                    ChangeTabState(MasterData.Pages.BATCH);
                     if (GlobalFunctionsAndCallersService.GetTubeProduct() == null)
                     {
                         tabs.tube_fluid = "0";
