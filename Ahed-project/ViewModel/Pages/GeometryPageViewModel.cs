@@ -32,7 +32,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _tube_plate_layout_number_of_passes = value;
-                List<string> divplate = new List<string>(); ;
+                ObservableCollection<string> divplate = new ObservableCollection<string>(); ;
                 switch (value)
                 {
                     case "1":
@@ -77,7 +77,11 @@ namespace Ahed_project.ViewModel.Pages
                         divplate.Add("Mechanised");
                         break;
                 }
-                DivPlateItems = new ObservableCollection<string>(divplate);
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    DivPlateItems.Clear();
+                    DivPlateItems = divplate;
+                });
                 if (DivPlateItems.Count>0)
                 {
                     DivPlateItem = DivPlateItems.First();
@@ -174,6 +178,10 @@ namespace Ahed_project.ViewModel.Pages
                     Tube_plate_layout_number_of_passes = value.tube_plate_layout_number_of_passes;
                 }
                 DivPlateItem = DivPlateItems.FirstOrDefault(x => x == value.tube_plate_layout_div_plate_layout);
+                if(value.tube_plate_layout_sealing_type == null)
+                {
+                    SealingTypeItem = "O'Rings + Housing";
+                }
                 SealingTypeItem = SealingTypeItems.FirstOrDefault(x => x == value.tube_plate_layout_sealing_type);
                 RaisePropertiesChanged("GeometryPageViewModel");
 
@@ -405,11 +413,11 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
 
-        public Dictionary<string, string> SealingTypeItems { get; set; }
+        public ObservableCollection<string> SealingTypeItems { get; set; }
 
-        private KeyValuePair<string, string> _sealingTypeItem;
+        private string _sealingTypeItem;
 
-        public KeyValuePair<string, string> SealingTypeItem
+        public string SealingTypeItem
         {
             get => _sealingTypeItem;
             set
@@ -417,9 +425,9 @@ namespace Ahed_project.ViewModel.Pages
                 _sealingTypeItem = value;
                 if (Geometry != null)
                 {
-                    Geometry.tube_plate_layout_sealing_type = value.Key;
+                    Geometry.tube_plate_layout_sealing_type = value;
                 }
-                if (_sealingTypeItem.Value == "O'Rings + Housing")
+                if (_sealingTypeItem == "O'Rings + Housing")
                 {
                     HousingSpaceVis = Visibility.Visible;
                 }
@@ -446,7 +454,7 @@ namespace Ahed_project.ViewModel.Pages
             Orientations = new Dictionary<string, string>();
             Materials = new Dictionary<int, Material>();
             DivPlateItems = new ObservableCollection<string>();
-            SealingTypeItems = new Dictionary<string, string>();
+            SealingTypeItems = new ObservableCollection<string>();
             TubePlateLayouts = new Dictionary<string, TubeplateLayout>();
             TubeProfile = new Dictionary<string, string>();
             TubeplateLayout optimize = new TubeplateLayout
@@ -496,8 +504,8 @@ namespace Ahed_project.ViewModel.Pages
             //DivPlateItems.Add(0, "Horizontal");
             //DivPlateItems.Add(1, "Mechanised");
 
-            SealingTypeItems.Add("o_rings_housing", "O'Rings + Housing");
-            SealingTypeItems.Add("gasket", "Gasket");
+            SealingTypeItems.Add("O'Rings + Housing");
+            SealingTypeItems.Add("Gasket");
 
             TubeProfile.Add("smooth_tube", "Smooth Tube");
             TubeProfile.Add("hard_corrugation", "Hard Corrugation");
@@ -569,7 +577,7 @@ namespace Ahed_project.ViewModel.Pages
                     Geometry.tube_plate_layout_div_plate_layout = "horizontal_vertical";
                     break;
             }
-            switch(SealingTypeItem.Value)
+            switch(SealingTypeItem)
             {
                 case "O'Rings + Housing":
                     Geometry.tube_plate_layout_sealing_type = "o_rings_housing";

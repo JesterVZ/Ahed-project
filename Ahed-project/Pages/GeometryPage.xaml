@@ -168,8 +168,8 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <Image Grid.Column="0" Grid.Row="0">
-                        </Image>
+                        <Canvas  Grid.Column="0" Grid.Row="0">
+                        </Canvas>
                         <Grid Grid.Column="1" Grid.Row="0">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
@@ -207,20 +207,15 @@
                             <TextBox Style="{StaticResource Default}" Text="{Binding Tube_plate_layout_number_of_passes, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Column="1" Grid.Row="2"/>
 
                             <Label Grid.Column="0" Grid.Row="3" VerticalAlignment="Center">Div.Plate Layout</Label>
-                            <ComboBox Style="{StaticResource ComboboxDefault}" ItemsSource="{Binding DivPlateItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding DivPlateItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3">
+                            <ComboBox Style="{StaticResource ComboboxDefault}" ItemsSource="{Binding DivPlateItems, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding DivPlateItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3">
                             </ComboBox>
 
                             <Label Visibility="{Binding SealingTypeVis}" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center">Sealing Type</Label>
                             <ComboBox Visibility="{Binding SealingTypeVis}" ItemsSource="{Binding SealingTypeItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SealingTypeItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="1" SelectedIndex="0" Grid.Row="4">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Value}"></TextBlock>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
                             </ComboBox>
 
                             <Label Grid.Column="0" Grid.Row="5" Visibility="{Binding HousingSpaceVis, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center">Housing Space (mm)</Label>
-                            <TextBox Style="{StaticResource Colored}" Visibility="{Binding HousingSpaceVis, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" Text="NaN" Grid.Column="1" Grid.Row="5"/>
+                            <TextBox Style="{StaticResource Colored}" Visibility="{Binding HousingSpaceVis, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" Text="{Binding Geometry.tube_plate_layout_housings_space, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5"/>
 
                             <Label Grid.Column="0" Grid.Row="6" VerticalAlignment="Center">Div.Plate Thickness (mm)</Label>
                             <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_div_plate_thickness}" Grid.Column="1" Grid.Row="6"/>
