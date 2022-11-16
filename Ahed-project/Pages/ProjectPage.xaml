@@ -82,7 +82,16 @@
                     <StackPanel Margin="3" Orientation="Horizontal" Grid.Column="0" Grid.Row="9">
                         <TextBlock Grid.ColumnSpan="4" FontWeight="Bold" Margin="0 0 9 0">Advanced Properties</TextBlock>
                         <Button Width="20" Height="20" Template="{StaticResource RoundedButton}" Command="{Binding ToggleCommand}">
-                            <materialDesign:PackIcon Kind="ChevronDown"/>
+                            <Image Source="../Visual/arrow.png" Margin="4 4 4 4" RenderTransformOrigin="0.5,0.5">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="{Binding ArrowAngle, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
                         </Button>
                     </StackPanel>
                     

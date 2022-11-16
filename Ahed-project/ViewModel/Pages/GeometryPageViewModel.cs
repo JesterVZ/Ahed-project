@@ -18,7 +18,26 @@ namespace Ahed_project.ViewModel.Pages
 {
     public class GeometryPageViewModel : BindableBase
     {
-        public bool IsOpen { get; set; }
+        private bool _isOpen;
+        public bool IsOpen
+        {
+
+            get => _isOpen;
+            set
+            {
+                _isOpen = value;
+                if (value == true)
+                {
+                    ArrowAngle = "180";
+                }
+                else
+                {
+                    ArrowAngle = "0";
+                }
+
+            }
+        }
+        public string ArrowAngle { get; set; }
         public double GridColumnWidth { get; set; }
         public Dictionary<string, string> Exchangers { get; set; }
         public Dictionary<string, string> Orientations { get; set; }
@@ -457,6 +476,7 @@ namespace Ahed_project.ViewModel.Pages
             SealingTypeItems = new ObservableCollection<string>();
             TubePlateLayouts = new Dictionary<string, TubeplateLayout>();
             TubeProfile = new Dictionary<string, string>();
+            ArrowAngle = "0";
             TubeplateLayout optimize = new TubeplateLayout
             {
                 ImageUrl = "",

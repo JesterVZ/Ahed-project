@@ -15,7 +15,26 @@ namespace Ahed_project.ViewModel.Pages
         public Dictionary<string, string> Type { get; set; }
         public Dictionary<string, string> BaffleType { get; set; } // No baffles, Standard heat transfer with SUPPORT baffles, Full baffles heat transfer calculation
         public Dictionary<string, string> CutDirection { get; set; }
-        public bool IsOpen { get; set; }
+        private bool _isOpen;
+        public bool IsOpen
+        {
+
+            get => _isOpen;
+            set
+            {
+                _isOpen = value;
+                if (value == true)
+                {
+                    ArrowAngle = "180";
+                }
+                else
+                {
+                    ArrowAngle = "0";
+                }
+
+            }
+        }
+        public string ArrowAngle { get; set; }
         public double SingleSegmentalIsEnables { get; set; }
         public double DoubleSegmentalIsEnables { get; set; }
         private BaffleFull _baffle;
@@ -31,7 +50,7 @@ namespace Ahed_project.ViewModel.Pages
             BaffleType = new Dictionary<string, string>();
             CutDirection = new Dictionary<string, string>();
             Baffle = new BaffleFull();
-
+            ArrowAngle = "0";
             Type.Add("single_segmental", "Single Segmental");
             Type.Add("double_segmental", "Double Segmental");
 
