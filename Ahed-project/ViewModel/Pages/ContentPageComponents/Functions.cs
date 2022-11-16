@@ -116,6 +116,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
             if (tabs.head_balance != null && tabs.head_balance == "1")
             {
+                GlobalDataCollectorService.HeatBalanceCalculated = true;
                 HeatBalanceValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
             }
             else
@@ -125,6 +126,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
             if (tabs.geometry != null && tabs.geometry == "1")
             {
+                GlobalDataCollectorService.GeometryCalculated = true;
                 GeometryValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
             }
             else
@@ -134,6 +136,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 
             if(tabs.baffles != null && tabs.baffles == "1")
             {
+                GlobalDataCollectorService.IsBaffleCalculated = true;
                 BafflesValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
             } else
             {
