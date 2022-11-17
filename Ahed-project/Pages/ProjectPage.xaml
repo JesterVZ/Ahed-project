@@ -9,7 +9,7 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:SVG="http://sharpvectors.codeplex.com/svgc/"
       mc:Ignorable="d" 
       Title="ProjectPage"
-      VerticalAlignment="Top">
+      VerticalAlignment="Top" HorizontalAlignment="Left" Width="983" Height="522">
 
     <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" >
         <StackPanel Orientation="Vertical" Background="White">
