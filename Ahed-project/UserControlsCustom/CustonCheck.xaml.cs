@@ -20,13 +20,27 @@ namespace Ahed_project.UserControlsCustom
     /// </summary>
     public partial class CustonCheck : System.Windows.Controls.UserControl
     {
-        private string _text;
-        public string Text
+        public static readonly DependencyProperty dependencyPropertyText = DependencyProperty.Register("InputText", typeof(string), typeof(CustonCheck), new PropertyMetadata("", new PropertyChangedCallback(ChangeTextProperty)));
+        public static readonly DependencyProperty dependencyPropertyIsChecked = DependencyProperty.Register("IsChecked", typeof(int), typeof(CustonCheck), new PropertyMetadata(0, new PropertyChangedCallback(ChangeIsCheckedProperty)));
+
+        public int IsChecked
         {
-            get => (string)GetValue(TextProperty);
-            set => SetValue(TextProperty, value);
+            get => (int)GetValue(dependencyPropertyIsChecked);
+            set
+            {
+                SetValue(dependencyPropertyIsChecked, value);
+            }
         }
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(CustonCheck), new PropertyMetadata(false, new PropertyChangedCallback(ChangeTextProperty)));
+
+        public string InputText
+        {
+            get => (string)GetValue(dependencyPropertyText);
+            set { 
+                SetValue(dependencyPropertyText, value);
+                CustomTextBox.Text = value;
+            }
+        }
+
         public CustonCheck()
         {
             InitializeComponent();
@@ -35,6 +49,7 @@ namespace Ahed_project.UserControlsCustom
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             CustomTextBox.IsEnabled = true;
+            IsChecked = 1;
             CustomTextBox.Background = new SolidColorBrush(Colors.White);
             //CustomTextBox.Background = new SolidColorBrush(Color.FromRgb(249, 239, 229));
         }
@@ -42,11 +57,16 @@ namespace Ahed_project.UserControlsCustom
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             CustomTextBox.IsEnabled = false;
+            IsChecked = 0;
             CustomTextBox.Background = new SolidColorBrush(Color.FromRgb(249, 239, 229));
         }
         private static void ChangeTextProperty(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as CustonCheck).Text = (string)e.NewValue;
+            (d as CustonCheck).InputText = (string)e.NewValue;
+        }
+        private static void ChangeIsCheckedProperty(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as CustonCheck).IsChecked = (int)e.NewValue;
         }
     }
 }
