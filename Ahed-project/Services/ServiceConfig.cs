@@ -43,5 +43,7 @@ namespace Ahed_project.Services
         public string GetTabStateLink { get; set; }
         public string SetTabStateLink { get; set; }
         public string CalculateBaffle { get; set; }
+        public string GetBaffle { get; set; }
+        public string GetGeometry { get; set; }
     }
 }

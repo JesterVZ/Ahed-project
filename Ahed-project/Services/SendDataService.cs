@@ -222,7 +222,26 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
 
                         break;
+                    case ProjectMethods.GetBaffle:
+                        restClient = new RestClient(_serviceConfig.GetBaffle.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        request.Method = Method.Post;
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        response = restClient.Execute(request);
 
+                        break;
+                    case ProjectMethods.GetGeometry:
+                        restClient = new RestClient(_serviceConfig.GetGeometry.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        request.Method = Method.Post;
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        response = restClient.Execute(request);
+
+                        break;
                 }
                 if (response.IsSuccessful)
                     return response.Content;
