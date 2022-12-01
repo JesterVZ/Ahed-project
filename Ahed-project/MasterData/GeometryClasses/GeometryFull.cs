@@ -9,6 +9,7 @@ namespace Ahed_project.MasterData.GeometryClasses
     public class GeometryFull
     {
         public int geometry_catalog_id { get; set; }
+        public int geometry_id { get; set; }
         public string name { get; set; }
         public string head_exchange_type { get; set; }
         public string owner { get; set; }
