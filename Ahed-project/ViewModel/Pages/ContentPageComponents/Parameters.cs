@@ -1,4 +1,6 @@
 ﻿using Ahed_project.Pages;
+using Ahed_project.Services.Global;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -6,7 +8,17 @@ namespace Ahed_project.ViewModel.ContentPageComponents
 {
     public partial class ContentPageViewModel
     {
-        public int SelectedPage { get; set; }
+        private int _selectedPage;
+        public int SelectedPage {
+            get => _selectedPage;
+            set {
+                _selectedPage = value;
+                if(value == 6)
+                {
+                    Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateOverall());
+                }
+            } 
+        }
         public string ProjectValidationStatusSource { get; set; }
         public string TubesFluidValidationStatusSource { get; set; }
         public string ShellFluidValidationStatusSource { get; set; }

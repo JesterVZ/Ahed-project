@@ -158,6 +158,20 @@ namespace Ahed_project.Services.Global
             }
         }
 
+        public static async Task CalculateOverall()
+        {
+            int calculation_id;
+            using (var context = new EFContext())
+            {
+                var user = context.Users.FirstOrDefault(x => x.Id == GlobalDataCollectorService.UserId);
+                calculation_id = user.LastCalculationId ?? 0;
+            }
+            var template = _sendDataService.ReturnCopy();
+            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Начало загрузки перегородок...")));
+            var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.CALCULATE_OVERALL,  null, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString()));
+            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Загрузка перегородок завершена!")));
+        }
+
         // Загрузка продуктов
         public static async Task DownLoadProducts()
         {
@@ -398,7 +412,7 @@ namespace Ahed_project.Services.Global
             _shellFluidViewModel.Product = shellProduct;
             _mainViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({_heatBalanceViewModel.Calculation?.name})";
             await Task.Factory.StartNew(GetTabState);
-            var geometryResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GetGeometry, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
+            var geometryResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_GEOMETRY, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
             if (geometryResponse != null)
             {
                 Responce response = JsonConvert.DeserializeObject<Responce>(geometryResponse);
@@ -411,7 +425,7 @@ namespace Ahed_project.Services.Global
                 }
                 
             }
-            var baffleResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GetBaffle, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
+            var baffleResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_BAFFLE, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
             if (baffleResponse != null)
             {
                 BaffleFull baffle = JsonConvert.DeserializeObject<BaffleFull>(baffleResponse);

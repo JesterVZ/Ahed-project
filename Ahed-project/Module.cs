@@ -18,7 +18,6 @@ using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Pages;
 using Ahed_project.Windows;
 using System.Windows.Navigation;
-using Ahed_project.ViewModel;
 
 namespace Ahed_project
 {

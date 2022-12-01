@@ -22,7 +22,8 @@
         GET_TAB_STATE,
         SET_TAB_STATE,
         CALCULATE_BAFFLE,
-        GetGeometry,
-        GetBaffle
+        GET_GEOMETRY,
+        GET_BAFFLE,
+        CALCULATE_OVERALL
     }
 }

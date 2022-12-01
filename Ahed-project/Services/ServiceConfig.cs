@@ -45,5 +45,6 @@ namespace Ahed_project.Services
         public string CalculateBaffle { get; set; }
         public string GetBaffle { get; set; }
         public string GetGeometry { get; set; }
+        public string CalculateOverall { get; set; }
     }
 }

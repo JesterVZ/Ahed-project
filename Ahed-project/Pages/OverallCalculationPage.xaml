@@ -55,52 +55,51 @@
                             </Grid.RowDefinitions>
                             <Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontWeight="Bold">Tube Side</Label>
                             <Label Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontWeight="Bold">Shell Side</Label>
-                            <Label Grid.Column="0" Grid.Row="1">Fluid name</Label>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.fluid_name_tube, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.fluid_name_shell, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2"/>
 
                             <Label Grid.Column="0" Grid.Row="1">Fluid name</Label>
-                            
+
                             <Label Grid.Column="1" Grid.Row="2" HorizontalContentAlignment="Center">Inlet</Label>
                             <Label Grid.Column="2" Grid.Row="2" HorizontalContentAlignment="Center">Outlet</Label>
                             <Label Grid.Column="4" Grid.Row="2" HorizontalContentAlignment="Center">Inlet</Label>
                             <Label Grid.Column="5" Grid.Row="2" HorizontalContentAlignment="Center">Outlet</Label>
 
-                            <Label Grid.Column="0" Grid.Row="3">Fluid</Label>
-                            <TextBox Style="{StaticResource Default}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"/>
-                            <TextBox Style="{StaticResource Default}" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2"/>
+                            <Label Grid.Column="0" Grid.Row="3">Flow</Label>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.flow_tube, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.flow_shell, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2"/>
 
                             <Label Grid.Column="0" Grid.Row="4">Temperature</Label>
-                            <TextBox Style="{StaticResource Default}" Grid.Row="4" Grid.Column="1"/>
-                            <TextBox Style="{StaticResource Default}" Grid.Row="4" Grid.Column="2"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.temperature_tube_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.temperature_tube_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="2"/>
 
-                            <TextBox Style="{StaticResource Default}" Grid.Row="4" Grid.Column="4"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="4" Grid.Column="5"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.temperature_shell_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="4"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.temperature_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="5"/>
 
                             <Label Grid.Column="0" Grid.Row="5">Duty</Label>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.duty_tube, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.duty_shell, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2"/>
 
                             <Label Grid.Column="0" Grid.Row="6">Fluid Velocity</Label>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="6" Grid.Column="1"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="6" Grid.Column="2"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.fluid_velocity_tube_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="6" Grid.Column="1"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.fluid_velocity_tube_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="6" Grid.Column="2"/>
 
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="6" Grid.Column="4"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="6" Grid.Column="5"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.fluid_velocity_shell_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="6" Grid.Column="4"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.fluid_velocity_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="6" Grid.Column="5"/>
 
                             <Label Grid.Column="0" Grid.Row="7">Shear rate</Label>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="7" Grid.Column="1"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="7" Grid.Column="2"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.shear_rate_tube_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="7" Grid.Column="1"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.shear_rate_tube_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="7" Grid.Column="2"/>
 
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="7" Grid.Column="4"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="7" Grid.Column="5"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.shear_rate_shell_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="7" Grid.Column="4"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.shear_rate_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="7" Grid.Column="5"/>
 
                             <Label Grid.Column="0" Grid.Row="8">Flow Type</Label>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="8" Grid.Column="1"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="8" Grid.Column="2"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.flow_type_tube_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="8" Grid.Column="1"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.flow_type_tube_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="8" Grid.Column="2"/>
 
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="8" Grid.Column="4"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="8" Grid.Column="5"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.flow_type_shell_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="8" Grid.Column="4"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.flow_type_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="8" Grid.Column="5"/>
 
                             <Label Grid.Column="0" Grid.Row="9">Scraping Frequency</Label>
                             <TextBox Style="{StaticResource Default}" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2"/>
@@ -108,52 +107,52 @@
                             <Label Grid.Column="0" Grid.Row="10">Maximum Visosity</Label>
                             <TextBox Style="{StaticResource Colored}" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2"/>
 
-                            
+
                             <Label Grid.Column="0" Grid.Row="11" FontWeight="Bold">Liquid Phase</Label>
 
                             <Label Grid.Column="0" Grid.Row="12">App. Viscosity</Label>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="12" Grid.Column="1"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="12" Grid.Column="2"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.liquid_phase_app_viscosity_tube_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="12" Grid.Column="1"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.liquid_phase_app_viscosity_tube_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="12" Grid.Column="2"/>
 
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="12" Grid.Column="4"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="12" Grid.Column="5"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.liquid_phase_app_viscosity_shell_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="12" Grid.Column="4"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.liquid_phase_app_viscosity_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="12" Grid.Column="5"/>
 
                             <Label Grid.Column="0" Grid.Row="13">Reynolds</Label>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="13" Grid.Column="1"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="13" Grid.Column="2"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.liquid_phase_reynolds_tube_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="13" Grid.Column="1"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.liquid_phase_reynolds_tube_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="13" Grid.Column="2"/>
 
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="13" Grid.Column="4"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="13" Grid.Column="5"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.liquid_phase_reynolds_shell_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="13" Grid.Column="4"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.liquid_phase_reynolds_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="13" Grid.Column="5"/>
 
                             <Label Grid.Column="0" Grid.Row="14">Prandtl</Label>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="14" Grid.Column="1"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="14" Grid.Column="2"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.liquid_phase_prandtl_tube_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="14" Grid.Column="1"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.liquid_phase_prandtl_tube_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="14" Grid.Column="2"/>
 
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="14" Grid.Column="4"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="14" Grid.Column="5"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.liquid_phase_prandtl_shell_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="14" Grid.Column="4"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.liquid_phase_prandtl_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="14" Grid.Column="5"/>
 
                             <Label Grid.Column="0" Grid.Row="15" FontWeight="Bold">Gas Phase</Label>
 
                             <Label Grid.Column="0" Grid.Row="16">Dynamic viscosity gas</Label>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="16" Grid.Column="1"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="16" Grid.Column="2"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_app_viscosity_tube_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="16" Grid.Column="1"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_app_viscosity_tube_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="16" Grid.Column="2"/>
 
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="16" Grid.Column="4"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="16" Grid.Column="5"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_app_viscosity_shell_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="16" Grid.Column="4"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_app_viscosity_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="16" Grid.Column="5"/>
 
                             <Label Grid.Column="0" Grid.Row="17">Reynolds</Label>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="17" Grid.Column="1"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="17" Grid.Column="2"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_reynolds_tube_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="17" Grid.Column="1"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_reynolds_tube_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="17" Grid.Column="2"/>
 
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="17" Grid.Column="4"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="17" Grid.Column="5"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_reynolds_shell_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="17" Grid.Column="4"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_reynolds_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="17" Grid.Column="5"/>
 
                             <Label Grid.Column="0" Grid.Row="18">Prandtl</Label>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="18" Grid.Column="1"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="18" Grid.Column="2"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_prandtl_tube_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="18" Grid.Column="1"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_prandtl_tube_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="18" Grid.Column="2"/>
 
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="18" Grid.Column="4"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="18" Grid.Column="5"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_prandtl_shell_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="18" Grid.Column="4"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_prandtl_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="18" Grid.Column="5"/>
 
                         </Grid>
                         <Grid Width="800" Height="745" VerticalAlignment="Top">
@@ -284,8 +283,6 @@
                             <Label Grid.Column="0" Grid.Row="4">K Side</Label>
                             <Label Grid.Column="0" Grid.Row="5">Fouling Factor</Label>
 
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="0"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="0"/>
                             <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="1"/>
                             <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="1"/>
                             <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="2"/>
@@ -296,8 +293,6 @@
                             <custom1:CustonCheck Grid.Column="2" Grid.Row="4"/>
                             <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2"/>
 
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="4" Grid.Row="0"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="5" Grid.Row="0"/>
                             <TextBox Style="{StaticResource Colored}" Grid.Column="4" Grid.Row="1"/>
                             <TextBox Style="{StaticResource Colored}" Grid.Column="5" Grid.Row="1"/>
                             <TextBox Style="{StaticResource Colored}" Grid.Column="4" Grid.Row="2"/>
@@ -414,7 +409,7 @@
                         </Grid>
                     </StackPanel>
                 </StackPanel>
-                
+
             </Grid>
         </ScrollViewer>
     </Grid>
