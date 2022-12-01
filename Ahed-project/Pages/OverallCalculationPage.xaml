@@ -283,13 +283,13 @@
                             <Label Grid.Column="0" Grid.Row="4">K Side</Label>
                             <Label Grid.Column="0" Grid.Row="5">Fouling Factor</Label>
 
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="1"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="1"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="2"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="2"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="3"/>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="2" Grid.Row="3"/>
-                            <custom1:CustonCheck Grid.Column="1" Grid.Row="4"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_prandtl_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_prandtl_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="1"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_prandtl_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_prandtl_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="2"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_prandtl_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_prandtl_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="3"/>
+                            <custom1:CustonCheck Text="test" Grid.Column="1" Grid.Row="4"/>
                             <custom1:CustonCheck Grid.Column="2" Grid.Row="4"/>
                             <TextBox Style="{StaticResource Default}" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2"/>
 
