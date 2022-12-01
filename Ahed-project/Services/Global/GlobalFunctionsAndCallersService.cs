@@ -401,9 +401,15 @@ namespace Ahed_project.Services.Global
             var geometryResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GetGeometry, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
             if (geometryResponse != null)
             {
-                GeometryFull geometry = JsonConvert.DeserializeObject<GeometryFull>(geometryResponse);
-                geometry = GlobalDataCollectorService.GeometryCollection.FirstOrDefault(x => x.geometry_catalog_id == geometry.geometry_id);
-                SelectGeometry(geometry);
+                Responce response = JsonConvert.DeserializeObject<Responce>(geometryResponse);
+                string geometryJSON = JsonConvert.SerializeObject(response.data);
+                GeometryFull geometry = JsonConvert.DeserializeObject<GeometryFull>(geometryJSON);
+                //geometry = GlobalDataCollectorService.GeometryCollection.FirstOrDefault(x => x.geometry_id == geometry.geometry_catalog_id);
+                if(geometry != null)
+                {
+                    SelectGeometry(geometry);
+                }
+                
             }
             var baffleResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GetBaffle, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
             if (baffleResponse != null)
