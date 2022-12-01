@@ -114,16 +114,16 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _geometry = value;
-                ExchangersSelector = Exchangers.FirstOrDefault(x => x.Key == value.head_exchange_type);
-                Orientation = Orientations.FirstOrDefault(x => x.Value == value.orientation);
-                TubeProfileSelector = TubeProfile.FirstOrDefault(x => x.Value == value.tube_profile_tubes_side);
-                ShellMaterial = Materials.FirstOrDefault(x => x.Value.name == value.material_shell_side);
-                TubesMaterial = Materials.FirstOrDefault(x => x.Value.name == value.material_tubes_side);
-                TubeLayout = TubePlateLayouts.FirstOrDefault(x => x.Value.Name == value.tube_plate_layout_tube_layout);
+                ExchangersSelector = Exchangers.FirstOrDefault(x => x.Key == value?.head_exchange_type);
+                Orientation = Orientations.FirstOrDefault(x => x.Value == value?.orientation);
+                TubeProfileSelector = TubeProfile.FirstOrDefault(x => x.Value == value?.tube_profile_tubes_side);
+                ShellMaterial = Materials.FirstOrDefault(x => x.Value.name == value?.material_shell_side);
+                TubesMaterial = Materials.FirstOrDefault(x => x.Value.name == value?.material_tubes_side);
+                TubeLayout = TubePlateLayouts.FirstOrDefault(x => x.Value.Name == value?.tube_plate_layout_tube_layout);
                
                 try
                 {
-                    double outer_diameter_tubes_side = Convert.ToDouble(_geometry.outer_diameter_tubes_side, CultureInfo.InvariantCulture);
+                    double outer_diameter_tubes_side = Convert.ToDouble(_geometry?.outer_diameter_tubes_side, CultureInfo.InvariantCulture);
                     if (outer_diameter_tubes_side <= 25)
                     {
                         GlobalFunctionsAndCallersService.SetDiametralTubeDefaultValue("0.3");
@@ -140,7 +140,7 @@ namespace Ahed_project.ViewModel.Pages
                 }
                 
 
-                switch (value.bundle_type)
+                switch (value?.bundle_type)
                 {
                     case "Fixed":
                         Fixed = true;
@@ -158,7 +158,7 @@ namespace Ahed_project.ViewModel.Pages
                         break;
                 }
 
-                switch (value.roller_expanded)
+                switch (value?.roller_expanded)
                 {
                     case "No":
                             RollerExpanded = false;
@@ -168,7 +168,7 @@ namespace Ahed_project.ViewModel.Pages
                         break;
                 }
 
-                switch (value.shell_nozzle_orientation)
+                switch (value?.shell_nozzle_orientation)
                 {
                     case "Opposite side":
                         OppositeSide = true;
@@ -179,29 +179,29 @@ namespace Ahed_project.ViewModel.Pages
                         OppositeSide = false;
                         break;
                 }
-                if (value.bundle_type == null || value.bundle_type == "")
+                if (value?.bundle_type == null || value?.bundle_type == "")
                 {
                     Fixed = true;
                     Removable = false;
                 }
-                if (value.shell_nozzle_orientation == null || value.shell_nozzle_orientation == "")
+                if (value?.shell_nozzle_orientation == null || value?.shell_nozzle_orientation == "")
                 {
                     OppositeSide = true;
                     SameSide = false;
                 }
-                if (value.tube_plate_layout_number_of_passes == null || value.tube_plate_layout_number_of_passes == "")
+                if (value?.tube_plate_layout_number_of_passes == null || value?.tube_plate_layout_number_of_passes == "")
                 {
                     Tube_plate_layout_number_of_passes = "1";
                 } else
                 {
                     Tube_plate_layout_number_of_passes = value.tube_plate_layout_number_of_passes;
                 }
-                DivPlateItem = DivPlateItems.FirstOrDefault(x => x == value.tube_plate_layout_div_plate_layout);
-                if(value.tube_plate_layout_sealing_type == null)
+                DivPlateItem = DivPlateItems.FirstOrDefault(x => x == value?.tube_plate_layout_div_plate_layout);
+                if(value?.tube_plate_layout_sealing_type == null)
                 {
                     SealingTypeItem = "O'Rings + Housing";
                 }
-                SealingTypeItem = SealingTypeItems.FirstOrDefault(x => x == value.tube_plate_layout_sealing_type);
+                SealingTypeItem = SealingTypeItems.FirstOrDefault(x => x == value?.tube_plate_layout_sealing_type);
                 RaisePropertiesChanged("GeometryPageViewModel");
 
             }
