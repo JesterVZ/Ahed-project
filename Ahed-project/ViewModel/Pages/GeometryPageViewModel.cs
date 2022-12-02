@@ -316,8 +316,10 @@ namespace Ahed_project.ViewModel.Pages
                 else
                 {
                     GridColumnWidth = 0;
+                    
                 }
                 _exchangersSelector = value;
+                GlobalFunctionsAndCallersService.ChengeRow(value.Key);
                 if (Geometry != null)
                 {
                     Geometry.head_exchange_type = value.Key;

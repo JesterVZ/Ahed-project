@@ -172,7 +172,7 @@
                                 
                             </Grid>
                         </StackPanel>
-                        <StackPanel Orientation="Vertical" Width="600">
+                        <StackPanel Orientation="Vertical" Width="600" Visibility="{Binding ColumnVisibility, UpdateSourceTrigger=PropertyChanged}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="2*"/>

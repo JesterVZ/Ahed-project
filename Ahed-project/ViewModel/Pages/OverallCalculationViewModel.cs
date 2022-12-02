@@ -14,6 +14,9 @@ namespace Ahed_project.ViewModel.Pages
     {
         public OverallFull Overall { get; set; }
 
+        public double ScrapingFrequencyRow { get; set; }
+        public double MaximumViscosityRow { get; set; }
+        public double GridHeight { get; set; }
         private bool _acoustic_vibration_exist_inlet;
         public bool acoustic_vibration_exist_inlet { 
             get => _acoustic_vibration_exist_inlet; 
@@ -58,6 +61,10 @@ namespace Ahed_project.ViewModel.Pages
                     Overall.acoustic_vibration_exist_outlet = 0;
                 }
             }
+        }
+        OverallCalculationViewModel()
+        {
+            GridHeight = 745;
         }
         #region commands
         public ICommand Calculate => new DelegateCommand(() => {

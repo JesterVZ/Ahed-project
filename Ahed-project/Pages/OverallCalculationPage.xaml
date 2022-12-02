@@ -23,7 +23,7 @@
                         <CheckBox Content="Use Viscosity Correction"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0 0 0 40">
-                        <Grid Width="800" Height="745" VerticalAlignment="Top">
+                        <Grid Width="800" Height="{Binding GridHeight, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="198*"/>
                                 <ColumnDefinition Width="120*"/>
@@ -42,8 +42,8 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
+                                <RowDefinition Height="{Binding ScrapingFrequencyRow, UpdateSourceTrigger=PropertyChanged}"/>
+                                <RowDefinition Height="{Binding MaximumViscosityRow, UpdateSourceTrigger=PropertyChanged}"/>
                                 <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
@@ -105,8 +105,7 @@
                             <TextBox Style="{StaticResource Default}" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2"/>
 
                             <Label Grid.Column="0" Grid.Row="10">Maximum Visosity</Label>
-                            <TextBox Style="{StaticResource Colored}" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2"/>
-
+                            <TextBox Style="{StaticResource Default}" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2"/>
 
                             <Label Grid.Column="0" Grid.Row="11" FontWeight="Bold">Liquid Phase</Label>
 

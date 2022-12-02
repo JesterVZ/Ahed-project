@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Ahed_project.ViewModel.Pages
@@ -15,6 +16,7 @@ namespace Ahed_project.ViewModel.Pages
         public Dictionary<string, string> Type { get; set; }
         public Dictionary<string, string> BaffleType { get; set; } // No baffles, Standard heat transfer with SUPPORT baffles, Full baffles heat transfer calculation
         public Dictionary<string, string> CutDirection { get; set; }
+        public Visibility ColumnVisibility { get; set; }
         private bool _isOpen;
         public bool IsOpen
         {
@@ -60,6 +62,7 @@ namespace Ahed_project.ViewModel.Pages
             BaffleType.Add("no_baffles", "No baffles");
             BaffleType.Add("standard_heat_transfer_with_support_baffles", "Standard heat transfer with SUPPORT baffles");
             BaffleType.Add("full_baffles_heat_transfer_calculation", "Full baffles heat transfer calculation");
+            ColumnVisibility = Visibility.Hidden;
             SingleSegmentalIsEnables = 37;
             DoubleSegmentalIsEnables = 0;
         }
@@ -104,6 +107,13 @@ namespace Ahed_project.ViewModel.Pages
             {
                 Baffle.method = value.Key;
                 _selectedBaffleType = value;
+                if(value.Key == "no_baffles" || value.Key == "standard_heat_transfer_with_support_baffles")
+                {
+                    ColumnVisibility = Visibility.Hidden;
+                } else
+                {
+                    ColumnVisibility = Visibility.Visible;
+                }
             }
         }
         #endregion

@@ -161,6 +161,22 @@ namespace Ahed_project.Services.Global
             }
         }
 
+        public static void ChengeRow(string head_exchange_type)
+        {
+            if (head_exchange_type == "r_series" || head_exchange_type == "unicus")
+            {
+                _overallCalculationViewModel.ScrapingFrequencyRow = 40;
+                _overallCalculationViewModel.MaximumViscosityRow = 40;
+                _overallCalculationViewModel.GridHeight = 745;
+            } else
+            {
+                _overallCalculationViewModel.ScrapingFrequencyRow = 0;
+                _overallCalculationViewModel.MaximumViscosityRow = 0;
+                _overallCalculationViewModel.GridHeight = 650;
+            }
+                
+        }
+
         //запрос к Overall (когда нажали calculate или просто переключились на вкладку)
         public static async Task CalculateOverall(OverallFull overall = null)
         {
@@ -189,6 +205,8 @@ namespace Ahed_project.Services.Global
                     k_fouled_outlet = overall.k_fouled_outlet,
                     k_global_fouled_is_edit = overall.k_global_fouled_is_edit,
                     k_global_fouled = overall.k_global_fouled,
+                    fouling_factor_tube = overall.fouling_factor_tube,
+                    fouling_factor_shell = overall.fouling_factor_shell,
 
                     acoustic_vibration_exist_inlet = overall.acoustic_vibration_exist_inlet,
                     acoustic_vibration_exist_central = overall.acoustic_vibration_exist_central,
