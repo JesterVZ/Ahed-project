@@ -15,7 +15,7 @@
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Calculate" Command="{Binding Calculate}" Margin="0 0 12 0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
-                        <Button Content="Batch calculation" Command="{Binding Calculate}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
+                        <Button Content="Batch calculation"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Width="800" FontWeight="Bold" Grid.Column="0" Grid.Row="0">Flow Data</Label>
@@ -290,9 +290,9 @@
                                 <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_prandtl_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="2"/>
                                 <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_prandtl_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3"/>
                                 <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.gas_phase_prandtl_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="3"/>
-                                <custom1:CustonCheck IsChecked="{Binding Overall.k_side_tube_inlet_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
-                                <custom1:CustonCheck IsChecked="{Binding Overall.k_side_tube_outlet_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4"/>
-                                <TextBox Style="{StaticResource Default}" Text="{Binding Overall.fouling_factor_tube, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2"/>
+                                <custom1:CustonCheck IsChecked="{Binding Overall.k_side_tube_inlet_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" InputText="{Binding Overall.k_side_tube_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
+                                <custom1:CustonCheck IsChecked="{Binding Overall.k_side_tube_outlet_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" InputText="{Binding Overall.k_side_tube_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding Overall.fouling_factor_tube, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2"/>
 
                                 <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.wall_temperature_shell_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="1"/>
                                 <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.wall_temperature_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="5" Grid.Row="1"/>
@@ -300,8 +300,8 @@
                                 <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.wall_consistency_index_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="5" Grid.Row="2"/>
                                 <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.nusselt_shell_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="3"/>
                                 <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.nusselt_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="5" Grid.Row="3"/>
-                                <custom1:CustonCheck IsChecked="{Binding Overall.k_side_shell_inlet_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="4"/>
-                                <custom1:CustonCheck IsChecked="{Binding Overall.k_side_shell_outlet_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="5" Grid.Row="4"/>
+                                <custom1:CustonCheck IsChecked="{Binding Overall.k_side_shell_inlet_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" InputText="{Binding Overall.k_side_shell_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="4"/>
+                                <custom1:CustonCheck IsChecked="{Binding Overall.k_side_shell_outlet_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" InputText="{Binding Overall.k_side_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="5" Grid.Row="4"/>
                                 <TextBox Style="{StaticResource Default}" Text="{Binding Overall.fouling_factor_shell, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="5" Grid.ColumnSpan="2"/>
 
                                 <Label Grid.Column="2" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center">Inlet</Label>
@@ -315,9 +315,9 @@
 
                                 <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.k_unfouled_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="7" Grid.Column="2"/>
                                 <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.k_unfouled_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="7" Grid.Column="4"/>
-                                <custom1:CustonCheck IsChecked="{Binding Overall.k_fouled_outlet_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="8"/>
-                                <custom1:CustonCheck IsChecked="{Binding Overall.k_fouled_inlet_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="8"/>
-                                <custom1:CustonCheck IsChecked="{Binding Overall.k_global_fouled_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="9" Grid.ColumnSpan="3"/>
+                                <custom1:CustonCheck IsChecked="{Binding Overall.k_fouled_outlet_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" InputText="{Binding Overall.k_fouled_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="8"/>
+                                <custom1:CustonCheck IsChecked="{Binding Overall.k_fouled_inlet_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" InputText="{Binding Overall.k_fouled_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="8"/>
+                                <custom1:CustonCheck IsChecked="{Binding Overall.k_global_fouled_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" InputText="{Binding Overall.k_global_fouled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="9" Grid.ColumnSpan="3"/>
                                 <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.k_effective, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="3"/>
                             </Grid>
                             <Grid Width="800" Height="220" VerticalAlignment="Top">
@@ -447,9 +447,9 @@
                             <Label Grid.Column="0" Grid.Row="12" FontWeight="Bold">Acoustic Vibrations (gases)</Label>
                             <Label Grid.Column="0" Grid.Row="13">Acoustic Vibrations Exists</Label>
 
-                            <CheckBox Grid.Column="1" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <CheckBox Grid.Column="2" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <CheckBox Grid.Column="3" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <CheckBox Grid.Column="1" IsChecked="{Binding acoustic_vibration_exist_inlet, UpdateSourceTrigger=PropertyChanged}" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <CheckBox Grid.Column="2" IsChecked="{Binding acoustic_vibration_exist_central, UpdateSourceTrigger=PropertyChanged}" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <CheckBox Grid.Column="3" IsChecked="{Binding acoustic_vibration_exist_outlet, UpdateSourceTrigger=PropertyChanged}" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
                             <Label Grid.Column="0" Grid.Row="14" FontWeight="Bold">Vibrations Exists</Label>
                             <CheckBox Grid.Column="1" Grid.Row="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>

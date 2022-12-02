@@ -68,5 +68,10 @@ namespace Ahed_project.UserControlsCustom
         {
             (d as CustonCheck).IsChecked = (int)e.NewValue;
         }
+
+        private void CustomTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            InputText = CustomTextBox.Text;
+        }
     }
 }

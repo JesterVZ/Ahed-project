@@ -2,6 +2,7 @@
 using Ahed_project.MasterData.BafflesClasses;
 using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.GeometryClasses;
+using Ahed_project.MasterData.Overall;
 using Ahed_project.MasterData.Products;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.MasterData.TabClasses;
@@ -41,11 +42,12 @@ namespace Ahed_project.Services.Global
         private static ShellFluidViewModel _shellFluidViewModel;
         private static GeometryPageViewModel _geometryPageViewModel;
         private static BufflesPageViewModel _bufflesPageViewModel;
+        private static OverallCalculationViewModel _overallCalculationViewModel;
         private static MainViewModel _mainViewModel;
 
         public GlobalFunctionsAndCallersService(SendDataService sendDataService, ContentPageViewModel contentPage,
             ProjectPageViewModel projectPageViewModel, IMapper mapper, HeatBalanceViewModel heatBalanceViewModel, TubesFluidViewModel tubesFluidViewModel,
-            ShellFluidViewModel shellFluidViewModel, GeometryPageViewModel geometryPageViewModel, BufflesPageViewModel bufflesPageViewModel, MainViewModel mainViewModel)
+            ShellFluidViewModel shellFluidViewModel, GeometryPageViewModel geometryPageViewModel, BufflesPageViewModel bufflesPageViewModel, MainViewModel mainViewModel, OverallCalculationViewModel overallCalculationViewModel)
         {
             _sendDataService = sendDataService;
             _contentPageViewModel = contentPage;
@@ -56,6 +58,7 @@ namespace Ahed_project.Services.Global
             _shellFluidViewModel = shellFluidViewModel;
             _bufflesPageViewModel = bufflesPageViewModel;
             _geometryPageViewModel = geometryPageViewModel;
+            _overallCalculationViewModel = overallCalculationViewModel;
             _mainViewModel = mainViewModel;
             
         }
@@ -158,7 +161,8 @@ namespace Ahed_project.Services.Global
             }
         }
 
-        public static async Task CalculateOverall()
+        //запрос к Overall (когда нажали calculate или просто переключились на вкладку)
+        public static async Task CalculateOverall(OverallFull overall = null)
         {
             int calculation_id;
             using (var context = new EFContext())
@@ -167,9 +171,42 @@ namespace Ahed_project.Services.Global
                 calculation_id = user.LastCalculationId ?? 0;
             }
             var template = _sendDataService.ReturnCopy();
-            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Начало загрузки перегородок...")));
-            var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.CALCULATE_OVERALL,  null, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString()));
-            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Загрузка перегородок завершена!")));
+            if (overall != null)
+            {
+                string json = JsonConvert.SerializeObject(new
+                {
+                    k_side_tube_inlet_is_edit = overall.k_side_tube_inlet_is_edit,
+                    k_side_tube_outlet_is_edit = overall.k_side_tube_outlet_is_edit,
+                    k_side_shell_inlet_is_edit = overall.k_side_shell_inlet_is_edit,
+                    k_side_shell_outlet_is_edit = overall.k_side_shell_outlet_is_edit,
+                    k_side_tube_inlet = overall.k_side_tube_inlet,
+                    k_side_tube_outlet = overall.k_side_tube_outlet,
+                    k_side_shell_inlet = overall.k_side_shell_inlet,
+                    k_side_shell_outlet = overall.k_side_shell_outlet,
+                    k_fouled_inlet_is_edit = overall.k_fouled_inlet_is_edit,
+                    k_fouled_outlet_is_edit = overall.k_fouled_outlet_is_edit,
+                    k_fouled_inlet = overall.k_fouled_inlet,
+                    k_fouled_outlet = overall.k_fouled_outlet,
+                    k_global_fouled_is_edit = overall.k_global_fouled_is_edit,
+                    k_global_fouled = overall.k_global_fouled,
+
+                    acoustic_vibration_exist_inlet = overall.acoustic_vibration_exist_inlet,
+                    acoustic_vibration_exist_central = overall.acoustic_vibration_exist_central,
+                    acoustic_vibration_exist_outlet = overall.acoustic_vibration_exist_outlet
+
+                });
+                var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.CALCULATE_OVERALL, json, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString()));
+                Responce result = JsonConvert.DeserializeObject<Responce>(response);
+                var o = JsonConvert.DeserializeObject<OverallFull>(result.data.ToString());
+                _overallCalculationViewModel.Overall = o;
+            } else
+            {
+                var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.CALCULATE_OVERALL, null, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString()));
+                Responce result = JsonConvert.DeserializeObject<Responce>(response);
+                var o = JsonConvert.DeserializeObject<OverallFull>(result.data.ToString());
+                _overallCalculationViewModel.Overall = o;
+            }
+            
         }
 
         // Загрузка продуктов

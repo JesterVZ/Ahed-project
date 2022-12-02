@@ -71,13 +71,13 @@ namespace Ahed_project.MasterData.Overall
         public string k_unfouled_inlet { get; set; }
         public string k_unfouled_outlet { get; set; }
         public string k_effective { get; set; }
-        public int k_side_tube_inlet { get; set; }
-        public int k_side_tube_outlet { get; set; }
-        public int k_side_shell_inlet { get; set; }
-        public int k_side_shell_outlet { get; set; }
-        public int k_fouled_inlet { get; set; }
-        public int k_fouled_outlet { get; set; }
-        public int k_global_fouled { get; set; }
+        public string k_side_tube_inlet { get; set; }
+        public string k_side_tube_outlet { get; set; }
+        public string k_side_shell_inlet { get; set; }
+        public string k_side_shell_outlet { get; set; }
+        public string k_fouled_inlet { get; set; }
+        public string k_fouled_outlet { get; set; }
+        public string k_global_fouled { get; set; }
         public int k_side_tube_inlet_is_edit { get; set; }
         public int k_side_tube_outlet_is_edit { get; set; }
         public int k_side_shell_inlet_is_edit { get; set; }
@@ -85,5 +85,8 @@ namespace Ahed_project.MasterData.Overall
         public int k_fouled_inlet_is_edit { get; set; }
         public int k_fouled_outlet_is_edit { get; set; }
         public int k_global_fouled_is_edit { get; set; }
+        public int acoustic_vibration_exist_inlet { get; set; }
+        public int acoustic_vibration_exist_central { get; set; }
+        public int acoustic_vibration_exist_outlet { get; set; }
     }
 }
