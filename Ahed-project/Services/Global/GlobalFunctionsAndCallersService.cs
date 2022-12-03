@@ -207,6 +207,8 @@ namespace Ahed_project.Services.Global
                     k_global_fouled = overall.k_global_fouled,
                     fouling_factor_tube = overall.fouling_factor_tube,
                     fouling_factor_shell = overall.fouling_factor_shell,
+                    nr_modules_is_edit = overall.nr_modules_is_edit,
+                    nr_modules = overall.nr_modules,
 
                     acoustic_vibration_exist_inlet = overall.acoustic_vibration_exist_inlet,
                     acoustic_vibration_exist_central = overall.acoustic_vibration_exist_central,
@@ -444,7 +446,7 @@ namespace Ahed_project.Services.Global
             _heatBalanceViewModel.Raise("Calculation");
         }
 
-        //Выбор рассчета
+        //Выбор расчета
         public static async void SetCalculation(CalculationFull calc)
         {
             if (calc != null)
@@ -502,7 +504,7 @@ namespace Ahed_project.Services.Global
                 }
             }
             _geometryPageViewModel.Geometry = geometry;
-            GlobalDataCollectorService.GeometryCalculated = false;
+            //GlobalDataCollectorService.GeometryCalculated = false;
             _contentPageViewModel.Validation(false);
         }
 

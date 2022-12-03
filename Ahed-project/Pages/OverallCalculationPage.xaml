@@ -346,7 +346,7 @@
                                 <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.k_unfouled_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1"/>
 
                                 <Label Grid.Column="0" Grid.Row="3">Nr. Modules</Label>
-                                <custom1:CustonCheck  Grid.Row="3" Grid.Column="1"/>
+                                <custom1:CustonCheck IsChecked="{Binding Overall.nr_modules_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" InputText="{Binding Overall.nr_modules, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1"/>
 
                                 <Label Grid.Column="0" Grid.Row="4">Area Fitted</Label>
                                 <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.k_unfouled_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1"/>
