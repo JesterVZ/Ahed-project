@@ -8,6 +8,8 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Visual\banner_hrs.jpg" />
+    <None Remove="Visual\logo_header.svg" />
     <None Remove="Visual\splash_screen.png" />
   </ItemGroup>
   <ItemGroup>
@@ -63,12 +65,18 @@
     <Resource Include="Visual\baffles-2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Visual\banner_hrs.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Visual\Diagram.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Visual\loading.gif" />
+    <Resource Include="Visual\logo_header.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.4.0" />

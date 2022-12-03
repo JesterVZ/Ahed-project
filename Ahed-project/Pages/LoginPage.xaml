@@ -6,14 +6,20 @@
       xmlns:local="clr-namespace:Ahed_project.Pages"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:gif="http://wpfanimatedgif.codeplex.com"
+      xmlns:SVG="http://sharpvectors.codeplex.com/svgc/"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="1080" d:DesignWidth="1920"
       Title="LoginPage">
     <Grid>
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="346">
             <Grid.Resources>
                 <Style TargetType="TextBlock" x:Key="Header">
-                    <Setter Property="FontSize" Value="30"/>
+                    <Setter Property="FontSize" Value="50"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Style>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource Header}" x:Key="Subheader">
+                    <Setter Property="FontSize" Value="18"/>
                 </Style>
                 <Style TargetType="TextBox" x:Key="Default">
                     <Setter Property="Height" Value="30"/>
@@ -30,23 +36,33 @@
                 <ColumnDefinition MinWidth="300"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="70"/>
-                <RowDefinition Height="70"/>
-                <RowDefinition Height="70"/>
-                <RowDefinition Height="70"/>
+                <RowDefinition Height="150"/>
+                <RowDefinition Height="310"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Welcome!" HorizontalAlignment="Center" Style="{StaticResource Header}"/>
-            <StackPanel Grid.Row="1">
-                <TextBlock Text="email"/>
-                <TextBox Text="{Binding Email,  UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Default}"/>
+            <StackPanel Orientation="Vertical">
+                <SVG:SvgViewbox Source="../Visual/logo_header.svg" Height="96"/>
+                <TextBlock Text="Теплообменные решения" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource Subheader}" Width="238" Height="74" Margin="0 20 0 0"/>
             </StackPanel>
-            <StackPanel Grid.Row="2">
-                <TextBlock Text="password"/>
-                <PasswordBox  Style="{StaticResource PasswordDefault}" PasswordChanged="PasswordBox_PasswordChanged"/>
-            </StackPanel>
-            <Button Grid.Row="3" Command="{Binding GoToContent}" Background="#fc6">Login</Button>
-            <Image Grid.Row="4" gif:ImageBehavior.AnimatedSource="/Visual/loading.gif" Visibility="{Binding Loading, UpdateSourceTrigger=PropertyChanged}" />
+            
+            <Border Grid.Row="1" Background="White" BorderThickness="1,1,1,1" CornerRadius="0,0,0,0">
+                <Grid  >
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Grid.Row="1" Margin="15 15 15 15">
+                            <TextBlock Text="Email" FontSize="18"/>
+                            <TextBox Text="{Binding Email,  UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Default}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Margin="15 15 15 15">
+                            <TextBlock Text="Пароль" FontSize="18"/>
+                            <PasswordBox  Style="{StaticResource PasswordDefault}" PasswordChanged="PasswordBox_PasswordChanged"/>
+                        </StackPanel>
+                        <Button Grid.Row="3" Command="{Binding GoToContent}" Background="Black" Margin="15 15 15 15" Height="43">
+                            <TextBlock Text="Войти" Foreground="White" FontSize="18"/>
+                        </Button>
+                        <Image gif:ImageBehavior.AnimatedSource="/Visual/loading.gif" Visibility="{Binding Loading, UpdateSourceTrigger=PropertyChanged}" Height="52" Width="178" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+            
         </Grid>
     </Grid>
 </Page>

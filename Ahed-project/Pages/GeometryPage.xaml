@@ -270,7 +270,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <Grid Grid.Column="0">
+                    <Grid Grid.Column="0" Height="440">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="{Binding Path=GridColumnWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource gridLengthConverter}}"/>
@@ -345,7 +345,7 @@
 
                     <Grid Grid.Column="1">
 
-                        <Image Source="../Visual/Diagram.png" Grid.Column="0" Grid.Row="0">
+                        <Image Grid.Column="0" Grid.Row="0">
 
                         </Image>
 
