@@ -65,6 +65,7 @@ namespace Ahed_project.ViewModel.Pages
         public OverallCalculationViewModel()
         {
             GridHeight = 650;
+            Overall = new();
         }
         #region commands
         public ICommand Calculate => new DelegateCommand(() => {

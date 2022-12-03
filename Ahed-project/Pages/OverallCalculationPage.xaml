@@ -446,9 +446,9 @@
                             <Label Grid.Column="0" Grid.Row="12" FontWeight="Bold">Acoustic Vibrations (gases)</Label>
                             <Label Grid.Column="0" Grid.Row="13">Acoustic Vibrations Exists</Label>
 
-                            <CheckBox Grid.Column="1" IsChecked="{Binding acoustic_vibration_exist_inlet, UpdateSourceTrigger=PropertyChanged}" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <CheckBox Grid.Column="2" IsChecked="{Binding acoustic_vibration_exist_central, UpdateSourceTrigger=PropertyChanged}" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <CheckBox Grid.Column="3" IsChecked="{Binding acoustic_vibration_exist_outlet, UpdateSourceTrigger=PropertyChanged}" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <CheckBox Grid.Column="1" IsChecked="{Binding acoustic_vibration_exist_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <CheckBox Grid.Column="2" IsChecked="{Binding acoustic_vibration_exist_central, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <CheckBox Grid.Column="3" IsChecked="{Binding acoustic_vibration_exist_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="13" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
                             <Label Grid.Column="0" Grid.Row="14" FontWeight="Bold">Vibrations Exists</Label>
                             <CheckBox Grid.Column="1" Grid.Row="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>

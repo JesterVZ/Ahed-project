@@ -122,6 +122,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             }
             else
             {
+                GlobalDataCollectorService.HeatBalanceCalculated = false;
                 HeatBalanceValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
             }
 
@@ -132,6 +133,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             }
             else
             {
+                GlobalDataCollectorService.GeometryCalculated = false;
                 GeometryValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
             }
 
@@ -141,6 +143,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 BafflesValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
             } else
             {
+                GlobalDataCollectorService.IsBaffleCalculated = false;
                 GeometryValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
             }
 
