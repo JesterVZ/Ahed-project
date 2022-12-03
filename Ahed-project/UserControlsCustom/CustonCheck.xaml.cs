@@ -29,6 +29,20 @@ namespace Ahed_project.UserControlsCustom
             set
             {
                 SetValue(dependencyPropertyIsChecked, value);
+                switch (value)
+                {
+                    case 0:
+                        CheckBox.IsChecked = false;
+                        CustomTextBox.IsEnabled = false;
+                        CustomTextBox.Background = new SolidColorBrush(Color.FromRgb(249, 239, 229));
+                        break;
+                    case 1:
+                        CheckBox.IsChecked = true;
+                        CustomTextBox.IsEnabled = true;
+                        CustomTextBox.Background = new SolidColorBrush(Colors.White);
+                        break;
+
+                }
             }
         }
 
