@@ -12,7 +12,7 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="CheckBox" Grid.Column="0" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
-        <TextBox Style="{StaticResource Colored}" x:Name="CustomTextBox" Grid.Column="1"/>
+        <TextBox Style="{StaticResource Colored}" x:Name="CustomTextBox" TextChanged="CustomTextBox_TextChanged" Grid.Column="1"/>
 
     </Grid>
 </UserControl>
