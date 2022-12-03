@@ -227,7 +227,7 @@
                             <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_shell_cross_section}" Grid.Column="1" Grid.Row="8"/>
 
                             <Label Grid.Column="0" Grid.Row="9" VerticalAlignment="Center">Tubes Cross Section(per pass) (m^2)</Label>
-                            <TextBox Style="{StaticResource Colored}" Grid.Column="1" Grid.Row="9"/>
+                            <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_tubes_cross_section_pre_pass}" Grid.Column="1" Grid.Row="9"/>
 
                             <Label Grid.Column="0" Grid.Row="10" VerticalAlignment="Center">Perimeter (mm)</Label>
                             <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_perimeter}" Grid.Column="1" Grid.Row="10"/>
