@@ -247,7 +247,7 @@ namespace Ahed_project.Services.Global
             _contentPageViewModel.Validation(false);
         }
 
-        //Установка продукта
+        //Установка проекта
         public static void SetProject(ProjectInfoGet projectInfoGet)
         {
             _projectPageViewModel.ProjectInfo = projectInfoGet;
@@ -636,6 +636,8 @@ namespace Ahed_project.Services.Global
                         Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
                     }
                     var g = JsonConvert.DeserializeObject<GeometryFull>(result.data.ToString());
+                    String imageURL = "https://ahead-api.ru" + g.image_geometry;
+                    g.image_geometry = imageURL;
                     _geometryPageViewModel.Geometry = g;
                 }
                 catch (Exception e)

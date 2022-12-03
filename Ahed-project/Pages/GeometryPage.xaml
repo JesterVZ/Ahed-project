@@ -168,8 +168,8 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <Canvas  Grid.Column="0" Grid.Row="0">
-                        </Canvas>
+                        <Image Source="{Binding Geometry.image_geometry, UpdateSourceTrigger=PropertyChanged}"  Grid.Column="0" Grid.Row="0">
+                        </Image>
                         <Grid Grid.Column="1" Grid.Row="0">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
