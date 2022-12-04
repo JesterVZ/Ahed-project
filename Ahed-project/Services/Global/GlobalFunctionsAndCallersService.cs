@@ -244,7 +244,8 @@ namespace Ahed_project.Services.Global
             {
                 x.Value?.Sort((z, c) => z.product_id.CompareTo(c.product_id));
             });
-            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Загрузка проектов завершена!")));
+            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Загрузка продуктов завершена!")));
+            await Task.Factory.StartNew(() => GetCalculations(_projectPageViewModel.ProjectInfo.project_id.ToString()));
         }
 
         // Создание узлов в продуктах
@@ -314,7 +315,7 @@ namespace Ahed_project.Services.Global
             }
             GlobalDataCollectorService.Project = projectInfoGet;
             SetUserLastProject(projectInfoGet.project_id);
-            Task.Factory.StartNew(() => GetCalculations(projectInfoGet.project_id.ToString()));
+            
             _mainViewModel.Title = $"{projectInfoGet.name} ({_heatBalanceViewModel.Calculation?.name})";
             _contentPageViewModel.Validation(false);
             _projectPageViewModel.FieldsState = true;
@@ -338,11 +339,16 @@ namespace Ahed_project.Services.Global
                         id = user.LastCalculationId ?? 0;
                     }
                     if (id != 0)
+                    {
+                        _projectPageViewModel.SelectedCalculation = _projectPageViewModel.Calculations.FirstOrDefault(x => x.calculation_id == id);
+                    }
+                        /*
                         Task.Factory.StartNew(() =>
                         {
-                            Thread.Sleep(new TimeSpan(0, 0, 5));
+                            //Thread.Sleep(new TimeSpan(0, 0, 5));
                             _projectPageViewModel.SelectedCalculation = _projectPageViewModel.Calculations.FirstOrDefault(x => x.calculation_id == id);
-                        });
+                        });*/
+
                     else
                         _projectPageViewModel.SelectedCalculation = null;
                     for (int i = 0; i < result.logs.Count; i++)

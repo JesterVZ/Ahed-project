@@ -81,7 +81,12 @@ namespace Ahed_project.ViewModel.Pages
         #region Comms
         public ICommand CreateCalculationCommand => new AsyncCommand(async () =>
         {
-            await Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CreateCalculation(CalculationName));
+            if(CalculationName == "")
+            {
+                await Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CreateCalculation(CalculationName));
+                CalculationName = "";
+            }
+            
         });
 
         public ICommand ToggleCommand => new DelegateCommand(async () =>
