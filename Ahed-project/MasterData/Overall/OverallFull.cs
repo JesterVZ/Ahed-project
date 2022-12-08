@@ -79,6 +79,12 @@ namespace Ahed_project.MasterData.Overall
         public string k_fouled_outlet { get; set; }
         public string k_global_fouled { get; set; }
         public string nr_modules { get; set; }
+        public string pressure_drop_tube_side_modules_V { get; set; }
+        public string pressure_drop_tube_side_modules_P { get; set; }
+        public string pressure_drop_tube_side_inlet_nozzles_V { get; set; }
+        public string pressure_drop_tube_side_inlet_nozzles_pV { get; set; }
+        public string pressure_drop_tube_side_inlet_nozzles_P { get; set; }
+
         public int k_side_tube_inlet_is_edit { get; set; }
         public int k_side_tube_outlet_is_edit { get; set; }
         public int k_side_shell_inlet_is_edit { get; set; }
