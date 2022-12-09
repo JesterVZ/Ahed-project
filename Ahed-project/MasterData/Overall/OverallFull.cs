@@ -84,7 +84,51 @@ namespace Ahed_project.MasterData.Overall
         public string pressure_drop_tube_side_inlet_nozzles_V { get; set; }
         public string pressure_drop_tube_side_inlet_nozzles_pV { get; set; }
         public string pressure_drop_tube_side_inlet_nozzles_P { get; set; }
-
+        public string pressure_drop_tube_side_outlet_nozzles_V { get; set; }
+        public string pressure_drop_tube_side_outlet_nozzles_pV { get; set; }
+        public string pressure_drop_tube_side_outlet_nozzles_P { get; set; }
+        public string pressure_drop_tube_side_bends_V { get; set; }
+        public string pressure_drop_tube_side_bends_P { get; set; }
+        public string pressure_drop_tube_side_total_P { get; set; }
+        public string pressure_drop_shell_side_modules_V { get; set; }
+        public string pressure_drop_shell_side_modules_P { get; set; }
+        public string pressure_drop_shell_side_inlet_nozzles_V { get; set; }
+        public string pressure_drop_shell_side_inlet_nozzles_pV { get; set; }
+        public string pressure_drop_shell_side_inlet_nozzles_P { get; set; }
+        public string pressure_drop_tube_shell_outlet_nozzles_V { get; set; }
+        public string pressure_drop_tube_shell_outlet_nozzles_pV { get; set; }
+        public string pressure_drop_tube_shell_outlet_nozzles_P { get; set; }
+        public string pressure_drop_shell_side_Pc { get; set; }
+        public string pressure_drop_shell_side_Pw { get; set; }
+        public string pressure_drop_shell_side_Pe { get; set; }
+        public string pressure_drop_shell_side_total_p { get; set; }
+        public string vibrations_inlet_span_length { get; set; }
+        public string vibrations_central_span_length { get; set; }
+        public string vibrations_outlet_span_length { get; set; }
+        public string vibrations_inlet_span_length_tema_lb { get; set; }
+        public string vibrations_central_span_length_tema_lb { get; set; }
+        public string vibrations_outlet_span_length_tema_lb { get; set; }
+        public string vibrations_inlet_tubes_natural_frequency { get; set; }
+        public string vibrations_central_tubes_natural_frequency { get; set; }
+        public string vibrations_outlet_tubes_natural_frequency { get; set; }
+        public string vibrations_inlet_shell_acoustic_frequency_gases { get; set; }
+        public string vibrations_central_shell_acoustic_frequency_gases { get; set; }
+        public string vibrations_outlet_shell_acoustic_frequency_gases { get; set; }
+        public string vibrations_inlet_cross_flow_velocity { get; set; }
+        public string vibrations_central_cross_flow_velocity { get; set; }
+        public string vibrations_outlet_cross_flow_velocity { get; set; }
+        public string vibrations_inlet_cricical_velocity { get; set; }
+        public string vibrations_central_cricical_velocity { get; set; }
+        public string vibrations_outlet_cricical_velocity { get; set; }
+        public string vibrations_inlet_average_cross_flow_velocity_ratio { get; set; }
+        public string vibrations_central_average_cross_flow_velocity_ratio { get; set; }
+        public string vibrations_outlet_average_cross_flow_velocity_ratio { get; set; }
+        public string vibrations_inlet_vortex_shedding_ratio { get; set; }
+        public string vibrations_central_vortex_shedding_ratio { get; set; }
+        public string vibrations_outlet_vortex_shedding_ratio { get; set; }
+        public string vibrations_inlet_turbulent_buffeting_ratio { get; set; }
+        public string vibrations_central_turbulent_buffeting_ratio { get; set; }
+        public string vibrations_outlet_turbulent_buffeting_ratio { get; set; }
         public int k_side_tube_inlet_is_edit { get; set; }
         public int k_side_tube_outlet_is_edit { get; set; }
         public int k_side_shell_inlet_is_edit { get; set; }
