@@ -95,9 +95,9 @@ namespace Ahed_project.MasterData.Overall
         public string pressure_drop_shell_side_inlet_nozzles_V { get; set; }
         public string pressure_drop_shell_side_inlet_nozzles_pV { get; set; }
         public string pressure_drop_shell_side_inlet_nozzles_P { get; set; }
-        public string pressure_drop_tube_shell_outlet_nozzles_V { get; set; }
-        public string pressure_drop_tube_shell_outlet_nozzles_pV { get; set; }
-        public string pressure_drop_tube_shell_outlet_nozzles_P { get; set; }
+        public string pressure_drop_shell_side_outlet_nozzles_V { get; set; }
+        public string pressure_drop_shell_side_outlet_nozzles_pV { get; set; }
+        public string pressure_drop_shell_side_outlet_nozzles_P { get; set; }
         public string pressure_drop_shell_side_Pc { get; set; }
         public string pressure_drop_shell_side_Pw { get; set; }
         public string pressure_drop_shell_side_Pe { get; set; }

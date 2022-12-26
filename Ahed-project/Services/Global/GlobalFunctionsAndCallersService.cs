@@ -775,6 +775,7 @@ namespace Ahed_project.Services.Global
                     GlobalDataCollectorService.GeometryCalculated = false;
                     GlobalDataCollectorService.HeatBalanceCalculated = false;
                     GlobalDataCollectorService.IsBaffleCalculated = false;
+
                     SetProject(newProj);
                     _contentPageViewModel.Validation(true);
                     Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations.Clear());
