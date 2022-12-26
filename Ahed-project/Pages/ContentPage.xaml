@@ -11,6 +11,9 @@
     </Page.Resources>
     <Page.InputBindings>
         <KeyBinding Key="N" Command="{Binding NewProjectCommand}" Modifiers="Ctrl"/>
+        <KeyBinding Key="P" Command="{Binding OpenProjectsWindow}" Modifiers="Ctrl"/>
+        <KeyBinding Key="F" Command="{Binding OpenProductsWindow}" Modifiers="Ctrl"/>
+        <KeyBinding Key="G" Command="{Binding OpenGeometryWindow}" Modifiers="Ctrl"/>
         <KeyBinding Key="S" Command="{Binding SaveCommand}" Modifiers="Ctrl"/>
     </Page.InputBindings>
     <Grid>
@@ -21,12 +24,11 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" VerticalAlignment="Top">
             <MenuItem Header="File">
-                <MenuItem Header="New" InputGestureText="Ctrl + N" Command="{Binding NewProjectCommand}"></MenuItem>
+                <MenuItem Header="New Project" InputGestureText="Ctrl + N" Command="{Binding NewProjectCommand}"></MenuItem>
                 <MenuItem Header="Manage">
-                    <MenuItem Header="Project" Command="{Binding OpenProjectsWindow}"></MenuItem>
-                    <MenuItem Header="Product" Command="{Binding OpenProductsWindow}"></MenuItem>
-                    <MenuItem Header="Fluid"></MenuItem>
-                    <MenuItem Header="Geometry" Command="{Binding OpenGeometryWindow}"></MenuItem>
+                    <MenuItem Header="Project" InputGestureText="Ctrl + P" Command="{Binding OpenProjectsWindow}"></MenuItem>
+                    <MenuItem Header="Fluid" InputGestureText="Ctrl + F" Command="{Binding OpenProductsWindow}"></MenuItem>
+                    <MenuItem Header="Geometry" InputGestureText="Ctrl + G" Command="{Binding OpenGeometryWindow}"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Save">
                     <MenuItem Header="Project" InputGestureText="Ctrl + S" Command="{Binding SaveCommand}"></MenuItem>

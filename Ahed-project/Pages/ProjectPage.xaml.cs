@@ -13,5 +13,10 @@ namespace Ahed_project.Pages
             InitializeComponent();
             DataContext = vm;
         }
+
+        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
     }
 }
