@@ -1,4 +1,5 @@
-﻿using Ahed_project.MasterData.Products;
+﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData.Products;
 using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
 using OxyPlot;
@@ -12,7 +13,7 @@ namespace Ahed_project.ViewModel.Pages
 {
     public class TubesFluidViewModel : BindableBase
     {
-        public TubesFluidViewModel() { }
+        public TubesFluidViewModel(){}
         private ProductGet _product;
         public ProductGet Product
         {

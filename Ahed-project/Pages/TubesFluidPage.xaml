@@ -8,7 +8,13 @@
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:oxy="http://oxyplot.org/wpf"
       d:DesignHeight="450" d:DesignWidth="800"
+      xmlns:converter="clr-namespace:Ahed_project.MasterData"
       Title="TubesFluidPage">
+    <Page.Resources>
+        <ResourceDictionary>
+            <converter:Converter x:Key="Converter"></converter:Converter>
+        </ResourceDictionary>
+    </Page.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding CreateBaseOxyPlots}"/>
@@ -76,9 +82,27 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=liquid_phase_temperature}"/>
                                     <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=liquid_phase_density}"/>
-                                    <DataGridTextColumn Header="Sp.Heat kcal/kg°C"  Binding="{Binding Path=liquid_phase_specific_heat}"/>
-                                    <DataGridTextColumn Header="Th.Cond kcal/mr*hr°C" Binding="{Binding Path=liquid_phase_thermal_conductivity}"/>
-                                    <DataGridTextColumn Header="C.ind.cP" Binding="{Binding Path=liquid_phase_consistency_index}"/>
+                                    <DataGridTextColumn Header="Sp.Heat kcal/kg°C">
+                                        <DataGridTextColumn.Binding>
+                                            <MultiBinding Converter="{StaticResource Converter}">
+                                                <Binding Path="liquid_phase_specific_heat"/>
+                                            </MultiBinding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Th.Cond kcal/mr*hr°C">
+                                        <DataGridTextColumn.Binding>
+                                            <MultiBinding Converter="{StaticResource Converter}">
+                                                <Binding Path="liquid_phase_thermal_conductivity"/>
+                                            </MultiBinding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="C.ind.cP">
+                                        <DataGridTextColumn.Binding>
+                                            <MultiBinding Converter="{StaticResource Converter}">
+                                                <Binding Path="liquid_phase_consistency_index"/>
+                                            </MultiBinding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
                                     <DataGridTextColumn Header="F.ind" Binding="{Binding Path=liquid_phase_f_ind}"/>
                                     <DataGridTextColumn Header="dH kcal/kg" Binding="{Binding Path=liquid_phase_dh}"/>
                                 </DataGrid.Columns>
