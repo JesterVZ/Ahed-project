@@ -172,11 +172,11 @@ namespace Ahed_project.ViewModel.Pages
 
                 switch (value?.shell_nozzle_orientation)
                 {
-                    case "Opposite side":
+                    case "opposite_side":
                         OppositeSide = true;
                         SameSide = false;
                         break;
-                    case "Same side":
+                    case "same_side":
                         SameSide = true;
                         OppositeSide = false;
                         break;
