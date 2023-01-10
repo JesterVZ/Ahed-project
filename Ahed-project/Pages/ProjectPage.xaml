@@ -62,7 +62,7 @@
                         </ComboBoxItem>
                     </ComboBox>
                     <TextBlock Margin="3" Style="{StaticResource DefaultText}" Text="Number of decimals" Grid.Row="6" Grid.Column="2"/>
-                    <TextBox IsEnabled="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Margin="3" Style="{StaticResource Default}" Text="{Binding ProjectInfo.number_of_decimals, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="6"/>
+                    <TextBox IsEnabled="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Margin="3" Style="{StaticResource Default}" Text="{Binding NumberOfDecimals, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="6"/>
                     <TextBlock Margin="3" Grid.Column="0" Grid.Row="7" FontWeight="Bold">Project Processes</TextBlock>
                     <TextBox IsEnabled="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Margin="3" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2" Text="{Binding CalculationName, UpdateSourceTrigger=PropertyChanged}"/>
                     <Button Grid.Row="7" Grid.Column="3" Margin="3" Command="{Binding CreateCalculationCommand}" Click="Button_Click">Add</Button>
