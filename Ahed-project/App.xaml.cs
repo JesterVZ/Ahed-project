@@ -18,18 +18,18 @@ namespace Ahed_project
     /// </summary>
     public partial class App : Application
     {
-
+        private static IContainer _containers;
         protected override async void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
             var builder = new ContainerBuilder();
             builder.RegisterModule<Module>();
-            var cont = builder.Build();
-            var login = cont.Resolve<LoginPage>();
-            var content = cont.Resolve<ContentPage>();
-            var main = cont.Resolve<MainWindow>();
-            var vm = cont.Resolve<MainViewModel>();
-            var jwt = cont.Resolve<JsonWebTokenLocal>();
+            _containers = builder.Build();
+            var login = _containers.Resolve<LoginPage>();
+            var content = _containers.Resolve<ContentPage>();
+            var main = _containers.Resolve<MainWindow>();
+            var vm = _containers.Resolve<MainViewModel>();
+            var jwt = _containers.Resolve<JsonWebTokenLocal>();
 
             UserEF active = null;
             using (var context = new EFContext())
@@ -50,5 +50,11 @@ namespace Ahed_project
             main.Show();
         }
 
+        public static void Refresh()
+        {
+            var main = _containers.Resolve<MainWindow>();
+            main.Show();
+            App.Current.Windows[0].Close();
+        }
     }
 }

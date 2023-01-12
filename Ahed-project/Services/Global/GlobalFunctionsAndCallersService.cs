@@ -23,6 +23,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace Ahed_project.Services.Global
 {
@@ -308,6 +309,7 @@ namespace Ahed_project.Services.Global
         //Установка проекта
         public static void SetProject(ProjectInfoGet projectInfoGet)
         {
+            ReRender(projectInfoGet.number_of_decimals ?? 2);
             _projectPageViewModel.ProjectInfo = projectInfoGet;
             if (!(_heatBalanceViewModel.Calculation == null || _heatBalanceViewModel.Calculation?.calculation_id == 0))
             {
@@ -824,6 +826,19 @@ namespace Ahed_project.Services.Global
         {
             _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = value;
             _bufflesPageViewModel.Raise("Baffle");
+        }
+
+        public static void ReRender(int numberOfDecimals)
+        {
+            App.Current.Dispatcher.Invoke(()=>
+            {
+                if (Config.NumberOfDecimals != numberOfDecimals)
+                {
+                    Config.NumberOfDecimals = numberOfDecimals;
+                    _projectPageViewModel.ProjectInfo.number_of_decimals = numberOfDecimals;
+                }                
+                App.Refresh();
+            });
         }
     }
 }
