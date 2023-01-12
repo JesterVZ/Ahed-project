@@ -475,24 +475,31 @@ namespace Ahed_project.Services.Global
             _shellFluidViewModel.Product = shellProduct;
             _mainViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({_heatBalanceViewModel.Calculation?.name})";
             await Task.Factory.StartNew(GetTabState);
-            var geometryResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_GEOMETRY, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
-            if (geometryResponse != null)
+            if (calc != null)
             {
-                Responce response = JsonConvert.DeserializeObject<Responce>(geometryResponse);
-                string geometryJSON = JsonConvert.SerializeObject(response.data);
-                GeometryFull geometry = JsonConvert.DeserializeObject<GeometryFull>(geometryJSON);
-                //geometry = GlobalDataCollectorService.GeometryCollection.FirstOrDefault(x => x.geometry_id == geometry.geometry_catalog_id);
-                if(geometry != null)
+                var geometryResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_GEOMETRY, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
+                if (geometryResponse != null)
                 {
-                    SelectGeometry(geometry);
+                    Responce response = JsonConvert.DeserializeObject<Responce>(geometryResponse);
+                    string geometryJSON = JsonConvert.SerializeObject(response.data);
+                    GeometryFull geometry = JsonConvert.DeserializeObject<GeometryFull>(geometryJSON);
+                    //geometry = GlobalDataCollectorService.GeometryCollection.FirstOrDefault(x => x.geometry_id == geometry.geometry_catalog_id);
+                    if (geometry != null)
+                    {
+                        SelectGeometry(geometry);
+                    }
                 }
-                
+                var baffleResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_BAFFLE, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
+                if (baffleResponse != null)
+                {
+                    BaffleFull baffle = JsonConvert.DeserializeObject<BaffleFull>(baffleResponse);
+                    _bufflesPageViewModel.Baffle = baffle;
+                }
             }
-            var baffleResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_BAFFLE, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
-            if (baffleResponse != null)
+            else
             {
-                BaffleFull baffle = JsonConvert.DeserializeObject<BaffleFull>(baffleResponse);
-                _bufflesPageViewModel.Baffle = baffle;
+                SelectGeometry(null);
+                _bufflesPageViewModel.Baffle = new();
             }
             //_contentPageViewModel.Validation(false);
         }
