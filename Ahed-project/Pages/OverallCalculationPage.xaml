@@ -340,28 +340,28 @@
                                 <Label FontWeight="Bold" Grid.Column="2" Grid.ColumnSpan="4" Grid.Row="0">Logarithmic Mean Temperature Difference (LMTD)</Label>
                                 
                                 <Label Grid.Column="0" Grid.Row="1">Surface Area Required</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.k_unfouled_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.surface_area_required, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1"/>
 
                                 <Label Grid.Column="0" Grid.Row="2">Area / Module</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.k_unfouled_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.area_module, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1"/>
 
                                 <Label Grid.Column="0" Grid.Row="3">Nr. Modules</Label>
                                 <custom1:CustonCheck IsChecked="{Binding Overall.nr_modules_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" InputText="{Binding Overall.nr_modules, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1"/>
 
                                 <Label Grid.Column="0" Grid.Row="4">Area Fitted</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.k_unfouled_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.area_fitted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1"/>
 
                                 <Label Grid.Column="0" Grid.Row="5">Excess Area</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.k_unfouled_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.Column="1"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.excess_area, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.Column="1"/>
 
                                 <Label Grid.Column="2" Grid.Row="1">LMTD</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.k_unfouled_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="5"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.LMTD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="5"/>
 
                                 <Label Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2">LMTD Correction Factor 'F'</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.k_unfouled_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="5"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.LMTD_correction_factor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="5"/>
 
                                 <Label Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="3">Adjusted LMTD</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.k_unfouled_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="5"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Overall.adjusted_LMTD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="5"/>
                             </Grid>
                         </StackPanel>
                         

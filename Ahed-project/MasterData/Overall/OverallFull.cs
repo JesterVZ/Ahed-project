@@ -78,7 +78,15 @@ namespace Ahed_project.MasterData.Overall
         public string k_fouled_inlet { get; set; }
         public string k_fouled_outlet { get; set; }
         public string k_global_fouled { get; set; }
+        public string surface_area_required { get; set; }
+        public string area_module { get; set; }
         public string nr_modules { get; set; }
+        //public int nr_modules_is_edit { get; set; }
+        public string area_fitted { get; set; }
+        public string excess_area { get; set; }
+        public string LMTD { get; set; }
+        public string LMTD_correction_factor { get; set; }
+        public string adjusted_LMTD { get; set; }
         public string pressure_drop_tube_side_modules_V { get; set; }
         public string pressure_drop_tube_side_modules_P { get; set; }
         public string pressure_drop_tube_side_inlet_nozzles_V { get; set; }

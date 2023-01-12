@@ -306,7 +306,7 @@ namespace Ahed_project.Services.Global
         }
 
         //Установка проекта
-        public static void SetProject(ProjectInfoGet projectInfoGet)
+        public static async void SetProject(ProjectInfoGet projectInfoGet) 
         {
             _projectPageViewModel.ProjectInfo = projectInfoGet;
             if (!(_heatBalanceViewModel.Calculation == null || _heatBalanceViewModel.Calculation?.calculation_id == 0))
@@ -315,7 +315,7 @@ namespace Ahed_project.Services.Global
             }
             GlobalDataCollectorService.Project = projectInfoGet;
             SetUserLastProject(projectInfoGet.project_id);
-            
+            await Task.Factory.StartNew(() => GetCalculations(_projectPageViewModel.ProjectInfo.project_id.ToString()));
             _mainViewModel.Title = $"{projectInfoGet.name} ({_heatBalanceViewModel.Calculation?.name})";
             _contentPageViewModel.Validation(false);
             _projectPageViewModel.FieldsState = true;
