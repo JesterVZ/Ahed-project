@@ -78,7 +78,7 @@
                     </Grid>
                     <TabControl SelectedIndex="{Binding TabIndex, UpdateSourceTrigger=PropertyChanged}">
                         <TabItem Header="Liquid Phase">
-                            <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" Height="500" ItemsSource="{Binding Product.product_properties}">
+                            <DataGrid Name="PropertiesGrid" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" Height="500" ItemsSource="{Binding Product.product_properties, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=liquid_phase_temperature}"/>
                                     <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=liquid_phase_density}"/>
@@ -103,21 +103,69 @@
                                             </MultiBinding>
                                         </DataGridTextColumn.Binding>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="F.ind" Binding="{Binding Path=liquid_phase_f_ind}"/>
-                                    <DataGridTextColumn Header="dH kcal/kg" Binding="{Binding Path=liquid_phase_dh}"/>
+                                    <DataGridTextColumn Header="F.ind">
+                                        <DataGridTextColumn.Binding>
+                                            <MultiBinding Converter="{StaticResource Converter}">
+                                                <Binding Path="liquid_phase_f_ind"/>
+                                            </MultiBinding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="dH kcal/kg">
+                                        <DataGridTextColumn.Binding>
+                                            <MultiBinding Converter="{StaticResource Converter}">
+                                                <Binding Path="liquid_phase_dh"/>
+                                            </MultiBinding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </TabItem>
                         <TabItem Header="Gas Phase">
-                            <DataGrid AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" IsReadOnly="True" Height="500" ItemsSource="{Binding Product.product_properties}">
+                            <DataGrid Name="PropertiesGridGas" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" IsReadOnly="True" Height="500" ItemsSource="{Binding Product.product_properties}">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=gas_phase_temperature}"/>
-                                    <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=gas_phase_density}"/>
-                                    <DataGridTextColumn Header="Sp.Heat kcal/kg°C"  Binding="{Binding Path=gas_phase_specific_heat}"/>
-                                    <DataGridTextColumn Header="Th.Cond kcal/mr*hr°C" Binding="{Binding Path=gas_phase_thermal_conductivity}"/>
-                                    <DataGridTextColumn Header="Dyn Visc cP" Binding="{Binding Path=gas_phase_dyn_visc_gas}"/>
-                                    <DataGridTextColumn Header="Vapour pressure bar-a" Binding="{Binding Path=gas_phase_p_vap}"/>
-                                    <DataGridTextColumn Header="Mass Vapour Fraction %" Binding="{Binding Path=gas_phase_vapour_frac}"/>
+                                    <DataGridTextColumn Header="Dens kg/m³" Width="100">
+                                        <DataGridTextColumn.Binding>
+                                            <MultiBinding Converter="{StaticResource Converter}">
+                                                <Binding Path="gas_phase_density"/>
+                                            </MultiBinding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Sp.Heat kcal/kg°C">
+                                        <DataGridTextColumn.Binding>
+                                            <MultiBinding Converter="{StaticResource Converter}">
+                                                <Binding Path="gas_phase_specific_heat"/>
+                                            </MultiBinding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Th.Cond kcal/mr*hr°C">
+                                        <DataGridTextColumn.Binding>
+                                            <MultiBinding Converter="{StaticResource Converter}">
+                                                <Binding Path="gas_phase_thermal_conductivity"/>
+                                            </MultiBinding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Dyn Visc cP">
+                                        <DataGridTextColumn.Binding>
+                                            <MultiBinding Converter="{StaticResource Converter}">
+                                                <Binding Path="gas_phase_dyn_visc_gas"/>
+                                            </MultiBinding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Vapour pressure bar-a">
+                                        <DataGridTextColumn.Binding>
+                                            <MultiBinding Converter="{StaticResource Converter}">
+                                                <Binding Path="gas_phase_p_vap"/>
+                                            </MultiBinding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Mass Vapour Fraction %">
+                                        <DataGridTextColumn.Binding>
+                                            <MultiBinding Converter="{StaticResource Converter}">
+                                                <Binding Path="gas_phase_vapour_frac"/>
+                                            </MultiBinding>
+                                        </DataGridTextColumn.Binding>
+                                    </DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </TabItem>

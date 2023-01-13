@@ -836,8 +836,10 @@ namespace Ahed_project.Services.Global
                 {
                     Config.NumberOfDecimals = numberOfDecimals;
                     _projectPageViewModel.ProjectInfo.number_of_decimals = numberOfDecimals;
-                }                
-                App.Refresh();
+                    _tubesFluidViewModel.Refresh();
+                    _shellFluidViewModel.Refresh();
+                    _heatBalanceViewModel.Refresh();
+                }
             });
         }
     }

@@ -14,7 +14,5 @@ namespace Ahed_project.ViewModel.Windows
         {
             FramePage = new Page();
         }
-
-        public Action CloseWindow { get; set; }
     }
 }

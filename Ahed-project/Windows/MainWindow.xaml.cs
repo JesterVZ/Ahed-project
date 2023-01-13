@@ -12,10 +12,6 @@ namespace Ahed_project
         {
             InitializeComponent();
             DataContext = vm;
-            vm.CloseWindow = ()=>
-            {
-                this.Close();
-            };
         }
     }
 }

@@ -12,6 +12,13 @@ namespace Ahed_project.Pages
         {
             InitializeComponent();
             DataContext = vm;
+            vm.Refresh = () =>
+            {
+                this.PropertiesGrid.BeginInit();
+                this.PropertiesGrid.EndInit();
+                this.PropertiesGridGas.BeginInit();
+                this.PropertiesGridGas.EndInit();
+            };
         }
     }
 }
