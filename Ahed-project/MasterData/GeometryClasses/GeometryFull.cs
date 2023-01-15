@@ -99,6 +99,8 @@ namespace Ahed_project.MasterData.GeometryClasses
         public string clearances_spacing_min_tube_hole_to_division_plate_groove { get; set; }
         public string clearances_spacing_division_plate_to_tubeplate { get; set; }
         public string clearances_spacing_minimum_tube_in_tube_spacing { get; set; }
+        public string clearances_spacing_actual_tube_hole_to_tubeplate_edge { get; set; }
+        public string clearances_spacing_actual_tube_hole_to_tube_hole { get; set; }
         public string image_geometry { get; set; }
         public DateTime? createdAt { get; set; }
         public DateTime? updatedAt { get; set; }

@@ -731,7 +731,7 @@ namespace Ahed_project.Services.Global
             {
                 type = baffle.type,
                 buffle_cut = baffle.buffle_cut,
-                method = "no_baffles",
+                method = baffle.method,
                 buffle_cut_diraction = baffle.buffle_cut_diraction,
                 diametral_clearance_shell_baffle = baffle.diametral_clearance_shell_baffle,
                 diametral_clearance_tube_baffle = baffle.diametral_clearance_tube_baffle,

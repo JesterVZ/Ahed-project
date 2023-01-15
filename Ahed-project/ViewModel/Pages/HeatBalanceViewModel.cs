@@ -73,7 +73,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _pressure_tube_inlet_value = value;
-                if (Calculation != null && Calculation.calculation_id != 0 && Calculation.process_tube.Contains("Condensation") && double.TryParse(value, out var res))
+                if (Calculation != null && Calculation.pressure_tube_inlet!=value && Calculation.calculation_id != 0 && Calculation.process_tube.Contains("Condensation") && double.TryParse(value, out var res))
                 {
                     GetTemperatureCalculation(false,value);
                 }
@@ -131,6 +131,7 @@ namespace Ahed_project.ViewModel.Pages
                     TubesInletTemp = temperatureTubeInlet;
                     Double.TryParse(value?.temperature_shell_inlet?.Replace('.', ','), out var temperatureShellInlet);
                     ShellInletTemp = temperatureShellInlet;
+                    Pressure_tube_inlet_value = value.pressure_tube_inlet;
                 }
             }
         }
