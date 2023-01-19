@@ -492,7 +492,12 @@ namespace Ahed_project.Services.Global
                 var baffleResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_BAFFLE, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
                 if (baffleResponse != null)
                 {
-                    BaffleFull baffle = JsonConvert.DeserializeObject<BaffleFull>(baffleResponse);
+                    Responce result = JsonConvert.DeserializeObject<Responce>(baffleResponse);
+                    for (int i = 0; i < result.logs.Count; i++)
+                    {
+                        Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
+                    }
+                    BaffleFull baffle = JsonConvert.DeserializeObject<BaffleFull>(result.data.ToString());
                     _bufflesPageViewModel.Baffle = baffle;
                 }
             }
