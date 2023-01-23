@@ -107,12 +107,15 @@ namespace Ahed_project.Services.Global
                 var user = context.Users.FirstOrDefault(x => x.Id == GlobalDataCollectorService.UserId);
                 calculation_id = user.LastCalculationId ?? 0;
             }
-            var template = _sendDataService.ReturnCopy();
-            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка состояний вкладок...")));
-            var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.GET_TAB_STATE, null, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString()));
-            _contentPageViewModel.SetTabState(response);
-            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка состояний вкладок завершена!")));
-            GlobalDataCollectorService.IsAllSave = true;
+            if (GlobalDataCollectorService.Project?.project_id != null && calculation_id != 0)
+            {
+                var template = _sendDataService.ReturnCopy();
+                Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка состояний вкладок...")));
+                var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.GET_TAB_STATE, null, GlobalDataCollectorService.Project?.project_id.ToString(), calculation_id.ToString()));
+                _contentPageViewModel.SetTabState(response);
+                Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка состояний вкладок завершена!")));
+                GlobalDataCollectorService.IsAllSave = true;
+            }
         }
         //сохранение состояния вкладок
         public static async void SetTabState(TabsState tabs)
@@ -314,9 +317,18 @@ namespace Ahed_project.Services.Global
                 _projectPageViewModel.SelectedCalculation = null;
             }
             GlobalDataCollectorService.Project = projectInfoGet;
-            SetUserLastProject(projectInfoGet.project_id);
-            await Task.Factory.StartNew(() => GetCalculations(_projectPageViewModel.ProjectInfo.project_id.ToString()));
-            _mainViewModel.Title = $"{projectInfoGet.name} ({_heatBalanceViewModel.Calculation?.name})";
+            SetUserLastProject(projectInfoGet?.project_id??0);
+            if (projectInfoGet != null)
+            {
+                await Task.Factory.StartNew(() => GetCalculations(_projectPageViewModel.ProjectInfo?.project_id.ToString()));
+                _mainViewModel.Title = $"{projectInfoGet?.name} ({_heatBalanceViewModel.Calculation?.name})";
+            }
+            else
+            {
+                _mainViewModel.Title = "";
+                _projectPageViewModel.Calculations.Clear();
+                SetCalculation(null);
+            }
             _contentPageViewModel.Validation(false);
             _projectPageViewModel.FieldsState = true;
         }
@@ -330,18 +342,20 @@ namespace Ahed_project.Services.Global
                 try
                 {
                     Responce result = JsonConvert.DeserializeObject<Responce>(response);
-                    Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations = JsonConvert.DeserializeObject<ObservableCollection<CalculationFull>>(result.data.ToString()));
-                    int userId = GlobalDataCollectorService.UserId;
-                    int id = 0;
-                    using (var context = new EFContext())
+                    if (result.data != null)
                     {
-                        var user = context.Users.FirstOrDefault(x => x.Id == userId);
-                        id = user.LastCalculationId ?? 0;
-                    }
-                    if (id != 0)
-                    {
-                        _projectPageViewModel.SelectedCalculation = _projectPageViewModel.Calculations.FirstOrDefault(x => x.calculation_id == id);
-                    }
+                        Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations = JsonConvert.DeserializeObject<ObservableCollection<CalculationFull>>(result.data.ToString()));
+                        int userId = GlobalDataCollectorService.UserId;
+                        int id = 0;
+                        using (var context = new EFContext())
+                        {
+                            var user = context.Users.FirstOrDefault(x => x.Id == userId);
+                            id = user.LastCalculationId ?? 0;
+                        }
+                        if (id != 0)
+                        {
+                            _projectPageViewModel.SelectedCalculation = _projectPageViewModel.Calculations.FirstOrDefault(x => x.calculation_id == id);
+                        }
                         /*
                         Task.Factory.StartNew(() =>
                         {
@@ -349,13 +363,14 @@ namespace Ahed_project.Services.Global
                             _projectPageViewModel.SelectedCalculation = _projectPageViewModel.Calculations.FirstOrDefault(x => x.calculation_id == id);
                         });*/
 
-                    else
-                        _projectPageViewModel.SelectedCalculation = null;
-                    for (int i = 0; i < result.logs.Count; i++)
-                    {
-                        Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
+                        else
+                            _projectPageViewModel.SelectedCalculation = null;
+                        for (int i = 0; i < result.logs.Count; i++)
+                        {
+                            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
+                        }
+                        Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Расчеты получены!")));
                     }
-                    Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Расчеты получены!")));
                 }
                 catch (Exception e)
                 {
@@ -464,6 +479,7 @@ namespace Ahed_project.Services.Global
                     context.Users.Update(user);
                     context.SaveChanges();
                 }
+                _mainViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({_heatBalanceViewModel.Calculation?.name})";
             }
             _heatBalanceViewModel.Calculation = calc;
             var products = GlobalDataCollectorService.AllProducts.SelectMany(x => x.Value).ToList();
@@ -473,7 +489,6 @@ namespace Ahed_project.Services.Global
             var shellProduct = products.FirstOrDefault(x => x.product_id == calc?.product_id_shell);
             _heatBalanceViewModel.ShellProductName = shellProduct?.name;
             _shellFluidViewModel.Product = shellProduct;
-            _mainViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({_heatBalanceViewModel.Calculation?.name})";
             await Task.Factory.StartNew(GetTabState);
             if (calc != null)
             {
@@ -836,6 +851,16 @@ namespace Ahed_project.Services.Global
         {
             _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = value;
             _bufflesPageViewModel.Raise("Baffle");
+        }
+
+        public static async void DeleteProject(ProjectInfoGet selectedProject)
+        {
+            if (selectedProject.project_id == _projectPageViewModel.ProjectInfo.project_id)
+            {
+                SetProject(null);
+            }
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.DELETE_PROJECT,null,selectedProject.project_id.ToString()));
+            GlobalDataCollectorService.ProjectsCollection.Remove(selectedProject);
         }
     }
 }
