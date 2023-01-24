@@ -11,12 +11,12 @@ namespace Ahed_project.MasterData
     {
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            string value = System.Convert.ToDecimal(values[0]).ToString($"F{Config.NumberOfDecimals}");
+            string value = System.Convert.ToDecimal(values[0]?.ToString()?.Replace('.',',')).ToString($"F{Config.NumberOfDecimals}");
             return value;
         }
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return new object[] { value };
         }
     }
 }

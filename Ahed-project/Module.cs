@@ -67,7 +67,7 @@ namespace Ahed_project
             builder.RegisterType<TubesFluidPage>().AsSelf().SingleInstance();
             #endregion
             #region Windows
-            builder.RegisterType<MainWindow>().AsSelf().SingleInstance();
+            builder.RegisterType<MainWindow>().AsSelf().InstancePerDependency();
             builder.RegisterType<GeometryWindow>().AsSelf();
             builder.RegisterType<Presets>().AsSelf();
             builder.RegisterType<ProductsWindow>().AsSelf();

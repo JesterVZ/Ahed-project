@@ -292,5 +292,11 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
         public bool TemperatureShellOutLetTB { get; set; }
+
+        public void Refresh()
+        {
+            RaisePropertiesChanged(nameof(Calculation));
+            RaisePropertiesChanged(nameof(ShellInletTemp));
+        }
     }
 }

@@ -5,6 +5,7 @@ using DevExpress.Mvvm;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -150,5 +151,6 @@ namespace Ahed_project.ViewModel.Pages
             FifthChart.Series.Add(fifthSeries);
             SixthChart.Series.Add(sixthSeries);
         }
+        public Action Refresh { get; set; }
     }
 }
