@@ -14,6 +14,13 @@ namespace Ahed_project.ViewModel.Windows
 
         }
 
+        public ICommand DeleteProject => new DelegateCommand(() =>
+        {
+            GlobalFunctionsAndCallersService.DeleteProject(SelectedProject);
+            Projects.Remove(SelectedProject);
+            SelectedProject = null;
+        });
+
         public ICommand SelectProject => new DelegateCommand(() =>
         {
             GlobalFunctionsAndCallersService.SetProject(SelectedProject);

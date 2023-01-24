@@ -327,9 +327,9 @@
                         <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_thickness_shell_side}" Grid.Column="3" Grid.Row="5"/>
 
                         <Label Grid.Column="0" Grid.Row="6">Out Inner Diam (mm)</Label>
-                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_out_outer_diam_inner_side}" Grid.Column="1" Grid.Row="6"/>
-                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_out_outer_diam_tubes_side}" Grid.Column="2" Grid.Row="6"/>
-                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_out_outer_diam_shell_side}" Grid.Column="3" Grid.Row="6"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_out_inner_diam_inner_side}" Grid.Column="1" Grid.Row="6"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_out_inner_diam_tubes_side}" Grid.Column="2" Grid.Row="6"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_out_inner_diam_shell_side}" Grid.Column="3" Grid.Row="6"/>
 
                         <Label Grid.Column="0" Grid.Row="7">Out Length (mm)</Label>
                         <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_length_tubes_side}" Grid.Column="2" Grid.Row="7"/>
@@ -357,7 +357,7 @@
                     </Grid>
                 </Grid>
                 <StackPanel Margin="3" Orientation="Horizontal" Grid.Column="0" Grid.Row="9">
-                    <TextBlock Grid.ColumnSpan="4" FontWeight="Bold" Margin="0 0 9 0">Advanced Properties</TextBlock>
+                    <TextBlock Grid.ColumnSpan="4" FontWeight="Bold" Margin="0 0 9 0">Clearance and Spacing</TextBlock>
                     <Button Width="20" Height="20" Template="{StaticResource RoundedButton}" Command="{Binding ToggleCommand}">
                         <Image Source="../Visual/arrow.png" Margin="4 4 4 4" RenderTransformOrigin="0.5,0.5">
                             <Image.RenderTransform>
@@ -406,19 +406,19 @@
                         <TextBox Grid.Column="1" Grid.Row="3" Style="{StaticResource Default}" Text="{Binding Geometry.clearances_spacing_minimum_tube_hole_to_tubeplate_edge}"/>
 
                         <Label Grid.Column="0" Grid.Row="4">Actual tube hole to tubeplate edge (D) (mm)</Label>
-                        <TextBox Grid.Column="1" Grid.Row="4" Style="{StaticResource Colored}"/>
+                        <TextBox Grid.Column="1" Grid.Row="4" Style="{StaticResource Colored}" Text="{Binding Geometry.clearances_spacing_actual_tube_hole_to_tubeplate_edge}"/>
 
                         <Label Grid.Column="0" Grid.Row="5">Min. tube hole to division plate groove (E) (mm)</Label>
                         <TextBox Grid.Column="1" Grid.Row="5" Style="{StaticResource Default}" Text="{Binding Geometry.clearances_spacing_min_tube_hole_to_division_plate_groove}"/>
 
                         <Label Grid.Column="0" Grid.Row="6">Actual tube hole to tube hole (F) (mm)</Label>
-                        <TextBox Grid.Column="1" Grid.Row="6" Style="{StaticResource Colored}"/>
+                        <TextBox Grid.Column="1" Grid.Row="6" Style="{StaticResource Colored}" Text="{Binding Geometry.clearances_spacing_actual_tube_hole_to_tube_hole}"/>
 
                         <Label Grid.Column="0" Grid.Row="7">Division plate to tubeplate (groove) (mm)</Label>
                         <TextBox Grid.Column="1" Grid.Row="7" Style="{StaticResource Default}" Text="{Binding Geometry.clearances_spacing_min_tube_hole_to_division_plate_groove}"/>
 
                         <Label Grid.Column="0" Grid.Row="8">Minimum tube-in-tube spacing (G) (mm)</Label>
-                        <TextBox Grid.Column="1" Grid.Row="8" Style="{StaticResource Default}"/>
+                        <TextBox Grid.Column="1" Grid.Row="8" Style="{StaticResource Default}" Text="{Binding Geometry.clearances_spacing_minimum_tube_in_tube_spacing}"/>
 
                         <Button Grid.Column="1" Margin="3" Grid.Row="9" Content="Restore Defaults" VerticalAlignment="Center" Background="#fc6"/>
                         <Button Grid.Column="1" Margin="3" Grid.Row="10" Content="Show Template" VerticalAlignment="Center" Background="#fc6"/>

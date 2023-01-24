@@ -48,6 +48,7 @@ namespace Ahed_project
             builder.RegisterType<TubesFluidViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<ShellFluidViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<BufflesPageViewModel>().AsSelf().SingleInstance();
+            builder.RegisterType<ReportsPageViewModel>().AsSelf().SingleInstance();
             #endregion
             #region Pages
             builder.RegisterType<_3DPage>().AsSelf().SingleInstance();
@@ -78,6 +79,7 @@ namespace Ahed_project
             builder.RegisterType<WebClient>().AsSelf().SingleInstance();
             builder.RegisterType<JsonWebTokenLocal>().AsSelf().SingleInstance();
             builder.RegisterType<WindowTitleService>().AsSelf().SingleInstance();
+            builder.RegisterType<CreateExcelService>().AsSelf().SingleInstance();
             var data = new GlobalDataCollectorService();
             builder.RegisterInstance(data).As<GlobalDataCollectorService>().SingleInstance();
             #endregion

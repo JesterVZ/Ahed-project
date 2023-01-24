@@ -44,11 +44,12 @@ namespace Ahed_project.Services.Global
         private static GeometryPageViewModel _geometryPageViewModel;
         private static BufflesPageViewModel _bufflesPageViewModel;
         private static OverallCalculationViewModel _overallCalculationViewModel;
+        private static CreateExcelService _createExcelService;
         private static MainViewModel _mainViewModel;
 
         public GlobalFunctionsAndCallersService(SendDataService sendDataService, ContentPageViewModel contentPage,
             ProjectPageViewModel projectPageViewModel, IMapper mapper, HeatBalanceViewModel heatBalanceViewModel, TubesFluidViewModel tubesFluidViewModel,
-            ShellFluidViewModel shellFluidViewModel, GeometryPageViewModel geometryPageViewModel, BufflesPageViewModel bufflesPageViewModel, MainViewModel mainViewModel, OverallCalculationViewModel overallCalculationViewModel)
+            ShellFluidViewModel shellFluidViewModel, GeometryPageViewModel geometryPageViewModel, BufflesPageViewModel bufflesPageViewModel, MainViewModel mainViewModel, OverallCalculationViewModel overallCalculationViewModel, CreateExcelService createExcelService)
         {
             _sendDataService = sendDataService;
             _contentPageViewModel = contentPage;
@@ -61,7 +62,9 @@ namespace Ahed_project.Services.Global
             _geometryPageViewModel = geometryPageViewModel;
             _overallCalculationViewModel = overallCalculationViewModel;
             _mainViewModel = mainViewModel;
-            
+            _createExcelService = createExcelService;
+
+
         }
 
         //Первичная загрузка после входа
@@ -108,12 +111,15 @@ namespace Ahed_project.Services.Global
                 var user = context.Users.FirstOrDefault(x => x.Id == GlobalDataCollectorService.UserId);
                 calculation_id = user.LastCalculationId ?? 0;
             }
-            var template = _sendDataService.ReturnCopy();
-            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка состояний вкладок...")));
-            var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.GET_TAB_STATE, null, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString()));
-            _contentPageViewModel.SetTabState(response);
-            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка состояний вкладок завершена!")));
-            GlobalDataCollectorService.IsAllSave = true;
+            if (GlobalDataCollectorService.Project?.project_id != null && calculation_id != 0)
+            {
+                var template = _sendDataService.ReturnCopy();
+                Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка состояний вкладок...")));
+                var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.GET_TAB_STATE, null, GlobalDataCollectorService.Project?.project_id.ToString(), calculation_id.ToString()));
+                _contentPageViewModel.SetTabState(response);
+                Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка состояний вкладок завершена!")));
+                GlobalDataCollectorService.IsAllSave = true;
+            }
         }
         //сохранение состояния вкладок
         public static async void SetTabState(TabsState tabs)
@@ -307,7 +313,7 @@ namespace Ahed_project.Services.Global
         }
 
         //Установка проекта
-        public static void SetProject(ProjectInfoGet projectInfoGet)
+        public static async void SetProject(ProjectInfoGet projectInfoGet) 
         {
             ReRender(projectInfoGet.number_of_decimals ?? 2);
             _projectPageViewModel.ProjectInfo = projectInfoGet;
@@ -316,9 +322,18 @@ namespace Ahed_project.Services.Global
                 _projectPageViewModel.SelectedCalculation = null;
             }
             GlobalDataCollectorService.Project = projectInfoGet;
-            SetUserLastProject(projectInfoGet.project_id);
-            
-            _mainViewModel.Title = $"{projectInfoGet.name} ({_heatBalanceViewModel.Calculation?.name})";
+            SetUserLastProject(projectInfoGet?.project_id??0);
+            if (projectInfoGet != null)
+            {
+                await Task.Factory.StartNew(() => GetCalculations(_projectPageViewModel.ProjectInfo?.project_id.ToString()));
+                _mainViewModel.Title = $"{projectInfoGet?.name} ({_heatBalanceViewModel.Calculation?.name})";
+            }
+            else
+            {
+                _mainViewModel.Title = "";
+                _projectPageViewModel.Calculations.Clear();
+                SetCalculation(null);
+            }
             _contentPageViewModel.Validation(false);
             _projectPageViewModel.FieldsState = true;
         }
@@ -332,18 +347,20 @@ namespace Ahed_project.Services.Global
                 try
                 {
                     Responce result = JsonConvert.DeserializeObject<Responce>(response);
-                    Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations = JsonConvert.DeserializeObject<ObservableCollection<CalculationFull>>(result.data.ToString()));
-                    int userId = GlobalDataCollectorService.UserId;
-                    int id = 0;
-                    using (var context = new EFContext())
+                    if (result.data != null)
                     {
-                        var user = context.Users.FirstOrDefault(x => x.Id == userId);
-                        id = user.LastCalculationId ?? 0;
-                    }
-                    if (id != 0)
-                    {
-                        _projectPageViewModel.SelectedCalculation = _projectPageViewModel.Calculations.FirstOrDefault(x => x.calculation_id == id);
-                    }
+                        Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations = JsonConvert.DeserializeObject<ObservableCollection<CalculationFull>>(result.data.ToString()));
+                        int userId = GlobalDataCollectorService.UserId;
+                        int id = 0;
+                        using (var context = new EFContext())
+                        {
+                            var user = context.Users.FirstOrDefault(x => x.Id == userId);
+                            id = user.LastCalculationId ?? 0;
+                        }
+                        if (id != 0)
+                        {
+                            _projectPageViewModel.SelectedCalculation = _projectPageViewModel.Calculations.FirstOrDefault(x => x.calculation_id == id);
+                        }
                         /*
                         Task.Factory.StartNew(() =>
                         {
@@ -351,13 +368,14 @@ namespace Ahed_project.Services.Global
                             _projectPageViewModel.SelectedCalculation = _projectPageViewModel.Calculations.FirstOrDefault(x => x.calculation_id == id);
                         });*/
 
-                    else
-                        _projectPageViewModel.SelectedCalculation = null;
-                    for (int i = 0; i < result.logs.Count; i++)
-                    {
-                        Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
+                        else
+                            _projectPageViewModel.SelectedCalculation = null;
+                        for (int i = 0; i < result.logs.Count; i++)
+                        {
+                            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
+                        }
+                        Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Расчеты получены!")));
                     }
-                    Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Расчеты получены!")));
                 }
                 catch (Exception e)
                 {
@@ -466,6 +484,7 @@ namespace Ahed_project.Services.Global
                     context.Users.Update(user);
                     context.SaveChanges();
                 }
+                _mainViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({_heatBalanceViewModel.Calculation?.name})";
             }
             _heatBalanceViewModel.Calculation = calc;
             var products = GlobalDataCollectorService.AllProducts.SelectMany(x => x.Value).ToList();
@@ -475,26 +494,37 @@ namespace Ahed_project.Services.Global
             var shellProduct = products.FirstOrDefault(x => x.product_id == calc?.product_id_shell);
             _heatBalanceViewModel.ShellProductName = shellProduct?.name;
             _shellFluidViewModel.Product = shellProduct;
-            _mainViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({_heatBalanceViewModel.Calculation?.name})";
             await Task.Factory.StartNew(GetTabState);
-            var geometryResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_GEOMETRY, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
-            if (geometryResponse != null)
+            if (calc != null)
             {
-                Responce response = JsonConvert.DeserializeObject<Responce>(geometryResponse);
-                string geometryJSON = JsonConvert.SerializeObject(response.data);
-                GeometryFull geometry = JsonConvert.DeserializeObject<GeometryFull>(geometryJSON);
-                //geometry = GlobalDataCollectorService.GeometryCollection.FirstOrDefault(x => x.geometry_id == geometry.geometry_catalog_id);
-                if(geometry != null)
+                var geometryResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_GEOMETRY, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
+                if (geometryResponse != null)
                 {
-                    SelectGeometry(geometry);
+                    Responce response = JsonConvert.DeserializeObject<Responce>(geometryResponse);
+                    string geometryJSON = JsonConvert.SerializeObject(response.data);
+                    GeometryFull geometry = JsonConvert.DeserializeObject<GeometryFull>(geometryJSON);
+                    //geometry = GlobalDataCollectorService.GeometryCollection.FirstOrDefault(x => x.geometry_id == geometry.geometry_catalog_id);
+                    if (geometry != null)
+                    {
+                        SelectGeometry(geometry);
+                    }
                 }
-                
+                var baffleResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_BAFFLE, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
+                if (baffleResponse != null)
+                {
+                    Responce result = JsonConvert.DeserializeObject<Responce>(baffleResponse);
+                    for (int i = 0; i < result.logs.Count; i++)
+                    {
+                        Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
+                    }
+                    BaffleFull baffle = JsonConvert.DeserializeObject<BaffleFull>(result.data.ToString());
+                    _bufflesPageViewModel.Baffle = baffle;
+                }
             }
-            var baffleResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_BAFFLE, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
-            if (baffleResponse != null)
+            else
             {
-                BaffleFull baffle = JsonConvert.DeserializeObject<BaffleFull>(baffleResponse);
-                _bufflesPageViewModel.Baffle = baffle;
+                SelectGeometry(null);
+                _bufflesPageViewModel.Baffle = new();
             }
             //_contentPageViewModel.Validation(false);
         }
@@ -726,7 +756,7 @@ namespace Ahed_project.Services.Global
             {
                 type = baffle.type,
                 buffle_cut = baffle.buffle_cut,
-                method = "no_baffles",
+                method = baffle.method,
                 buffle_cut_diraction = baffle.buffle_cut_diraction,
                 diametral_clearance_shell_baffle = baffle.diametral_clearance_shell_baffle,
                 diametral_clearance_tube_baffle = baffle.diametral_clearance_tube_baffle,
@@ -809,6 +839,13 @@ namespace Ahed_project.Services.Global
             }
         }
 
+        //создать полный отчет
+
+        public static async void CreateFullReport()
+        {
+            _createExcelService.CreateExcel();
+        }
+
         public static void SetWindowName(string name)
         {
             _mainViewModel.Title = $"{name} ({_heatBalanceViewModel.Calculation?.name})";
@@ -828,6 +865,7 @@ namespace Ahed_project.Services.Global
             _bufflesPageViewModel.Raise("Baffle");
         }
 
+
         public static void ReRender(int numberOfDecimals)
         {
             App.Current.Dispatcher.Invoke(()=>
@@ -841,6 +879,15 @@ namespace Ahed_project.Services.Global
                     _heatBalanceViewModel.Refresh();
                 }
             });
+
+        public static async void DeleteProject(ProjectInfoGet selectedProject)
+        {
+            if (selectedProject.project_id == _projectPageViewModel.ProjectInfo.project_id)
+            {
+                SetProject(null);
+            }
+            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.DELETE_PROJECT,null,selectedProject.project_id.ToString()));
+            GlobalDataCollectorService.ProjectsCollection.Remove(selectedProject);
         }
     }
 }

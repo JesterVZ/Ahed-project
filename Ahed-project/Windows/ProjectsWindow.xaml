@@ -23,9 +23,11 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
             <TextBox Grid.Column="0" Margin="5 5 5 5" Text="{Binding Path=SearchBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Grid.Column="1" Margin="5 5 5 5" Click="Button_Click" IsCancel="True" Command="{Binding SelectProject}">Select</Button>
+            <Button Grid.Column="1" Margin="5 5 5 5" Click="Button_Click" Command="{Binding DeleteProject}">Delete</Button>
+            <Button Grid.Column="2" Margin="5 5 5 5" Click="Button_Click" IsCancel="True" Command="{Binding SelectProject}">Select</Button>
         </Grid>
     </Grid>
 </Window>

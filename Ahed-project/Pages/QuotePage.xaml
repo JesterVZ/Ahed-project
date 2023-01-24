@@ -9,6 +9,8 @@
       Title="QuotePage">
 
     <Grid>
-        
+        <StackPanel Orientation="Vertical">
+            
+        </StackPanel>
     </Grid>
 </Page>
