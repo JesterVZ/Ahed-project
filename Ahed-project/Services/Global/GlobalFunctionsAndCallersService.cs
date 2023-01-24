@@ -43,11 +43,12 @@ namespace Ahed_project.Services.Global
         private static GeometryPageViewModel _geometryPageViewModel;
         private static BufflesPageViewModel _bufflesPageViewModel;
         private static OverallCalculationViewModel _overallCalculationViewModel;
+        private static CreateExcelService _createExcelService;
         private static MainViewModel _mainViewModel;
 
         public GlobalFunctionsAndCallersService(SendDataService sendDataService, ContentPageViewModel contentPage,
             ProjectPageViewModel projectPageViewModel, IMapper mapper, HeatBalanceViewModel heatBalanceViewModel, TubesFluidViewModel tubesFluidViewModel,
-            ShellFluidViewModel shellFluidViewModel, GeometryPageViewModel geometryPageViewModel, BufflesPageViewModel bufflesPageViewModel, MainViewModel mainViewModel, OverallCalculationViewModel overallCalculationViewModel)
+            ShellFluidViewModel shellFluidViewModel, GeometryPageViewModel geometryPageViewModel, BufflesPageViewModel bufflesPageViewModel, MainViewModel mainViewModel, OverallCalculationViewModel overallCalculationViewModel, CreateExcelService createExcelService)
         {
             _sendDataService = sendDataService;
             _contentPageViewModel = contentPage;
@@ -60,7 +61,9 @@ namespace Ahed_project.Services.Global
             _geometryPageViewModel = geometryPageViewModel;
             _overallCalculationViewModel = overallCalculationViewModel;
             _mainViewModel = mainViewModel;
-            
+            _createExcelService = createExcelService;
+
+
         }
 
         //Первичная загрузка после входа
@@ -832,6 +835,13 @@ namespace Ahed_project.Services.Global
                     MessageBox.Show(e.Message.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+        }
+
+        //создать полный отчет
+
+        public static async void CreateFullReport()
+        {
+            _createExcelService.CreateExcel();
         }
 
         public static void SetWindowName(string name)
