@@ -821,7 +821,7 @@ namespace Ahed_project.Services.Global
 
         public static async void CreateFullReport()
         {
-            _createExcelService.CreateExcel(DocumentType.FULL);
+            _createExcelService.CreateExcel();
         }
 
         public static void SetWindowName(string name)

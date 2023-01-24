@@ -8,6 +8,7 @@ using SpreadsheetLight;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -16,28 +17,26 @@ using System.Windows;
 
 namespace Ahed_project.Services
 {
+    
     public class CreateExcelService
     {
         private static ProjectPageViewModel _projectPageViewModel;
         private static TubesFluidViewModel _tubesFluidViewModel;
         public static ShellFluidViewModel _shellFluidViewModel;
+        private static HeatBalanceViewModel _heatBalanceViewModel;
         private static SLDocument Doc;
-        public CreateExcelService(TubesFluidViewModel tubesFluidViewModel, ShellFluidViewModel shellFluidViewModel, ProjectPageViewModel projectPageViewModel)
+        public CreateExcelService(TubesFluidViewModel tubesFluidViewModel, ShellFluidViewModel shellFluidViewModel, ProjectPageViewModel projectPageViewModel, HeatBalanceViewModel heatBalanceViewModel)
         {
             _projectPageViewModel = projectPageViewModel;
             _tubesFluidViewModel = tubesFluidViewModel;
             _shellFluidViewModel = shellFluidViewModel;
+            _heatBalanceViewModel = heatBalanceViewModel;
 
             Doc = new();
         }
-        public async void CreateExcel(DocumentType documentType)
+        public async void CreateExcel()
         {
-            switch (documentType)
-            {
-                case DocumentType.FULL:
-                    CreateFull();
-                break;
-            }
+            CreateFull();
         }
 
         private static void CreateFull()
@@ -46,33 +45,17 @@ namespace Ahed_project.Services
             {
                 var assembly = Assembly.GetExecutingAssembly();
                 string path = assembly.Location;
-                
-                Doc.MergeWorksheetCells("A1", "B1");
-                Doc.MergeWorksheetCells("A2", "B2");
-                Doc.MergeWorksheetCells("A3", "B3");
-                Doc.MergeWorksheetCells("A4", "B4");
-                Doc.MergeWorksheetCells("C1", "F1");
-                Doc.MergeWorksheetCells("C3", "F3");
-                Doc.MergeWorksheetCells("C4", "F4");
-                Doc.SetCellValue("A1", "Project name");
-                Doc.SetCellValue("C1", _projectPageViewModel.ProjectName);
-                Doc.SetCellStyle("A1", "A6", BoldTextStyle());
-                Doc.SetCellStyle("A1", "F1", BorderCellsStyle());
-                Doc.SetCellStyle("A2", "C2", BorderCellsStyle());
-                Doc.SetCellStyle("A3", "F3", BorderCellsStyle());
-                Doc.SetCellStyle("A4", "F4", BorderCellsStyle());
-                Doc.SetColumnWidth("A", "M", 15);
-                Doc.SetCellValue("A2", "Revision Nr");
-                Doc.SetCellValue("C2", _projectPageViewModel.ProjectInfo.revision.ToString());
-                Doc.SetCellValue("A3", "Process");
-                Doc.SetCellValue("C3", _projectPageViewModel.SelectedCalculation.name);
-                Doc.SetCellValue("A4", "Name");
-                Doc.SetCellValue("C4", _tubesFluidViewModel.Product.name);
+                if (!File.Exists($"{path}\\FullReport.xlsx"))
+                {
+                    AddTubeData();
+                    AddShellData();
+                    AddHeatBalanceData();
+                    Doc.SaveAs("FullReport.xlsx");
+                } else
+                {
 
-                CreateHeaders();
-                CreateUnits();
-                AddData(_tubesFluidViewModel.Product.product_properties);
-                Doc.SaveAs("FullReport.xlsx");
+                }
+                
 
             }
             catch(Exception e)
@@ -82,10 +65,19 @@ namespace Ahed_project.Services
             
         }
 
+        #region styles
         private static SLStyle BoldTextStyle()
         {
             var style = new SLStyle();
             style.Font.FontSize = 11;
+            style.Font.Bold = true;
+            style.SetWrapText(true);
+            return style;
+        }
+        private static SLStyle BoldHeaderTextStyle()
+        {
+            var style = new SLStyle();
+            style.Font.FontSize = 14;
             style.Font.Bold = true;
             style.SetWrapText(true);
             return style;
@@ -99,6 +91,41 @@ namespace Ahed_project.Services
             style.SetBottomBorder(BorderStyleValues.Thin, System.Drawing.Color.Black);
             return style;
         }
+        #endregion
+
+        #region tube
+        private static void AddTubeData()
+        {
+            Doc.AddWorksheet("TubeReport");
+            Doc.DeleteWorksheet("Sheet1");
+            Doc.MergeWorksheetCells("A1", "B1");
+            Doc.MergeWorksheetCells("A2", "B2");
+            Doc.MergeWorksheetCells("A3", "B3");
+            Doc.MergeWorksheetCells("A4", "B4");
+            Doc.MergeWorksheetCells("C1", "F1");
+            Doc.MergeWorksheetCells("C3", "F3");
+            Doc.MergeWorksheetCells("C4", "F4");
+            Doc.SetCellValue("A1", "Project name");
+            Doc.SetCellValue("C1", _projectPageViewModel.ProjectName);
+            Doc.SetCellStyle("A1", "A6", BoldTextStyle());
+            Doc.SetCellStyle("A1", "F1", BorderCellsStyle());
+            Doc.SetCellStyle("A2", "C2", BorderCellsStyle());
+            Doc.SetCellStyle("A3", "F3", BorderCellsStyle());
+            Doc.SetCellStyle("A4", "F4", BorderCellsStyle());
+            Doc.SetColumnWidth("A", "M", 15);
+            Doc.SetCellValue("A2", "Revision Nr");
+            Doc.SetCellValue("C2", _projectPageViewModel.ProjectInfo.revision.ToString());
+            Doc.SetCellValue("A3", "Process");
+            Doc.SetCellValue("C3", _projectPageViewModel.SelectedCalculation.name);
+            Doc.SetCellValue("A4", "Name");
+            Doc.SetCellValue("C4", _tubesFluidViewModel.Product.name);
+
+            CreateHeaders();
+            CreateUnits();
+            AddData(_tubesFluidViewModel.Product.product_properties);
+        }
+
+
         private static void CreateHeaders()
         {
             Doc.SetCellValue("A8", "Temperature");
@@ -155,5 +182,129 @@ namespace Ahed_project.Services
             }
             Doc.SetCellStyle("A8", $"M{properties.Length + 9}", BorderCellsStyle());
         }
+
+        #endregion
+
+        #region shell
+        private static void AddShellData()
+        {
+            Doc.AddWorksheet("ShellReport");
+            Doc.MergeWorksheetCells("A1", "B1");
+            Doc.MergeWorksheetCells("A2", "B2");
+            Doc.MergeWorksheetCells("A3", "B3");
+            Doc.MergeWorksheetCells("A4", "B4");
+            Doc.MergeWorksheetCells("C1", "F1");
+            Doc.MergeWorksheetCells("C3", "F3");
+            Doc.MergeWorksheetCells("C4", "F4");
+            Doc.SetCellValue("A1", "Project name");
+            Doc.SetCellValue("C1", _projectPageViewModel.ProjectName);
+            Doc.SetCellStyle("A1", "A6", BoldTextStyle());
+            Doc.SetCellStyle("A1", "F1", BorderCellsStyle());
+            Doc.SetCellStyle("A2", "C2", BorderCellsStyle());
+            Doc.SetCellStyle("A3", "F3", BorderCellsStyle());
+            Doc.SetCellStyle("A4", "F4", BorderCellsStyle());
+            Doc.SetColumnWidth("A", "M", 15);
+            Doc.SetCellValue("A2", "Revision Nr");
+            Doc.SetCellValue("C2", _projectPageViewModel.ProjectInfo.revision.ToString());
+            Doc.SetCellValue("A3", "Process");
+            Doc.SetCellValue("C3", _projectPageViewModel.SelectedCalculation.name);
+            Doc.SetCellValue("A4", "Name");
+            Doc.SetCellValue("C4", _shellFluidViewModel.Product.name);
+
+            CreateHeaders();
+            CreateUnits();
+            AddData(_shellFluidViewModel.Product.product_properties);
+        }
+        #endregion
+
+        #region heat balance
+        private static void AddHeatBalanceData()
+        {
+            Doc.AddWorksheet("HeatBalanceReport");
+            Doc.MergeWorksheetCells("A1", "B1");
+            Doc.MergeWorksheetCells("A2", "B2");
+            Doc.MergeWorksheetCells("A3", "B3");
+            Doc.MergeWorksheetCells("A4", "B4");
+            Doc.MergeWorksheetCells("C1", "F1");
+            Doc.MergeWorksheetCells("C3", "F3");
+            Doc.MergeWorksheetCells("C4", "F4");
+            Doc.SetCellValue("A1", "Project name");
+            Doc.SetCellValue("C1", _projectPageViewModel.ProjectName);
+            Doc.SetCellStyle("A1", "A6", BoldTextStyle());
+            Doc.SetCellStyle("A1", "F1", BorderCellsStyle());
+            Doc.SetCellStyle("A2", "C2", BorderCellsStyle());
+            Doc.SetCellStyle("A3", "F3", BorderCellsStyle());
+            Doc.SetColumnWidth("A", "M", 15);
+            Doc.SetCellValue("A2", "Revision Nr");
+            Doc.SetCellValue("C2", _projectPageViewModel.ProjectInfo.revision.ToString());
+            Doc.SetCellValue("A3", "Process");
+            Doc.SetCellValue("C3", _projectPageViewModel.SelectedCalculation.name);
+
+            Doc.MergeWorksheetCells("A5", "F5");
+            Doc.SetCellValue("A5", "Heat Balance");
+            Doc.SetCellStyle("A5", BoldHeaderTextStyle());
+
+            Doc.MergeWorksheetCells("A5", "F5");
+            Doc.MergeWorksheetCells("C6", "D6");
+            Doc.MergeWorksheetCells("E6", "F6");
+            Doc.SetCellValue("C6", "Tubes side");
+            Doc.SetCellValue("E6", "Shell side");
+
+            Doc.SetCellValue("C7", "In");
+            Doc.SetCellValue("D7", "Out");
+            Doc.SetCellValue("E7", "In");
+            Doc.SetCellValue("F7", "Out");
+            Doc.SetCellStyle("C6", "F7", BorderCellsStyle());
+            Doc.SetCellStyle("C6", "F7", BoldTextStyle());
+
+            AddNames();
+            AddValues();
+        }
+
+        private static void AddNames()
+        {
+            Doc.SetCellValue("A8", "Fluid Name");
+            Doc.SetCellValue("A9", "Flow Type");
+            Doc.SetCellValue("A10", "Process");
+            Doc.SetCellValue("A11", "Flow");
+            Doc.SetCellValue("A12", "Temperature");
+            Doc.SetCellValue("A13", "Duty");
+            Doc.SetCellValue("A14", "Pressure");
+            Doc.SetCellValue("A15", "Liquid Phase");
+            Doc.SetCellValue("A16", "Density");
+            Doc.SetCellValue("A17", "Specific heat");
+            Doc.SetCellValue("A18", "Therm. Cond.");
+            Doc.SetCellValue("A19", "Consistency index");
+            Doc.SetCellValue("A20", "Flow index");
+            Doc.SetCellValue("A21", "Latent heat");
+            Doc.SetCellValue("A22", "Gas Phase");
+            Doc.SetCellValue("A23", "Density Gas");
+            Doc.SetCellValue("A24", "Specific heat gas at constant pressure (Cp)");
+            Doc.SetCellValue("A25", "Thermal Conductivity Gas");
+            Doc.SetCellValue("A26", "Dynamic viscosity gas");
+            Doc.SetCellValue("A27", "Vapour pressure");
+            Doc.SetCellValue("A28", "Mass Vapour Fraction");
+            Doc.SetCellStyle("A8", "F28", BorderCellsStyle());
+            Doc.SetCellStyle("A8", "A28", BoldTextStyle());
+        }
+
+        private static void AddValues()
+        {
+            Doc.MergeWorksheetCells("C8", "D8");
+            Doc.SetCellValue("C8", _tubesFluidViewModel.Product.name);
+            Doc.MergeWorksheetCells("E8", "F8");
+            Doc.SetCellValue("E8", _shellFluidViewModel.Product.name);
+            Doc.MergeWorksheetCells("C9", "F9");
+            Doc.SetCellValue("C9", "Counter current");
+            Doc.MergeWorksheetCells("C10", "D10");
+            Doc.SetCellValue("C10", _heatBalanceViewModel.Calculation.process_tube);
+            Doc.MergeWorksheetCells("E10", "F10");
+            Doc.SetCellValue("E10", _heatBalanceViewModel.Calculation.process_shell);
+            Doc.MergeWorksheetCells("C11", "D11");
+            Doc.SetCellValue("C11", _heatBalanceViewModel.Calculation.flow_tube);
+            Doc.MergeWorksheetCells("E11", "F11");
+            Doc.SetCellValue("E11", _heatBalanceViewModel.Calculation.flow_shell);
+        }
+        #endregion
     }
 }
