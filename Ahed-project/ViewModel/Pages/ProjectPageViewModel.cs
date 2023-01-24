@@ -50,7 +50,6 @@ namespace Ahed_project.ViewModel.Pages
             set { 
                 SetValue(ref _projectInfo, value);
                 ProjectName = value?.name;
-                NumberOfDecimals = value?.number_of_decimals??2;
             }
         }
 

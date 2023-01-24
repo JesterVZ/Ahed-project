@@ -868,7 +868,7 @@ namespace Ahed_project.Services.Global
 
         public static void ReRender(int numberOfDecimals)
         {
-            App.Current.Dispatcher.Invoke(()=>
+            App.Current.Dispatcher.Invoke(() =>
             {
                 if (Config.NumberOfDecimals != numberOfDecimals)
                 {
@@ -879,6 +879,7 @@ namespace Ahed_project.Services.Global
                     _heatBalanceViewModel.Refresh();
                 }
             });
+        }
 
         public static async void DeleteProject(ProjectInfoGet selectedProject)
         {
