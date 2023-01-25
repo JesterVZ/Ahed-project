@@ -263,13 +263,7 @@
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}" Margin="0,3,0,3" Height="30">
                         <RadioButton IsEnabled="{Binding TSIE}" IsChecked="{Binding TemperatureShellInLet, UpdateSourceTrigger=PropertyChanged}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                        <TextBox Background="{Binding TIB, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding TemperatureShellInLetTB, UpdateSourceTrigger=PropertyChanged}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center">
-                            <TextBox.Text>
-                                <MultiBinding Converter="{StaticResource Converter}">
-                                    <Binding Path="ShellInletTemp" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"/>
-                                </MultiBinding>
-                            </TextBox.Text>
-                        </TextBox>
+                        <TextBox Text="{Binding ShellInletTemp, Converter={StaticResource Converter}}" Background="{Binding TIB, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding TemperatureShellInLetTB, UpdateSourceTrigger=PropertyChanged}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
                         <RadioButton IsEnabled="{Binding TSOE}" IsChecked="{Binding TemperatureShellOutLet, UpdateSourceTrigger=PropertyChanged}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
                         <TextBox Background="{Binding TOB, UpdateSourceTrigger=PropertyChanged}"  IsEnabled="{Binding TemperatureShellOutLetTB, UpdateSourceTrigger=PropertyChanged}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center">
                             <MultiBinding Converter="{StaticResource Converter}">

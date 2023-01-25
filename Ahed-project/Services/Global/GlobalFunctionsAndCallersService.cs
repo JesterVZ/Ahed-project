@@ -513,12 +513,22 @@ namespace Ahed_project.Services.Global
                 if (baffleResponse != null)
                 {
                     Responce result = JsonConvert.DeserializeObject<Responce>(baffleResponse);
-                    for (int i = 0; i < result.logs.Count; i++)
+                    if (result != null)
                     {
-                        Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
+                        for (int i = 0; i < result.logs?.Count; i++)
+                        {
+                            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i]?.type, result.logs[i]?.message)));
+                        }
+                        if (result.data != null)
+                        {
+                            BaffleFull baffle = JsonConvert.DeserializeObject<BaffleFull>(result.data.ToString());
+                            _bufflesPageViewModel.Baffle = baffle;
+                        }
+                        else
+                        {
+                            _bufflesPageViewModel.Baffle = null;
+                        }
                     }
-                    BaffleFull baffle = JsonConvert.DeserializeObject<BaffleFull>(result.data.ToString());
-                    _bufflesPageViewModel.Baffle = baffle;
                 }
             }
             else

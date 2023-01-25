@@ -264,7 +264,10 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _orientation = value;
-                Geometry.orientation = value.Key;
+                if (Geometry != null)
+                {
+                    Geometry.orientation = value.Key;
+                }
             }
         }
         private bool _oppositeSide;

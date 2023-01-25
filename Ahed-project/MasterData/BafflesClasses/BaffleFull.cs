@@ -10,7 +10,7 @@ namespace Ahed_project.MasterData.BafflesClasses
     {
         public string type { get; set; }
         public string method { get; set; }
-        public int show_dimensions { get; set; }
+        public string show_dimensions { get; set; }
         public string inlet_baffle_spacing { get; set; }
         public string outlet_baffle_spacing { get; set; }
         public string number_of_baffles { get; set; }
