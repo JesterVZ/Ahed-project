@@ -220,7 +220,7 @@
                             </ComboBox>
 
                             <Label Grid.Column="0" Grid.Row="5" Visibility="{Binding HousingSpaceVis, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center">Housing Space (mm)</Label>
-                            <TextBox Style="{StaticResource Colored}" Visibility="{Binding HousingSpaceVis, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" Text="{Binding Geometry.tube_plate_layout_housings_space, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5"/>
+                            <TextBox Style="{StaticResource Colored}" Visibility="{Binding HousingSpaceVis, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False" Text="{Binding Geometry.tube_plate_layout_housings_space, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5"/>
 
                             <Label Grid.Column="0" Grid.Row="6" VerticalAlignment="Center">Div.Plate Thickness (mm)</Label>
                             <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_div_plate_thickness}" Grid.Column="1" Grid.Row="6"/>
