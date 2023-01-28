@@ -69,6 +69,7 @@ namespace Ahed_project.ViewModel.Pages
                     }
                     _isUpdateAny = false;
                 }
+            }
         }
 
         private string _pressure_tube_inlet_value;
@@ -92,12 +93,12 @@ namespace Ahed_project.ViewModel.Pages
 
         private async void GetTemperatureCalculation(bool shell,string value)
         {
-            await Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateTemperature(value, Calculation,shell));
+            GlobalFunctionsAndCallersService.CalculateTemperature(value, Calculation,shell);
         }
 
         private async void GetPressureCalculation(string value)
         {
-            await Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculatePressure(value, Calculation));
+           GlobalFunctionsAndCallersService.CalculatePressure(value, Calculation);
         }
 
         public void Raise(string param)
@@ -162,7 +163,7 @@ namespace Ahed_project.ViewModel.Pages
             {
                 _tubesProcessSelector = value;
                 Calculation.process_tube = value.Value;
-                if (value.Value == "Condensation")
+                if (value.Value.ToLower() == "condensation")
                 {
                     TemperatureTubesOut = false;
                 }
@@ -221,7 +222,7 @@ namespace Ahed_project.ViewModel.Pages
 
         public ICommand ChangeProcess => new DelegateCommand(() =>
         {
-            if (ShellProcessSelector.Value.Contains("Condensation"))
+            if (ShellProcessSelector.Value.ToLower()=="condensation")
             {
                 FlowShell = true;
                 TSIE = false;
@@ -250,7 +251,7 @@ namespace Ahed_project.ViewModel.Pages
             {
                 _shellProcessSelector = value;
                 Calculation.process_shell = value.Value;
-                if (value.Value=="Condensation")
+                if (value.Value.ToLower()=="condensation")
                 {
                     TemperatureShellOutLetTB = false;
                 }
@@ -296,9 +297,9 @@ namespace Ahed_project.ViewModel.Pages
                 TemperatureShellInLetTB = !value;
                 if (value)
                 {
-                    FB = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-                    TOB = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-                    TIB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
+                    App.Current.Dispatcher.Invoke(() => FB = new SolidColorBrush(Color.FromRgb(255, 255, 255)));
+                    App.Current.Dispatcher.Invoke(() => TOB = new SolidColorBrush(Color.FromRgb(255, 255, 255)));
+                    App.Current.Dispatcher.Invoke(() => TIB = new SolidColorBrush(Color.FromRgb(251, 246, 242)));
                 }
             }
         }
@@ -313,9 +314,9 @@ namespace Ahed_project.ViewModel.Pages
                 TemperatureShellOutLetTB = !value;
                 if (value)
                 {
-                    FB = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-                    TOB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
-                    TIB = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+                    App.Current.Dispatcher.Invoke(()=>FB = new SolidColorBrush(Color.FromRgb(255, 255, 255)));
+                    App.Current.Dispatcher.Invoke(() => TOB = new SolidColorBrush(Color.FromRgb(251, 246, 242)));
+                    App.Current.Dispatcher.Invoke(() => TIB = new SolidColorBrush(Color.FromRgb(255, 255, 255)));
                 }
             }
         }
