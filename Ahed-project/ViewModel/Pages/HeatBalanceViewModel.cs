@@ -61,14 +61,14 @@ namespace Ahed_project.ViewModel.Pages
                 }
                 else
                 {
-                    if (Calculation != null && Calculation.calculation_id != 0 && Calculation.process_shell.Contains("Condensation") && double.TryParse(value, out var res))
+                    _isUpdateAny = true;
+                    _pressure_shell_inlet_value = value;
+                    if (Calculation != null && Calculation.calculation_id != 0 && Calculation.process_shell.ToLower() == "condensation" && double.TryParse(value, out var res))
                     {
                         GetTemperatureCalculation(true, value);
                     }
                     _isUpdateAny = false;
                 }
-                
-            }
         }
 
         private string _pressure_tube_inlet_value;
@@ -81,7 +81,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _pressure_tube_inlet_value = value;
-                if (Calculation != null && Calculation.pressure_tube_inlet!=value && Calculation.calculation_id != 0 && Calculation.process_tube.Contains("Condensation") && double.TryParse(value, out var res))
+                if (Calculation != null && Calculation.pressure_tube_inlet!=value && Calculation.calculation_id != 0 && Calculation.process_tube.ToLower()=="condensation" && double.TryParse(value, out var res))
                 {
                     GetTemperatureCalculation(false,value);
                 }
@@ -206,7 +206,7 @@ namespace Ahed_project.ViewModel.Pages
                     _isUpdateAny = true;
                     _shellInletTemp = value;
                     Calculation.temperature_shell_inlet = value.ToString().Replace(',', '.');
-                    if (ShellProcessSelector.Value == "Condensation")
+                    if (ShellProcessSelector.Value.ToLower() == "condensation")
                     {
                         Calculation.temperature_shell_outlet = value.ToString().Replace(',', '.');
                         GetPressureCalculation(value.ToString());
