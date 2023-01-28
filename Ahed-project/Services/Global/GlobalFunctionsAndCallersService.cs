@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -458,6 +459,7 @@ namespace Ahed_project.Services.Global
             if (shell)
             {
                 _heatBalanceViewModel.Pressure_shell_inlet_value = data.pressure;
+                _heatBalanceViewModel.ShellInletTemp = Convert.ToDouble(data.temperature_inlet, CultureInfo.InvariantCulture);
                 _heatBalanceViewModel.Calculation.temperature_shell_inlet = data.temperature_inlet;
                 _heatBalanceViewModel.Calculation.temperature_shell_outlet = data.temperature_outlet;
                 _heatBalanceViewModel.Calculation.pressure_shell_inlet = data.pressure;
@@ -469,6 +471,24 @@ namespace Ahed_project.Services.Global
                 _heatBalanceViewModel.Calculation.temperature_tube_outlet = data.temperature_outlet;
                 _heatBalanceViewModel.Calculation.pressure_tube_inlet = data.pressure;
             }
+            _heatBalanceViewModel.Raise("Calculation");
+        }
+
+        public static async void CalculatePressure(string temperature_inlet, CalculationFull calc)
+        {
+            var calculationPressureSend = new
+            {
+                temperature_inlet = double.Parse(temperature_inlet),
+                product_id = _heatBalanceViewModel.Calculation.product_id_shell.Value
+            };
+            string json = JsonConvert.SerializeObject(calculationPressureSend);
+            string response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_PRESSURE, json, calc.project_id.ToString(), calc.calculation_id.ToString()));
+            CalculationTemperatureGet data = JsonConvert.DeserializeObject<CalculationTemperatureGet>(response);
+            _heatBalanceViewModel.Pressure_tube_inlet_value = data.pressure;
+            _heatBalanceViewModel.Calculation.temperature_shell_inlet = data.temperature_inlet;
+            _heatBalanceViewModel.Calculation.temperature_shell_outlet = data.temperature_outlet;
+            _heatBalanceViewModel.Calculation.pressure_shell_inlet = data.pressure;
+            _heatBalanceViewModel.Raise("Pressure_tube_inlet_value");
             _heatBalanceViewModel.Raise("Calculation");
         }
 

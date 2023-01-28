@@ -13,6 +13,7 @@
 	"CreateCalculationLink": "https://ahead-api.ru/api/he/project/{projectId}/calculation/create",
 	"UpdateChooseLink": "https://ahead-api.ru/api/he/project/{projectId}/calculation/update/{calculationId}",
 	"CalculateTemperatureLink": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/getT",
+	"CalculatePressureLink": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/getP",
 	"GetProductCalculationLink": "https://ahead-api.ru/api/he/project/{projectId}/calculation/list",
 	"UpdateCalculationLink": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/heat-balance/calculate",
 	"CalculateGeometryLink": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/geometry/calculate",

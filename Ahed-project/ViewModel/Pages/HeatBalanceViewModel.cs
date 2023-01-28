@@ -55,11 +55,19 @@ namespace Ahed_project.ViewModel.Pages
             }
             set
             {
-                _pressure_shell_inlet_value = value;
-                if (Calculation != null && Calculation.calculation_id != 0 && Calculation.process_shell.Contains("Condensation") && double.TryParse(value, out var res))
+                if (_isUpdateAny)
                 {
-                    GetTemperatureCalculation(true,value);
+                    _pressure_shell_inlet_value = value;
                 }
+                else
+                {
+                    if (Calculation != null && Calculation.calculation_id != 0 && Calculation.process_shell.Contains("Condensation") && double.TryParse(value, out var res))
+                    {
+                        GetTemperatureCalculation(true, value);
+                    }
+                    _isUpdateAny = false;
+                }
+                
             }
         }
 
@@ -80,9 +88,16 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
 
+
+
         private async void GetTemperatureCalculation(bool shell,string value)
         {
             await Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateTemperature(value, Calculation,shell));
+        }
+
+        private async void GetPressureCalculation(string value)
+        {
+            await Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculatePressure(value, Calculation));
         }
 
         public void Raise(string param)
@@ -182,13 +197,25 @@ namespace Ahed_project.ViewModel.Pages
             get => _shellInletTemp;
             set
             {
-                _shellInletTemp = value;
-                Calculation.temperature_shell_inlet = value.ToString().Replace(',', '.');
-                if (ShellProcessSelector.Value== "Condensation")
+                if (_isUpdateAny)
                 {
-                    Calculation.temperature_shell_outlet = value.ToString().Replace(',', '.');
-                    RaisePropertiesChanged("Calculation");
+                    _shellInletTemp = value;
+                } 
+                else
+                {
+                    _isUpdateAny = true;
+                    _shellInletTemp = value;
+                    Calculation.temperature_shell_inlet = value.ToString().Replace(',', '.');
+                    if (ShellProcessSelector.Value == "Condensation")
+                    {
+                        Calculation.temperature_shell_outlet = value.ToString().Replace(',', '.');
+                        GetPressureCalculation(value.ToString());
+                        RaisePropertiesChanged("Calculation");
+                    }
+                    _isUpdateAny = false;
                 }
+                
+                
             }
         }
 
@@ -258,6 +285,7 @@ namespace Ahed_project.ViewModel.Pages
         public bool FlowShellTB { get; set; }
         public bool TSIE { get; set; }
         public bool TSOE { get; set; }
+        private bool _isUpdateAny;
         private bool _temperatureShellInLet;
         public bool TemperatureShellInLet
         {

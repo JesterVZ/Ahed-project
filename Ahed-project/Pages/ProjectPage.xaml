@@ -55,10 +55,10 @@
                     <TextBox Margin="3" TextWrapping="Wrap" IsEnabled="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Text="{Binding ProjectInfo.description, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3"/>
                     <ComboBox Margin="3" Grid.Row="6" Grid.Column="1">
                         <ComboBoxItem IsSelected="True" IsEnabled="True">
-                            <Label>Metric</Label>
+                            <Label>Si</Label>
                         </ComboBoxItem>
                         <ComboBoxItem IsSelected="False" IsEnabled="True">
-                            <Label>Si</Label>
+                            <Label>Metric</Label>
                         </ComboBoxItem>
                     </ComboBox>
                     <TextBlock Margin="3" Style="{StaticResource DefaultText}" Text="Number of decimals" Grid.Row="6" Grid.Column="2"/>
