@@ -3,7 +3,9 @@ using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
+using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,10 +16,15 @@ namespace Ahed_project.ViewModel.Pages
 {
     public class ProjectPageViewModel : BindableBase
     {
-        public ProjectPageViewModel() 
+        public ProjectPageViewModel()
         {
             Calculations = new ObservableCollection<CalculationFull>();
             ArrowAngle = "0";
+            SystemItems = new ObservableCollection<string>()
+            {
+                "Si",
+                "Metric"
+            };
         }
         public Visibility TextBoxVisibillity { get; set; }
         public Visibility LabelVisibillity { get; set; }
@@ -50,9 +57,29 @@ namespace Ahed_project.ViewModel.Pages
             set { 
                 SetValue(ref _projectInfo, value);
                 ProjectName = value?.name;
+                System = value?.units;
             }
         }
 
+        private string _system;
+        public string System
+        {
+            get => _system;
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    _system = "Si";
+                    ProjectInfo.units = "Si";
+                }
+                else
+                {
+                    _system = value;
+                    ProjectInfo.units = value;
+                }
+            }
+        }
+        public ObservableCollection<string> SystemItems { get; set; }
 
         private string _projectName;
         public string ProjectName

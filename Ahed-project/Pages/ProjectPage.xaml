@@ -46,25 +46,18 @@
                     <TextBlock Style="{StaticResource DefaultText}" Text="Units" Grid.Column="0" Grid.Row="6"/>
                     <TextBox Margin="3" Style="{StaticResource Colored}" Text="{Binding ProjectInfo.project_id, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" />
                     <TextBlock Margin="3" Style="{StaticResource DefaultText}" Text="Revision" Grid.Column="2" Grid.Row="1"/>
-                    <TextBox Margin="3" Style="{StaticResource Default}" IsEnabled="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Text="{Binding ProjectInfo.revision, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="1"/>
-                    <TextBox Margin="3" Style="{StaticResource Default}" IsEnabled="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Text="{Binding ProjectName, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1"/>
-                    <TextBox Margin="3" Style="{StaticResource Default}" IsEnabled="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Text="{Binding ProjectInfo.customer, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="3" Grid.Row="3" Grid.Column="1"/>
-                    <TextBox Margin="3" Style="{StaticResource Default}" IsEnabled="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Text="{Binding ProjectInfo.contact, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
+                    <TextBox Margin="3" Style="{StaticResource Default}" IsReadOnly="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Text="{Binding ProjectInfo.revision, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="1"/>
+                    <TextBox Margin="3" Style="{StaticResource Default}" IsReadOnly="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Text="{Binding ProjectName, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="1"/>
+                    <TextBox Margin="3" Style="{StaticResource Default}" IsReadOnly="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Text="{Binding ProjectInfo.customer, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="3" Grid.Row="3" Grid.Column="1"/>
+                    <TextBox Margin="3" Style="{StaticResource Default}" IsReadOnly="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Text="{Binding ProjectInfo.contact, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
                     <TextBlock Margin="3" Style="{StaticResource DefaultText}" Text="Customer reference" Grid.Column="2"  Grid.Row="4"/>
-                    <TextBox Margin="3" Style="{StaticResource Default}" IsEnabled="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Text="{Binding ProjectInfo.customer_reference, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3"  Grid.Row="4"/>
-                    <TextBox Margin="3" TextWrapping="Wrap" IsEnabled="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Text="{Binding ProjectInfo.description, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3"/>
-                    <ComboBox Margin="3" Grid.Row="6" Grid.Column="1">
-                        <ComboBoxItem IsSelected="True" IsEnabled="True">
-                            <Label>Si</Label>
-                        </ComboBoxItem>
-                        <ComboBoxItem IsSelected="False" IsEnabled="True">
-                            <Label>Metric</Label>
-                        </ComboBoxItem>
-                    </ComboBox>
+                    <TextBox Margin="3" Style="{StaticResource Default}" IsReadOnly="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Text="{Binding ProjectInfo.customer_reference, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3"  Grid.Row="4"/>
+                    <TextBox Margin="3" TextWrapping="Wrap" IsReadOnly="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Text="{Binding ProjectInfo.description, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3"/>
+                    <ComboBox Margin="3" Grid.Row="6" Grid.Column="1" SelectedIndex="1" ItemsSource="{Binding SystemItems}" SelectedItem="{Binding System, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                     <TextBlock Margin="3" Style="{StaticResource DefaultText}" Text="Number of decimals" Grid.Row="6" Grid.Column="2"/>
-                    <TextBox IsEnabled="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Margin="3" Style="{StaticResource Default}" Text="{Binding ProjectInfo.number_of_decimals, Mode=OneWay}" Grid.Column="3" Grid.Row="6" LostFocus="TextBox_LostFocus"/>
+                    <TextBox IsReadOnly="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Margin="3" Style="{StaticResource Default}" Text="{Binding ProjectInfo.number_of_decimals, Mode=OneWay}" Grid.Column="3" Grid.Row="6" LostFocus="TextBox_LostFocus"/>
                     <TextBlock Margin="3" Grid.Column="0" Grid.Row="7" FontWeight="Bold">Project Processes</TextBlock>
-                    <TextBox IsEnabled="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Margin="3" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2" Text="{Binding CalculationName, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox IsReadOnly="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Margin="3" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2" Text="{Binding CalculationName, UpdateSourceTrigger=PropertyChanged}"/>
                     <Button Grid.Row="7" Grid.Column="3" Margin="3" Command="{Binding CreateCalculationCommand}" Click="Button_Click">Add</Button>
                     <ListView Margin="3" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" ItemsSource="{Binding Calculations}" SelectedItem="{Binding SelectedCalculation}">
                         <ListView.ItemTemplate>
