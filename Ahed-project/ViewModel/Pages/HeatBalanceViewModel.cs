@@ -1,5 +1,6 @@
 ﻿using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.Services.Global;
+using Ahed_project.Settings;
 using DevExpress.Mvvm;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -57,19 +58,27 @@ namespace Ahed_project.ViewModel.Pages
             }
             set
             {
-                if (_isUpdateAny)
+                value = StringToDoubleChecker.RemoveLetters(value, out var check);
+                if (!check)
                 {
-                    _pressure_shell_inlet_value = value;
+                    if (_isUpdateAny)
+                    {
+                        _pressure_shell_inlet_value = value;
+                    }
+                    else
+                    {
+                        _isUpdateAny = true;
+                        _pressure_shell_inlet_value = value;
+                        if (Calculation != null && Calculation.calculation_id != 0 && Calculation.process_shell.ToLower() == "condensation" && double.TryParse(value, out var res))
+                        {
+                            GetTemperatureCalculation(true, value);
+                        }
+                        _isUpdateAny = false;
+                    }
                 }
                 else
                 {
-                    _isUpdateAny = true;
-                    _pressure_shell_inlet_value = value;
-                    if (Calculation != null && Calculation.calculation_id != 0 && Calculation.process_shell.ToLower() == "condensation" && double.TryParse(value, out var res))
-                    {
-                        GetTemperatureCalculation(true, value);
-                    }
-                    _isUpdateAny = false;
+                    Pressure_shell_inlet_value = value;
                 }
             }
         }
@@ -146,9 +155,9 @@ namespace Ahed_project.ViewModel.Pages
                         RaisePropertiesChanged("ShellProcessSelector");
                     }
                     Double.TryParse(value?.temperature_tube_inlet?.Replace('.',','), out var temperatureTubeInlet);
-                    TubesInletTemp = temperatureTubeInlet;
+                    TubesInletTemp = StringToDoubleChecker.ToCorrectFormat(temperatureTubeInlet.ToString());
                     Double.TryParse(value?.temperature_shell_inlet?.Replace('.', ','), out var temperatureShellInlet);
-                    ShellInletTemp = temperatureShellInlet;
+                    ShellInletTemp = StringToDoubleChecker.ToCorrectFormat(temperatureShellInlet.ToString());
                     Pressure_tube_inlet_value = value.pressure_tube_inlet;
                 }
             }
@@ -178,47 +187,61 @@ namespace Ahed_project.ViewModel.Pages
 
         public bool TemperatureTubesOut { get; set; }
 
-        private double _tubesInletTemp;
-        public double TubesInletTemp
+        private string _tubesInletTemp;
+        public string TubesInletTemp
         {
             get => _tubesInletTemp;
             set
             {
-                _tubesInletTemp = value;
-                Calculation.temperature_tube_inlet = value.ToString().Replace(',', '.');
-                if (!TemperatureTubesOut)
+                value = StringToDoubleChecker.RemoveLetters(value, out var check);
+                if (!check)
                 {
-                    Calculation.temperature_tube_outlet = value.ToString().Replace(',', '.');
-                    RaisePropertiesChanged("Calculation");
+                    _tubesInletTemp = value;
+                    Calculation.temperature_tube_inlet = value;
+                    if (!TemperatureTubesOut)
+                    {
+                        Calculation.temperature_tube_outlet = value;
+                        RaisePropertiesChanged("Calculation");
+                    }
+                }
+                else
+                {
+                    TubesInletTemp = value;
                 }
             }
         }
 
-        private double _shellInletTemp;
-        public double ShellInletTemp
+        private string _shellInletTemp;
+        public string ShellInletTemp
         {
             get => _shellInletTemp;
             set
             {
-                if (_isUpdateAny)
+                value = StringToDoubleChecker.RemoveLetters(value, out var check);
+                if (!check)
                 {
-                    _shellInletTemp = value;
-                } 
+                    if (_isUpdateAny)
+                    {
+                        _shellInletTemp = value;
+                    }
+                    else
+                    {
+                        _isUpdateAny = true;
+                        _shellInletTemp = value;
+                        Calculation.temperature_shell_inlet = value;
+                        if (ShellProcessSelector.Value.ToLower() == "condensation")
+                        {
+                            Calculation.temperature_shell_outlet = value;
+                            GetPressureCalculation(value.ToString());
+                            RaisePropertiesChanged("Calculation");
+                        }
+                        _isUpdateAny = false;
+                    }
+                }
                 else
                 {
-                    _isUpdateAny = true;
-                    _shellInletTemp = value;
-                    Calculation.temperature_shell_inlet = value.ToString().Replace(',', '.');
-                    if (ShellProcessSelector.Value.ToLower() == "condensation")
-                    {
-                        Calculation.temperature_shell_outlet = value.ToString().Replace(',', '.');
-                        GetPressureCalculation(value.ToString());
-                        RaisePropertiesChanged("Calculation");
-                    }
-                    _isUpdateAny = false;
+                    ShellInletTemp = value;
                 }
-                
-                
             }
         }
 
