@@ -149,6 +149,15 @@ namespace Ahed_project.Services
                         }
                         response = restClient.Execute(request);
                         break;
+                    case ProjectMethods.CALCULATE_PRESSURE:
+                        restClient = new RestClient(_serviceConfig.CalculatePressureLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        request.Method = Method.Post;
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        response = restClient.Execute(request);
+                        break;
                     case ProjectMethods.GET_PRODUCT_CALCULATIONS:
                         restClient = new RestClient(_serviceConfig.GetProductCalculationLink.Replace("{projectId}", projectId));
                         request.Method = Method.Get;

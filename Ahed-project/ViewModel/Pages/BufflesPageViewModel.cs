@@ -44,6 +44,7 @@ namespace Ahed_project.ViewModel.Pages
             get => _baffle;
             set { 
                 _baffle = value;
+                SelectedBaffleType = BaffleType.FirstOrDefault(x => x.Key == value?.method);
             } 
         }
         public BufflesPageViewModel()
