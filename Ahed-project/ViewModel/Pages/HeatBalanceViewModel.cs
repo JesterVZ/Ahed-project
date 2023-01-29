@@ -20,10 +20,12 @@ namespace Ahed_project.ViewModel.Pages
         public HeatBalanceViewModel()
         {
             Calculation = new CalculationFull();
-            TubesProcess = new Dictionary<int, string>
+            TubesProcess = new List<TubesVariables>()
             {
-                { 1, "Sensible Heat" },
-                { 2, "Condensation" }
+                new TubesVariables()
+                { IsSelectable = true, Value = "Sensible Heat" },
+                new TubesVariables()
+                { IsSelectable = false, Value = "Condensation" }
             };
             ShellProcess = new Dictionary<int, string>
             {
@@ -151,12 +153,12 @@ namespace Ahed_project.ViewModel.Pages
                 }
             }
         }
-        public Dictionary<int, string> TubesProcess { get; set; }
+        public List<TubesVariables> TubesProcess { get; set; }
         public Dictionary<int, string> ShellProcess { get; set; }
 
-        private KeyValuePair<int, string> _tubesProcessSelector;
+        private TubesVariables _tubesProcessSelector;
 
-        public KeyValuePair<int, string> TubesProcessSelector
+        public TubesVariables TubesProcessSelector
         {
             get => _tubesProcessSelector;
             set
@@ -326,6 +328,12 @@ namespace Ahed_project.ViewModel.Pages
         {
             RaisePropertiesChanged(nameof(Calculation));
             RaisePropertiesChanged(nameof(ShellInletTemp));
+        }
+
+        public class TubesVariables
+        {
+            public string Value { get; set; }
+            public bool IsSelectable { get; set; }
         }
     }
 }
