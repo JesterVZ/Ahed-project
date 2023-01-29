@@ -229,8 +229,8 @@ namespace Ahed_project.ViewModel.Pages
                 FlowShell = true;
                 TSIE = false;
                 TSOE = false;
-                TOB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
-                FB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
+                App.Current.Dispatcher.Invoke(()=> TOB = new SolidColorBrush(Color.FromRgb(251, 246, 242)));
+                App.Current.Dispatcher.Invoke(() => FB = new SolidColorBrush(Color.FromRgb(251, 246, 242)));
                 if (double.TryParse(Calculation?.temperature_tube_outlet?.Replace('.',','), out double res))
                     Calculation.temperature_shell_outlet = res.ToString();
                 RaisePropertiesChanged("Calculation");
@@ -239,7 +239,7 @@ namespace Ahed_project.ViewModel.Pages
             {
                 TSIE = true;
                 TSOE = true;
-                TOB = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+                App.Current.Dispatcher.Invoke(() => TOB = new SolidColorBrush(Color.FromRgb(255, 255, 255)));
                 RaisePropertiesChanged("Calculation");
             }
         });
@@ -261,6 +261,7 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     TemperatureShellOutLetTB = true;
                 }
+                ChangeProcess.Execute(this);
             }
         }
 
