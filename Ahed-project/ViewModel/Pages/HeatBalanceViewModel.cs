@@ -99,9 +99,27 @@ namespace Ahed_project.ViewModel.Pages
             GlobalFunctionsAndCallersService.CalculateTemperature(value, Calculation,shell);
         }
 
-        private async void GetPressureCalculation(string value)
+        private async void GetPressureCalculation(string value, bool isShell)
         {
-           GlobalFunctionsAndCallersService.CalculatePressure(value, Calculation);
+           GlobalFunctionsAndCallersService.CalculatePressure(value, Calculation,isShell);
+        }
+
+        public void SetTubesInletTemp(string value)
+        {
+            _tubesInletTemp = value;
+            Raise(nameof(TubesInletTemp));
+        }
+
+        public void SetTubesInletPressure(string value)
+        {
+            _pressure_tube_inlet_value = value;
+            Raise(nameof(Pressure_tube_inlet_value));
+        }
+
+        public void SetPressureShellInletValue(string value)
+        {
+            _pressure_shell_inlet_value = value;
+            Raise(nameof(Pressure_shell_inlet_value));
         }
 
         public void Raise(string param)
@@ -193,6 +211,7 @@ namespace Ahed_project.ViewModel.Pages
                     if (!TemperatureTubesOut)
                     {
                         Calculation.temperature_tube_outlet = value;
+                        GetPressureCalculation(value, false);
                         RaisePropertiesChanged("Calculation");
                     }
                 }
@@ -217,7 +236,7 @@ namespace Ahed_project.ViewModel.Pages
                     if (ShellProcessSelector.Value?.ToLower() == "condensation")
                     {
                         Calculation.temperature_shell_outlet = value;
-                        GetPressureCalculation(value);
+                        GetPressureCalculation(value,true);
                         RaisePropertiesChanged("Calculation");
                     }
                 }
