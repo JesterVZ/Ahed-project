@@ -272,10 +272,7 @@
                         <RadioButton IsEnabled="{Binding TSIE}" IsChecked="{Binding TemperatureShellInLet, UpdateSourceTrigger=PropertyChanged}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
                         <TextBox Text="{Binding ShellInletTemp, Converter={StaticResource Converter}}" Background="{Binding TIB, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding TemperatureShellInLetTB, UpdateSourceTrigger=PropertyChanged}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
                         <RadioButton IsEnabled="{Binding TSOE}" IsChecked="{Binding TemperatureShellOutLet, UpdateSourceTrigger=PropertyChanged}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                        <TextBox Background="{Binding TOB, UpdateSourceTrigger=PropertyChanged}"  IsReadOnly="{Binding TemperatureShellOutLetTB, UpdateSourceTrigger=PropertyChanged}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center">
-                            <MultiBinding Converter="{StaticResource Converter}">
-                                <Binding Path="Calculation.temperature_shell_outlet" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"/>
-                            </MultiBinding>
+                        <TextBox Background="{Binding TOB, UpdateSourceTrigger=PropertyChanged}"  IsReadOnly="{Binding TemperatureShellOutLetTB, UpdateSourceTrigger=PropertyChanged}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Calculation.temperature_shell_outlet, Converter={StaticResource Converter}}">
                         </TextBox>
                     </StackPanel>
                     <TextBox Style="{StaticResource TextBoxHeatBalance}" Text="{Binding Calculation.duty_shell, UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FFABADB3"/>

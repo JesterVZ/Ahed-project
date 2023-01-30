@@ -34,7 +34,7 @@ namespace Ahed_project.MasterData
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
         {
-            return new object[] { value };
+            return new object[] { StringToDoubleChecker.ConvertToDouble(StringToDoubleChecker.RemoveLetters(value.ToString(),out var q)) };
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

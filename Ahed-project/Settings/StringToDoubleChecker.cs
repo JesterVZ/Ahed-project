@@ -11,7 +11,7 @@ namespace Ahed_project.Settings
     {
         public static double ConvertToDouble(string s)
         {
-            return Convert.ToDouble(s.Replace('.', ','));
+            return Convert.ToDouble(RemoveLetters(s,out var q).Replace('.', ','));
         }
 
         public static string RemoveLetters(string s, out bool changedCount)
