@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ahed_project.Settings;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Ahed_project.MasterData
             {
                 return null;
             }
-            string value = System.Convert.ToDecimal(values[0]?.ToString()?.Replace('.',',')).ToString($"F{Config.NumberOfDecimals}");
+            string value = StringToDoubleChecker.ToCorrectFormat(System.Convert.ToDecimal(values[0]?.ToString()?.Replace('.',',')).ToString($"F{Config.NumberOfDecimals}"));
             return value;
         }
 
@@ -27,7 +28,7 @@ namespace Ahed_project.MasterData
             {
                 return null;
             }
-            string val = System.Convert.ToDecimal(value?.ToString()?.Replace('.', ',')).ToString($"F{Config.NumberOfDecimals}");
+            string val = StringToDoubleChecker.ToCorrectFormat(System.Convert.ToDecimal(value?.ToString()?.Replace('.', ',')).ToString($"F{Config.NumberOfDecimals}"));
             return val;
         }
 
@@ -40,7 +41,7 @@ namespace Ahed_project.MasterData
         {
             try
             {
-                return System.Convert.ToDouble(value);
+                return StringToDoubleChecker.ConvertToDouble(value.ToString());
             }
             catch
             {

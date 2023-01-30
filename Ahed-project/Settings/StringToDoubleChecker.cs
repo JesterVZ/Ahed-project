@@ -18,6 +18,10 @@ namespace Ahed_project.Settings
         {
             changedCount = false;
             int n = s.Length;
+            if (s.First()=='.'||s.First()==',')
+            {
+                s = s.Remove(0, 1);
+            }
             s = new string((from c in s
                            where char.IsDigit(c) || c == '.' || c == ','
                            select c).ToArray());
@@ -26,7 +30,11 @@ namespace Ahed_project.Settings
         }
 
         public static string ToCorrectFormat(string s)
-        {            
+        {    
+            if (s==null)
+            {
+                return s;
+            }
             s= s.Replace( '.', Config.DoubleSplitter).Replace(',',Config.DoubleSplitter);
             if (s.Where(x => x == Config.DoubleSplitter).Count()>1)
             {
