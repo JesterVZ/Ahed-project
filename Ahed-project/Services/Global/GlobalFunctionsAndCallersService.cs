@@ -891,15 +891,21 @@ namespace Ahed_project.Services.Global
 
         public static void SetDiametralShellDefaultValue(string value)
         {
-            _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = value;
-            _bufflesPageViewModel.Raise("Baffle");
+            if (_bufflesPageViewModel.Baffle != null)
+            {
+                _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = value;
+                _bufflesPageViewModel.Raise("Baffle");
+            }
         }
 
 
         public static void SetDiametralTubeDefaultValue(string value)
         {
-            _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = value;
-            _bufflesPageViewModel.Raise("Baffle");
+            if (_bufflesPageViewModel.Baffle != null)
+            {
+                _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = value;
+                _bufflesPageViewModel.Raise("Baffle");
+            }
         }
 
 

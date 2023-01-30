@@ -214,7 +214,7 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     _shellInletTemp = value;
                     Calculation.temperature_shell_inlet = value;
-                    if (ShellProcessSelector.Value.ToLower() == "condensation")
+                    if (ShellProcessSelector.Value?.ToLower() == "condensation")
                     {
                         Calculation.temperature_shell_outlet = value;
                         GetPressureCalculation(value);
