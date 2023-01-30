@@ -37,9 +37,9 @@ namespace Ahed_project.ViewModel.Pages
             FlowShell = true;
             TemperatureShellInLet = false;
             TemperatureShellOutLet = false;
-            FlowShellTB = false;
-            TemperatureShellInLetTB = true;
-            TemperatureShellOutLetTB = true;
+            FlowShellTB = true;
+            TemperatureShellInLetTB = false;
+            TemperatureShellOutLetTB = false;
             TemperatureTubesOut = true;
             TSIE = true;
             TSOE = true;
@@ -267,11 +267,11 @@ namespace Ahed_project.ViewModel.Pages
                 Calculation.process_shell = value.Value;
                 if (value.Value.ToLower()=="condensation")
                 {
-                    TemperatureShellOutLetTB = false;
+                    TemperatureShellOutLetTB = true;
                 }
                 else
                 {
-                    TemperatureShellOutLetTB = true;
+                    TemperatureShellOutLetTB = false;
                 }
                 ChangeProcess.Execute(this);
             }
@@ -289,7 +289,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _flowShell = value;
-                FlowShellTB = !value;
+                FlowShellTB = value;
                 if (value)
                 {
                     FB = new SolidColorBrush(Color.FromRgb(251, 246, 242));
@@ -309,7 +309,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _temperatureShellInLet = value;
-                TemperatureShellInLetTB = !value;
+                TemperatureShellInLetTB = value;
                 if (value)
                 {
                     App.Current.Dispatcher.Invoke(() => FB = new SolidColorBrush(Color.FromRgb(255, 255, 255)));
@@ -326,7 +326,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _temperatureShellOutLet = value;
-                TemperatureShellOutLetTB = !value;
+                TemperatureShellOutLetTB = value;
                 if (value)
                 {
                     App.Current.Dispatcher.Invoke(()=>FB = new SolidColorBrush(Color.FromRgb(255, 255, 255)));
