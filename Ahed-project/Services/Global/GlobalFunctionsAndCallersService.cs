@@ -89,10 +89,10 @@ namespace Ahed_project.Services.Global
                 if (id != 0)
                 {
                     SetProject(projects.FirstOrDefault(x => x.project_id == id));
-                    _projectPageViewModel.FieldsState = true;
+                    _projectPageViewModel.FieldsState = false;
                 } else
                 {
-                    _projectPageViewModel.FieldsState = false;
+                    _projectPageViewModel.FieldsState = true;
                 }
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Загрузка проекта выполнена успешно!")));
                 _contentPageViewModel.Validation(false);
@@ -337,7 +337,7 @@ namespace Ahed_project.Services.Global
                 SetCalculation(null);
             }
             _contentPageViewModel.Validation(false);
-            _projectPageViewModel.FieldsState = true;
+            _projectPageViewModel.FieldsState = false;
         }
 
         //Получение рассчетов
