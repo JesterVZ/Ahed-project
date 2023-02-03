@@ -76,6 +76,8 @@ namespace Ahed_project.Services.Global
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PROJECTS, ""));
             Responce result = JsonConvert.DeserializeObject<Responce>(response);
             List<ProjectInfoGet> projects = JsonConvert.DeserializeObject<List<ProjectInfoGet>>(result.data.ToString());
+            GlobalDataCollectorService.ProjectsCollection = projects;
+            /*
             if (projects.Count > 0)
             {
                 GlobalDataCollectorService.ProjectsCollection = projects;
@@ -97,7 +99,7 @@ namespace Ahed_project.Services.Global
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Загрузка проекта выполнена успешно!")));
                 _contentPageViewModel.Validation(false);
                 
-            }
+            }*/
             await Task.Factory.StartNew(DownLoadProducts);
             await Task.Factory.StartNew(GetMaterials);
             await Task.Factory.StartNew(DownloadGeometries);
@@ -523,7 +525,7 @@ namespace Ahed_project.Services.Global
                     context.Users.Update(user);
                     context.SaveChanges();
                 }
-                _mainViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({_heatBalanceViewModel.Calculation?.name})";
+                _mainViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({calc.name})";
             }
             _heatBalanceViewModel.Calculation = calc;
             var products = GlobalDataCollectorService.AllProducts.SelectMany(x => x.Value).ToList();
