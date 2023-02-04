@@ -149,7 +149,7 @@
                         </ComboBoxItem>
                     </ComboBox>
                     <TextBox HorizontalContentAlignment="Left" Style="{StaticResource TextBoxHeatBalance}" Text="{Binding TubesProductName, UpdateSourceTrigger=PropertyChanged}"/>
-                    <ComboBox ItemsSource="{Binding Path=TubesProcess}" SelectedItem="{Binding TubesProcessSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0">
+                    <ComboBox HorizontalContentAlignment="Left" ItemsSource="{Binding Path=TubesProcess}" SelectedItem="{Binding TubesProcessSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0">
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="ComboBoxItem">
                                 <Setter

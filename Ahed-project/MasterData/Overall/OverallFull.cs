@@ -148,5 +148,6 @@ namespace Ahed_project.MasterData.Overall
         public int acoustic_vibration_exist_central { get; set; }
         public int acoustic_vibration_exist_outlet { get; set; }
         public int nr_modules_is_edit { get; set; }
+        public int use_viscosity_correction { get; set; }
     }
 }
