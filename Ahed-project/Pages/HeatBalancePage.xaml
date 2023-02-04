@@ -140,16 +140,16 @@
                     </StackPanel.Resources>
                     <Label HorizontalAlignment="Center" FontWeight="Bold">Tubes Side</Label>
                     <StackPanel Orientation="Horizontal"  Height="24">
-                        <Label FontSize="8" Width="125" HorizontalContentAlignment="Center" Foreground="Gray">Inlet</Label>
-                        <Label FontSize="8" Width="125" HorizontalContentAlignment="Center" Foreground="Gray">Outlet</Label>
+                        <Label FontSize="12" Width="125" HorizontalContentAlignment="Center" Foreground="Gray">Inlet</Label>
+                        <Label FontSize="12" Width="125" HorizontalContentAlignment="Center" Foreground="Gray">Outlet</Label>
                     </StackPanel>
-                    <ComboBox Width="253">
+                    <ComboBox HorizontalContentAlignment="Left" Width="253">
                         <ComboBoxItem IsSelected="True" IsEnabled="False">
                             <Label>--Select Fluid--</Label>
                         </ComboBoxItem>
                     </ComboBox>
-                    <TextBox Style="{StaticResource TextBoxHeatBalance}" Text="{Binding TubesProductName, UpdateSourceTrigger=PropertyChanged}"/>
-                    <ComboBox ItemsSource="{Binding Path=TubesProcess}" SelectedItem="{Binding TubesProcessSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox HorizontalContentAlignment="Left" Style="{StaticResource TextBoxHeatBalance}" Text="{Binding TubesProductName, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ComboBox ItemsSource="{Binding Path=TubesProcess}" SelectedItem="{Binding TubesProcessSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0">
                         <ComboBox.ItemContainerStyle>
                             <Style TargetType="ComboBoxItem">
                                 <Setter
@@ -237,16 +237,16 @@
                     </StackPanel.Resources>
                     <Label HorizontalAlignment="Center" FontWeight="Bold">Shell Side</Label>
                     <StackPanel Orientation="Horizontal"  Height="24" Margin="0,0,0,0">
-                        <Label FontSize="8" Width="125" HorizontalContentAlignment="Center" Foreground="Gray">Inlet</Label>
-                        <Label FontSize="8" Width="125" HorizontalContentAlignment="Center" Foreground="Gray">Outlet</Label>
+                        <Label FontSize="12" Width="125" HorizontalContentAlignment="Center" Foreground="Gray">Inlet</Label>
+                        <Label FontSize="12" Width="125" HorizontalContentAlignment="Center" Foreground="Gray">Outlet</Label>
                     </StackPanel>
-                    <ComboBox Width="253">
+                    <ComboBox HorizontalContentAlignment="Left" Width="250">
                         <ComboBoxItem IsSelected="True" IsEnabled="False">
                             <Label>--Select Fluid--</Label>
                         </ComboBoxItem>
                     </ComboBox>
-                    <TextBox Style="{StaticResource TextBoxHeatBalance}" Text="{Binding ShellProductName, UpdateSourceTrigger=PropertyChanged}"/>
-                    <ComboBox ItemsSource="{Binding Path=ShellProcess}" SelectedItem="{Binding ShellProcessSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox HorizontalContentAlignment="Left" Style="{StaticResource TextBoxHeatBalance}" Text="{Binding ShellProductName, UpdateSourceTrigger=PropertyChanged}" Width="250"/>
+                    <ComboBox HorizontalContentAlignment="Left" ItemsSource="{Binding Path=ShellProcess}" SelectedItem="{Binding ShellProcessSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="250" SelectedIndex="0">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
                                 <i:InvokeCommandAction Command="{Binding ChangeProcess}"/>
@@ -260,7 +260,7 @@
                     </ComboBox>
                     <StackPanel Orientation="Horizontal" Height="30">
                         <RadioButton IsChecked="{Binding FlowShell}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                        <TextBox Background="{Binding FB, UpdateSourceTrigger=PropertyChanged}" Width="235" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" IsReadOnly="{Binding FlowShellTB }">
+                        <TextBox Background="{Binding FB, UpdateSourceTrigger=PropertyChanged}" Width="238" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" IsReadOnly="{Binding FlowShellTB }">
                             <TextBox.Text>
                                 <MultiBinding Converter="{StaticResource Converter}">
                                     <Binding Path="Calculation.flow_shell" UpdateSourceTrigger="PropertyChanged"/>
@@ -272,10 +272,10 @@
                         <RadioButton IsEnabled="{Binding TSIE}" IsChecked="{Binding TemperatureShellInLet, UpdateSourceTrigger=PropertyChanged}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
                         <TextBox Text="{Binding ShellInletTemp, Converter={StaticResource Converter}}" Background="{Binding TIB, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding TemperatureShellInLetTB, UpdateSourceTrigger=PropertyChanged}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
                         <RadioButton IsEnabled="{Binding TSOE}" IsChecked="{Binding TemperatureShellOutLet, UpdateSourceTrigger=PropertyChanged}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                        <TextBox Background="{Binding TOB, UpdateSourceTrigger=PropertyChanged}"  IsReadOnly="{Binding TemperatureShellOutLetTB, UpdateSourceTrigger=PropertyChanged}" Width="110" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Calculation.temperature_shell_outlet, Converter={StaticResource Converter}}">
+                        <TextBox Background="{Binding TOB, UpdateSourceTrigger=PropertyChanged}"  IsReadOnly="{Binding TemperatureShellOutLetTB, UpdateSourceTrigger=PropertyChanged}" Width="113" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Text="{Binding Calculation.temperature_shell_outlet, Converter={StaticResource Converter}}">
                         </TextBox>
                     </StackPanel>
-                    <TextBox Style="{StaticResource TextBoxHeatBalance}" Text="{Binding Calculation.duty_shell, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FFABADB3"/>
+                    <TextBox Style="{StaticResource TextBoxHeatBalance}" Text="{Binding Calculation.duty_shell, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" BorderBrush="#FFABADB3" Width="250"/>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
                         <TextBox Style="{StaticResource SubEnabled}" Margin="0,0,3,0" Text="{Binding Pressure_shell_inlet_value, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
                         <TextBox Style="{StaticResource Sub}" Text="{Binding Calculation.pressure_shell_outlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}"/>

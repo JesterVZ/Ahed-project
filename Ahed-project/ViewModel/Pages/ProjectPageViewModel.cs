@@ -25,6 +25,7 @@ namespace Ahed_project.ViewModel.Pages
                 "Si",
                 "Metric"
             };
+            System = SystemItems[0];
         }
         public Visibility TextBoxVisibillity { get; set; }
         public Visibility LabelVisibillity { get; set; }

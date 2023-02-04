@@ -63,7 +63,7 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">Heat Exchanger Type</Label>
-                        <ComboBox ItemsSource="{Binding Exchangers}" SelectedItem="{Binding ExchangersSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="0" SelectedIndex="0" Margin="3,3,3,3">
+                        <ComboBox ItemsSource="{Binding Exchangers}" HorizontalContentAlignment="Left" SelectedItem="{Binding ExchangersSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="0" SelectedIndex="0" Margin="3,3,3,3">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Value}"/>
@@ -71,9 +71,9 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                         <Button Grid.Column="0" Grid.Row="1" Content="Tubes Assistant" HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6" Grid.ColumnSpan="2"/>
-                        <Label Grid.Column="2" Grid.Row="1" FontWeight="Bold" Margin="0,0,0,36" Grid.RowSpan="2">Inner Side</Label>
-                        <Label Grid.Column="3" Grid.Row="1" FontWeight="Bold" Margin="0,0,0,36" Grid.RowSpan="2">Tubes side</Label>
-                        <Label Grid.Column="4" Grid.Row="1" FontWeight="Bold" Margin="0,0,0,36" Grid.RowSpan="2">Shell side</Label>
+                        <Label Grid.Column="2" Grid.Row="1" FontWeight="Bold" FontSize="14" Margin="0,0,0,36" Grid.RowSpan="2">Inner Side</Label>
+                        <Label Grid.Column="3" Grid.Row="1" FontWeight="Bold" FontSize="14" Margin="0,0,0,36" Grid.RowSpan="2">Tubes side</Label>
+                        <Label Grid.Column="4" Grid.Row="1" FontWeight="Bold" FontSize="14" Margin="0,0,0,36" Grid.RowSpan="2">Shell side</Label>
 
                         <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Name</Label>
                         <TextBox Style="{StaticResource Default}" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="2" Text="{Binding Geometry.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="3,3,3,3"/>
@@ -94,14 +94,14 @@
                         <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.inner_diameter_shell_side}" Grid.Column="4" Grid.Row="5" Margin="3,3,3,3"/>
 
                         <Label Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Material</Label>
-                        <ComboBox Style="{StaticResource ComboboxDefault}" SelectedItem="{Binding TubesMaterial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Materials}" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="6" SelectedIndex="0" Margin="3,3,3,3">
+                        <ComboBox Style="{StaticResource ComboboxDefault}" HorizontalContentAlignment="Left" SelectedItem="{Binding TubesMaterial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Materials}" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="6" SelectedIndex="0" Margin="3,3,3,3">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Value.name_short}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Style="{StaticResource ComboboxDefault}" SelectedItem="{Binding ShellMaterial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Materials}" Grid.Column="4" Grid.Row="6" SelectedIndex="0" Margin="3,3,3,3">
+                        <ComboBox Style="{StaticResource ComboboxDefault}" HorizontalContentAlignment="Left" SelectedItem="{Binding ShellMaterial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Materials}" Grid.Column="4" Grid.Row="6" SelectedIndex="0" Margin="3,3,3,3">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Value.name_short}"/>
@@ -140,7 +140,7 @@
                         <TextBox Style="{StaticResource Colored}" Text="{Binding Geometry.volume_module_shell_side}" Grid.Column="4" Grid.Row="13" Margin="3,3,3,3"/>
 
                         <Label Grid.Column="0" Grid.Row="14" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Tube Profile</Label>
-                        <ComboBox ItemsSource="{Binding TubeProfile}" SelectedItem="{Binding TubeProfileSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="3" SelectedIndex="0" Grid.Row="14" Margin="3,3,3,3">
+                        <ComboBox ItemsSource="{Binding TubeProfile}" HorizontalContentAlignment="Left" SelectedItem="{Binding TubeProfileSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="3" SelectedIndex="0" Grid.Row="14" Margin="3,3,3,3">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Value}"/>
@@ -192,7 +192,7 @@
                             <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">Tube Pitch (mm)</Label>
                             <Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">Tube Layout</Label>
                             <TextBox Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_tube_pitch}" Grid.Column="1" Grid.Row="0"/>
-                            <ComboBox ItemsSource="{Binding TubePlateLayouts}" SelectedItem="{Binding TubeLayout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="1" SelectedIndex="0" Grid.Row="1">
+                            <ComboBox ItemsSource="{Binding TubePlateLayouts}" HorizontalContentAlignment="Left" SelectedItem="{Binding TubeLayout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="1" SelectedIndex="0" Grid.Row="1">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
@@ -207,7 +207,7 @@
                             <TextBox Style="{StaticResource Default}" Text="{Binding Tube_plate_layout_number_of_passes, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Column="1" Grid.Row="2"/>
 
                             <Label Grid.Column="0" Grid.Row="3" VerticalAlignment="Center">Div.Plate Layout</Label>
-                            <ComboBox Style="{StaticResource ComboboxDefault}" ItemsSource="{Binding DivPlateItems, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding DivPlateItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" SelectedIndex="0" Grid.Row="3">
+                            <ComboBox Style="{StaticResource ComboboxDefault}" HorizontalContentAlignment="Left" ItemsSource="{Binding DivPlateItems, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding DivPlateItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" SelectedIndex="0" Grid.Row="3">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <Label Content="{Binding Value}"/>
@@ -216,7 +216,7 @@
                             </ComboBox>
 
                             <Label Visibility="{Binding SealingTypeVis}" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center">Sealing Type</Label>
-                            <ComboBox Visibility="{Binding SealingTypeVis}" ItemsSource="{Binding SealingTypeItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SealingTypeItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="1" SelectedIndex="0" Grid.Row="4">
+                            <ComboBox Visibility="{Binding SealingTypeVis}" HorizontalContentAlignment="Left" ItemsSource="{Binding SealingTypeItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SealingTypeItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="1" SelectedIndex="0" Grid.Row="4">
                             </ComboBox>
 
                             <Label Grid.Column="0" Grid.Row="5" Visibility="{Binding HousingSpaceVis, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center">Housing Space (mm)</Label>
