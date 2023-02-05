@@ -79,6 +79,11 @@ namespace Ahed_project.ViewModel.Pages
                 }
             }
         }
+
+        public void Refrash()
+        {
+            RaisePropertiesChanged(nameof(Overall));
+        }
         public OverallCalculationViewModel()
         {
             GridHeight = 650;

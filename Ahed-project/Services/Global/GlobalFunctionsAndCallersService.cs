@@ -936,6 +936,8 @@ namespace Ahed_project.Services.Global
                     _shellFluidViewModel.Refresh();
                     _heatBalanceViewModel.Refresh();
                     _geometryPageViewModel.Refrash();
+                    _bufflesPageViewModel.Refrash();
+                    _overallCalculationViewModel.Refrash();
                 }
             });
         }

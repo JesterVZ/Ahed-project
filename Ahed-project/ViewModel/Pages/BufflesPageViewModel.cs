@@ -137,7 +137,10 @@ namespace Ahed_project.ViewModel.Pages
         });
         #endregion
 
-
+        public void Refrash()
+        {
+            RaisePropertiesChanged(nameof(Baffle));
+        }
 
         public void Raise(string name)
         {
