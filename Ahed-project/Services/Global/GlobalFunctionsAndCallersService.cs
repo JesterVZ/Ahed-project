@@ -77,33 +77,11 @@ namespace Ahed_project.Services.Global
             Responce result = JsonConvert.DeserializeObject<Responce>(response);
             List<ProjectInfoGet> projects = JsonConvert.DeserializeObject<List<ProjectInfoGet>>(result.data.ToString());
             GlobalDataCollectorService.ProjectsCollection = projects;
-            /*
-            if (projects.Count > 0)
-            {
-                GlobalDataCollectorService.ProjectsCollection = projects;
-                int userId = GlobalDataCollectorService.UserId;
-                int id = 0;
-                using (var context = new EFContext())
-                {
-                    var user = context.Users.FirstOrDefault(x => x.Id == userId);
-                    id = user.LastProjectId ?? 0;
-                }
-                if (id != 0)
-                {
-                    SetProject(projects.FirstOrDefault(x => x.project_id == id));
-                    _projectPageViewModel.FieldsState = false;
-                } else
-                {
-                    _projectPageViewModel.FieldsState = true;
-                }
-                Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Загрузка проекта выполнена успешно!")));
-                _contentPageViewModel.Validation(false);
-                
-            }*/
+            _projectPageViewModel.ProjectInfo.number_of_decimals = 2;
+            _projectPageViewModel.Raise();
             await Task.Factory.StartNew(DownLoadProducts);
             await Task.Factory.StartNew(GetMaterials);
             await Task.Factory.StartNew(DownloadGeometries);
-            //await Task.Factory.StartNew(GetTabState);
 
         }
         //получение состояний вкладок

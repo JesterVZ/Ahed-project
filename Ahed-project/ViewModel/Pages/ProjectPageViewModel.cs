@@ -94,6 +94,11 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
 
+        public void Raise()
+        {
+            RaisePropertiesChanged(nameof(ProjectInfo));
+        }
+
         private CalculationFull _selectedCalculation;
         public CalculationFull SelectedCalculation
         {

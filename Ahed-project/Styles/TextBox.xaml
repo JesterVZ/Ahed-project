@@ -32,11 +32,12 @@
         <Setter Property="IsReadOnly" Value="True"/>
         <Setter Property="Background" Value="#f9efe5"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
         <Setter Property="Margin" Value="0,3"/>
     </Style>
     <Style BasedOn="{StaticResource TextBoxHeatBalance}" TargetType="TextBox" x:Key="Sub">
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        
         <Setter Property="Width" Value="125"/>
         <Setter Property="Margin" Value="0,3,3,3"/>
     </Style>

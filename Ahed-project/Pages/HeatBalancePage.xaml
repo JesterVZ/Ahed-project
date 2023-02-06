@@ -168,7 +168,7 @@
                         <TextBox Style="{StaticResource SubEnabled}" Text="{Binding TubesInletTemp, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}"/>
                         <TextBox Style="{StaticResource SubEnabled}" Margin="0,3,0,3" Text="{Binding Calculation.temperature_tube_outlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
-                    <TextBox Style="{StaticResource TextBoxHeatBalance}" Text="{Binding Calculation.duty_tube, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Style="{StaticResource TextBoxHeatBalance}"  Text="{Binding Calculation.duty_tube, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}"/>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
                         <TextBox Style="{StaticResource SubEnabled}" Text="{Binding Pressure_tube_inlet_value, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
                         <TextBox Style="{StaticResource Sub}" Margin="0,3,0,3" Text="{Binding Calculation.pressure_shell_outlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}"/>
