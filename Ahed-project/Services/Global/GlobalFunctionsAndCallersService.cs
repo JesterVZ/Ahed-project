@@ -393,18 +393,26 @@ namespace Ahed_project.Services.Global
         public async static void SaveProject()
         {
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Идет сохранение проекта...")));
-            var projectInfoSend = _mapper.Map<ProjectInfoSend>(GlobalDataCollectorService.Project);
-            string json = JsonConvert.SerializeObject(projectInfoSend);
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE, json, GlobalDataCollectorService.Project.project_id.ToString()));
-            Responce result = JsonConvert.DeserializeObject<Responce>(response);
-            GlobalDataCollectorService.IsProjectSave = true; //проект сохранен
+            if(GlobalDataCollectorService.Project == null)
+            {
+                await Task.Factory.StartNew(() => CreateNewProject());
 
-            if (result.logs != null)
-                for (int i = 0; i < result.logs.Count; i++)
-                {
-                    Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
-                }
-            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Сохранение выполнено успешно!")));
+            } else
+            {
+                var projectInfoSend = _mapper.Map<ProjectInfoSend>(GlobalDataCollectorService.Project);
+                string json = JsonConvert.SerializeObject(projectInfoSend);
+                var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE, json, GlobalDataCollectorService.Project.project_id.ToString()));
+                Responce result = JsonConvert.DeserializeObject<Responce>(response);
+                GlobalDataCollectorService.IsProjectSave = true; //проект сохранен
+
+                if (result.logs != null)
+                    for (int i = 0; i < result.logs.Count; i++)
+                    {
+                        Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
+                    }
+                Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Сохранение выполнено успешно!")));
+            }
+            
         }
 
         //Создание рассчета
@@ -855,6 +863,21 @@ namespace Ahed_project.Services.Global
                         Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
                     }
                     var newProj = JsonConvert.DeserializeObject<ProjectInfoGet>(result.data.ToString());
+                    newProj.name = _projectPageViewModel.ProjectInfo.name;
+                    newProj.description = _projectPageViewModel.ProjectInfo.description;
+                    newProj.units = _projectPageViewModel.ProjectInfo.units;
+                    newProj.revision = _projectPageViewModel.ProjectInfo.revision;
+                    newProj.number_of_decimals = _projectPageViewModel.ProjectInfo.number_of_decimals;
+                    newProj.category = _projectPageViewModel.ProjectInfo.category;
+                    newProj.customer = _projectPageViewModel.ProjectInfo.customer;
+                    newProj.contact = _projectPageViewModel.ProjectInfo.contact;
+                    newProj.customer_reference = _projectPageViewModel.ProjectInfo.customer_reference;
+                    newProj.keywords = _projectPageViewModel.ProjectInfo.keywords;
+                    newProj.comments = _projectPageViewModel.ProjectInfo.comments;
+                    newProj.createdAt = _projectPageViewModel.ProjectInfo.createdAt;
+                    newProj.updatedAt = _projectPageViewModel.ProjectInfo.updatedAt;
+
+                    GlobalDataCollectorService.Project = newProj; 
                     GlobalDataCollectorService.ProjectsCollection.Add(newProj);
                     GlobalDataCollectorService.GeometryCalculated = false;
                     GlobalDataCollectorService.HeatBalanceCalculated = false;
