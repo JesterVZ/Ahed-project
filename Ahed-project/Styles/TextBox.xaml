@@ -3,6 +3,7 @@
     <Style TargetType="TextBox" x:Key="Default">
         <Setter Property="Height" Value="30"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
         <Setter Property="Margin" Value="3"/>
         <Style.Triggers>
             <Trigger Property="Validation.HasError" Value="True">
@@ -19,7 +20,7 @@
     </Style>
     <Style BasedOn="{StaticResource Default}" TargetType="TextBox" x:Key="Colored">
         <Setter Property="Background" Value="#f9efe5"/>
-        <Setter Property="IsReadOnly" Value="False"/>
+        <Setter Property="IsReadOnly" Value="True"/>
     </Style>
     
     
@@ -31,11 +32,12 @@
         <Setter Property="IsReadOnly" Value="True"/>
         <Setter Property="Background" Value="#f9efe5"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
         <Setter Property="Margin" Value="0,3"/>
     </Style>
     <Style BasedOn="{StaticResource TextBoxHeatBalance}" TargetType="TextBox" x:Key="Sub">
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        
         <Setter Property="Width" Value="125"/>
         <Setter Property="Margin" Value="0,3,3,3"/>
     </Style>

@@ -25,6 +25,7 @@ namespace Ahed_project.ViewModel.Pages
                 "Si",
                 "Metric"
             };
+            System = SystemItems[0];
         }
         public Visibility TextBoxVisibillity { get; set; }
         public Visibility LabelVisibillity { get; set; }
@@ -93,6 +94,11 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
 
+        public void Raise()
+        {
+            RaisePropertiesChanged(nameof(ProjectInfo));
+        }
+
         private CalculationFull _selectedCalculation;
         public CalculationFull SelectedCalculation
         {
@@ -100,7 +106,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _selectedCalculation = value;
-                GlobalFunctionsAndCallersService.SetCalculation(SelectedCalculation);
+                GlobalFunctionsAndCallersService.SetCalculation(_selectedCalculation);
             }
         }
         public ObservableCollection<CalculationFull> Calculations { get; set; }

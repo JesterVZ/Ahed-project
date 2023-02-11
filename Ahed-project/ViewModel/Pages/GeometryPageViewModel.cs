@@ -464,6 +464,11 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
 
+        public void Refrash()
+        {
+            RaisePropertiesChanged(nameof(Geometry));
+        }
+
         public GeometryPageViewModel()
         {
             Exchangers = new Dictionary<string, string>();

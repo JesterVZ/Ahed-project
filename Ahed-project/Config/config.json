@@ -23,5 +23,5 @@
 	"GetGeometry": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/geometry/get",
 	"GetBaffle": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/baffles/get",
 	"CalculateOverall": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/overall/calculate",
-	"DeleteProject": "https://ahead-api.ru/api/he/project/delete/{project_id}"
+	"DeleteProject": "https://ahead-api.ru/api/he/project/delete/{projectId}"
 }

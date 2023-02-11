@@ -76,32 +76,12 @@ namespace Ahed_project.Services.Global
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PROJECTS, ""));
             Responce result = JsonConvert.DeserializeObject<Responce>(response);
             List<ProjectInfoGet> projects = JsonConvert.DeserializeObject<List<ProjectInfoGet>>(result.data.ToString());
-            if (projects.Count > 0)
-            {
-                GlobalDataCollectorService.ProjectsCollection = projects;
-                int userId = GlobalDataCollectorService.UserId;
-                int id = 0;
-                using (var context = new EFContext())
-                {
-                    var user = context.Users.FirstOrDefault(x => x.Id == userId);
-                    id = user.LastProjectId ?? 0;
-                }
-                if (id != 0)
-                {
-                    SetProject(projects.FirstOrDefault(x => x.project_id == id));
-                    _projectPageViewModel.FieldsState = false;
-                } else
-                {
-                    _projectPageViewModel.FieldsState = true;
-                }
-                Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Загрузка проекта выполнена успешно!")));
-                _contentPageViewModel.Validation(false);
-                
-            }
+            GlobalDataCollectorService.ProjectsCollection = projects;
+            _projectPageViewModel.ProjectInfo.number_of_decimals = 2;
+            _projectPageViewModel.Raise();
             await Task.Factory.StartNew(DownLoadProducts);
             await Task.Factory.StartNew(GetMaterials);
             await Task.Factory.StartNew(DownloadGeometries);
-            //await Task.Factory.StartNew(GetTabState);
 
         }
         //получение состояний вкладок
@@ -218,6 +198,7 @@ namespace Ahed_project.Services.Global
                     fouling_factor_shell = overall.fouling_factor_shell,
                     nr_modules_is_edit = overall.nr_modules_is_edit,
                     nr_modules = overall.nr_modules,
+                    use_viscosity_correction = overall.use_viscosity_correction,
 
                     acoustic_vibration_exist_inlet = overall.acoustic_vibration_exist_inlet,
                     acoustic_vibration_exist_central = overall.acoustic_vibration_exist_central,
@@ -390,18 +371,26 @@ namespace Ahed_project.Services.Global
         public async static void SaveProject()
         {
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Идет сохранение проекта...")));
-            var projectInfoSend = _mapper.Map<ProjectInfoSend>(GlobalDataCollectorService.Project);
-            string json = JsonConvert.SerializeObject(projectInfoSend);
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE, json, GlobalDataCollectorService.Project.project_id.ToString()));
-            Responce result = JsonConvert.DeserializeObject<Responce>(response);
-            GlobalDataCollectorService.IsProjectSave = true; //проект сохранен
+            if(GlobalDataCollectorService.Project == null)
+            {
+                await Task.Factory.StartNew(() => CreateNewProject());
 
-            if (result.logs != null)
-                for (int i = 0; i < result.logs.Count; i++)
-                {
-                    Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
-                }
-            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Сохранение выполнено успешно!")));
+            } else
+            {
+                var projectInfoSend = _mapper.Map<ProjectInfoSend>(GlobalDataCollectorService.Project);
+                string json = JsonConvert.SerializeObject(projectInfoSend);
+                var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE, json, GlobalDataCollectorService.Project.project_id.ToString()));
+                Responce result = JsonConvert.DeserializeObject<Responce>(response);
+                GlobalDataCollectorService.IsProjectSave = true; //проект сохранен
+
+                if (result.logs != null)
+                    for (int i = 0; i < result.logs.Count; i++)
+                    {
+                        Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
+                    }
+                Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Сохранение выполнено успешно!")));
+            }
+            
         }
 
         //Создание рассчета
@@ -426,6 +415,9 @@ namespace Ahed_project.Services.Global
             CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
             Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations.Add(calculationGet));
             _contentPageViewModel.Validation(true);
+            _heatBalanceViewModel.Pressure_tube_inlet_value = "5";
+            _heatBalanceViewModel.Pressure_shell_inlet_value = "5";
+            _heatBalanceViewModel.Raise("Calculation");
         }
         //изменение имени рассчета
         public static async void ChangeCalculationName(CalculationFull calc)
@@ -523,7 +515,7 @@ namespace Ahed_project.Services.Global
                     context.Users.Update(user);
                     context.SaveChanges();
                 }
-                _mainViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({_heatBalanceViewModel.Calculation?.name})";
+                _mainViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({calc.name})";
             }
             _heatBalanceViewModel.Calculation = calc;
             var products = GlobalDataCollectorService.AllProducts.SelectMany(x => x.Value).ToList();
@@ -852,6 +844,22 @@ namespace Ahed_project.Services.Global
                         Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
                     }
                     var newProj = JsonConvert.DeserializeObject<ProjectInfoGet>(result.data.ToString());
+                    newProj.name = _projectPageViewModel.ProjectInfo.name;
+                    newProj.description = _projectPageViewModel.ProjectInfo.description;
+                    newProj.units = _projectPageViewModel.ProjectInfo.units;
+                    newProj.revision = _projectPageViewModel.ProjectInfo.revision;
+                    newProj.number_of_decimals = _projectPageViewModel.ProjectInfo.number_of_decimals;
+                    newProj.category = _projectPageViewModel.ProjectInfo.category;
+                    newProj.customer = _projectPageViewModel.ProjectInfo.customer;
+                    newProj.contact = _projectPageViewModel.ProjectInfo.contact;
+                    newProj.customer_reference = _projectPageViewModel.ProjectInfo.customer_reference;
+                    newProj.keywords = _projectPageViewModel.ProjectInfo.keywords;
+                    newProj.comments = _projectPageViewModel.ProjectInfo.comments;
+                    newProj.createdAt = _projectPageViewModel.ProjectInfo.createdAt;
+                    newProj.updatedAt = _projectPageViewModel.ProjectInfo.updatedAt;
+
+
+                    GlobalDataCollectorService.Project = newProj; 
                     GlobalDataCollectorService.ProjectsCollection.Add(newProj);
                     GlobalDataCollectorService.GeometryCalculated = false;
                     GlobalDataCollectorService.HeatBalanceCalculated = false;
@@ -859,6 +867,7 @@ namespace Ahed_project.Services.Global
 
                     SetProject(newProj);
                     _contentPageViewModel.Validation(true);
+                    
                     Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations.Clear());
                     await Task.Factory.StartNew(() => CreateCalculation("Default"));
                 }
@@ -932,6 +941,9 @@ namespace Ahed_project.Services.Global
                     _tubesFluidViewModel.Refresh();
                     _shellFluidViewModel.Refresh();
                     _heatBalanceViewModel.Refresh();
+                    _geometryPageViewModel.Refrash();
+                    _bufflesPageViewModel.Refrash();
+                    _overallCalculationViewModel.Refrash();
                 }
             });
         }

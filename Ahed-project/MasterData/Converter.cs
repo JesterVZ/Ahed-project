@@ -24,12 +24,21 @@ namespace Ahed_project.MasterData
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == DependencyProperty.UnsetValue)
+            try
             {
-                return null;
+                if (value == DependencyProperty.UnsetValue)
+                {
+                    return null;
+                }
+                string val = StringToDoubleChecker.ToCorrectFormat(System.Convert.ToDecimal(value?.ToString()?.Replace('.', ',')).ToString($"F{Config.NumberOfDecimals}"));
+                return val;
             }
-            string val = StringToDoubleChecker.ToCorrectFormat(System.Convert.ToDecimal(value?.ToString()?.Replace('.', ',')).ToString($"F{Config.NumberOfDecimals}"));
-            return val;
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return "";
+            }
+            
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)

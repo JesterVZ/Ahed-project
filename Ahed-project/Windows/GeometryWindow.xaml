@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ahed_project.Windows"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        Closed="Window_Closed"
         mc:Ignorable="d"
         Title="GeometryWindow" Height="450" Width="800">
     <i:Interaction.Triggers>
