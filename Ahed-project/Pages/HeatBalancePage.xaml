@@ -202,7 +202,7 @@
                         <TextBox Text="{Binding Calculation.gas_density_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
-                        <TextBox Text="{Binding Calculation.gas_specific_heat_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
+                        <TextBox x:Name="gas_specific_heat_tube_inlet" Text="{Binding Calculation.gas_specific_heat_tube_inlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" PreviewMouseLeftButtonDown="ShowOnClick"/>
                         <TextBox Text="{Binding Calculation.gas_specific_heat_tube_outlet, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">

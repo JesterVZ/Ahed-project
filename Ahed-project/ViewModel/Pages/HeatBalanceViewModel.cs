@@ -1,4 +1,5 @@
-﻿using Ahed_project.MasterData.CalculateClasses;
+﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.Services.Global;
 using Ahed_project.Settings;
 using DevExpress.Mvvm;
@@ -11,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Color = System.Windows.Media.Color;
@@ -366,6 +368,36 @@ namespace Ahed_project.ViewModel.Pages
         {
             public string Value { get; set; }
             public bool IsSelectable { get; set; }
+        }
+
+        public void ShowFull(object sender)
+        {
+            var type = typeof(HeatBalanceViewModel);
+            var tb = (TextBox)sender;
+            var field = type.GetProperty(tb.Name);
+            object value = null;
+            if (field == null)
+            {
+                type = typeof(CalculationFull);
+                field = type.GetProperty(tb.Name);
+                value = field.GetValue(Calculation);
+            }
+            else
+            {
+                value = field.GetValue(this);
+            }
+            int count = value.ToString().Split(Config.DoubleSplitter).Last().Length;
+            var oldCount = Config.NumberOfDecimals;
+            Config.NumberOfDecimals = count;
+            if (type == typeof(CalculationFull))
+            {
+                Raise($"Calculation.{tb.Name}");
+            }
+            else
+            {
+                Raise(tb.Name);
+            }
+            Config.NumberOfDecimals = oldCount;
         }
     }
 }
