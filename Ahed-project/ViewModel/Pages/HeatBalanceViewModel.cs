@@ -29,6 +29,7 @@ namespace Ahed_project.ViewModel.Pages
                 new TubesVariables()
                 { IsSelectable = false, Value = "Condensation" }
             };
+            TubesProcessSelector = TubesProcess[0];
             ShellProcess = new Dictionary<int, string>
             {
                 { 1, "Sensible Heat" },

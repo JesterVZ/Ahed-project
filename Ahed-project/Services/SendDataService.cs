@@ -261,7 +261,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.DELETE_PROJECT:
-                        restClient = new RestClient(_serviceConfig.DeleteProject.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        restClient = new RestClient(_serviceConfig.DeleteProject.Replace("{projectId}", projectId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {

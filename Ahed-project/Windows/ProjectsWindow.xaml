@@ -18,7 +18,8 @@
             <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <DataGrid ItemsSource="{Binding Projects}" Margin="5 5 5 5" IsReadOnly="True" AllowDrop="False" SelectedItem="{Binding SelectedProject, Mode=TwoWay}"/>
+        <DataGrid ItemsSource="{Binding Projects}" CanUserSortColumns="True" Margin="5 5 5 5" IsReadOnly="True" AllowDrop="False" SelectedItem="{Binding SelectedProject, Mode=TwoWay}">
+        </DataGrid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>

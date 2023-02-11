@@ -6,11 +6,16 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:SVG="http://sharpvectors.codeplex.com/svgc/"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Ahed_project.Pages"
+      xmlns:converter="clr-namespace:Ahed_project.MasterData"
       mc:Ignorable="d" 
       d:DesignHeight="1600" d:DesignWidth="1800"
       Title="BafflesPage">
     <Page.Resources>
-        <customGrid:GridLengthConverter x:Key="gridLengthConverter"/>
+        <ResourceDictionary>
+            <customGrid:GridLengthConverter x:Key="gridLengthConverter"/>
+            <converter:Converter x:Key="Converter"></converter:Converter>
+        </ResourceDictionary>
+        
     </Page.Resources>
     <Grid>
         <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
@@ -75,22 +80,22 @@
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
                                 <Label Grid.Column="0" Grid.Row="1">Shell Inner Diameter (Ds)(mm)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.shell_inner_diameter, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.shell_inner_diameter, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1"/>
 
                                 <Label Grid.Column="0" Grid.Row="2">Tubes Outer Diameter (Dt)(mm)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.tubes_outer_diameter, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2"/> <!--здесь разделение-->
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.tubes_outer_diameter, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2"/> <!--здесь разделение-->
 
                                 <Label Grid.Column="0" Grid.Row="3">Central Baffle Cut (Bc1)(%)</Label>
-                                <TextBox Style="{StaticResource Default}" Text="{Binding Baffle.central_baffle_cut_bc1, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding Baffle.central_baffle_cut_bc1, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3"/>
                                 
                                 <Label Grid.Column="0" Grid.Row="4">Overlap (%)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.overlap, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.overlap, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
 
                                 <Label Grid.Column="0" Grid.Row="5">Side Baffle Cut(Bc2)</Label>
-                                <TextBox Style="{StaticResource Default}" Text="{Binding Baffle.side_baffle_cut_bc2, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding Baffle.side_baffle_cut_bc2, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5"/>
 
                                 <Label Grid.Column="0" Grid.Row="6">Baffle Cut (Bc)(%)</Label>
-                                <TextBox Style="{StaticResource Default}" Text="{Binding Baffle.buffle_cut, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding Baffle.buffle_cut, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6"/>
 
                                 <Label Grid.Column="0" Grid.Row="7">Baffle Cut Direction (%)</Label>
                                 <ComboBox Grid.Column="1" Grid.Row="7" Style="{StaticResource ComboboxDefault}" ItemsSource="{Binding CutDirection, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedCutDirection, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0">
@@ -102,28 +107,28 @@
                                 </ComboBox>
 
                                 <Label Grid.Column="0" Grid.Row="8">Pairs Of Sealing Strips (Nss)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.pairs_of_sealing_strips, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="8"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.pairs_of_sealing_strips, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="8"/>
 
                                 <Label Grid.Column="0" Grid.Row="9">Shell Diameter Angle (0ds)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.shell_diameter_angle, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="9"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.shell_diameter_angle, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="9"/>
                                 
                                 <Label Grid.Column="0" Grid.Row="10">Center Tube Angle (0ct)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.center_tube_angle, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="10"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.center_tube_angle, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="10"/>
 
                                 <Label Grid.Column="0" Grid.Row="11">Diameter To Tube Center (Dct)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.diameter_to_tube_center, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="11"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.diameter_to_tube_center, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="11"/>
                                 
                                 <Label Grid.Column="0" Grid.Row="12">Diameter To Tube Outer Side (Dot)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.diameter_to_tube_outer_side, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="12"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.diameter_to_tube_outer_side, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="12"/>
 
                                 <Label Grid.Column="0" Grid.Row="13">Bypass Lines (Lp)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.bypass_lanes, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="13"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.bypass_lanes, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="13"/>
 
                                 <Label Grid.Column="0" Grid.Row="14">Inner Shell To Outer Tube Bypass Clearance</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.inner_shell_to_outer_tube_bypass_clearance, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="14"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.inner_shell_to_outer_tube_bypass_clearance, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="14"/>
 
                                 <Label Grid.Column="0" Grid.Row="15">Average Tubes in Baffle Windows</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.average_tubes_in_baffle_windows, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="15"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.average_tubes_in_baffle_windows, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="15"/>
                                 <Button Grid.Column="1" Margin="3" Grid.Row="16" Content="Show Template" HorizontalAlignment="Left" VerticalAlignment="Center" Width="121" Background="#fc6"/>
                             </Grid>
                         </StackPanel>
@@ -145,29 +150,29 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 <Label Grid.Column="0" Grid.Row="0">TubePlate Thickness (Lts)(mm)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.tubeplate_thickness, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="0"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.tubeplate_thickness, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="0"/>
                                 
                                 <Label Grid.Column="0" Grid.Row="1">Tube Inner Length (Lti)(mm)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.tube_inner_length, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.tube_inner_length, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1"/>
 
                                 <Label Grid.Column="0" Grid.Row="2">Tube Outer Length (Lto)(mm)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.tube_outer_length, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.tube_outer_length, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2"/>
 
                                 <Label Grid.Column="0" Grid.Row="3">Inlet Baffle Spacing (Lbi)(mm)</Label>
-                                <TextBox Style="{StaticResource Default}" Text="{Binding Baffle.inlet_baffle_spacing, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding Baffle.inlet_baffle_spacing, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3"/>
 
                                 <Label Grid.Column="0" Grid.Row="4">Central Baffle Spacing (Lbc)(mm)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.central_baffle_spacing, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.central_baffle_spacing, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
 
 
                                 <Label Grid.Column="0" Grid.Row="5">Outlet Baffle Spacing (Lbo)(mm)</Label>
-                                <TextBox Style="{StaticResource Default}" Text="{Binding Baffle.outlet_baffle_spacing, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding Baffle.outlet_baffle_spacing, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5"/>
 
                                 <Label Grid.Column="0" Grid.Row="6">Number Of Baffles (Nb)</Label>
-                                <TextBox Style="{StaticResource Default}" Text="{Binding Baffle.number_of_baffles, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding Baffle.number_of_baffles, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6"/>
 
                                 <Label Grid.Column="0" Grid.Row="7">Baffle Thickness (mm)</Label>
-                                <TextBox Style="{StaticResource Default}" Text="{Binding Baffle.baffle_thickness, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7"/>
+                                <TextBox Style="{StaticResource Default}" Text="{Binding Baffle.baffle_thickness, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7"/>
 
                                 
                             </Grid>
@@ -205,45 +210,45 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 <Label Grid.Column="0" Grid.Row="0">Cut Effect (Jc)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.cut_effect_inlet, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="0"/>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.cut_effect_outlet, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="0"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.cut_effect_inlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="0"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.cut_effect_outlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="0"/>
 
                                 <Label Grid.Column="0" Grid.Row="1">Leackages Effect (Ji)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.leackages_effect_inlet, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1"/>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.leackages_effect_outlet, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="1"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.leackages_effect_inlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.leackages_effect_outlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="1"/>
 
                                 <Label Grid.Column="0" Grid.Row="2">Bundle Bypass Effect (Jb)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.bundle_bypass_effect_inlet, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2"/>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.bundle_bypass_effect_outlet, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="2"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.bundle_bypass_effect_inlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="2"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.bundle_bypass_effect_outlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="2"/>
 
                                 <Label Grid.Column="0" Grid.Row="3">Adverce Temperature Gradient (Jr)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.adverce_temperature_gradient_inlet, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3"/>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.adverce_temperature_gradient_outlet, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="3"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.adverce_temperature_gradient_inlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="3"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.adverce_temperature_gradient_outlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="3"/>
 
                                 <Label Grid.Column="0" Grid.Row="4">Uneven Baffle Spacing (Js)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.uneven_baffle_spacing_inlet, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.uneven_baffle_spacing_outlet, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.uneven_baffle_spacing_inlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="4"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.uneven_baffle_spacing_outlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4"/>
 
                                 <Label Grid.Column="0" Grid.Row="5">Combined Effects (JT)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.combined_effects_inlet, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5"/>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.combined_effects_outlet, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="5"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.combined_effects_inlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="5"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.combined_effects_outlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="5"/>
 
                                 <Label Grid.Column="0" Grid.Row="6">Colorbun Correction Factor (Ji)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.colorbun_correction_factor_inlet, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6"/>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.colorbun_correction_factor_outlet, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="6"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.colorbun_correction_factor_inlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="6"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.colorbun_correction_factor_outlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="6"/>
 
                                 <Label Grid.Column="0" Grid.Row="7">Heat.Trans.Coeff.Pure Cross-Flow Ideal</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.heat_trans_coeff_pure_inlet, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7"/>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.heat_trans_coeff_pure_outlet, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="7"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.heat_trans_coeff_pure_inlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="7"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.heat_trans_coeff_pure_outlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="7"/>
 
                                 <Label Grid.Column="0" Grid.Row="8">Shell-Side Heat Transfer Coefficient (Hcc)</Label>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.shell_side_heat_transfer_inlet, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="8"/>
-                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.shell_side_heat_transfer_outlet, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="8"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.shell_side_heat_transfer_inlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="8"/>
+                                <TextBox Style="{StaticResource Colored}" Text="{Binding Baffle.shell_side_heat_transfer_outlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="8"/>
                             </Grid>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Margin="3" Orientation="Horizontal" Grid.Column="0" Grid.Row="9">
-                        <TextBlock Grid.ColumnSpan="4" FontWeight="Bold" Margin="0 0 9 0">Baffles Clearances And Spasings</TextBlock>
+                        <TextBlock Grid.ColumnSpan="4" FontWeight="Bold" Margin="0 0 9 0">Baffles Clearance &#38; Spacings</TextBlock>
                         <Button Width="20" Height="20" Template="{StaticResource RoundedButton}" Command="{Binding ToggleCommand}">
                             <Image Source="../Visual/arrow.png" Margin="4 4 4 4" RenderTransformOrigin="0.5,0.5">
                                 <Image.RenderTransform>

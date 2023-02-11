@@ -3,6 +3,7 @@
     <Style TargetType="ComboBox" x:Key="ComboboxDefault">
         <Setter Property="Height" Value="30"/>
         <Setter Property="Margin" Value="3"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
     </Style>
 
     <Style TargetType="ComboBox" x:Key="ComboboxHeatBalance">
@@ -10,5 +11,6 @@
         <Setter Property="Height" Value="30"/>
         <Setter Property="Margin" Value="0,3"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
     </Style>
 </ResourceDictionary>

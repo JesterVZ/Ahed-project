@@ -6,6 +6,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <ApplicationIcon>Visual\favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Visual\banner_hrs.jpg" />
@@ -16,6 +17,7 @@
     <Content Include="Visual\check.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Visual\favicon.ico" />
     <Content Include="Visual\Rotated_Squared.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
