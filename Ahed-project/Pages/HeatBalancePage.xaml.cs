@@ -23,5 +23,11 @@ namespace Ahed_project.Pages
         {
             _viewModel.ShowFull(sender);
         }
+
+        private void MouseLeave(object sender, MouseEventArgs e)
+        {
+            TextBox tb = sender as TextBox;
+            _viewModel.RaiseDeep(tb.Name);
+        }
     }
 }

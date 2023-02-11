@@ -130,6 +130,12 @@ namespace Ahed_project.ViewModel.Pages
             RaisePropertiesChanged(param);
         }
 
+        public void RaiseDeep(string name)
+        {
+            Calculation.OnPropertyChanged(name);
+            Raise(name);
+        }
+
         private CalculationFull _calculation;
         public CalculationFull Calculation
         {

@@ -174,7 +174,7 @@
                         <TextBox Style="{StaticResource Sub}" Margin="0,3,0,3" Text="{Binding Calculation.pressure_shell_outlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                     <StackPanel Margin="0,36,0,0" Style="{StaticResource HeatBalanceChild}">
-                        <TextBox x:Name="liquid_density_tube_inlet" Text="{Binding Calculation.liquid_density_tube_inlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" PreviewMouseLeftButtonDown="ShowOnClick"/>
+                        <TextBox x:Name="liquid_density_tube_inlet" Text="{Binding Calculation.liquid_density_tube_inlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave"/>
                         <TextBox Text="{Binding Calculation.liquid_density_tube_outlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" Margin="0,3,0,3"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
