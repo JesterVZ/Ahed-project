@@ -392,7 +392,7 @@ namespace Ahed_project.ViewModel.Pages
             Config.NumberOfDecimals = count;
             if (type == typeof(CalculationFull))
             {
-                Raise($"Calculation.{tb.Name}");
+                Calculation.OnPropertyChanged(tb.Name);
             }
             else
             {
