@@ -21,8 +21,8 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Margin="250,0,0,0">Flow Type</Label>
-                <RadioButton Content="Counter current" GroupName="HeatBalanceFlowType" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                <RadioButton Content="Co-current" GroupName="HeatBalanceFlowType" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                <RadioButton Content="Counter current" IsChecked="True" IsEnabled="False" GroupName="HeatBalanceFlowType" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                <RadioButton Content="Co-current" IsEnabled="False" GroupName="HeatBalanceFlowType" VerticalAlignment="Center" Margin="10,0,0,0"/>
             </StackPanel>
             <Label FontWeight="Bold">Heat Balance</Label>
             <StackPanel Orientation="Horizontal">
@@ -260,13 +260,7 @@
                     </ComboBox>
                     <StackPanel Orientation="Horizontal" Height="30">
                         <RadioButton IsChecked="{Binding FlowShell}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>
-                        <TextBox Background="{Binding FB, UpdateSourceTrigger=PropertyChanged}" Width="238" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" IsReadOnly="{Binding FlowShellTB }">
-                            <TextBox.Text>
-                                <MultiBinding Converter="{StaticResource Converter}">
-                                    <Binding Path="Calculation.flow_shell" UpdateSourceTrigger="PropertyChanged"/>
-                                </MultiBinding>
-                            </TextBox.Text>
-                        </TextBox>
+                        <TextBox Background="{Binding FB, UpdateSourceTrigger=PropertyChanged}" Text="{Binding Path=Calculation.flow_shell, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Converter}}" Width="238" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" IsReadOnly="{Binding FlowShellTB }"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}" Margin="0,3,0,3" Height="30">
                         <RadioButton IsEnabled="{Binding TSIE}" IsChecked="{Binding TemperatureShellInLet, UpdateSourceTrigger=PropertyChanged}" GroupName="HeatBalanceTemperature" VerticalAlignment="Center"/>

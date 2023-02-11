@@ -248,7 +248,7 @@
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Margin="3" Orientation="Horizontal" Grid.Column="0" Grid.Row="9">
-                        <TextBlock Grid.ColumnSpan="4" FontWeight="Bold" Margin="0 0 9 0">Baffles Clearances And Spasings</TextBlock>
+                        <TextBlock Grid.ColumnSpan="4" FontWeight="Bold" Margin="0 0 9 0">Baffles Clearance &#38; Spacings</TextBlock>
                         <Button Width="20" Height="20" Template="{StaticResource RoundedButton}" Command="{Binding ToggleCommand}">
                             <Image Source="../Visual/arrow.png" Margin="4 4 4 4" RenderTransformOrigin="0.5,0.5">
                                 <Image.RenderTransform>

@@ -415,6 +415,9 @@ namespace Ahed_project.Services.Global
             CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
             Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations.Add(calculationGet));
             _contentPageViewModel.Validation(true);
+            _heatBalanceViewModel.Pressure_tube_inlet_value = "5";
+            _heatBalanceViewModel.Pressure_shell_inlet_value = "5";
+            _heatBalanceViewModel.Raise("Calculation");
         }
         //изменение имени рассчета
         public static async void ChangeCalculationName(CalculationFull calc)
@@ -855,6 +858,7 @@ namespace Ahed_project.Services.Global
                     newProj.createdAt = _projectPageViewModel.ProjectInfo.createdAt;
                     newProj.updatedAt = _projectPageViewModel.ProjectInfo.updatedAt;
 
+
                     GlobalDataCollectorService.Project = newProj; 
                     GlobalDataCollectorService.ProjectsCollection.Add(newProj);
                     GlobalDataCollectorService.GeometryCalculated = false;
@@ -863,6 +867,7 @@ namespace Ahed_project.Services.Global
 
                     SetProject(newProj);
                     _contentPageViewModel.Validation(true);
+                    
                     Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations.Clear());
                     await Task.Factory.StartNew(() => CreateCalculation("Default"));
                 }

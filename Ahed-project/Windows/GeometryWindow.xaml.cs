@@ -20,15 +20,22 @@ namespace Ahed_project.Windows
     /// </summary>
     public partial class GeometryWindow : Window
     {
+        private GeometryWindowViewModel _geometryWindowViewModel;
         public GeometryWindow(GeometryWindowViewModel vm)
         {
             InitializeComponent();
-            DataContext = vm;
+            _geometryWindowViewModel = vm;
+            DataContext = _geometryWindowViewModel;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            _geometryWindowViewModel.TextBox = "";
         }
     }
 }
