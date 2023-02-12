@@ -571,6 +571,35 @@ namespace Ahed_project.ViewModel.Pages
                     Geometry.roller_expanded = "1";
                     break;
             }
+
+            if(Geometry.head_exchange_type == null)
+            {
+                ExchangersSelector = Exchangers.First();
+            }
+            if(Geometry.material_tubes_side == null)
+            {
+                TubesMaterial = Materials.First();
+            }
+            if (Geometry.material_shell_side == null)
+            {
+                ShellMaterial = Materials.First();
+            }
+            if (Geometry.orientation == null)
+            {
+                Orientation = Orientations.First();
+            }
+            if (Geometry.tube_profile_tubes_side == null)
+            {
+                TubeProfileSelector = TubeProfile.First();
+            }
+            if (Geometry.tube_plate_layout_tube_layout == null)
+            {
+                TubeLayout = TubePlateLayouts.First();
+            }
+            if(Geometry.tube_plate_layout_sealing_type == null)
+            {
+                SealingTypeItem = SealingTypeItems.First();
+            }
             Geometry.tube_plate_layout_div_plate_layout = DivPlateItem.Key;
             Geometry.tube_plate_layout_sealing_type = SealingTypeItem.Key;
             Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateGeometry(Geometry));

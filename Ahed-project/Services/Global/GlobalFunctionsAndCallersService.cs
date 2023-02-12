@@ -310,6 +310,7 @@ namespace Ahed_project.Services.Global
             {
                 await Task.Factory.StartNew(() => GetCalculations(_projectPageViewModel.ProjectInfo?.project_id.ToString()));
                 _mainViewModel.Title = $"{projectInfoGet?.name} ({_heatBalanceViewModel.Calculation?.name})";
+                
             }
             else
             {
@@ -333,26 +334,12 @@ namespace Ahed_project.Services.Global
                     if (result.data != null)
                     {
                         Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations = JsonConvert.DeserializeObject<ObservableCollection<CalculationFull>>(result.data.ToString()));
-                        int userId = GlobalDataCollectorService.UserId;
-                        int id = 0;
-                        using (var context = new EFContext())
+                        if(_projectPageViewModel.Calculations.Count > 0)
                         {
-                            var user = context.Users.FirstOrDefault(x => x.Id == userId);
-                            id = user.LastCalculationId ?? 0;
-                        }
-                        if (id != 0)
-                        {
-                            _projectPageViewModel.SelectedCalculation = _projectPageViewModel.Calculations.FirstOrDefault(x => x.calculation_id == id);
-                        }
-                        /*
-                        Task.Factory.StartNew(() =>
-                        {
-                            //Thread.Sleep(new TimeSpan(0, 0, 5));
-                            _projectPageViewModel.SelectedCalculation = _projectPageViewModel.Calculations.FirstOrDefault(x => x.calculation_id == id);
-                        });*/
+                            SetCalculation(_projectPageViewModel.Calculations.First());
 
-                        else
-                            _projectPageViewModel.SelectedCalculation = null;
+                        }
+                        
                         for (int i = 0; i < result.logs.Count; i++)
                         {
                             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
