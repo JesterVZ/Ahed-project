@@ -39,7 +39,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         });
         public ICommand OpenProductsWindow => new DelegateCommand(() =>
         {
-            _pageService.OpenWindow<ProductsWindow>();
+            _pageService.OpenWindow<ProductsWindow>(MasterData.OpenWindowType.WINDOW);
         });
 
         public ICommand OpenProjectsWindow => new DelegateCommand(() =>
@@ -47,19 +47,14 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             _pageService.OpenWindow<ProjectsWindow>();
         });
 
-        public ICommand OpenMaterialsWindow => new DelegateCommand(() =>
-        {
-
-        });
-
         public ICommand NewProjectCommand => new AsyncCommand(async () =>
         {
-            Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CreateNewProject());
+            await Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CreateNewProject(false));
         });
 
         public ICommand SaveCommand => new AsyncCommand(async () =>
         {
-            Task.Factory.StartNew(GlobalFunctionsAndCallersService.SaveProject);
+            await Task.Factory.StartNew(GlobalFunctionsAndCallersService.SaveProject);
         });
     }
 }
