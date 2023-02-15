@@ -12,11 +12,6 @@ namespace Ahed_project.ViewModel.Windows
     public class ProductsViewModel : BindableBase
     {
 
-        public ProductsViewModel()
-        {
-
-        }
-
         public ObservableCollection<Node> Nodes
         {
             get => GlobalDataCollectorService.Nodes;
@@ -76,12 +71,12 @@ namespace Ahed_project.ViewModel.Windows
         public ICommand OpenInTubesCommand => new DelegateCommand(() =>
         {
             GlobalFunctionsAndCallersService.SelectProductTube(SelectedProduct);
-            GlobalFunctionsAndCallersService.ChangePage(1);
+            //GlobalFunctionsAndCallersService.ChangePage(1);
         });
         public ICommand OpenInShellCommand => new DelegateCommand(() =>
         {
             GlobalFunctionsAndCallersService.SelectProductShell(SelectedProduct);
-            GlobalFunctionsAndCallersService.ChangePage(2);
+            //GlobalFunctionsAndCallersService.ChangePage(2);
         });
         public ICommand NewfluidCommand => new DelegateCommand(() => { });
         public ICommand EditfluidCommand => new DelegateCommand(() => { });

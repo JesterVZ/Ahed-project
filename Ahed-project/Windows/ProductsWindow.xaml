@@ -26,7 +26,7 @@
             <ComboBoxItem IsSelected="True">Date Created</ComboBoxItem>
             <ComboBoxItem>Date Modified</ComboBoxItem>
         </ComboBox>
-        <Button Grid.Column="1" Grid.Row="0" Width="100" HorizontalAlignment="Right" Margin="0,4,3,4" Command="{Binding GetCurrentProducts}">GetAll</Button>
+        <Button Style="{StaticResource MainButton}" Grid.Column="1" Grid.Row="0" Width="100" HorizontalAlignment="Right" Margin="0,4,3,4" Command="{Binding GetCurrentProducts}">GetAll</Button>
         <TreeView x:Name="ProductTreeView" Grid.Column="0" Grid.Row="1" Margin="4" ItemsSource="{Binding Nodes, UpdateSourceTrigger=PropertyChanged}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectedItemChanged">
@@ -70,8 +70,8 @@
             </Grid.ColumnDefinitions>
             <TextBlock Text="Search" VerticalAlignment="Center" Margin="4"/>
             <TextBox Grid.Column="1" Margin="4" Text="{Binding Path=SearchBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Grid.Column="2" Click="Button_Click" IsCancel="True" IsEnabled="{Binding IsProductSelected, UpdateSourceTrigger=PropertyChanged}" Command="{Binding OpenInTubesCommand}" Margin="4">Open in Tubes</Button>
-            <Button Grid.Column="3" Click="Button_Click" IsCancel="True" IsEnabled="{Binding IsProductSelected, UpdateSourceTrigger=PropertyChanged}" Command="{Binding OpenInShellCommand}" Margin="4">Open in Shell</Button>
+            <Button Style="{StaticResource MainButton}" Grid.Column="2" Click="Button_Click" IsCancel="True" IsEnabled="{Binding IsProductSelected, UpdateSourceTrigger=PropertyChanged}" Command="{Binding OpenInTubesCommand}" Margin="4">Open in Tubes</Button>
+            <Button Style="{StaticResource MainButton}" Grid.Column="3" Click="Button_Click" IsCancel="True" IsEnabled="{Binding IsProductSelected, UpdateSourceTrigger=PropertyChanged}" Command="{Binding OpenInShellCommand}" Margin="4">Open in Shell</Button>
             <Button Grid.Column="4" Margin="4" Command="{Binding NewfluidCommand}" Visibility="Hidden">New Fluid</Button>
             <Button Grid.Column="5" IsEnabled="{Binding IsProductSelected, UpdateSourceTrigger=PropertyChanged}" Command="{Binding EditfluidCommand}" Margin="4" Visibility="Hidden">Edit Fluid</Button>
         </Grid>

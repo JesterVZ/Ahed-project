@@ -118,7 +118,7 @@ namespace Ahed_project.ViewModel.Pages
                 _geometry = value;
                 ExchangersSelector = Exchangers.FirstOrDefault(x => x.Key == value?.head_exchange_type);
                 Orientation = Orientations.FirstOrDefault(x => x.Value == value?.orientation);
-                TubeProfileSelector = TubeProfile.FirstOrDefault(x => x.Key == value?.tube_profile_tubes_side);
+                TubeProfileSelector = TubeProfile.FirstOrDefault(x => x.Value == value?.tube_profile_tubes_side);
                 ShellMaterial = Materials.FirstOrDefault(x => x.Value.name == value?.material_shell_side);
                 TubesMaterial = Materials.FirstOrDefault(x => x.Value.name == value?.material_tubes_side);
                 TubeLayout = TubePlateLayouts.FirstOrDefault(x => x.Value.Name == value?.tube_plate_layout_tube_layout);
@@ -570,6 +570,35 @@ namespace Ahed_project.ViewModel.Pages
                 case "Yes":
                     Geometry.roller_expanded = "1";
                     break;
+            }
+
+            if(Geometry.head_exchange_type == null)
+            {
+                ExchangersSelector = Exchangers.First();
+            }
+            if(Geometry.material_tubes_side == null)
+            {
+                TubesMaterial = Materials.First();
+            }
+            if (Geometry.material_shell_side == null)
+            {
+                ShellMaterial = Materials.First();
+            }
+            if (Geometry.orientation == null)
+            {
+                Orientation = Orientations.First();
+            }
+            if (Geometry.tube_profile_tubes_side == null)
+            {
+                TubeProfileSelector = TubeProfile.First();
+            }
+            if (Geometry.tube_plate_layout_tube_layout == null)
+            {
+                TubeLayout = TubePlateLayouts.First();
+            }
+            if(Geometry.tube_plate_layout_sealing_type == null)
+            {
+                SealingTypeItem = SealingTypeItems.First();
             }
             Geometry.tube_plate_layout_div_plate_layout = DivPlateItem.Key;
             Geometry.tube_plate_layout_sealing_type = SealingTypeItem.Key;

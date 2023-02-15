@@ -310,6 +310,7 @@ namespace Ahed_project.Services.Global
             {
                 await Task.Factory.StartNew(() => GetCalculations(_projectPageViewModel.ProjectInfo?.project_id.ToString()));
                 _mainViewModel.Title = $"{projectInfoGet?.name} ({_heatBalanceViewModel.Calculation?.name})";
+                
             }
             else
             {
@@ -333,26 +334,12 @@ namespace Ahed_project.Services.Global
                     if (result.data != null)
                     {
                         Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations = JsonConvert.DeserializeObject<ObservableCollection<CalculationFull>>(result.data.ToString()));
-                        int userId = GlobalDataCollectorService.UserId;
-                        int id = 0;
-                        using (var context = new EFContext())
+                        if(_projectPageViewModel.Calculations.Count > 0)
                         {
-                            var user = context.Users.FirstOrDefault(x => x.Id == userId);
-                            id = user.LastCalculationId ?? 0;
-                        }
-                        if (id != 0)
-                        {
-                            _projectPageViewModel.SelectedCalculation = _projectPageViewModel.Calculations.FirstOrDefault(x => x.calculation_id == id);
-                        }
-                        /*
-                        Task.Factory.StartNew(() =>
-                        {
-                            //Thread.Sleep(new TimeSpan(0, 0, 5));
-                            _projectPageViewModel.SelectedCalculation = _projectPageViewModel.Calculations.FirstOrDefault(x => x.calculation_id == id);
-                        });*/
+                            SetCalculation(_projectPageViewModel.Calculations.First());
 
-                        else
-                            _projectPageViewModel.SelectedCalculation = null;
+                        }
+                        
                         for (int i = 0; i < result.logs.Count; i++)
                         {
                             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
@@ -373,7 +360,7 @@ namespace Ahed_project.Services.Global
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Идет сохранение проекта...")));
             if(GlobalDataCollectorService.Project == null)
             {
-                await Task.Factory.StartNew(() => CreateNewProject());
+                await Task.Factory.StartNew(() => CreateNewProject(true));
 
             } else
             {
@@ -830,7 +817,7 @@ namespace Ahed_project.Services.Global
         }
 
         //Создать проект
-        public static async void CreateNewProject()
+        public static async void CreateNewProject(bool afterSave)
         {
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Начало создания проекта...")));
             var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CREATE, ""));
@@ -844,19 +831,23 @@ namespace Ahed_project.Services.Global
                         Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
                     }
                     var newProj = JsonConvert.DeserializeObject<ProjectInfoGet>(result.data.ToString());
-                    newProj.name = _projectPageViewModel.ProjectInfo.name;
-                    newProj.description = _projectPageViewModel.ProjectInfo.description;
-                    newProj.units = _projectPageViewModel.ProjectInfo.units;
-                    newProj.revision = _projectPageViewModel.ProjectInfo.revision;
-                    newProj.number_of_decimals = _projectPageViewModel.ProjectInfo.number_of_decimals;
-                    newProj.category = _projectPageViewModel.ProjectInfo.category;
-                    newProj.customer = _projectPageViewModel.ProjectInfo.customer;
-                    newProj.contact = _projectPageViewModel.ProjectInfo.contact;
-                    newProj.customer_reference = _projectPageViewModel.ProjectInfo.customer_reference;
-                    newProj.keywords = _projectPageViewModel.ProjectInfo.keywords;
-                    newProj.comments = _projectPageViewModel.ProjectInfo.comments;
-                    newProj.createdAt = _projectPageViewModel.ProjectInfo.createdAt;
-                    newProj.updatedAt = _projectPageViewModel.ProjectInfo.updatedAt;
+                    if (!afterSave)
+                    {
+                        newProj.name = _projectPageViewModel.ProjectInfo.name;
+                        newProj.description = _projectPageViewModel.ProjectInfo.description;
+                        newProj.units = _projectPageViewModel.ProjectInfo.units;
+                        newProj.revision = _projectPageViewModel.ProjectInfo.revision;
+                        newProj.number_of_decimals = _projectPageViewModel.ProjectInfo.number_of_decimals;
+                        newProj.category = _projectPageViewModel.ProjectInfo.category;
+                        newProj.customer = _projectPageViewModel.ProjectInfo.customer;
+                        newProj.contact = _projectPageViewModel.ProjectInfo.contact;
+                        newProj.customer_reference = _projectPageViewModel.ProjectInfo.customer_reference;
+                        newProj.keywords = _projectPageViewModel.ProjectInfo.keywords;
+                        newProj.comments = _projectPageViewModel.ProjectInfo.comments;
+                        newProj.createdAt = _projectPageViewModel.ProjectInfo.createdAt;
+                        newProj.updatedAt = _projectPageViewModel.ProjectInfo.updatedAt;
+                    }
+                   
 
 
                     GlobalDataCollectorService.Project = newProj; 
