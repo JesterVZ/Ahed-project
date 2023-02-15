@@ -4,6 +4,7 @@ using Ahed_project.Services.Global;
 using Ahed_project.Settings;
 using DevExpress.Mvvm;
 using DocumentFormat.OpenXml.Math;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -46,7 +47,10 @@ namespace Ahed_project.ViewModel.Pages
             TemperatureTubesOut = true;
             TSIE = true;
             TSOE = true;
+
+            BorderVisible = _baseColorBrush;
         }
+        private SolidColorBrush _baseColorBrush = new SolidColorBrush(Color.FromRgb(171, 173, 179));
         public Brush FB { get; set; }
         public Brush TIB { get; set; }
         public Brush TOB { get; set; }
@@ -405,6 +409,24 @@ namespace Ahed_project.ViewModel.Pages
                 Raise(tb.Name);
             }
             Config.NumberOfDecimals = oldCount;
+            if (BorderVisible == _baseColorBrush)
+            {
+                BorderVisible = new SolidColorBrush(Color.FromRgb(255,0,0));
+            }
+            else
+            {
+                BorderVisible = _baseColorBrush;
+            }
+        }
+
+        private Brush _borderVisible;
+        public Brush BorderVisible 
+        {
+            get => _borderVisible;
+            set
+            {
+                _borderVisible = value;
+            }
         }
     }
 }
