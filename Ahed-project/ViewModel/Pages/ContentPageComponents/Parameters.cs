@@ -15,10 +15,6 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             set
             {
                 _selectedPage = value;
-                if (value == 6)
-                {
-                    Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateOverall());
-                }
             }
         }
         public string ProjectValidationStatusSource { get; set; }
