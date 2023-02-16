@@ -22,7 +22,7 @@ namespace Ahed_project.ViewModel.Pages
             ArrowAngle = "0";
             SystemItems = new ObservableCollection<string>()
             {
-                "Si",
+                "SI",
                 "Metric"
             };
             System = SystemItems[0];
@@ -70,8 +70,8 @@ namespace Ahed_project.ViewModel.Pages
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    _system = "Si";
-                    ProjectInfo.units = "Si";
+                    _system = "SI";
+                    ProjectInfo.units = "SI";
                 }
                 else
                 {

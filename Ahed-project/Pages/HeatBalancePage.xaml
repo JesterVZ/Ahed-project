@@ -5,6 +5,7 @@
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
+      Background="White"
       xmlns:converter="clr-namespace:Ahed_project.MasterData"
       d:DesignHeight="1000" d:DesignWidth="800"
       Title="HeatBalancePage">
@@ -71,7 +72,7 @@
                     </StackPanel>
                     <StackPanel Style="{StaticResource Child}">
                         <Label Style="{StaticResource Left}">Duty</Label>
-                        <Label Style="{StaticResource Right}">kcal/hr</Label>
+                        <Label Style="{StaticResource Right}">kW</Label>
                     </StackPanel>
                     <StackPanel Style="{StaticResource Child}">
                         <Label Style="{StaticResource Left}">Pressure</Label>
@@ -84,11 +85,11 @@
                     </StackPanel>
                     <StackPanel Style="{StaticResource Child}">
                         <Label Style="{StaticResource LeftWMargin}">Specific heat</Label>
-                        <Label Style="{StaticResource Right}">kcal/kg•°С</Label>
+                        <Label Style="{StaticResource Right}">kj/kg•°С</Label>
                     </StackPanel>
                     <StackPanel Style="{StaticResource Child}">
                         <Label Style="{StaticResource LeftWMargin}">Thermal conductivity</Label>
-                        <Label Style="{StaticResource Right}">kcal/m•hr•°C</Label>
+                        <Label Style="{StaticResource Right}">W/m•°C</Label>
                     </StackPanel>
                     <StackPanel Style="{StaticResource Child}">
                         <Label Style="{StaticResource LeftWMargin}">Consistency Index</Label>
@@ -100,7 +101,7 @@
                     </StackPanel>
                     <StackPanel Style="{StaticResource Child}">
                         <Label Style="{StaticResource LeftWMargin}">Latent heat</Label>
-                        <Label Style="{StaticResource Right}">kcal/kg</Label>
+                        <Label Style="{StaticResource Right}">j/kg</Label>
                     </StackPanel>
                     <Label FontWeight="Bold">Gas Phase</Label>
                     <StackPanel Style="{StaticResource Child}">
@@ -109,11 +110,11 @@
                     </StackPanel>
                     <StackPanel Style="{StaticResource Child}">
                         <Label Style="{StaticResource LeftWMargin}">Specific heat gas at constant pressure(Cp)</Label>
-                        <Label Style="{StaticResource Right}">kcal/kg•°C</Label>
+                        <Label Style="{StaticResource Right}" Content="kj/kg•°C"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource Child}">
                         <Label Style="{StaticResource LeftWMargin}">Thermal Conductivity Gas</Label>
-                        <Label Style="{StaticResource Right}">kcal/m•hr•°C</Label>
+                        <Label Style="{StaticResource Right}" Content="W/m•°C"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource Child}">
                         <Label Style="{StaticResource LeftWMargin}">Dynamic viscosity gas</Label>
