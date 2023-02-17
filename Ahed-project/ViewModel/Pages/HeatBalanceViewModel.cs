@@ -365,8 +365,7 @@ namespace Ahed_project.ViewModel.Pages
 
         public void Refresh()
         {
-            RaisePropertiesChanged(nameof(Calculation));
-            RaisePropertiesChanged(nameof(ShellInletTemp));
+            RaisePropertiesChanged(String.Empty);
         }
 
         public class TubesVariables
