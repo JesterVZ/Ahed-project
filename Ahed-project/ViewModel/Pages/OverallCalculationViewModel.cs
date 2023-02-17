@@ -86,9 +86,9 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
 
-        public void Refrash()
+        public void Refresh()
         {
-            RaisePropertiesChanged(nameof(Overall));
+            RaisePropertiesChanged(String.Empty);
         }
         public OverallCalculationViewModel()
         {

@@ -464,9 +464,9 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
 
-        public void Refrash()
+        public void Refresh()
         {
-            RaisePropertiesChanged(nameof(Geometry));
+            RaisePropertiesChanged(String.Empty);
         }
 
         public GeometryPageViewModel()
