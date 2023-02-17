@@ -1,5 +1,6 @@
 ﻿using Ahed_project.ViewModel.Pages;
 using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -24,9 +25,9 @@ namespace Ahed_project.Pages
             _viewModel.ShowFull(sender);
         }
 
-        private void MouseLeave(object sender, MouseEventArgs e)
+        private new void MouseLeave(object sender, MouseEventArgs e)
         {
-            TextBox tb = sender as TextBox;
+            FrameworkElement tb = sender as FrameworkElement;
             _viewModel.RaiseDeep(tb.Name);
         }
     }

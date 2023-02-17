@@ -134,20 +134,6 @@ namespace Ahed_project.ViewModel.Pages
             RaisePropertiesChanged(param);
         }
 
-        public void RaiseDeep(string name)
-        {
-            var type = typeof(HeatBalanceViewModel);
-            var field = type.GetProperty(name);
-            if (field == null)
-            {
-                Calculation.OnPropertyChanged(name);
-            }
-            else
-            {
-                Raise(name);
-            }
-        }
-
         private CalculationFull _calculation;
         public CalculationFull Calculation
         {
@@ -392,7 +378,7 @@ namespace Ahed_project.ViewModel.Pages
         public void ShowFull(object sender)
         {
             var type = typeof(HeatBalanceViewModel);
-            var tb = (TextBox)sender;
+            var tb = (FrameworkElement)sender;
             var field = type.GetProperty(tb.Name);
             object value = null;
             if (field == null)
@@ -426,6 +412,20 @@ namespace Ahed_project.ViewModel.Pages
             else
             {
                 BorderVisible = _baseColorBrush;
+            }
+        }
+
+        public void RaiseDeep(string name)
+        {
+            var type = typeof(HeatBalanceViewModel);
+            var field = type.GetProperty(name);
+            if (field == null)
+            {
+                Calculation.OnPropertyChanged(name);
+            }
+            else
+            {
+                Raise(name);
             }
         }
 
