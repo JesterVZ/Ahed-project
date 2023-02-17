@@ -136,8 +136,16 @@ namespace Ahed_project.ViewModel.Pages
 
         public void RaiseDeep(string name)
         {
-            Calculation.OnPropertyChanged(name);
-            Raise(name);
+            var type = typeof(HeatBalanceViewModel);
+            var field = type.GetProperty(name);
+            if (field == null)
+            {
+                Calculation.OnPropertyChanged(name);
+            }
+            else
+            {
+                Raise(name);
+            }
         }
 
         private CalculationFull _calculation;
@@ -397,6 +405,8 @@ namespace Ahed_project.ViewModel.Pages
             {
                 value = field.GetValue(this);
             }
+            if (value == null)
+                return;
             int count = value.ToString().Split(Config.DoubleSplitter).Last().Length;
             var oldCount = Config.NumberOfDecimals;
             Config.NumberOfDecimals = count;
