@@ -7,6 +7,7 @@
       mc:Ignorable="d" 
       Background="White"
       xmlns:converter="clr-namespace:Ahed_project.MasterData"
+      xmlns:controls="clr-namespace:Ahed_project.UserControlsCustom"
       d:DesignHeight="1000" d:DesignWidth="800"
       Title="HeatBalancePage">
     <Page.Resources>
@@ -176,7 +177,7 @@
                     </StackPanel>
                     <StackPanel Margin="0,36,0,0" Style="{StaticResource HeatBalanceChild}">
                         <TextBox x:Name="liquid_density_tube_inlet" Text="{Binding Calculation.liquid_density_tube_inlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave"/>
-                        <TextBox Text="{Binding Calculation.liquid_density_tube_outlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}" BorderBrush="{Binding BorderVisible}"/>
+                        <TextBox Text="{Binding Calculation.liquid_density_tube_outlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
                         <TextBox Text="{Binding Calculation.liquid_specific_heat_tube_inlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource Sub}"/>

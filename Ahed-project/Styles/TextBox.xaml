@@ -1,5 +1,18 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls ="clr-namespace:Ahed_project.UserControlsCustom">
+    <Style x:Key="customTextBoxStyle" TargetType="{x:Type controls:CustomTextBox}">
+        <Style.Triggers>
+            <Trigger Property="IsError" Value="True">
+                <Setter Property="BorderBrush" Value="Red"/>
+            </Trigger>
+            <Trigger Property="IsError" Value="False">
+                <Setter Property="BorderBrush" Value="#ABADB3"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    
     <Style TargetType="TextBox" x:Key="Default">
         <Setter Property="Height" Value="30"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
