@@ -86,7 +86,7 @@
                     </StackPanel>
                     <StackPanel Style="{StaticResource Child}">
                         <Label Style="{StaticResource LeftWMargin}">Specific heat</Label>
-                        <Label Style="{StaticResource Right}">kj/kg•°С</Label>
+                        <Label Style="{StaticResource Right}">kJ/kg•°С</Label>
                     </StackPanel>
                     <StackPanel Style="{StaticResource Child}">
                         <Label Style="{StaticResource LeftWMargin}">Thermal conductivity</Label>
@@ -102,7 +102,7 @@
                     </StackPanel>
                     <StackPanel Style="{StaticResource Child}">
                         <Label Style="{StaticResource LeftWMargin}">Latent heat</Label>
-                        <Label Style="{StaticResource Right}">j/kg</Label>
+                        <Label Style="{StaticResource Right}">J/kg</Label>
                     </StackPanel>
                     <Label FontWeight="Bold">Gas Phase</Label>
                     <StackPanel Style="{StaticResource Child}">
@@ -111,7 +111,7 @@
                     </StackPanel>
                     <StackPanel Style="{StaticResource Child}">
                         <Label Style="{StaticResource LeftWMargin}">Specific heat gas at constant pressure(Cp)</Label>
-                        <Label Style="{StaticResource Right}" Content="kj/kg•°C"/>
+                        <Label Style="{StaticResource Right}" Content="kJ/kg•°C"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource Child}">
                         <Label Style="{StaticResource LeftWMargin}">Thermal Conductivity Gas</Label>

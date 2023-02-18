@@ -79,16 +79,16 @@
                         <TabItem Header="Liquid Phase">
                             <DataGrid Name="PropertiesGrid" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" IsReadOnly="True" Height="500" ItemsSource="{Binding Product.product_properties}">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=liquid_phase_temperature}"/>
+                                    <DataGridTextColumn Header="Temp. °C" Width="150" Binding="{Binding Path=liquid_phase_temperature}"/>
                                     <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=liquid_phase_density}"/>
-                                    <DataGridTextColumn Header="Sp.Heat kj/kg°C">
+                                    <DataGridTextColumn Header="Sp.Heat kJ/kg°C">
                                         <DataGridTextColumn.Binding>
                                             <MultiBinding Converter="{StaticResource Converter}">
                                                 <Binding Path="liquid_phase_specific_heat"/>
                                             </MultiBinding>
                                         </DataGridTextColumn.Binding>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Th.Cond kj/mr*hr°C">
+                                    <DataGridTextColumn Header="Th.Cond W/m∙°C">
                                         <DataGridTextColumn.Binding>
                                             <MultiBinding Converter="{StaticResource Converter}">
                                                 <Binding Path="liquid_phase_thermal_conductivity"/>
@@ -109,7 +109,7 @@
                                             </MultiBinding>
                                         </DataGridTextColumn.Binding>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="dH kj/kg">
+                                    <DataGridTextColumn Header="dH J/kg">
                                         <DataGridTextColumn.Binding>
                                             <MultiBinding Converter="{StaticResource Converter}">
                                                 <Binding Path="liquid_phase_dh"/>
@@ -122,7 +122,7 @@
                         <TabItem Header="Gas Phase">
                             <DataGrid Name="PropertiesGridGas" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" IsReadOnly="True" Height="500" ItemsSource="{Binding Product.product_properties}">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=gas_phase_temperature}"/>
+                                    <DataGridTextColumn Header="Temp. °C" Width="150" Binding="{Binding Path=gas_phase_temperature}"/>
                                     <DataGridTextColumn Header="Dens kg/m³" Width="100">
                                         <DataGridTextColumn.Binding>
                                             <MultiBinding Converter="{StaticResource Converter}">
@@ -130,14 +130,14 @@
                                             </MultiBinding>
                                         </DataGridTextColumn.Binding>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Sp.Heat kj/kg°C">
+                                    <DataGridTextColumn Header="Sp.Heat kJ/kg°C">
                                         <DataGridTextColumn.Binding>
                                             <MultiBinding Converter="{StaticResource Converter}">
                                                 <Binding Path="gas_phase_specific_heat"/>
                                             </MultiBinding>
                                         </DataGridTextColumn.Binding>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Th.Cond kj/mr*hr°C">
+                                    <DataGridTextColumn Header="Th.Cond W/m∙°C">
                                         <DataGridTextColumn.Binding>
                                             <MultiBinding Converter="{StaticResource Converter}">
                                                 <Binding Path="gas_phase_thermal_conductivity"/>
