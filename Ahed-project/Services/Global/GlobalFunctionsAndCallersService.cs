@@ -320,6 +320,8 @@ namespace Ahed_project.Services.Global
             }
             _contentPageViewModel.Validation(false);
             _projectPageViewModel.FieldsState = false;
+            _overallCalculationViewModel.Overall = new OverallFull();
+            _overallCalculationViewModel.Refresh();
         }
 
         //Получение рассчетов
