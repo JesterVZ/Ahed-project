@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace Ahed_project.ViewModel.Pages
 {
-    public class BufflesPageViewModel : BindableBase
+    public class BafflesPageViewModel : BindableBase
     {
         public Dictionary<string, string> Type { get; set; }
         public Dictionary<string, string> BaffleType { get; set; } // No baffles, Standard heat transfer with SUPPORT baffles, Full baffles heat transfer calculation
@@ -45,9 +45,10 @@ namespace Ahed_project.ViewModel.Pages
             set { 
                 _baffle = value;
                 SelectedBaffleType = BaffleType.FirstOrDefault(x => x.Key == value?.method);
+                NumberOfBaffles = _baffle.number_of_baffles;
             } 
         }
-        public BufflesPageViewModel()
+        public BafflesPageViewModel()
         {
             Type = new Dictionary<string, string>();
             BaffleType = new Dictionary<string, string>();
@@ -118,6 +119,33 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
         #endregion
+
+        private string _numberOfBaffles;
+        public string NumberOfBaffles
+        {
+            get => _numberOfBaffles;
+            set
+            {
+                _numberOfBaffles= value;
+                Baffle.number_of_baffles= value;
+                var converted = Convert.ToDouble(value);
+                if (converted==1)
+                {
+                    BaffleType.Clear();
+                    BaffleType.Add("no_baffles", "No baffles");
+                    SelectedBaffleType = BaffleType.First();
+                }
+                else
+                {
+                    if (BaffleType.Count == 1)
+                    {
+                        BaffleType.Add("standard_heat_transfer_with_support_baffles", "Standard heat transfer with SUPPORT baffles");
+                        BaffleType.Add("full_baffles_heat_transfer_calculation", "Full baffles heat transfer calculation");
+                    }
+                }
+                RaisePropertyChanged(nameof(BaffleType));
+            }
+        }
 
         #region commands
         public ICommand ToggleCommand => new DelegateCommand(() =>

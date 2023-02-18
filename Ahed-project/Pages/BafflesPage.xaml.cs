@@ -8,7 +8,7 @@ namespace Ahed_project.Pages
     /// </summary>
     public partial class BafflesPage : Page
     {
-        public BafflesPage(BufflesPageViewModel vm)
+        public BafflesPage(BafflesPageViewModel vm)
         {
             InitializeComponent();
             DataContext = vm;

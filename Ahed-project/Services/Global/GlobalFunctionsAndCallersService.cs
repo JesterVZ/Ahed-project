@@ -44,14 +44,14 @@ namespace Ahed_project.Services.Global
         private static TubesFluidViewModel _tubesFluidViewModel;
         private static ShellFluidViewModel _shellFluidViewModel;
         private static GeometryPageViewModel _geometryPageViewModel;
-        private static BufflesPageViewModel _bufflesPageViewModel;
+        private static BafflesPageViewModel _bufflesPageViewModel;
         private static OverallCalculationViewModel _overallCalculationViewModel;
         private static CreateExcelService _createExcelService;
         private static MainViewModel _mainViewModel;
 
         public GlobalFunctionsAndCallersService(SendDataService sendDataService, ContentPageViewModel contentPage,
             ProjectPageViewModel projectPageViewModel, IMapper mapper, HeatBalanceViewModel heatBalanceViewModel, TubesFluidViewModel tubesFluidViewModel,
-            ShellFluidViewModel shellFluidViewModel, GeometryPageViewModel geometryPageViewModel, BufflesPageViewModel bufflesPageViewModel, MainViewModel mainViewModel, OverallCalculationViewModel overallCalculationViewModel, CreateExcelService createExcelService)
+            ShellFluidViewModel shellFluidViewModel, GeometryPageViewModel geometryPageViewModel, BafflesPageViewModel bufflesPageViewModel, MainViewModel mainViewModel, OverallCalculationViewModel overallCalculationViewModel, CreateExcelService createExcelService)
         {
             _sendDataService = sendDataService;
             _contentPageViewModel = contentPage;
