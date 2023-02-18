@@ -22,7 +22,7 @@
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Calculate" Command="{Binding Calculate}" Margin="0 0 12 0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
-                        <Button Content="Batch calculation"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
+                        <Button IsEnabled="False" Content="Batch calculation"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Width="800" FontWeight="Bold" Grid.Column="0" Grid.Row="0">Flow Data</Label>
