@@ -111,7 +111,7 @@
                     </StackPanel>
                     <StackPanel Style="{StaticResource Child}">
                         <Label Style="{StaticResource LeftWMargin}">Specific heat gas at constant pressure(Cp)</Label>
-                        <Label Style="{StaticResource Right}" Content="kj/kg•°C"/>
+                        <Label Style="{StaticResource Right}" Content="kJ/kg•°C"/>
                     </StackPanel>
                     <StackPanel Style="{StaticResource Child}">
                         <Label Style="{StaticResource LeftWMargin}">Thermal Conductivity Gas</Label>
