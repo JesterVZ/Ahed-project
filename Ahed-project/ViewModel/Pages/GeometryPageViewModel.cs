@@ -1,5 +1,7 @@
 ﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.GeometryClasses;
+using Ahed_project.Migrations;
 using Ahed_project.Services.Global;
 using DevExpress.DXBinding.Native;
 using DevExpress.Mvvm;
@@ -12,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace Ahed_project.ViewModel.Pages
@@ -606,5 +609,51 @@ namespace Ahed_project.ViewModel.Pages
         });
 
         #endregion
+
+        public void ShowFull(object sender)
+        {
+            var type = typeof(GeometryPageViewModel);
+            var tb = (FrameworkElement)sender;
+            var field = type.GetProperty(tb.Name);
+            object value = null;
+            if (field == null)
+            {
+                type = typeof(GeometryFull);
+                field = type.GetProperty(tb.Name);
+                value = field.GetValue(Geometry);
+            }
+            else
+            {
+                value = field.GetValue(this);
+            }
+            if (value == null)
+                return;
+            int count = value.ToString().Split(Config.DoubleSplitter).Last().Length;
+            var oldCount = Config.NumberOfDecimals;
+            Config.NumberOfDecimals = count;
+            if (type == typeof(GeometryFull))
+            {
+                Geometry.OnPropertyChanged(tb.Name);
+            }
+            else
+            {
+                RaisePropertyChanged(tb.Name);
+            }
+            Config.NumberOfDecimals = oldCount;
+        }
+
+        public void RaiseDeep(string name)
+        {
+            var type = typeof(GeometryPageViewModel);
+            var field = type.GetProperty(name);
+            if (field == null)
+            {
+                Geometry.OnPropertyChanged(name);
+            }
+            else
+            {
+                RaisePropertyChanged(name);
+            }
+        }
     }
 }
