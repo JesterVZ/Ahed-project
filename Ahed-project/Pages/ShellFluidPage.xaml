@@ -81,14 +81,14 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Temp °C" Width="150" Binding="{Binding Path=liquid_phase_temperature}"/>
                                     <DataGridTextColumn Header="Dens kg/m³" Width="100" Binding="{Binding Path=liquid_phase_density}"/>
-                                    <DataGridTextColumn Header="Sp.Heat kj/kg°C">
+                                    <DataGridTextColumn Header="Sp.Heat kJ/kg°C">
                                         <DataGridTextColumn.Binding>
                                             <MultiBinding Converter="{StaticResource Converter}">
                                                 <Binding Path="liquid_phase_specific_heat"/>
                                             </MultiBinding>
                                         </DataGridTextColumn.Binding>
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Th.Cond kj/mr*hr°C">
+                                    <DataGridTextColumn Header="Th.cond kj/mr*hr°C">
                                         <DataGridTextColumn.Binding>
                                             <MultiBinding Converter="{StaticResource Converter}">
                                                 <Binding Path="liquid_phase_thermal_conductivity"/>

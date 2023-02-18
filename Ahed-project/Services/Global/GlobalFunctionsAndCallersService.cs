@@ -357,7 +357,7 @@ namespace Ahed_project.Services.Global
         //Сохранение проекта
         public async static void SaveProject()
         {
-            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Идет сохранение проекта...")));
+            
             if(GlobalDataCollectorService.Project == null)
             {
                 await Task.Factory.StartNew(() => CreateNewProject(true));
@@ -365,6 +365,12 @@ namespace Ahed_project.Services.Global
             } else
             {
                 var projectInfoSend = _mapper.Map<ProjectInfoSend>(GlobalDataCollectorService.Project);
+                if(projectInfoSend.Name == null)
+                {
+                    Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Error", "Введите имя проекта!")));
+                    return;
+                }
+                Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Идет сохранение проекта...")));
                 string json = JsonConvert.SerializeObject(projectInfoSend);
                 var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE, json, GlobalDataCollectorService.Project.project_id.ToString()));
                 Responce result = JsonConvert.DeserializeObject<Responce>(response);
