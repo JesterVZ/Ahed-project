@@ -1,4 +1,7 @@
-﻿using Ahed_project.MasterData.BafflesClasses;
+﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData.BafflesClasses;
+using Ahed_project.MasterData.CalculateClasses;
+using Ahed_project.Migrations;
 using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
 using System;
@@ -8,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Ahed_project.ViewModel.Pages
 {
@@ -173,6 +177,52 @@ namespace Ahed_project.ViewModel.Pages
         public void Raise(string name)
         {
             RaisePropertiesChanged(name);
+        }
+
+        public void ShowFull(object sender)
+        {
+            var type = typeof(BafflesPageViewModel);
+            var tb = (FrameworkElement)sender;
+            var field = type.GetProperty(tb.Name);
+            object value = null;
+            if (field == null)
+            {
+                type = typeof(BaffleFull);
+                field = type.GetProperty(tb.Name);
+                value = field.GetValue(Baffle);
+            }
+            else
+            {
+                value = field.GetValue(this);
+            }
+            if (value == null)
+                return;
+            int count = value.ToString().Split(Config.DoubleSplitter).Last().Length;
+            var oldCount = Config.NumberOfDecimals;
+            Config.NumberOfDecimals = count;
+            if (type == typeof(BaffleFull))
+            {
+                Baffle.OnPropertyChanged(tb.Name);
+            }
+            else
+            {
+                Raise(tb.Name);
+            }
+            Config.NumberOfDecimals = oldCount;
+        }
+
+        public void RaiseDeep(string name)
+        {
+            var type = typeof(BafflesPageViewModel);
+            var field = type.GetProperty(name);
+            if (field == null)
+            {
+                Baffle.OnPropertyChanged(name);
+            }
+            else
+            {
+                Raise(name);
+            }
         }
     }
 }
