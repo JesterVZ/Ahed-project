@@ -79,11 +79,50 @@ namespace Ahed_project.Services.Global
             GlobalDataCollectorService.ProjectsCollection = projects;
             _projectPageViewModel.ProjectInfo.number_of_decimals = 2;
             _projectPageViewModel.Raise();
+            CreateProjectNodes(projects);
             await Task.Factory.StartNew(DownLoadProducts);
             await Task.Factory.StartNew(GetMaterials);
             await Task.Factory.StartNew(DownloadGeometries);
 
         }
+
+        // Создание узлов для проектов
+        private static void CreateProjectNodes(List<ProjectInfoGet> projects)
+        {
+            Dictionary<int, Dictionary<int, List<ProjectInfoGet>>> years = new Dictionary<int, Dictionary<int, List<ProjectInfoGet>>>();
+            foreach (var project in projects)
+            {
+                var date = DateTime.Parse(project.updatedAt ?? project.createdAt);
+                if (!years.TryAdd(date.Year, new Dictionary<int, List<ProjectInfoGet>>() { { date.Month, new List<ProjectInfoGet>() { project } } }))
+                {
+                    if (!years[date.Year].TryAdd(date.Month, new List<ProjectInfoGet>() { project }))
+                    {
+                        years[date.Year][date.Month].Add(project);
+                    }
+                }
+            }
+            App.Current.Dispatcher.Invoke(() => { GlobalDataCollectorService.ProjectNodes.Clear(); GlobalDataCollectorService.AllProjects.Clear(); });
+            foreach (var year in years)
+            {
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    Node node = new Node();
+                    node.Id = Guid.NewGuid().ToString();
+                    node.Name = year.Key.ToString();
+                    node.Nodes = new ObservableCollection<Node>();
+                    foreach (var month in year.Value)
+                    {
+                        Node monthNode = new Node();
+                        monthNode.Id = Guid.NewGuid().ToString();
+                        monthNode.Name = new DateTime(1, month.Key, 1).ToString("MMMM");
+                        GlobalDataCollectorService.AllProjects.Add(monthNode.Id, month.Value);
+                        node.Nodes.Add(monthNode);
+                    }
+                    GlobalDataCollectorService.ProjectNodes.Add(node);
+                });
+            }
+        }
+
         //получение состояний вкладок
         public static async Task GetTabState()
         {
@@ -261,11 +300,7 @@ namespace Ahed_project.Services.Global
                         Name = new DateTime(1, month.month_number, 1).ToString("MMMM")
                     };
                     node.Nodes.Add(monthNode);
-                    GlobalDataCollectorService.AllProducts.Add(month.Id, new List<ProductGet>());
-                    foreach (var product in month.products)
-                    {
-                        GlobalDataCollectorService.AllProducts[month.Id].Add(product);
-                    }
+                    GlobalDataCollectorService.AllProducts.Add(month.Id, month.products.ToList());
                 }
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Nodes.Add(node));
             }

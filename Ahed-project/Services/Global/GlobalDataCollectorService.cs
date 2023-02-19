@@ -23,6 +23,8 @@ namespace Ahed_project.Services.Global
             IsShelltSave = true;
             IsHeatBalancetSave = true;
             IsGeometrytSave = true;
+            ProjectNodes = new ObservableCollection<Node>();
+            AllProjects = new Dictionary<string, List<ProjectInfoGet>>();
         }
         #region Global
         public static ObservableCollection<LoggerMessage> Logs { get; set; }
@@ -53,6 +55,8 @@ namespace Ahed_project.Services.Global
         #region Project
         public static List<ProjectInfoGet> ProjectsCollection { get; set; }
         public static ProjectInfoGet Project { get; set; }
+        public static Dictionary<string, List<ProjectInfoGet>> AllProjects { get; set; }
+        public static ObservableCollection<Node> ProjectNodes { get; set; }
         #endregion
         #region Geometry
         public static ObservableCollection<GeometryFull> GeometryCollection { get; set; }
