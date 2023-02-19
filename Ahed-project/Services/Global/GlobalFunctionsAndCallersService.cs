@@ -208,6 +208,7 @@ namespace Ahed_project.Services.Global
         //запрос к Overall (когда нажали calculate или просто переключились на вкладку)
         public static async Task CalculateOverall(OverallFull overall = null)
         {
+            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Начало расчета overall...")));
             int calculation_id;
             using (var context = new EFContext())
             {
@@ -245,9 +246,18 @@ namespace Ahed_project.Services.Global
 
                 });
                 var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.CALCULATE_OVERALL, json, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString()));
-                Responce result = JsonConvert.DeserializeObject<Responce>(response);
-                var o = JsonConvert.DeserializeObject<OverallFull>(result.data.ToString());
-                _overallCalculationViewModel.Overall = o;
+                if(response != null)
+                {
+                    Responce result = JsonConvert.DeserializeObject<Responce>(response);
+                    for (int i = 0; i < result.logs?.Count; i++)
+                    {
+                        Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i]?.type, result.logs[i]?.message)));
+                    }
+                    
+                    var o = JsonConvert.DeserializeObject<OverallFull>(result.data.ToString());
+                    _overallCalculationViewModel.Overall = o;
+                }
+                
             } else
             {
                 var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.CALCULATE_OVERALL, null, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString()));
