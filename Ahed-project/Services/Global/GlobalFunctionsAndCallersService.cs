@@ -554,6 +554,27 @@ namespace Ahed_project.Services.Global
                         }
                     }
                 }
+                var overallResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_OVERALL, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
+                if(overallResponse != null)
+                {
+                    Responce result = JsonConvert.DeserializeObject<Responce>(overallResponse);
+                    if (result != null)
+                    {
+                        for (int i = 0; i < result.logs?.Count; i++)
+                        {
+                            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i]?.type, result.logs[i]?.message)));
+                        }
+                        if (result.data != null)
+                        {
+                            OverallFull overall = JsonConvert.DeserializeObject<OverallFull>(result.data.ToString());
+                            _overallCalculationViewModel.Overall = overall;
+                        }
+                        else
+                        {
+                            _overallCalculationViewModel.Overall = null;
+                        }
+                    }
+                }
             }
             else
             {
@@ -951,8 +972,12 @@ namespace Ahed_project.Services.Global
             {
                 SetProject(null);
             }
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.DELETE_PROJECT,null,selectedProject.project_id.ToString()));
-            GlobalDataCollectorService.ProjectsCollection.Remove(selectedProject);
+            if(MessageBox.Show("Удалить проект?", "Удаление", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.DELETE_PROJECT, null, selectedProject.project_id.ToString()));
+                GlobalDataCollectorService.ProjectsCollection.Remove(selectedProject);
+            }
+            
         }
     }
 }

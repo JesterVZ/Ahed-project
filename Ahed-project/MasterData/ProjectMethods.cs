@@ -25,6 +25,7 @@
         CALCULATE_BAFFLE,
         GET_GEOMETRY,
         GET_BAFFLE,
+        GET_OVERALL,
         CALCULATE_OVERALL,
         DELETE_PROJECT
     }

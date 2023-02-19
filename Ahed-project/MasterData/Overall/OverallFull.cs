@@ -139,18 +139,18 @@ namespace Ahed_project.MasterData.Overall
         private string _vibrations_inlet_turbulent_buffeting_ratio ;
         private string _vibrations_central_turbulent_buffeting_ratio ;
         private string _vibrations_outlet_turbulent_buffeting_ratio ;
-        private int _k_side_tube_inlet_is_edit ;
-        private int _k_side_tube_outlet_is_edit ;
-        private int _k_side_shell_inlet_is_edit ;
-        private int _k_side_shell_outlet_is_edit ;
-        private int _k_fouled_inlet_is_edit ;
-        private int _k_fouled_outlet_is_edit ;
-        private int _k_global_fouled_is_edit ;
-        private int _acoustic_vibration_exist_inlet ;
-        private int _acoustic_vibration_exist_central ;
-        private int _acoustic_vibration_exist_outlet ;
-        private int _nr_modules_is_edit ;
-        private int _use_viscosity_correction ;
+        private int? _k_side_tube_inlet_is_edit ;
+        private int? _k_side_tube_outlet_is_edit ;
+        private int? _k_side_shell_inlet_is_edit ;
+        private int? _k_side_shell_outlet_is_edit ;
+        private int? _k_fouled_inlet_is_edit ;
+        private int? _k_fouled_outlet_is_edit ;
+        private int? _k_global_fouled_is_edit ;
+        private int? _acoustic_vibration_exist_inlet ;
+        private int? _acoustic_vibration_exist_central ;
+        private int? _acoustic_vibration_exist_outlet ;
+        private int? _nr_modules_is_edit ;
+        private int? _use_viscosity_correction ;
         public string fluid_name_tube
         {
             get => _fluid_name_tube;
@@ -568,18 +568,18 @@ namespace Ahed_project.MasterData.Overall
         public string vibrations_inlet_turbulent_buffeting_ratio { get => _vibrations_inlet_turbulent_buffeting_ratio; set { _vibrations_inlet_turbulent_buffeting_ratio = value;  OnPropertyChanged(nameof(vibrations_inlet_turbulent_buffeting_ratio));  }  }
         public string vibrations_central_turbulent_buffeting_ratio { get => _vibrations_central_turbulent_buffeting_ratio; set { _vibrations_central_turbulent_buffeting_ratio = value;  OnPropertyChanged(nameof(vibrations_central_turbulent_buffeting_ratio));  }  }
         public string vibrations_outlet_turbulent_buffeting_ratio { get => _vibrations_outlet_turbulent_buffeting_ratio; set { _vibrations_outlet_turbulent_buffeting_ratio = value;  OnPropertyChanged(nameof(vibrations_outlet_turbulent_buffeting_ratio));  }  }
-        public int k_side_tube_inlet_is_edit { get => _k_side_tube_inlet_is_edit; set { _k_side_tube_inlet_is_edit = value;  OnPropertyChanged(nameof(k_side_tube_inlet_is_edit));  }  }
-        public int k_side_tube_outlet_is_edit { get => _k_side_tube_outlet_is_edit; set { _k_side_tube_outlet_is_edit = value;  OnPropertyChanged(nameof(k_side_tube_outlet_is_edit));  }  }
-        public int k_side_shell_inlet_is_edit { get => _k_side_shell_inlet_is_edit; set { _k_side_shell_inlet_is_edit = value;  OnPropertyChanged(nameof(k_side_shell_inlet_is_edit));  }  }
-        public int k_side_shell_outlet_is_edit { get => _k_side_shell_outlet_is_edit; set { _k_side_shell_outlet_is_edit = value;  OnPropertyChanged(nameof(k_side_shell_outlet_is_edit));  }  }
-        public int k_fouled_inlet_is_edit { get => _k_fouled_inlet_is_edit; set { _k_fouled_inlet_is_edit = value;  OnPropertyChanged(nameof(k_fouled_inlet_is_edit));  }  }
-        public int k_fouled_outlet_is_edit { get => _k_fouled_outlet_is_edit; set { _k_fouled_outlet_is_edit = value;  OnPropertyChanged(nameof(k_fouled_outlet_is_edit));  }  }
-        public int k_global_fouled_is_edit { get => _k_global_fouled_is_edit; set { _k_global_fouled_is_edit = value;  OnPropertyChanged(nameof(k_global_fouled_is_edit));  }  }
-        public int acoustic_vibration_exist_inlet { get => _acoustic_vibration_exist_inlet; set { _acoustic_vibration_exist_inlet = value;  OnPropertyChanged(nameof(acoustic_vibration_exist_inlet));  }  }
-        public int acoustic_vibration_exist_central { get => _acoustic_vibration_exist_central; set { _acoustic_vibration_exist_central = value;  OnPropertyChanged(nameof(acoustic_vibration_exist_central));  }  }
-        public int acoustic_vibration_exist_outlet { get => _acoustic_vibration_exist_outlet; set { _acoustic_vibration_exist_outlet = value;  OnPropertyChanged(nameof(acoustic_vibration_exist_outlet));  }  }
-        public int nr_modules_is_edit { get => _nr_modules_is_edit; set { _nr_modules_is_edit = value;  OnPropertyChanged(nameof(nr_modules_is_edit));  }  }
-        public int use_viscosity_correction { get => _use_viscosity_correction; set { _use_viscosity_correction = value;  OnPropertyChanged(nameof(use_viscosity_correction));  }  }
+        public int? k_side_tube_inlet_is_edit { get => _k_side_tube_inlet_is_edit; set { _k_side_tube_inlet_is_edit = value;  OnPropertyChanged(nameof(k_side_tube_inlet_is_edit));  }  }
+        public int? k_side_tube_outlet_is_edit { get => _k_side_tube_outlet_is_edit; set { _k_side_tube_outlet_is_edit = value;  OnPropertyChanged(nameof(k_side_tube_outlet_is_edit));  }  }
+        public int? k_side_shell_inlet_is_edit { get => _k_side_shell_inlet_is_edit; set { _k_side_shell_inlet_is_edit = value;  OnPropertyChanged(nameof(k_side_shell_inlet_is_edit));  }  }
+        public int? k_side_shell_outlet_is_edit { get => _k_side_shell_outlet_is_edit; set { _k_side_shell_outlet_is_edit = value;  OnPropertyChanged(nameof(k_side_shell_outlet_is_edit));  }  }
+        public int? k_fouled_inlet_is_edit { get => _k_fouled_inlet_is_edit; set { _k_fouled_inlet_is_edit = value;  OnPropertyChanged(nameof(k_fouled_inlet_is_edit));  }  }
+        public int? k_fouled_outlet_is_edit { get => _k_fouled_outlet_is_edit; set { _k_fouled_outlet_is_edit = value;  OnPropertyChanged(nameof(k_fouled_outlet_is_edit));  }  }
+        public int? k_global_fouled_is_edit { get => _k_global_fouled_is_edit; set { _k_global_fouled_is_edit = value;  OnPropertyChanged(nameof(k_global_fouled_is_edit));  }  }
+        public int? acoustic_vibration_exist_inlet { get => _acoustic_vibration_exist_inlet; set { _acoustic_vibration_exist_inlet = value;  OnPropertyChanged(nameof(acoustic_vibration_exist_inlet));  }  }
+        public int? acoustic_vibration_exist_central { get => _acoustic_vibration_exist_central; set { _acoustic_vibration_exist_central = value;  OnPropertyChanged(nameof(acoustic_vibration_exist_central));  }  }
+        public int? acoustic_vibration_exist_outlet { get => _acoustic_vibration_exist_outlet; set { _acoustic_vibration_exist_outlet = value;  OnPropertyChanged(nameof(acoustic_vibration_exist_outlet));  }  }
+        public int? nr_modules_is_edit { get => _nr_modules_is_edit; set { _nr_modules_is_edit = value;  OnPropertyChanged(nameof(nr_modules_is_edit));  }  }
+        public int? use_viscosity_correction { get => _use_viscosity_correction; set { _use_viscosity_correction = value;  OnPropertyChanged(nameof(use_viscosity_correction));  }  }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")

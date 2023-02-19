@@ -502,7 +502,7 @@ namespace Ahed_project.ViewModel.Pages
             TubeplateLayout squaredCentred = new TubeplateLayout
             {
                 ImageUrl = "../Visual/Squared_centred.png",
-                Name = "Squared Centred (90º)"
+                Name = "Squared Centered (90º)"
             };
             TubeplateLayout rotatedSquared = new TubeplateLayout
             {
