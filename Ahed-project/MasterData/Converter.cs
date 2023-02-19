@@ -18,7 +18,7 @@ namespace Ahed_project.MasterData
             {
                 return null;
             }
-            string value = StringToDoubleChecker.ToCorrectFormat(System.Convert.ToDecimal(values[0]?.ToString()?.Replace('.',',')).ToString($"F{Config.NumberOfDecimals}"));
+            string value = StringToDoubleChecker.ToCorrectFormat(System.Convert.ToDouble(values[0]?.ToString()?.Replace('.',',')).ToString($"F{Config.NumberOfDecimals}"));
             return value;
         }
 
@@ -30,7 +30,7 @@ namespace Ahed_project.MasterData
                 {
                     return null;
                 }
-                string val = StringToDoubleChecker.ToCorrectFormat(System.Convert.ToDecimal(value?.ToString()?.Replace('.', ',')).ToString($"F{Config.NumberOfDecimals}"));
+                string val = StringToDoubleChecker.ToCorrectFormat(System.Convert.ToDouble(value?.ToString()?.Replace('.', ',')).ToString($"F{Config.NumberOfDecimals}"));
                 return val;
             }
             catch(Exception e)
