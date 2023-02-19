@@ -31,7 +31,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     ChangeTabState(MasterData.Pages.GEOMETRY);
                     ChangeTabState(MasterData.Pages.BAFFLES);
                     ChangeTabState(MasterData.Pages.OVERALL_CALCULATION);
-                    ChangeTabState(MasterData.Pages.BATCH);
+                    //ChangeTabState(MasterData.Pages.BATCH);
                     ChangeTabState(MasterData.Pages.REPORTS);
                     if (GlobalFunctionsAndCallersService.GetTubeProduct() == null)
                     {

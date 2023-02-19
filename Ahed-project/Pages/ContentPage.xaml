@@ -56,7 +56,7 @@
             </MenuItem>
         </Menu>
         <TabControl Grid.Row="1" x:Name="Tabs" VerticalAlignment="Stretch" TabStripPlacement="Left" HorizontalAlignment="Stretch" FontSize="20" SelectedIndex="{Binding SelectedPage, UpdateSourceTrigger=PropertyChanged}">
-            <TabItem FontSize="12" Style="{StaticResource TabItemMain}">
+            <TabItem FontSize="12" Width="150" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
                         <Grid.ColumnDefinitions>
@@ -71,7 +71,6 @@
                 </TabItem.Header>
                 <Frame Content="{Binding ProjectPage}"/>
             </TabItem>
-
             <TabItem FontSize="12" IsEnabled="{Binding Path=TubesFluidState.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TabItemMain}">
                 <TabItem.Header>
                     <Grid Width="130">
@@ -156,7 +155,7 @@
                             <ColumnDefinition Width="17"/>
                         </Grid.ColumnDefinitions>
                         <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=OverallCalculationState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label Grid.Column="1" FontSize="12" HorizontalAlignment="Center">Overall Calculation</Label>
+                        <Label Grid.Column="1" FontSize="12" Width="110" HorizontalAlignment="Left" Grid.ColumnSpan="2">Overall Calculation</Label>
                         <SVG:SvgViewbox Margin="3"  Grid.Column="2" Source="{Binding Path=OverallValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
