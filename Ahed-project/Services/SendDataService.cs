@@ -17,13 +17,14 @@ namespace Ahed_project.Services
         {
             _serviceConfig = serviceConfig;
         }
-        public string SendToServer(ProjectMethods projectMethod, string body = null, string projectId = null, string calculationId = null)
+        public string SendToServer(ProjectMethods projectMethod, string body = null, string projectId = null, string calculationId = null, int timeout = 6000)
         {
             Headers.TryAdd("Content-Type", "application/json");
             RestResponse response = null;
             var request = new RestRequest();
             if (body != null)
                 request.AddBody(body);
+            request.Timeout = timeout;
             RestClient restClient = null;
             try
             {

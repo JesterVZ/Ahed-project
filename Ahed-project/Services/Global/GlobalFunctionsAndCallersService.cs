@@ -247,27 +247,35 @@ namespace Ahed_project.Services.Global
                     vibration_exist = overall.vibration_exist
 
                 });
-                var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.CALCULATE_OVERALL, json, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString()));
-                if(response != null)
+                var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.CALCULATE_OVERALL, json, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString(), 100000));
+                if (response != null)
                 {
                     Responce result = JsonConvert.DeserializeObject<Responce>(response);
                     for (int i = 0; i < result.logs?.Count; i++)
                     {
                         Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i]?.type, result.logs[i]?.message)));
                     }
-                    
+
                     var o = JsonConvert.DeserializeObject<OverallFull>(result.data.ToString());
                     _overallCalculationViewModel.Overall = o;
                 }
-                
-            } else
-            {
-                var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.CALCULATE_OVERALL, null, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString()));
-                Responce result = JsonConvert.DeserializeObject<Responce>(response);
-                var o = JsonConvert.DeserializeObject<OverallFull>(result.data.ToString());
-                _overallCalculationViewModel.Overall = o;
+
             }
-            
+            else
+            {
+                var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.CALCULATE_OVERALL, null, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString(), 100000));
+                if (response != null)
+                {
+                    Responce result = JsonConvert.DeserializeObject<Responce>(response);
+                    for (int i = 0; i < result.logs?.Count; i++)
+                    {
+                        Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i]?.type, result.logs[i]?.message)));
+                    }
+                    var o = JsonConvert.DeserializeObject<OverallFull>(result.data.ToString());
+                    _overallCalculationViewModel.Overall = o;
+
+                }
+            }
         }
 
         // Загрузка продуктов
