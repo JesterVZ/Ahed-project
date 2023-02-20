@@ -41,14 +41,14 @@ namespace Ahed_project.ViewModel.Pages
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             Loading = Visibility.Visible;
-            var result = await Task.Factory.StartNew(() => _jwt.AuthenticateUser(email, pass));
+            var result = await Task.Run(() => _jwt.AuthenticateUser(email, pass));
             Loading = Visibility.Hidden;
-            if (result.Result is User)
+            if (result is User)
             {
                 var page = _pageService.GetPage<ContentPage>();
                 (Application.Current.MainWindow.DataContext as MainViewModel).FramePage = page;
             }
-            else if (result.Result is null || result.Result is string)
+            else if (result is null || result is string)
             {
                 MessageBox.Show("Не правильные имя пользователя и/или пароль", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }

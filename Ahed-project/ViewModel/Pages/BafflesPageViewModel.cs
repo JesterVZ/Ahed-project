@@ -165,7 +165,7 @@ namespace Ahed_project.ViewModel.Pages
                 Baffle.type = "single_segmental";
                 Baffle.buffle_cut_diraction = "horizontal";
             }
-            Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateBaffle(Baffle));
+            Task.Run(() => GlobalFunctionsAndCallersService.CalculateBaffle(Baffle));
         });
         #endregion
 

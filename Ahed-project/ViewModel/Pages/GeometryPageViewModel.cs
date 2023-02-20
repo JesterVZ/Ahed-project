@@ -610,7 +610,7 @@ namespace Ahed_project.ViewModel.Pages
             }
             Geometry.tube_plate_layout_div_plate_layout = DivPlateItem.Key;
             Geometry.tube_plate_layout_sealing_type = SealingTypeItem.Key;
-            Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateGeometry(Geometry));
+            Task.Run(() => GlobalFunctionsAndCallersService.CalculateGeometry(Geometry));
         });
 
         #endregion

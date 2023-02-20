@@ -40,12 +40,12 @@ namespace Ahed_project.Services
                     pass = password
                 });
                 Token token = null;
-                var login = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.LOGIN, json));
+                var login = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.LOGIN, json));
                 if (!login.Contains("token"))
                     return null;
                 token = JsonConvert.DeserializeObject<Token>(login);
                 _sendDataService.AddHeader(token.token);
-                var auth = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.AUTH));
+                var auth = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.AUTH));
                 token = JsonConvert.DeserializeObject<Token>(auth);
                 _sendDataService.AddHeader(token.token);
                 if (user == null)

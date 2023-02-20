@@ -73,16 +73,16 @@ namespace Ahed_project.Services.Global
         public static async Task SetupUserDataAsync()
         {
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка последних проектов...")));
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PROJECTS, ""));
+            var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.GET_PROJECTS, ""));
             Responce result = JsonConvert.DeserializeObject<Responce>(response);
             List<ProjectInfoGet> projects = JsonConvert.DeserializeObject<List<ProjectInfoGet>>(result.data.ToString());
             GlobalDataCollectorService.ProjectsCollection = projects;
             _projectPageViewModel.ProjectInfo.number_of_decimals = 2;
             _projectPageViewModel.Raise();
             CreateProjectNodes(projects);
-            await Task.Factory.StartNew(DownLoadProducts);
-            await Task.Factory.StartNew(GetMaterials);
-            await Task.Factory.StartNew(DownloadGeometries);
+            await Task.Run(DownLoadProducts);
+            await Task.Run(GetMaterials);
+            await Task.Run(DownloadGeometries);
 
         }
 
@@ -136,7 +136,7 @@ namespace Ahed_project.Services.Global
             {
                 var template = _sendDataService.ReturnCopy();
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка состояний вкладок...")));
-                var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.GET_TAB_STATE, null, GlobalDataCollectorService.Project?.project_id.ToString(), calculation_id.ToString()));
+                var response = await Task.Run(() => template.SendToServer(ProjectMethods.GET_TAB_STATE, null, GlobalDataCollectorService.Project?.project_id.ToString(), calculation_id.ToString()));
                 _contentPageViewModel.SetTabState(response);
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка состояний вкладок завершена!")));
                 GlobalDataCollectorService.IsAllSave = true;
@@ -155,7 +155,7 @@ namespace Ahed_project.Services.Global
             tabs.project_id = GlobalDataCollectorService.Project.project_id.ToString();
             string json = JsonConvert.SerializeObject(tabs);
             var template = _sendDataService.ReturnCopy();
-            var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.SET_TAB_STATE, json, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString()));
+            var response = await Task.Run(() => template.SendToServer(ProjectMethods.SET_TAB_STATE, json, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString()));
         }
 
         //загрузка геометрий
@@ -166,7 +166,7 @@ namespace Ahed_project.Services.Global
             _isGeometriesDownloaded = true;
             var template = _sendDataService.ReturnCopy();
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка геометрий...")));
-            var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.GET_GEOMETRIES, ""));
+            var response = await Task.Run(() => template.SendToServer(ProjectMethods.GET_GEOMETRIES, ""));
             GlobalDataCollectorService.GeometryCollection = JsonConvert.DeserializeObject<ObservableCollection<GeometryFull>>(response);
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка геометрий завершена!")));
             int userId = GlobalDataCollectorService.UserId;
@@ -178,7 +178,7 @@ namespace Ahed_project.Services.Global
             }
             if(id != 0)
             {
-                Task.Factory.StartNew(() =>
+                Task.Run(() =>
                 {
                     Thread.Sleep(new TimeSpan(0, 0, 5));
                     _geometryPageViewModel.Geometry = GlobalDataCollectorService.GeometryCollection.FirstOrDefault(x => x.geometry_catalog_id == id);
@@ -247,7 +247,7 @@ namespace Ahed_project.Services.Global
                     vibration_exist = overall.vibration_exist
 
                 });
-                var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.CALCULATE_OVERALL, json, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString(), 100000));
+                var response = await Task.Run(() => template.SendToServer(ProjectMethods.CALCULATE_OVERALL, json, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString(), 100000));
                 if (response != null)
                 {
                     Responce result = JsonConvert.DeserializeObject<Responce>(response);
@@ -258,12 +258,17 @@ namespace Ahed_project.Services.Global
 
                     var o = JsonConvert.DeserializeObject<OverallFull>(result.data.ToString());
                     _overallCalculationViewModel.Overall = o;
+                    if (o.nozzles_number_of_parallel_lines_shell_side=="2"&&_geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side=="1")
+                    {
+                        _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side = "2";
+                        Task.Run(()=>CalculateGeometry(_geometryPageViewModel.Geometry));
+                    }
                 }
 
             }
             else
             {
-                var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.CALCULATE_OVERALL, null, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString(), 100000));
+                var response = await Task.Run(() => template.SendToServer(ProjectMethods.CALCULATE_OVERALL, null, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString(), 100000));
                 if (response != null)
                 {
                     Responce result = JsonConvert.DeserializeObject<Responce>(response);
@@ -273,7 +278,11 @@ namespace Ahed_project.Services.Global
                     }
                     var o = JsonConvert.DeserializeObject<OverallFull>(result.data.ToString());
                     _overallCalculationViewModel.Overall = o;
-
+                    if (o.nozzles_number_of_parallel_lines_shell_side == "2" && _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side == "1")
+                    {
+                        _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side = "2";
+                        Task.Run(()=>CalculateGeometry(_geometryPageViewModel.Geometry));
+                    }
                 }
             }
         }
@@ -286,7 +295,7 @@ namespace Ahed_project.Services.Global
             _isProductsDownloaded = true;
             var template = _sendDataService.ReturnCopy();
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Начало загрузки продуктов...")));
-            var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.GET_PRODUCTS, ""));
+            var response = await Task.Run(() => template.SendToServer(ProjectMethods.GET_PRODUCTS, ""));
             List<Year> years = JsonConvert.DeserializeObject<List<Year>>(response);
             await DoNodes(years);
             await Parallel.ForEachAsync(GlobalDataCollectorService.AllProducts, new ParallelOptions() { }, async (x, y) =>
@@ -294,7 +303,7 @@ namespace Ahed_project.Services.Global
                 x.Value?.Sort((z, c) => z.product_id.CompareTo(c.product_id));
             });
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Загрузка продуктов завершена!")));
-            await Task.Factory.StartNew(() => GetCalculations(_projectPageViewModel.ProjectInfo.project_id.ToString()));
+            await Task.Run(() => GetCalculations(_projectPageViewModel.ProjectInfo.project_id.ToString()));
         }
 
         // Создание узлов в продуктах
@@ -363,7 +372,7 @@ namespace Ahed_project.Services.Global
             SetUserLastProject(projectInfoGet?.project_id??0);
             if (projectInfoGet != null)
             {
-                await Task.Factory.StartNew(() => GetCalculations(_projectPageViewModel.ProjectInfo?.project_id.ToString()));
+                await Task.Run(() => GetCalculations(_projectPageViewModel.ProjectInfo?.project_id.ToString()));
                 _mainViewModel.Title = $"{projectInfoGet?.name} ({_heatBalanceViewModel.Calculation?.name})";
                 
             }
@@ -382,7 +391,7 @@ namespace Ahed_project.Services.Global
         //Получение рассчетов
         public static async void GetCalculations(string projectId)
         {
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT_CALCULATIONS, null, projectId));
+            var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT_CALCULATIONS, null, projectId));
             if (response != null)
             {
                 try
@@ -417,7 +426,7 @@ namespace Ahed_project.Services.Global
             
             if(GlobalDataCollectorService.Project == null)
             {
-                await Task.Factory.StartNew(() => CreateNewProject(true));
+                await Task.Run(() => CreateNewProject(true));
 
             } else
             {
@@ -429,7 +438,7 @@ namespace Ahed_project.Services.Global
                 }
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Идет сохранение проекта...")));
                 string json = JsonConvert.SerializeObject(projectInfoSend);
-                var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE, json, GlobalDataCollectorService.Project.project_id.ToString()));
+                var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.UPDATE, json, GlobalDataCollectorService.Project.project_id.ToString()));
                 Responce result = JsonConvert.DeserializeObject<Responce>(response);
                 GlobalDataCollectorService.IsProjectSave = true; //проект сохранен
 
@@ -456,7 +465,7 @@ namespace Ahed_project.Services.Global
                 Name = name
             };
             string json = JsonConvert.SerializeObject(calculationSend);
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CREATE_CALCULATION, json, GlobalDataCollectorService.Project.project_id.ToString()));
+            var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.CREATE_CALCULATION, json, GlobalDataCollectorService.Project.project_id.ToString()));
             Responce result = JsonConvert.DeserializeObject<Responce>(response);
             for (int i = 0; i < result.logs.Count; i++)
             {
@@ -480,7 +489,7 @@ namespace Ahed_project.Services.Global
             };
             string json = JsonConvert.SerializeObject(calculationUpdate);
 
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, calc.project_id.ToString(), calc.calculation_id.ToString()));
+            var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, calc.project_id.ToString(), calc.calculation_id.ToString()));
             if(response != null)
             {
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", $"Имя расчета {calc.calculation_id} изменено!")));
@@ -497,7 +506,7 @@ namespace Ahed_project.Services.Global
                 product_id = shell ? _heatBalanceViewModel.Calculation.product_id_shell.Value : _heatBalanceViewModel.Calculation.product_id_tube.Value,
             };
             string json = JsonConvert.SerializeObject(calculationTemperatureSend);
-            string response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_TEMPERATURE, json, calc.project_id.ToString(), calc.calculation_id.ToString()));
+            string response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_TEMPERATURE, json, calc.project_id.ToString(), calc.calculation_id.ToString()));
             CalculationTemperatureGet data = JsonConvert.DeserializeObject<CalculationTemperatureGet>(response);
             if (shell)
             {
@@ -531,7 +540,7 @@ namespace Ahed_project.Services.Global
                 product_id = _heatBalanceViewModel.Calculation.product_id_shell.Value
             };
             string json = JsonConvert.SerializeObject(calculationPressureSend);
-            string response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_PRESSURE, json, calc.project_id.ToString(), calc.calculation_id.ToString()));
+            string response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_PRESSURE, json, calc.project_id.ToString(), calc.calculation_id.ToString()));
             CalculationTemperatureGet data = JsonConvert.DeserializeObject<CalculationTemperatureGet>(response);
             if (isShell)
             {
@@ -575,10 +584,10 @@ namespace Ahed_project.Services.Global
             var shellProduct = products.FirstOrDefault(x => x.product_id == calc?.product_id_shell);
             _heatBalanceViewModel.ShellProductName = shellProduct?.name;
             _shellFluidViewModel.Product = shellProduct;
-            await Task.Factory.StartNew(GetTabState);
+            await Task.Run(GetTabState);
             if (calc != null)
             {
-                var geometryResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_GEOMETRY, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
+                var geometryResponse = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.GET_GEOMETRY, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
                 if (geometryResponse != null)
                 {
                     Responce response = JsonConvert.DeserializeObject<Responce>(geometryResponse);
@@ -590,7 +599,7 @@ namespace Ahed_project.Services.Global
                         SelectGeometry(geometry);
                     }
                 }
-                var baffleResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_BAFFLE, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
+                var baffleResponse = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.GET_BAFFLE, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
                 if (baffleResponse != null)
                 {
                     Responce result = JsonConvert.DeserializeObject<Responce>(baffleResponse);
@@ -611,7 +620,7 @@ namespace Ahed_project.Services.Global
                         }
                     }
                 }
-                var overallResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.GET_OVERALL, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
+                var overallResponse = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.GET_OVERALL, null, calc?.project_id.ToString(), calc?.calculation_id.ToString()));
                 if(overallResponse != null)
                 {
                     Responce result = JsonConvert.DeserializeObject<Responce>(overallResponse);
@@ -665,7 +674,7 @@ namespace Ahed_project.Services.Global
             if (_heatBalanceViewModel.Calculation != null && _heatBalanceViewModel.Calculation?.product_id_tube != product?.product_id)
             {
                 _heatBalanceViewModel.Calculation.product_id_tube = product?.product_id;
-                Task.Factory.StartNew(UpdateCalculationProducts);
+                Task.Run(UpdateCalculationProducts);
             }
             _tubesFluidViewModel.Product = product;
             _contentPageViewModel.Validation(true);
@@ -688,7 +697,7 @@ namespace Ahed_project.Services.Global
             if (_heatBalanceViewModel.Calculation != null && _heatBalanceViewModel.Calculation?.product_id_shell != product?.product_id)
             {
                 _heatBalanceViewModel.Calculation.product_id_shell = product?.product_id;
-                Task.Factory.StartNew(UpdateCalculationProducts);
+                Task.Run(UpdateCalculationProducts);
             }
             _shellFluidViewModel.Product = product;
             _contentPageViewModel.Validation(true);
@@ -709,7 +718,7 @@ namespace Ahed_project.Services.Global
                 name = _heatBalanceViewModel.Calculation.name
             };
             string json = JsonConvert.SerializeObject(calculationUpdate);
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, _heatBalanceViewModel.Calculation.project_id.ToString(), _heatBalanceViewModel.Calculation.calculation_id.ToString()));
+            var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, _heatBalanceViewModel.Calculation.project_id.ToString(), _heatBalanceViewModel.Calculation.calculation_id.ToString()));
             Responce result = JsonConvert.DeserializeObject<Responce>(response);
             for (int i = 0; i < result.logs.Count; i++)
             {
@@ -750,7 +759,7 @@ namespace Ahed_project.Services.Global
                 pressure_shell_inlet = calculation.pressure_shell_inlet
             };
             string json = JsonConvert.SerializeObject(calculateSend);
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE, json, calculation.project_id.ToString()));
+            var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE, json, calculation.project_id.ToString()));
             Responce result = JsonConvert.DeserializeObject<Responce>(response);
             if (result?.logs != null)
             {
@@ -763,7 +772,7 @@ namespace Ahed_project.Services.Global
                 calculationGet.project_id = calculation.project_id;
                 _heatBalanceViewModel.Calculation = calculationGet;
             }
-            var saveResponse = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CALCULATION, json, calculation.project_id.ToString(), calculation.calculation_id.ToString()));
+            var saveResponse = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CALCULATION, json, calculation.project_id.ToString(), calculation.calculation_id.ToString()));
             GlobalDataCollectorService.HeatBalanceCalculated = true;
             _contentPageViewModel.Validation(true);
         }
@@ -832,7 +841,7 @@ namespace Ahed_project.Services.Global
                 clearances_spacing_division_plate_to_tubeplate = geometry.clearances_spacing_division_plate_to_tubeplate,
                 clearances_spacing_minimum_tube_in_tube_spacing = geometry.clearances_spacing_minimum_tube_in_tube_spacing
             });
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_GEOMETRY, json,_heatBalanceViewModel.Calculation.project_id.ToString(),_heatBalanceViewModel.Calculation.calculation_id.ToString()));
+            var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_GEOMETRY, json,_heatBalanceViewModel.Calculation.project_id.ToString(),_heatBalanceViewModel.Calculation.calculation_id.ToString()));
             if (response != null)
             {
                 try
@@ -878,7 +887,7 @@ namespace Ahed_project.Services.Global
                 baffle_thickness = baffle.baffle_thickness,
 
             });
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_BAFFLE, json, _heatBalanceViewModel.Calculation.project_id.ToString(), _heatBalanceViewModel.Calculation.calculation_id.ToString()));
+            var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_BAFFLE, json, _heatBalanceViewModel.Calculation.project_id.ToString(), _heatBalanceViewModel.Calculation.calculation_id.ToString()));
             if (response != null)
             {
                 try
@@ -904,7 +913,7 @@ namespace Ahed_project.Services.Global
         public static async void CreateNewProject(bool afterSave)
         {
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Начало создания проекта...")));
-            var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.CREATE, ""));
+            var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.CREATE, ""));
             if (response != null)
             {
                 try
@@ -944,7 +953,7 @@ namespace Ahed_project.Services.Global
                     _contentPageViewModel.Validation(true);
                     
                     Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations.Clear());
-                    await Task.Factory.StartNew(() => CreateCalculation("Default"));
+                    await Task.Run(() => CreateCalculation("Default"));
                 }
                 catch (Exception e)
                 {
@@ -956,7 +965,7 @@ namespace Ahed_project.Services.Global
         //Загрузка материалов
         public static async void GetMaterials()
         {
-            var response = await Task.Factory.StartNew(() =>_sendDataService.SendToServer(ProjectMethods.GET_MATERIALS));
+            var response = await Task.Run(() =>_sendDataService.SendToServer(ProjectMethods.GET_MATERIALS));
             if (response!=null)
             {
                 try
@@ -1031,7 +1040,7 @@ namespace Ahed_project.Services.Global
             }
             if(MessageBox.Show("Удалить проект?", "Удаление", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                var response = await Task.Factory.StartNew(() => _sendDataService.SendToServer(ProjectMethods.DELETE_PROJECT, null, selectedProject.project_id.ToString()));
+                var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.DELETE_PROJECT, null, selectedProject.project_id.ToString()));
                 GlobalDataCollectorService.ProjectsCollection.Remove(selectedProject);
             }
             

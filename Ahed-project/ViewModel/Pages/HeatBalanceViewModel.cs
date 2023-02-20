@@ -305,7 +305,7 @@ namespace Ahed_project.ViewModel.Pages
 
         public ICommand Calculate => new DelegateCommand(() =>
         {
-            Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.Calculate(Calculation));
+            Task.Run(() => GlobalFunctionsAndCallersService.Calculate(Calculation));
         });
 
         private bool _flowShell;

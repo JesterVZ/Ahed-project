@@ -169,7 +169,7 @@ namespace Ahed_project.ViewModel.Pages
         }
         #region commands
         public ICommand Calculate => new DelegateCommand(() => {
-            Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CalculateOverall(Overall));
+            Task.Run(() => GlobalFunctionsAndCallersService.CalculateOverall(Overall));
         });
         #endregion
 

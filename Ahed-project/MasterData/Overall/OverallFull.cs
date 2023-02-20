@@ -152,6 +152,7 @@ namespace Ahed_project.MasterData.Overall
         private int? _nr_modules_is_edit ;
         private int? _use_viscosity_correction ;
         private int? _vibration_exist;
+        private string _nozzles_number_of_parallel_lines_shell_side;
         public string fluid_name_tube
         {
             get => _fluid_name_tube;
@@ -582,6 +583,7 @@ namespace Ahed_project.MasterData.Overall
         public int? nr_modules_is_edit { get => _nr_modules_is_edit; set { _nr_modules_is_edit = value;  OnPropertyChanged(nameof(nr_modules_is_edit));  }  }
         public int? use_viscosity_correction { get => _use_viscosity_correction; set { _use_viscosity_correction = value;  OnPropertyChanged(nameof(use_viscosity_correction));  }  }
         public int? vibration_exist { get => _vibration_exist; set { _vibration_exist = value; OnPropertyChanged(nameof(vibration_exist)); } }
+        public string nozzles_number_of_parallel_lines_shell_side { get => _nozzles_number_of_parallel_lines_shell_side; set { _nozzles_number_of_parallel_lines_shell_side = value; OnPropertyChanged(nameof(nozzles_number_of_parallel_lines_shell_side)); } }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")

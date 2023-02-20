@@ -13,7 +13,7 @@ namespace Ahed_project.ViewModel.Pages
     {
         #region commands
         public ICommand CreateReport => new DelegateCommand(() => {
-            Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CreateFullReport());
+            Task.Run(() => GlobalFunctionsAndCallersService.CreateFullReport());
         });
         #endregion
     }

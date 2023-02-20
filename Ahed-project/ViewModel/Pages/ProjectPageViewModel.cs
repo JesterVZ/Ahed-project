@@ -117,7 +117,7 @@ namespace Ahed_project.ViewModel.Pages
         {
             if(CalculationName != "")
             {
-                await Task.Factory.StartNew(() => GlobalFunctionsAndCallersService.CreateCalculation(CalculationName));
+                await Task.Run(() => GlobalFunctionsAndCallersService.CreateCalculation(CalculationName));
                 CalculationName = "";
             }
             

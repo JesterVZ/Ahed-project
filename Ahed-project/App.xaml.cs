@@ -40,7 +40,7 @@ namespace Ahed_project
             {
                 string email = active.Email;
                 string password = active.Password;
-                var result = await Task.Factory.StartNew(() => jwt.AuthenticateUser(email, password));
+                var result = await Task.Run(() => jwt.AuthenticateUser(email, password));
 
                 vm.FramePage = content;
             } else

@@ -28,7 +28,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _product = value;
-                Task.Factory.StartNew(CreateCharts);
+                Task.Run(CreateCharts);
             }
         }
         private int _tabIndex;
@@ -38,7 +38,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _tabIndex = value;
-                Task.Factory.StartNew(CreateCharts);
+                Task.Run(CreateCharts);
             }
         }
 
