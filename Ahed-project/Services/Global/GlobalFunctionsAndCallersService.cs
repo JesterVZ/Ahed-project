@@ -115,7 +115,7 @@ namespace Ahed_project.Services.Global
                         Node monthNode = new Node();
                         monthNode.Id = Guid.NewGuid().ToString();
                         monthNode.Name = new DateTime(1, month.Key, 1).ToString("MMMM");
-                        GlobalDataCollectorService.AllProjects.Add(monthNode.Id, month.Value);
+                        GlobalDataCollectorService.AllProjects.Add(monthNode.Id, month.Value.OrderBy(x=>DateTime.Parse(x.updatedAt??x.createdAt)).ToList());
                         node.Nodes.Add(monthNode);
                     }
                     GlobalDataCollectorService.ProjectNodes.Add(node);

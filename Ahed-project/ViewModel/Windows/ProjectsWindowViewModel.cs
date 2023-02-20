@@ -68,7 +68,10 @@ namespace Ahed_project.ViewModel.Windows
         {
             if (string.IsNullOrEmpty(SearchBox))
             {
-                Projects = new ObservableCollection<ProjectInfoGet>(GlobalDataCollectorService.ProjectsCollection);
+                if (Projects == null || Projects?.Count == 0)
+                {
+                    Projects = new ObservableCollection<ProjectInfoGet>(GlobalDataCollectorService.ProjectsCollection);
+                }
                 return;
             }
             else
