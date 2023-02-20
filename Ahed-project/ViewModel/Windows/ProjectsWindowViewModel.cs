@@ -54,10 +54,27 @@ namespace Ahed_project.ViewModel.Windows
             var selected = (Node)val;
             if (selected.Nodes == null && selected.Id != null)
             {
-                Projects = new ObservableCollection<ProjectInfoGet>(GlobalDataCollectorService.AllProjects[selected.Id]);
+                BeforeSearch = GlobalDataCollectorService.AllProjects[selected.Id];
                 SearchCondition();
             }
         });
+
+        private List<ProjectInfoGet> _beforeSearch;
+        public List<ProjectInfoGet> BeforeSearch
+        {
+            get
+            {
+                if (_beforeSearch == null)
+                {
+                    _beforeSearch = GlobalDataCollectorService.ProjectsCollection;
+                }
+                return _beforeSearch;
+            }
+            set
+            {
+                _beforeSearch = value;
+            }
+        }
 
         public ICommand WindowLoaded => new DelegateCommand(() =>
         {
@@ -68,16 +85,13 @@ namespace Ahed_project.ViewModel.Windows
         {
             if (string.IsNullOrEmpty(SearchBox))
             {
-                if (Projects == null || Projects?.Count == 0)
-                {
-                    Projects = new ObservableCollection<ProjectInfoGet>(GlobalDataCollectorService.ProjectsCollection);
-                }
-                return;
+
+                Projects = new ObservableCollection<ProjectInfoGet>(BeforeSearch);
             }
             else
             {
                 var lowSB = _searchBox.ToLower();
-                Projects = new ObservableCollection<ProjectInfoGet>(Projects.Where
+                Projects = new ObservableCollection<ProjectInfoGet>(BeforeSearch.Where
                     (x => (x.name?.ToLower().Contains(lowSB) ?? false) || (x.customer?.ToLower().Contains(lowSB) ?? false)
                     || (x.description?.ToLower().Contains(lowSB) ?? false) || (x.category?.ToLower().Contains(lowSB) ?? false)
                     || (x.keywords?.ToLower().Contains(lowSB) ?? false) || (x.comments?.ToLower().Contains(lowSB) ?? false)));
