@@ -1,4 +1,5 @@
 ﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.GeometryClasses;
 using Ahed_project.MasterData.Products;
 using Ahed_project.MasterData.ProjectClasses;
@@ -55,6 +56,7 @@ namespace Ahed_project.Services.Global
         #region Project
         public static List<ProjectInfoGet> ProjectsCollection { get; set; }
         public static ProjectInfoGet Project { get; set; }
+        public static CalculationFull Calculation { get; set; }
         public static Dictionary<string, List<ProjectInfoGet>> AllProjects { get; set; }
         public static ObservableCollection<Node> ProjectNodes { get; set; }
         #endregion
