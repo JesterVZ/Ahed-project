@@ -6,7 +6,7 @@
         xmlns:attach="clr-namespace:Ahed_project.Services"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="ProductsWindow" Height="450" Width="800">
+        Title="ProductsWindow" Height="450" Width="800" Closing="Window_Closing">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding GetCurrentProducts}"/>
@@ -69,7 +69,7 @@
                 <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="Search" VerticalAlignment="Center" Margin="4"/>
-            <TextBox Grid.Column="1" Margin="4" Text="{Binding Path=SearchBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox x:Name="searchTextBox" Grid.Column="1" Margin="4" Text="{Binding Path=SearchBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Style="{StaticResource MainButton}" Grid.Column="2" Click="Button_Click" IsCancel="True" IsEnabled="{Binding IsProductSelected, UpdateSourceTrigger=PropertyChanged}" Command="{Binding OpenInTubesCommand}" Margin="4">Open in Tubes</Button>
             <Button Style="{StaticResource MainButton}" Grid.Column="3" Click="Button_Click" IsCancel="True" IsEnabled="{Binding IsProductSelected, UpdateSourceTrigger=PropertyChanged}" Command="{Binding OpenInShellCommand}" Margin="4">Open in Shell</Button>
             <Button Grid.Column="4" Margin="4" Command="{Binding NewfluidCommand}" Visibility="Hidden">New Fluid</Button>

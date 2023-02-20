@@ -28,5 +28,11 @@ namespace Ahed_project.Pages
             FrameworkElement tb = sender as FrameworkElement;
             _viewModel.RaiseDeep(tb.Name);
         }
+
+        private void pressure_drop_tube_side_outlet_nozzles_P_LostFocus(object sender, RoutedEventArgs e)
+        {
+            FrameworkElement tb = sender as FrameworkElement;
+            _viewModel.RaiseDeep(tb.Name);
+        }
     }
 }

@@ -18,5 +18,10 @@ namespace Ahed_project.Windows
         {
             DialogResult = true;
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            searchTextBox.Text = "";
+        }
     }
 }

@@ -23,6 +23,7 @@
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
                     <Button Content="Calculate" Command="{Binding Calculate}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
+                    <Button Content="Show template" Command="{Binding Calculate}" Margin="12 0 0 0" Width="121" Background="#fc6"/>
                 </StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
