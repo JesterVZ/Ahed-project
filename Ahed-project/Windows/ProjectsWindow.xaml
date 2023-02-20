@@ -7,7 +7,7 @@
         xmlns:attach="clr-namespace:Ahed_project.Services"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="ProjectsWindow" Height="450" Width="800">
+        Title="ProjectsWindow" Height="450" Width="800" Closing="Window_Closing">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding WindowLoaded}"/>
@@ -41,7 +41,7 @@
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" Margin="5 5 5 5" Text="{Binding Path=SearchBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox x:Name="searchTextBox" Grid.Column="0" Margin="5 5 5 5" Text="{Binding Path=SearchBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Style="{StaticResource MainButton}" Grid.Column="1" Margin="5 5 5 5" Click="Button_Click" Command="{Binding DeleteProject}">Delete</Button>
             <Button Style="{StaticResource MainButton}" Grid.Column="2" Margin="5 5 5 5" Click="Button_Click" IsCancel="True" Command="{Binding SelectProject}">Select</Button>
         </Grid>

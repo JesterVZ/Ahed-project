@@ -242,7 +242,9 @@ namespace Ahed_project.Services.Global
 
                     acoustic_vibration_exist_inlet = overall.acoustic_vibration_exist_inlet,
                     acoustic_vibration_exist_central = overall.acoustic_vibration_exist_central,
-                    acoustic_vibration_exist_outlet = overall.acoustic_vibration_exist_outlet
+                    acoustic_vibration_exist_outlet = overall.acoustic_vibration_exist_outlet,
+
+                    vibration_exist = overall.vibration_exist
 
                 });
                 var response = await Task.Factory.StartNew(() => template.SendToServer(ProjectMethods.CALCULATE_OVERALL, json, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString()));

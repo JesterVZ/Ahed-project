@@ -554,6 +554,11 @@ namespace Ahed_project.ViewModel.Pages
 
         });
 
+        public ICommand ShowTemplate => new DelegateCommand(() =>
+        {
+
+        });
+
         public ICommand Calculate => new DelegateCommand(() =>
         {
             if (OppositeSide == true) //небольшой костыль, я потом поправлю
