@@ -25,5 +25,6 @@
 	"GetBaffle": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/baffles/get",
 	"CalculateOverall": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/overall/calculate",
 	"DeleteProject": "https://ahead-api.ru/api/he/project/delete/{projectId}",
-	"DeleteCalculation": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/delete"
+	"DeleteCalculation": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/delete",
+	"CopyCalculation": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/copy"
 }

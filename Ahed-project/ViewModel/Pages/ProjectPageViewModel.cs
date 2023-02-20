@@ -130,12 +130,13 @@ namespace Ahed_project.ViewModel.Pages
 
         public ICommand DeleteCalculationsCommand => new AsyncCommand<object>((value) => {
             GlobalFunctionsAndCallersService.DeleteCalculation(value as CalculationFull);
+            GlobalFunctionsAndCallersService.RemoveCalculationFromList(value as CalculationFull);
             return Task.CompletedTask;
         });
 
         public ICommand CopyCalculationsCommand => new AsyncCommand<object>(async (value) =>
         {
-            var a = 0;
+            GlobalFunctionsAndCallersService.CopyCalculation(value as CalculationFull);
         });
         #endregion
     }
