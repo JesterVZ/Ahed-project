@@ -1062,6 +1062,9 @@ namespace Ahed_project.Services.Global
             {
                 var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.DELETE_PROJECT, null, selectedProject.project_id.ToString()));
                 GlobalDataCollectorService.ProjectsCollection.Remove(selectedProject);
+            } else
+            { 
+                return;
             }
             
         }

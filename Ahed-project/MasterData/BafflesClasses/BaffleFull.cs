@@ -57,6 +57,9 @@ namespace Ahed_project.MasterData.BafflesClasses
         private string _average_tubes_in_baffle_windows;
         private string _diametral_clearance_shell_baffle;
         private string _diametral_clearance_tube_baffle;
+        private int _inlet_baffle_spacing_is_edit;
+        private int _outlet_baffle_spacing_is_edit;
+        public int _number_of_baffles_is_edit;
         public string type{ get => _type; set { _type = value;  OnPropertyChanged(nameof(type));  }  }
         public string method{ get => _method; set { _method = value;  OnPropertyChanged(nameof(method));  }  }
         public string show_dimensions{ get => _show_dimensions; set { _show_dimensions = value;  OnPropertyChanged(nameof(show_dimensions));  }  }
@@ -103,6 +106,9 @@ namespace Ahed_project.MasterData.BafflesClasses
         public string average_tubes_in_baffle_windows{ get => _average_tubes_in_baffle_windows; set { _average_tubes_in_baffle_windows = value;  OnPropertyChanged(nameof(average_tubes_in_baffle_windows));  }  }
         public string diametral_clearance_shell_baffle{ get => _diametral_clearance_shell_baffle; set { _diametral_clearance_shell_baffle = value;  OnPropertyChanged(nameof(diametral_clearance_shell_baffle));  }  }
         public string diametral_clearance_tube_baffle{ get => _diametral_clearance_tube_baffle; set { _diametral_clearance_tube_baffle = value;  OnPropertyChanged(nameof(diametral_clearance_tube_baffle));  }  }
+        public int inlet_baffle_spacing_is_edit { get => _inlet_baffle_spacing_is_edit; set { _inlet_baffle_spacing_is_edit = value; OnPropertyChanged(nameof(inlet_baffle_spacing_is_edit)); } }
+        public int outlet_baffle_spacing_is_edit { get => _outlet_baffle_spacing_is_edit; set { _outlet_baffle_spacing_is_edit = value; OnPropertyChanged(nameof(outlet_baffle_spacing_is_edit)); } }
+        public int number_of_baffles_is_edit { get => _number_of_baffles_is_edit; set { _number_of_baffles_is_edit = value; OnPropertyChanged(nameof(number_of_baffles_is_edit)); } }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")

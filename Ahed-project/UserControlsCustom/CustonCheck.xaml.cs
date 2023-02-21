@@ -33,12 +33,12 @@ namespace Ahed_project.UserControlsCustom
                 {
                     case 0:
                         CheckBox.IsChecked = false;
-                        CustomTextBox.IsEnabled = false;
+                        CustomTextBox.IsReadOnly = true;
                         CustomTextBox.Background = new SolidColorBrush(Color.FromRgb(249, 239, 229));
                         break;
                     case 1:
                         CheckBox.IsChecked = true;
-                        CustomTextBox.IsEnabled = true;
+                        CustomTextBox.IsReadOnly = false;
                         CustomTextBox.Background = new SolidColorBrush(Colors.White);
                         break;
 
