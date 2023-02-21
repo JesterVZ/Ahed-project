@@ -442,15 +442,15 @@ namespace Ahed_project.Services.Global
         //Сохранение проекта
         public async static void SaveProject()
         {
-            
-            if(GlobalDataCollectorService.Project == null)
+
+            if (GlobalDataCollectorService.Project == null)
             {
                 await Task.Run(() => CreateNewProject(true));
-
-            } else
+            }
+            else
             {
                 var projectInfoSend = _mapper.Map<ProjectInfoSend>(GlobalDataCollectorService.Project);
-                if(projectInfoSend.Name == null)
+                if (projectInfoSend.Name == null)
                 {
                     Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Error", "Введите имя проекта!")));
                     return;
@@ -468,7 +468,6 @@ namespace Ahed_project.Services.Global
                     }
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", "Сохранение выполнено успешно!")));
             }
-            
         }
 
         //Создание рассчета
@@ -945,7 +944,7 @@ namespace Ahed_project.Services.Global
                         Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
                     }
                     var newProj = JsonConvert.DeserializeObject<ProjectInfoGet>(result.data.ToString());
-                    if (!afterSave)
+                    if (afterSave)
                     {
                         newProj.name = _projectPageViewModel.ProjectInfo.name;
                         newProj.description = _projectPageViewModel.ProjectInfo.description;
