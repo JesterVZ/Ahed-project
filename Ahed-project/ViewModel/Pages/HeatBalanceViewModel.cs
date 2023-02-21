@@ -176,6 +176,18 @@ namespace Ahed_project.ViewModel.Pages
                     Double.TryParse(value?.temperature_shell_inlet?.Replace('.', ','), out var temperatureShellInlet);
                     ShellInletTemp = StringToDoubleChecker.ToCorrectFormat(temperatureShellInlet.ToString());
                     Pressure_tube_inlet_value = value.pressure_tube_inlet;
+                    if (value.calculate_field== "temperature_shell_outlet")
+                    {
+                        TemperatureShellOutLet = true;
+                    }
+                    else if (value.calculate_field == "temperature_shell_inlet")
+                    {
+                        TemperatureShellInLet= true;
+                    }
+                    else
+                    {
+                        FlowShell = true;
+                    }
                 }
             }
         }
