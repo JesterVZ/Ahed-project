@@ -55,7 +55,8 @@ namespace Ahed_project.ViewModel.Pages
         public ProjectInfoGet ProjectInfo
         {
             get => _projectInfo;
-            set { 
+            set
+            { 
                 SetValue(ref _projectInfo, value);
                 ProjectName = value?.name;
                 System = value?.units;
@@ -128,6 +129,12 @@ namespace Ahed_project.ViewModel.Pages
             IsOpen = !IsOpen;
         });
         #endregion
+
+        public void SelectCalc(CalculationFull calc)
+        {
+            _selectedCalculation= calc;
+            RaisePropertiesChanged(nameof(SelectedCalculation));
+        }
     }
 }
 

@@ -46,10 +46,11 @@ namespace Ahed_project.ViewModel.Pages
         private BaffleFull _baffle;
         public BaffleFull Baffle {
             get => _baffle;
-            set { 
+            set
+            { 
                 _baffle = value;
                 SelectedBaffleType = BaffleType.FirstOrDefault(x => x.Key == value?.method);
-                NumberOfBaffles = _baffle.number_of_baffles;
+                NumberOfBaffles = _baffle?.number_of_baffles;
             } 
         }
         public BafflesPageViewModel()

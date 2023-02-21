@@ -303,7 +303,6 @@ namespace Ahed_project.Services.Global
                 x.Value?.Sort((z, c) => z.product_id.CompareTo(c.product_id));
             });
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("info", "Загрузка продуктов завершена!")));
-            await Task.Run(() => GetCalculations(_projectPageViewModel.ProjectInfo.project_id.ToString()));
         }
 
         // Создание узлов в продуктах
@@ -648,6 +647,7 @@ namespace Ahed_project.Services.Global
                 _bufflesPageViewModel.Baffle = new();
             }
             //_contentPageViewModel.Validation(false);
+            _projectPageViewModel.SelectCalc(calc);
         }
         //выбор геометрии
         public static void SelectGeometry(GeometryFull geometry)

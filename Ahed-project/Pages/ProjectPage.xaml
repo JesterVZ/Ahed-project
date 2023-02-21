@@ -59,7 +59,7 @@
                     <TextBlock Margin="3" Grid.Column="0" Grid.Row="7" FontWeight="Bold">Project Processes</TextBlock>
                     <TextBox IsReadOnly="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Margin="3" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2" Text="{Binding CalculationName, UpdateSourceTrigger=PropertyChanged}"/>
                     <Button Style="{StaticResource MainButton}" Grid.Row="7" Grid.Column="3" Margin="3" Command="{Binding CreateCalculationCommand}" Click="Button_Click">Add</Button>
-                    <ListView Margin="3" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" ItemsSource="{Binding Calculations}" SelectedItem="{Binding SelectedCalculation}" SelectedIndex="0">
+                    <ListView Margin="3" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" ItemsSource="{Binding Calculations}" SelectedItem="{Binding SelectedCalculation}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <TextBox Style="{StaticResource EditableText}" Text="{Binding Path=name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="50">
