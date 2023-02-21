@@ -471,12 +471,12 @@ namespace Ahed_project.Services.Global
         }
 
         //Создание рассчета
-        public async static void CreateCalculation(string name)
+        public async static Task<object> CreateCalculation(string name)
         {
             if (GlobalDataCollectorService.Project==null||GlobalDataCollectorService.Project.project_id==0)
             {
                 MessageBox.Show("Необходимо выбрать проект", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                return null;
             }
             CalculationSend calculationSend = new()
             {
@@ -495,6 +495,7 @@ namespace Ahed_project.Services.Global
             _heatBalanceViewModel.Pressure_tube_inlet_value = "5";
             _heatBalanceViewModel.Pressure_shell_inlet_value = "5";
             _heatBalanceViewModel.Raise("Calculation");
+            return null;
         }
         //изменение имени рассчета
         public static async void ChangeCalculationName(CalculationFull calc)
@@ -974,6 +975,7 @@ namespace Ahed_project.Services.Global
                     
                     Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations.Clear());
                     await Task.Run(() => CreateCalculation("Default"));
+                    SetCalculation(_projectPageViewModel.Calculations.FirstOrDefault());
                 }
                 catch (Exception e)
                 {
