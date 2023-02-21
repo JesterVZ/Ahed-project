@@ -128,6 +128,17 @@ namespace Ahed_project.ViewModel.Pages
         {
             IsOpen = !IsOpen;
         });
+
+        public ICommand DeleteCalculationsCommand => new AsyncCommand<object>((value) => {
+            GlobalFunctionsAndCallersService.DeleteCalculation(value as CalculationFull);
+            GlobalFunctionsAndCallersService.RemoveCalculationFromList(value as CalculationFull);
+            return Task.CompletedTask;
+        });
+
+        public ICommand CopyCalculationsCommand => new AsyncCommand<object>(async (value) =>
+        {
+            GlobalFunctionsAndCallersService.CopyCalculation(value as CalculationFull);
+        });
         #endregion
 
         public void SelectCalc(CalculationFull calc)

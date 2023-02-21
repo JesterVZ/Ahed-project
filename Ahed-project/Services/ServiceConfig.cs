@@ -49,5 +49,7 @@ namespace Ahed_project.Services
         public string CalculateOverall { get; set; }
         public string DeleteProject { get; set; }
         public string CalculatePressureLink { get; set; }
+        public string DeleteCalculation { get; set; }
+        public string CopyCalculation { get; set; }
     }
 }

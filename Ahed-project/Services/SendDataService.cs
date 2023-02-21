@@ -279,6 +279,24 @@ namespace Ahed_project.Services
                         }
                         response = restClient.Execute(request);
                         break;
+                    case ProjectMethods.DELETE_CALCULATION:
+                        restClient = new RestClient(_serviceConfig.DeleteCalculation.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        request.Method = Method.Get;
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        response = restClient.Execute(request);
+                        break;
+                    case ProjectMethods.COPY_CALCULATION:
+                        restClient = new RestClient(_serviceConfig.CopyCalculation.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        request.Method = Method.Get;
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        response = restClient.Execute(request);
+                        break;
                 }
                 if (response.IsSuccessful)
                     return response.Content;

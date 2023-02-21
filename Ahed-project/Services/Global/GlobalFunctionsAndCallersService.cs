@@ -418,6 +418,26 @@ namespace Ahed_project.Services.Global
                 }
             }
         }
+        //удаление расчета из списка
+        public static void RemoveCalculationFromList(CalculationFull calculation)
+        {
+            _projectPageViewModel.Calculations.Remove(calculation);
+        }
+
+        //копирование расчета
+        public static async void CopyCalculation(CalculationFull calculation)
+        {
+            var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.COPY_CALCULATION, null, GlobalDataCollectorService.Project.ToString(), calculation.calculation_id.ToString()));
+            if(response != null)
+            {
+                Responce result = JsonConvert.DeserializeObject<Responce>(response);
+                for (int i = 0; i < result.logs?.Count; i++)
+                {
+                    Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i]?.type, result.logs[i]?.message)));
+                }
+                await Task.Run(()=> GetCalculations(GlobalDataCollectorService.Project.project_id.ToString()));
+            }
+        }
 
         //Сохранение проекта
         public async static void SaveProject()
@@ -573,6 +593,7 @@ namespace Ahed_project.Services.Global
                     context.Users.Update(user);
                     context.SaveChanges();
                 }
+                GlobalDataCollectorService.Calculation = calc;
                 _mainViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({calc.name})";
             }
             _heatBalanceViewModel.Calculation = calc;
@@ -1044,6 +1065,19 @@ namespace Ahed_project.Services.Global
                 GlobalDataCollectorService.ProjectsCollection.Remove(selectedProject);
             }
             
+        }
+
+        public static async void DeleteCalculation(CalculationFull calculation)
+        {
+            var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.DELETE_CALCULATION, null, GlobalDataCollectorService.Project.ToString(), calculation.calculation_id.ToString()));
+            if(response != null)
+            {
+                Responce result = JsonConvert.DeserializeObject<Responce>(response);
+                for (int i = 0; i < result.logs?.Count; i++)
+                {
+                    Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i]?.type, result.logs[i]?.message)));
+                }
+            }
         }
     }
 }

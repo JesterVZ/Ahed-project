@@ -25,5 +25,10 @@ namespace Ahed_project.Pages
         {
             GlobalFunctionsAndCallersService.ReRender(Convert.ToInt32(((TextBox)sender).Text));
         }
+
+        private void MenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var a = 1;
+        }
     }
 }
