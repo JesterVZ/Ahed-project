@@ -24,6 +24,57 @@ namespace Ahed_project.ViewModel.Pages
         public Dictionary<string, string> BaffleType { get; set; } // No baffles, Standard heat transfer with SUPPORT baffles, Full baffles heat transfer calculation
         public Dictionary<string, string> CutDirection { get; set; }
         public Visibility ColumnVisibility { get; set; }
+
+        private int _inlet_baffle_spacing_is_edit;
+        public int inlet_baffle_spacing_is_edit
+        {
+            get => _inlet_baffle_spacing_is_edit;
+            set
+            {
+                _inlet_baffle_spacing_is_edit = value;
+                Baffle.inlet_baffle_spacing_is_edit = value;
+                if (value == 1)
+                {
+                    outlet_baffle_spacing_is_edit = 1;
+                    number_of_baffles_is_edit = 1;
+                }
+
+            }
+        }
+
+        private int _outlet_baffle_spacing_is_edit;
+        public int outlet_baffle_spacing_is_edit
+        {
+            get => _outlet_baffle_spacing_is_edit;
+            set
+            {
+                _outlet_baffle_spacing_is_edit = value;
+                Baffle.outlet_baffle_spacing_is_edit = value;
+                if(value == 1)
+                {
+                    inlet_baffle_spacing_is_edit = 1;
+                    number_of_baffles_is_edit = 1;
+                }
+            }
+        }
+
+        private int _number_of_baffles_is_edit;
+        public int number_of_baffles_is_edit
+        {
+            get => _number_of_baffles_is_edit;
+            set
+            {
+                _number_of_baffles_is_edit = value;
+                Baffle.number_of_baffles_is_edit = value;
+                if (value == 1)
+                {
+                    inlet_baffle_spacing_is_edit = 1;
+                    outlet_baffle_spacing_is_edit = 1;
+                }
+            }
+        }
+
+
         private bool _isOpen;
         public bool IsOpen
         {

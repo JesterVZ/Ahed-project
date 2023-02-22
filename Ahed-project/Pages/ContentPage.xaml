@@ -245,6 +245,9 @@
                         <DataTrigger Binding="{Binding Severity}" Value="Error">
                             <Setter Property="Background" Value="#FFFF8E8E"/>
                         </DataTrigger>
+                        <DataTrigger Binding="{Binding Severity}" Value="error">
+                            <Setter Property="Background" Value="#FFFF8E8E"/>
+                        </DataTrigger>
                         <DataTrigger Binding="{Binding Severity}" Value="warning">
                             <Setter Property="Background" Value="#FFFFFFA7"/>
                         </DataTrigger>
