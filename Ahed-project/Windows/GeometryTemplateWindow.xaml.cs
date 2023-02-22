@@ -22,6 +22,7 @@ namespace Ahed_project.Windows
         public GeometryTemplateWindow()
         {
             InitializeComponent();
+            PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
     }
 }

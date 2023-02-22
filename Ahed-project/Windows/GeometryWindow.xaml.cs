@@ -26,6 +26,7 @@ namespace Ahed_project.Windows
             InitializeComponent();
             _geometryWindowViewModel = vm;
             DataContext = _geometryWindowViewModel;
+            PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
