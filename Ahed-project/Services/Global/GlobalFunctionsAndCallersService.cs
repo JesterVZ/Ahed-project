@@ -427,7 +427,7 @@ namespace Ahed_project.Services.Global
         //копирование расчета
         public static async void CopyCalculation(CalculationFull calculation)
         {
-            var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.COPY_CALCULATION, null, GlobalDataCollectorService.Project.ToString(), calculation.calculation_id.ToString()));
+            var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.COPY_CALCULATION, null, GlobalDataCollectorService.Project.project_id.ToString(), calculation.calculation_id.ToString()));
             if(response != null)
             {
                 Responce result = JsonConvert.DeserializeObject<Responce>(response);
@@ -1071,7 +1071,7 @@ namespace Ahed_project.Services.Global
 
         public static async void DeleteCalculation(CalculationFull calculation)
         {
-            var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.DELETE_CALCULATION, null, GlobalDataCollectorService.Project.ToString(), calculation.calculation_id.ToString()));
+            var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.DELETE_CALCULATION, null, GlobalDataCollectorService.Project.project_id.ToString(), calculation.calculation_id.ToString()));
             if(response != null)
             {
                 Responce result = JsonConvert.DeserializeObject<Responce>(response);
