@@ -85,21 +85,21 @@
 
                         <Label Grid.Column="0" Grid.Row="3" Margin="0,0,0,36" Grid.RowSpan="2">Outer Diameter</Label>
                         <Label Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="outer_diameter_inner_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.outer_diameter_inner_side, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="3" Margin="3,3,3,3"/>
-                        <TextBox x:Name="outer_diameter_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.outer_diameter_tubes_side, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="3" Margin="3,3,3,3"/>
-                        <TextBox x:Name="outer_diameter_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.outer_diameter_shell_side, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="3" Margin="3,3,3,3"/>
+                        <TextBox x:Name="outer_diameter_inner_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.outer_diameter_inner_side, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="3" Margin="3,3,3,3"/>
+                        <TextBox x:Name="outer_diameter_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.outer_diameter_tubes_side, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="3" Margin="3,3,3,3"/>
+                        <TextBox x:Name="outer_diameter_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.outer_diameter_shell_side, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="3" Margin="3,3,3,3"/>
 
                         <Label Grid.Column="0" Grid.Row="4" >Thickness</Label>
                         <Label Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="thickness_inner_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.thickness_inner_side, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4" Margin="3,3,3,3"/>
-                        <TextBox x:Name="thickness_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.thickness_tubes_side, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="4" Margin="3,3,3,3"/>
-                        <TextBox x:Name="thickness_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.thickness_shell_side, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="4" Margin="3,3,3,3"/>
+                        <TextBox x:Name="thickness_inner_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.thickness_inner_side, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4" Margin="3,3,3,3"/>
+                        <TextBox x:Name="thickness_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.thickness_tubes_side, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="4" Margin="3,3,3,3"/>
+                        <TextBox x:Name="thickness_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.thickness_shell_side, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="4" Margin="3,3,3,3"/>
 
                         <Label Grid.Column="0" Grid.Row="5">Inner Diameter</Label>
                         <Label Grid.Column="1" Grid.Row="5" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="inner_diameter_inner_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.inner_diameter_inner_side, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="5" Margin="3,3,3,3"/>
-                        <TextBox x:Name="inner_diameter_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.inner_diameter_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="5" Margin="3,3,3,3"/>
-                        <TextBox x:Name="inner_diameter_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.inner_diameter_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="5" Margin="3,3,3,3"/>
+                        <TextBox x:Name="inner_diameter_inner_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.inner_diameter_inner_side, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="5" Margin="3,3,3,3"/>
+                        <TextBox x:Name="inner_diameter_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.inner_diameter_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="5" Margin="3,3,3,3"/>
+                        <TextBox x:Name="inner_diameter_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.inner_diameter_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="5" Margin="3,3,3,3"/>
 
                         <Label Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Material</Label>
                         <ComboBox Style="{StaticResource ComboboxDefault}" HorizontalContentAlignment="Left" SelectedItem="{Binding TubesMaterial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Materials}" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="6" SelectedIndex="0" Margin="3,3,3,3">
@@ -118,11 +118,11 @@
                         </ComboBox>
 
                         <Label Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Number of Tubes</Label>
-                        <TextBox x:Name="number_of_tubes" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.number_of_tubes, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="7" Margin="3,3,3,3"/>
+                        <TextBox x:Name="number_of_tubes" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.number_of_tubes, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="7" Margin="3,3,3,3"/>
 
                         <Label Grid.Column="0" Grid.Row="8">Tube Inner Length</Label>
                         <Label Grid.Column="1" Grid.Row="8" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="tube_inner_length" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.tube_inner_length, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="8" Margin="3,3,3,3"/>
+                        <TextBox x:Name="tube_inner_length" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.tube_inner_length, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="8" Margin="3,3,3,3"/>
 
                         <Label Grid.Column="0" Grid.Row="9" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Orientation</Label>
                         <ComboBox Style="{StaticResource ComboboxDefault}" ItemsSource="{Binding Orientations}" SelectedItem="{Binding Orientation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.ColumnSpan="3" SelectedIndex="0" Grid.Row="9" Margin="3,3,3,3">
@@ -135,22 +135,22 @@
 
                         <Label Grid.Column="0" Grid.Row="10">Wetted Perimeter (per pass)</Label>
                         <Label Grid.Column="1" Grid.Row="10" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="wetted_perimeter_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.wetted_perimeter_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="10" Margin="3,3,3,3"/>
-                        <TextBox x:Name="wetted_perimeter_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.wetted_perimeter_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="10" Margin="3,3,3,3"/>
+                        <TextBox x:Name="wetted_perimeter_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.wetted_perimeter_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="10" Margin="3,3,3,3"/>
+                        <TextBox x:Name="wetted_perimeter_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.wetted_perimeter_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="10" Margin="3,3,3,3"/>
 
                         <Label Grid.Column="0" Grid.Row="11">Hydraulic Diameter</Label>
                         <Label Grid.Column="1" Grid.Row="11" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="hydraulic_diameter_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.hydraulic_diameter_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="11" Margin="3,3,3,3"/>
-                        <TextBox x:Name="hydraulic_diameter_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.hydraulic_diameter_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="11" Margin="3,3,3,3"/>
+                        <TextBox x:Name="hydraulic_diameter_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.hydraulic_diameter_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="11" Margin="3,3,3,3"/>
+                        <TextBox x:Name="hydraulic_diameter_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.hydraulic_diameter_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="11" Margin="3,3,3,3"/>
 
                         <Label Grid.Column="0" Grid.Row="12">Area / Module</Label>
                         <TextBlock  Grid.Column="1" Grid.Row="12" HorizontalAlignment="Right" VerticalAlignment="Center"><Run>m</Run><Run Typography.Variants="Superscript">2</Run></TextBlock>
-                        <TextBox x:Name="area_module" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.area_module, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="12" Margin="3,3,3,3"/>
+                        <TextBox x:Name="area_module" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.area_module, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="12" Margin="3,3,3,3"/>
 
                         <Label Grid.Column="0" Grid.Row="13">Volume / Module</Label>
                         <Label Grid.Column="1" Grid.Row="13" HorizontalAlignment="Right">I</Label>
-                        <TextBox x:Name="volume_module_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.volume_module_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="13" Margin="3,3,3,3"/>
-                        <TextBox x:Name="volume_module_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.volume_module_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="13" Margin="3,3,3,3"/>
+                        <TextBox x:Name="volume_module_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.volume_module_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="13" Margin="3,3,3,3"/>
+                        <TextBox x:Name="volume_module_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.volume_module_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="13" Margin="3,3,3,3"/>
 
                         <Label Grid.Column="0" Grid.Row="14" Grid.ColumnSpan="2" Margin="0,0,0,36" Grid.RowSpan="2">Tube Profile</Label>
                         <ComboBox ItemsSource="{Binding TubeProfile}" HorizontalContentAlignment="Left" SelectedItem="{Binding TubeProfileSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="3" SelectedIndex="0" Grid.Row="14" Margin="3,3,3,3">
@@ -163,8 +163,8 @@
 
                         <Label Grid.Column="0" Grid.Row="15">Roughness</Label>
                         <Label Grid.Column="1" Grid.Row="15" HorizontalAlignment="Right">&#956;m</Label>
-                        <TextBox x:Name="roughness_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.roughness_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="15" Margin="3,3,3,3"/>
-                        <TextBox x:Name="roughness_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.roughness_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="15" Margin="3,3,3,3"/>
+                        <TextBox x:Name="roughness_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.roughness_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="15" Margin="3,3,3,3"/>
+                        <TextBox x:Name="roughness_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.roughness_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="15" Margin="3,3,3,3"/>
 
                         <Label Grid.Column="0" Grid.Row="16" Grid.ColumnSpan="2" Margin="0,0,0,15" Grid.RowSpan="2">Bundle type</Label>
                         <RadioButton IsChecked="{Binding Fixed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="16" GroupName="BundleType" Content="Fixed" VerticalAlignment="Center"/>
@@ -207,7 +207,7 @@
                             <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">Tube Pitch</Label>
                             <Label Grid.Column="1" Grid.Row="0" VerticalAlignment="Center">mm</Label>
                             <Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">Tube Layout</Label>
-                            <TextBox x:Name="tube_plate_layout_tube_pitch" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_tube_pitch, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="0"/>
+                            <TextBox x:Name="tube_plate_layout_tube_pitch" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_tube_pitch, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="0"/>
                             <ComboBox ItemsSource="{Binding TubePlateLayouts}" HorizontalContentAlignment="Left" SelectedItem="{Binding TubeLayout, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="2" SelectedIndex="0" Grid.Row="1">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
@@ -220,7 +220,7 @@
                             </ComboBox>
 
                             <Label Grid.Column="0" Grid.Row="2" VerticalAlignment="Center">Number of Passes</Label>
-                            <TextBox x:Name="Tube_plate_layout_number_of_passes" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Tube_plate_layout_number_of_passes, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Column="2" Grid.Row="2"/>
+                            <TextBox x:Name="Tube_plate_layout_number_of_passes" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Tube_plate_layout_number_of_passes, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Grid.Column="2" Grid.Row="2"/>
 
                             <Label Grid.Column="0" Grid.Row="3" VerticalAlignment="Center">Div.Plate Layout</Label>
                             <ComboBox Style="{StaticResource ComboboxDefault}" HorizontalContentAlignment="Left" ItemsSource="{Binding DivPlateItems, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding DivPlateItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" SelectedIndex="0" Grid.Row="3">
@@ -237,27 +237,27 @@
 
                             <Label Grid.Column="0" Grid.Row="5" Visibility="{Binding HousingSpaceVis, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center">Housing Space</Label>
                             <Label Grid.Column="1" Grid.Row="5" VerticalAlignment="Center">mm</Label>
-                            <TextBox x:Name="HousingSpaceVis" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Visibility="{Binding HousingSpaceVis, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False" Text="{Binding Geometry.tube_plate_layout_housings_space, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="5"/>
+                            <TextBox x:Name="HousingSpaceVis" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Visibility="{Binding HousingSpaceVis, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False" Text="{Binding Geometry.tube_plate_layout_housings_space, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="5"/>
 
                             <Label Grid.Column="0" Grid.Row="6" VerticalAlignment="Center">Div.Plate Thickness</Label>
                             <Label Grid.Column="1" Grid.Row="6" VerticalAlignment="Center">mm</Label>
-                            <TextBox x:Name="tube_plate_layout_div_plate_thickness" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_div_plate_thickness, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="6"/>
+                            <TextBox x:Name="tube_plate_layout_div_plate_thickness" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_div_plate_thickness, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="6"/>
 
                             <Label Grid.Column="0" Grid.Row="7" VerticalAlignment="Center">TubePlate Thickness (LTS)</Label>
                             <Label Grid.Column="1" Grid.Row="7" VerticalAlignment="Center">mm</Label>
-                            <TextBox x:Name="tube_plate_layout_tubeplate_thickness" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_tubeplate_thickness, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="7"/>
+                            <TextBox x:Name="tube_plate_layout_tubeplate_thickness" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.tube_plate_layout_tubeplate_thickness, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="7"/>
 
                             <Label Grid.Column="0" Grid.Row="8" VerticalAlignment="Center">Shell Cross Section</Label>
                             <TextBlock  Grid.Column="1" Grid.Row="8" HorizontalAlignment="Right" VerticalAlignment="Center"><Run>m</Run><Run Typography.Variants="Superscript">2</Run></TextBlock>
-                            <TextBox x:Name="tube_plate_layout_shell_cross_section" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_shell_cross_section, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="8"/>
+                            <TextBox x:Name="tube_plate_layout_shell_cross_section" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_shell_cross_section, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="8"/>
 
                             <Label Grid.Column="0" Grid.Row="9" VerticalAlignment="Center">Tubes Cross Section(per pass)</Label>
                             <TextBlock  Grid.Column="1" Grid.Row="9" HorizontalAlignment="Right" VerticalAlignment="Center"><Run>m</Run><Run Typography.Variants="Superscript">2</Run></TextBlock>
-                            <TextBox x:Name="tube_plate_layout_tubes_cross_section_pre_pass" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_tubes_cross_section_pre_pass, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="9"/>
+                            <TextBox x:Name="tube_plate_layout_tubes_cross_section_pre_pass" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_tubes_cross_section_pre_pass, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="9"/>
 
                             <Label Grid.Column="0" Grid.Row="10" VerticalAlignment="Center">Perimeter</Label>
                             <Label Grid.Column="1" Grid.Row="10" VerticalAlignment="Center">mm</Label>
-                            <TextBox x:Name="tube_plate_layout_perimeter" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_perimeter, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="10"/>
+                            <TextBox x:Name="tube_plate_layout_perimeter" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_perimeter, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="10"/>
                         </Grid>
                         <Grid Grid.Column="0" Grid.Row="1">
                             <Grid.RowDefinitions>
@@ -276,9 +276,9 @@
                             <Label Grid.Column="0" Grid.Row="2" VerticalAlignment="Center">Tube-Tube Spacing</Label>
                             <Label Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">mm</Label>
 
-                            <TextBox x:Name="tube_plate_layout_max_nr_tubes" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_max_nr_tubes, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="0"/>
-                            <TextBox x:Name="tube_plate_layout_tube_distribution" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_tube_distribution, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="1"/>
-                            <TextBox x:Name="tube_plate_layout_tube_tube_spacing" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_tube_tube_spacing, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="2"/>
+                            <TextBox x:Name="tube_plate_layout_max_nr_tubes" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_max_nr_tubes, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="0"/>
+                            <TextBox x:Name="tube_plate_layout_tube_distribution" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_tube_distribution, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="1"/>
+                            <TextBox x:Name="tube_plate_layout_tube_tube_spacing" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_tube_tube_spacing, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="2"/>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -325,56 +325,56 @@
                         </Grid.RowDefinitions>
                         <Label Grid.Column="0" Grid.Row="0">In Outer Diam</Label>
                         <Label Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="nozzles_in_outer_diam_inner_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_outer_diam_inner_side, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="0"/>
-                        <TextBox x:Name="nozzles_in_outer_diam_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_outer_diam_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="0"/>
-                        <TextBox x:Name="nozzles_in_outer_diam_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_outer_diam_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="0"/>
+                        <TextBox x:Name="nozzles_in_outer_diam_inner_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_outer_diam_inner_side, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="0"/>
+                        <TextBox x:Name="nozzles_in_outer_diam_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_outer_diam_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="0"/>
+                        <TextBox x:Name="nozzles_in_outer_diam_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_outer_diam_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="0"/>
 
                         <Label Grid.Column="0" Grid.Row="1">In Thickness</Label>
                         <Label Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="nozzles_in_thickness_inner_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_thickness_inner_side, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="1"/>
-                        <TextBox x:Name="nozzles_in_thickness_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_thickness_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="1"/>
-                        <TextBox x:Name="nozzles_in_thickness_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_thickness_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="1"/>
+                        <TextBox x:Name="nozzles_in_thickness_inner_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_thickness_inner_side, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="1"/>
+                        <TextBox x:Name="nozzles_in_thickness_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_thickness_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="1"/>
+                        <TextBox x:Name="nozzles_in_thickness_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_thickness_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="1"/>
 
                         <Label Grid.Column="0" Grid.Row="2">In Inner Diam</Label>
                         <Label Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="nozzles_in_inner_diam_inner_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_in_inner_diam_inner_side, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="2"/>
-                        <TextBox x:Name="nozzles_in_inner_diam_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_in_inner_diam_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="2"/>
-                        <TextBox x:Name="nozzles_in_inner_diam_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_in_inner_diam_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="2"/>
+                        <TextBox x:Name="nozzles_in_inner_diam_inner_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_in_inner_diam_inner_side, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="2"/>
+                        <TextBox x:Name="nozzles_in_inner_diam_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_in_inner_diam_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="2"/>
+                        <TextBox x:Name="nozzles_in_inner_diam_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_in_inner_diam_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="2"/>
 
                         <Label Grid.Column="0" Grid.Row="3">In Length</Label>
                         <Label Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="nozzles_in_length_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_length_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="3"/>
-                        <TextBox x:Name="nozzles_in_length_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_length_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="3"/>
+                        <TextBox x:Name="nozzles_in_length_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_length_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="3"/>
+                        <TextBox x:Name="nozzles_in_length_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_in_length_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="3"/>
 
                         <Label Grid.Column="0" Grid.Row="4">Out Outer Diam</Label>
                         <Label Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="nozzles_out_outer_diam_inner_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_outer_diam_inner_side, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="4"/>
-                        <TextBox x:Name="nozzles_out_outer_diam_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_outer_diam_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="4"/>
-                        <TextBox x:Name="nozzles_out_outer_diam_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_outer_diam_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="4"/>
+                        <TextBox x:Name="nozzles_out_outer_diam_inner_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_outer_diam_inner_side, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="4"/>
+                        <TextBox x:Name="nozzles_out_outer_diam_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_outer_diam_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="4"/>
+                        <TextBox x:Name="nozzles_out_outer_diam_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_outer_diam_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="4"/>
 
                         <Label Grid.Column="0" Grid.Row="5">Out Thickness</Label>
                         <Label Grid.Column="1" Grid.Row="5" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="nozzles_out_thickness_inner_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_thickness_inner_side, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="5"/>
-                        <TextBox x:Name="nozzles_out_thickness_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_thickness_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="5"/>
-                        <TextBox x:Name="nozzles_out_thickness_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_thickness_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="5"/>
+                        <TextBox x:Name="nozzles_out_thickness_inner_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_thickness_inner_side, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="5"/>
+                        <TextBox x:Name="nozzles_out_thickness_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_thickness_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="5"/>
+                        <TextBox x:Name="nozzles_out_thickness_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_thickness_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="5"/>
 
                         <Label Grid.Column="0" Grid.Row="6">Out Inner Diam</Label>
                         <Label Grid.Column="1" Grid.Row="6" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="nozzles_out_inner_diam_inner_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_out_inner_diam_inner_side, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="6"/>
-                        <TextBox x:Name="nozzles_out_inner_diam_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_out_inner_diam_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="6"/>
-                        <TextBox x:Name="nozzles_out_inner_diam_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_out_inner_diam_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="6"/>
+                        <TextBox x:Name="nozzles_out_inner_diam_inner_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_out_inner_diam_inner_side, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="6"/>
+                        <TextBox x:Name="nozzles_out_inner_diam_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_out_inner_diam_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="6"/>
+                        <TextBox x:Name="nozzles_out_inner_diam_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_out_inner_diam_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="6"/>
 
                         <Label Grid.Column="0" Grid.Row="7">Out Length</Label>
                         <Label Grid.Column="1" Grid.Row="7" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="nozzles_out_length_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_length_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="7"/>
-                        <TextBox x:Name="nozzles_out_length_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_length_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="7"/>
+                        <TextBox x:Name="nozzles_out_length_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_length_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="7"/>
+                        <TextBox x:Name="nozzles_out_length_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_out_length_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="7"/>
 
                         <Label Grid.Column="0" Grid.Row="8">Number of Parallel Lines</Label>
-                        <TextBox x:Name="nozzles_number_of_parallel_lines_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_number_of_parallel_lines_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="8"/>
-                        <TextBox x:Name="nozzles_number_of_parallel_lines_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_number_of_parallel_lines_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="8"/>
+                        <TextBox x:Name="nozzles_number_of_parallel_lines_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_number_of_parallel_lines_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="8"/>
+                        <TextBox x:Name="nozzles_number_of_parallel_lines_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.nozzles_number_of_parallel_lines_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="8"/>
 
                         <Label Grid.Column="0" Grid.Row="9">Number of Modules per Block</Label>
-                        <TextBox x:Name="nozzles_number_of_modules_pre_block" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_number_of_modules_pre_block, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="9"/>
+                        <TextBox x:Name="nozzles_number_of_modules_pre_block" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.nozzles_number_of_modules_pre_block, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="9"/>
 
                         <Label Grid.Column="0" Grid.Row="10">Shell Nozzle Orientation</Label>
 
@@ -430,39 +430,39 @@
 
                         <Label Grid.Column="0" Grid.Row="0">Tube to tubeplate (A)</Label>
                         <Label Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="clearances_spacing_tube_to_tubeplate" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Grid.Column="2" Grid.Row="0" Style="{StaticResource Default}" Text="{Binding Geometry.clearances_spacing_tube_to_tubeplate, Converter={StaticResource Converter}}"/>
+                        <TextBox x:Name="clearances_spacing_tube_to_tubeplate" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Grid.Column="2" Grid.Row="0" Style="{StaticResource Default}" Text="{Binding Geometry.clearances_spacing_tube_to_tubeplate, Converter={StaticResource Converter}}"/>
 
                         <Label Grid.Column="0" Grid.Row="1">Tubeplate to shell (B)</Label>
                         <Label Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="clearances_spacing_tubeplate_to_shell" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Grid.Column="2" Grid.Row="1" Style="{StaticResource Default}" Text="{Binding Geometry.clearances_spacing_tubeplate_to_shell, Converter={StaticResource Converter}}"/>
+                        <TextBox x:Name="clearances_spacing_tubeplate_to_shell" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Grid.Column="2" Grid.Row="1" Style="{StaticResource Default}" Text="{Binding Geometry.clearances_spacing_tubeplate_to_shell, Converter={StaticResource Converter}}"/>
 
                         <Label Grid.Column="0" Grid.Row="2">Division plate to shell (C)</Label>
                         <Label Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="clearances_spacing_division_plate_to_shell" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Grid.Column="2" Grid.Row="2" Style="{StaticResource Default}" Text="{Binding Geometry.clearances_spacing_division_plate_to_shell, Converter={StaticResource Converter}}"/>
+                        <TextBox x:Name="clearances_spacing_division_plate_to_shell" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Grid.Column="2" Grid.Row="2" Style="{StaticResource Default}" Text="{Binding Geometry.clearances_spacing_division_plate_to_shell, Converter={StaticResource Converter}}"/>
 
                         <Label Grid.Column="0" Grid.Row="3">Minimum tube hole to tubeplate edge (D)</Label>
                         <Label Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="clearances_spacing_minimum_tube_hole_to_tubeplate_edge" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Grid.Column="2" Grid.Row="3" Style="{StaticResource Default}" Text="{Binding Geometry.clearances_spacing_minimum_tube_hole_to_tubeplate_edge, Converter={StaticResource Converter}}"/>
+                        <TextBox x:Name="clearances_spacing_minimum_tube_hole_to_tubeplate_edge" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Grid.Column="2" Grid.Row="3" Style="{StaticResource Default}" Text="{Binding Geometry.clearances_spacing_minimum_tube_hole_to_tubeplate_edge, Converter={StaticResource Converter}}"/>
 
                         <Label Grid.Column="0" Grid.Row="4">Actual tube hole to tubeplate edge (D)</Label>
                         <Label Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="clearances_spacing_actual_tube_hole_to_tubeplate_edge" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Grid.Column="2" Grid.Row="4" Style="{StaticResource Colored}" Text="{Binding Geometry.clearances_spacing_actual_tube_hole_to_tubeplate_edge, Converter={StaticResource Converter}}"/>
+                        <TextBox x:Name="clearances_spacing_actual_tube_hole_to_tubeplate_edge" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Grid.Column="2" Grid.Row="4" Style="{StaticResource Colored}" Text="{Binding Geometry.clearances_spacing_actual_tube_hole_to_tubeplate_edge, Converter={StaticResource Converter}}"/>
 
                         <Label Grid.Column="0" Grid.Row="5">Min. tube hole to division plate groove (E)</Label>
                         <Label Grid.Column="1" Grid.Row="5" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="clearances_spacing_min_tube_hole_to_division_plate_groove" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Grid.Column="2" Grid.Row="5" Style="{StaticResource Default}" Text="{Binding Geometry.clearances_spacing_min_tube_hole_to_division_plate_groove, Converter={StaticResource Converter}}"/>
+                        <TextBox x:Name="clearances_spacing_min_tube_hole_to_division_plate_groove" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Grid.Column="2" Grid.Row="5" Style="{StaticResource Default}" Text="{Binding Geometry.clearances_spacing_min_tube_hole_to_division_plate_groove, Converter={StaticResource Converter}}"/>
 
                         <Label Grid.Column="0" Grid.Row="6">Actual tube hole to tube hole (F)</Label>
                         <Label Grid.Column="1" Grid.Row="6" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="clearances_spacing_actual_tube_hole_to_tube_hole" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Grid.Column="2" Grid.Row="6" Style="{StaticResource Colored}" Text="{Binding Geometry.clearances_spacing_actual_tube_hole_to_tube_hole, Converter={StaticResource Converter}}"/>
+                        <TextBox x:Name="clearances_spacing_actual_tube_hole_to_tube_hole" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Grid.Column="2" Grid.Row="6" Style="{StaticResource Colored}" Text="{Binding Geometry.clearances_spacing_actual_tube_hole_to_tube_hole, Converter={StaticResource Converter}}"/>
 
                         <Label Grid.Column="0" Grid.Row="7">Division plate to tubeplate (groove)</Label>
                         <Label Grid.Column="1" Grid.Row="7" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="clearances_spacing_division_plate_to_tubeplate" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Grid.Column="2" Grid.Row="7" Style="{StaticResource Default}" Text="{Binding Geometry.clearances_spacing_division_plate_to_tubeplate, Converter={StaticResource Converter}}"/>
+                        <TextBox x:Name="clearances_spacing_division_plate_to_tubeplate" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Grid.Column="2" Grid.Row="7" Style="{StaticResource Default}" Text="{Binding Geometry.clearances_spacing_division_plate_to_tubeplate, Converter={StaticResource Converter}}"/>
 
                         <Label Grid.Column="0" Grid.Row="8">Minimum tube-in-tube spacing (G)</Label>
                         <Label Grid.Column="1" Grid.Row="8" HorizontalAlignment="Right">mm</Label>
-                        <TextBox x:Name="clearances_spacing_minimum_tube_in_tube_spacing" PreviewMouseLeftButtonDown="ShowOnClick" MouseLeave="MouseLeave" Grid.Column="2" Grid.Row="8" Style="{StaticResource Default}" Text="{Binding Geometry.clearances_spacing_minimum_tube_in_tube_spacing, Converter={StaticResource Converter}}"/>
+                        <TextBox x:Name="clearances_spacing_minimum_tube_in_tube_spacing" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Grid.Column="2" Grid.Row="8" Style="{StaticResource Default}" Text="{Binding Geometry.clearances_spacing_minimum_tube_in_tube_spacing, Converter={StaticResource Converter}}"/>
 
                         <Button Grid.Column="2" Margin="3" Grid.Row="9" Content="Restore Defaults" VerticalAlignment="Center" Background="#fc6"/>
                         <Button Grid.Column="2" Margin="3" Grid.Row="10" Content="Show Template" VerticalAlignment="Center" Background="#fc6"/>

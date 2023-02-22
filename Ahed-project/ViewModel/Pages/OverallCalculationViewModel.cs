@@ -177,16 +177,16 @@ namespace Ahed_project.ViewModel.Pages
         });
         #endregion
 
-        public void ShowFull(object sender)
+        private int _oldCount = 2;
+        public void ShowFull(string name)
         {
             var type = typeof(OverallCalculationViewModel);
-            var tb = (FrameworkElement)sender;
-            var field = type.GetProperty(tb.Name);
+            var field = type.GetProperty(name);
             object value = null;
             if (field == null)
             {
                 type = typeof(OverallFull);
-                field = type.GetProperty(tb.Name);
+                field = type.GetProperty(name);
                 value = field.GetValue(Overall);
             }
             else
@@ -195,31 +195,51 @@ namespace Ahed_project.ViewModel.Pages
             }
             if (value == null)
                 return;
-            int count = value.ToString().Split(Config.DoubleSplitter).Last().Length;
-            var oldCount = Config.NumberOfDecimals;
-            Config.NumberOfDecimals = count;
+            if (Config.NumberOfDecimals != 0)
+            {
+                _oldCount = Config.NumberOfDecimals;
+            }
+            Config.NumberOfDecimals = 0;
             if (type == typeof(OverallFull))
-            {
-                Overall.OnPropertyChanged(tb.Name);
-            }
-            else
-            {
-                RaisePropertyChanged(tb.Name);
-            }
-            Config.NumberOfDecimals = oldCount;
-        }
-
-        public void RaiseDeep(string name)
-        {
-            var type = typeof(OverallCalculationViewModel);
-            var field = type.GetProperty(name);
-            if (field == null)
             {
                 Overall.OnPropertyChanged(name);
             }
             else
             {
                 RaisePropertyChanged(name);
+            }
+        }
+
+        public void RaiseDeep(TextBox tb)
+        {
+            Config.NumberOfDecimals = _oldCount;
+            var type = typeof(OverallCalculationViewModel);
+            var field = type.GetProperty(tb.Name);
+            if (tb.IsReadOnly == false)
+            {
+                if (field == null)
+                {
+                    type = typeof(OverallFull);
+                    field = type.GetProperty(tb.Name);
+                    field.SetValue(Overall, tb.Text);
+                    Overall.OnPropertyChanged(tb.Name);
+                }
+                else
+                {
+                    field.SetValue(this, tb.Text);
+                    Refresh();
+                }
+            }
+            else
+            {
+                if (field == null)
+                {
+                    Overall.OnPropertyChanged(tb.Name);
+                }
+                else
+                {
+                    Refresh();
+                }
             }
         }
     }

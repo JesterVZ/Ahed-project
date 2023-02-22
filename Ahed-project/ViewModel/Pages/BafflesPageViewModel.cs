@@ -1,8 +1,10 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.MasterData.BafflesClasses;
 using Ahed_project.MasterData.CalculateClasses;
+using Ahed_project.MasterData.GeometryClasses;
 using Ahed_project.Migrations;
 using Ahed_project.Services.Global;
+using Ahed_project.Settings;
 using DevExpress.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -133,7 +136,7 @@ namespace Ahed_project.ViewModel.Pages
             {
                 _numberOfBaffles= value;
                 Baffle.number_of_baffles= value;
-                var converted = Convert.ToDouble(value);
+                var converted = StringToDoubleChecker.ConvertToDouble(value);
                 if (converted==1)
                 {
                     BaffleType.Clear();
@@ -180,16 +183,16 @@ namespace Ahed_project.ViewModel.Pages
             RaisePropertiesChanged(name);
         }
 
-        public void ShowFull(object sender)
+        private int _oldCount = 2;
+        public void ShowFull(string name)
         {
             var type = typeof(BafflesPageViewModel);
-            var tb = (FrameworkElement)sender;
-            var field = type.GetProperty(tb.Name);
+            var field = type.GetProperty(name);
             object value = null;
             if (field == null)
             {
                 type = typeof(BaffleFull);
-                field = type.GetProperty(tb.Name);
+                field = type.GetProperty(name);
                 value = field.GetValue(Baffle);
             }
             else
@@ -198,31 +201,51 @@ namespace Ahed_project.ViewModel.Pages
             }
             if (value == null)
                 return;
-            int count = value.ToString().Split(Config.DoubleSplitter).Last().Length;
-            var oldCount = Config.NumberOfDecimals;
-            Config.NumberOfDecimals = count;
+            if (Config.NumberOfDecimals != 0)
+            {
+                _oldCount = Config.NumberOfDecimals;
+            }
+            Config.NumberOfDecimals = 0;
             if (type == typeof(BaffleFull))
-            {
-                Baffle.OnPropertyChanged(tb.Name);
-            }
-            else
-            {
-                Raise(tb.Name);
-            }
-            Config.NumberOfDecimals = oldCount;
-        }
-
-        public void RaiseDeep(string name)
-        {
-            var type = typeof(BafflesPageViewModel);
-            var field = type.GetProperty(name);
-            if (field == null)
             {
                 Baffle.OnPropertyChanged(name);
             }
             else
             {
                 Raise(name);
+            }
+        }
+
+        public void RaiseDeep(TextBox tb)
+        {
+            Config.NumberOfDecimals = _oldCount;
+            var type = typeof(BafflesPageViewModel);
+            var field = type.GetProperty(tb.Name);
+            if (tb.IsReadOnly == false)
+            {
+                if (field == null)
+                {
+                    type = typeof(BaffleFull);
+                    field = type.GetProperty(tb.Name);
+                    field.SetValue(Baffle, tb.Text);
+                    Baffle.OnPropertyChanged(tb.Name);
+                }
+                else
+                {
+                    field.SetValue(this, tb.Text);
+                    Refresh();
+                }
+            }
+            else
+            {
+                if (field == null)
+                {
+                    Baffle.OnPropertyChanged(tb.Name);
+                }
+                else
+                {
+                    Refresh();
+                }
             }
         }
     }

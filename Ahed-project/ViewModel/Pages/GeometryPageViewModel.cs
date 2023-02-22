@@ -1,6 +1,7 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.GeometryClasses;
+using Ahed_project.MasterData.Overall;
 using Ahed_project.Migrations;
 using Ahed_project.Services.Global;
 using DevExpress.DXBinding.Native;
@@ -13,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -615,16 +617,16 @@ namespace Ahed_project.ViewModel.Pages
 
         #endregion
 
-        public void ShowFull(object sender)
+        private int _oldCount = 2;
+        public void ShowFull(string name)
         {
             var type = typeof(GeometryPageViewModel);
-            var tb = (FrameworkElement)sender;
-            var field = type.GetProperty(tb.Name);
+            var field = type.GetProperty(name);
             object value = null;
             if (field == null)
             {
                 type = typeof(GeometryFull);
-                field = type.GetProperty(tb.Name);
+                field = type.GetProperty(name);
                 value = field.GetValue(Geometry);
             }
             else
@@ -633,31 +635,51 @@ namespace Ahed_project.ViewModel.Pages
             }
             if (value == null)
                 return;
-            int count = value.ToString().Split(Config.DoubleSplitter).Last().Length;
-            var oldCount = Config.NumberOfDecimals;
-            Config.NumberOfDecimals = count;
+            if (Config.NumberOfDecimals != 0)
+            {
+                _oldCount = Config.NumberOfDecimals;
+            }
+            Config.NumberOfDecimals = 0;
             if (type == typeof(GeometryFull))
-            {
-                Geometry.OnPropertyChanged(tb.Name);
-            }
-            else
-            {
-                RaisePropertyChanged(tb.Name);
-            }
-            Config.NumberOfDecimals = oldCount;
-        }
-
-        public void RaiseDeep(string name)
-        {
-            var type = typeof(GeometryPageViewModel);
-            var field = type.GetProperty(name);
-            if (field == null)
             {
                 Geometry.OnPropertyChanged(name);
             }
             else
             {
                 RaisePropertyChanged(name);
+            }
+        }
+
+        public void RaiseDeep(TextBox tb)
+        {
+            Config.NumberOfDecimals = _oldCount;
+            var type = typeof(GeometryPageViewModel);
+            var field = type.GetProperty(tb.Name);
+            if (tb.IsReadOnly == false)
+            {
+                if (field == null)
+                {
+                    type = typeof(GeometryFull);
+                    field = type.GetProperty(tb.Name);
+                    field.SetValue(Geometry, tb.Text);
+                    Geometry.OnPropertyChanged(tb.Name);
+                }
+                else
+                {
+                    field.SetValue(this, tb.Text);
+                    Refresh();
+                }
+            }
+            else
+            {
+                if (field == null)
+                {
+                    Geometry.OnPropertyChanged(tb.Name);
+                }
+                else
+                {
+                    Refresh();
+                }
             }
         }
     }

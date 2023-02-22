@@ -16,6 +16,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Xml.Linq;
 using Color = System.Windows.Media.Color;
 
 namespace Ahed_project.ViewModel.Pages
@@ -386,16 +387,16 @@ namespace Ahed_project.ViewModel.Pages
             public bool IsSelectable { get; set; }
         }
 
-        public void ShowFull(object sender)
+        private int _oldCount = 2;
+        public void ShowFull(string name)
         {
             var type = typeof(HeatBalanceViewModel);
-            var tb = (FrameworkElement)sender;
-            var field = type.GetProperty(tb.Name);
+            var field = type.GetProperty(name);
             object value = null;
             if (field == null)
             {
                 type = typeof(CalculationFull);
-                field = type.GetProperty(tb.Name);
+                field = type.GetProperty(name);
                 value = field.GetValue(Calculation);
             }
             else
@@ -404,18 +405,19 @@ namespace Ahed_project.ViewModel.Pages
             }
             if (value == null)
                 return;
-            int count = value.ToString().Split(Config.DoubleSplitter).Last().Length;
-            var oldCount = Config.NumberOfDecimals;
-            Config.NumberOfDecimals = count;
+            if (Config.NumberOfDecimals != 0)
+            {
+                _oldCount = Config.NumberOfDecimals;
+            }
+            Config.NumberOfDecimals = 0;
             if (type == typeof(CalculationFull))
             {
-                Calculation.OnPropertyChanged(tb.Name);
+                Calculation.OnPropertyChanged(name);
             }
             else
             {
-                Raise(tb.Name);
+                Raise(name);
             }
-            Config.NumberOfDecimals = oldCount;
             if (BorderVisible == _baseColorBrush)
             {
                 BorderVisible = new SolidColorBrush(Color.FromRgb(255,0,0));
@@ -426,17 +428,36 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
 
-        public void RaiseDeep(string name)
+        public void RaiseDeep(TextBox tb)
         {
+            Config.NumberOfDecimals = _oldCount;
             var type = typeof(HeatBalanceViewModel);
-            var field = type.GetProperty(name);
-            if (field == null)
+            var field = type.GetProperty(tb.Name);
+            if (tb.IsReadOnly == false)
             {
-                Calculation.OnPropertyChanged(name);
+                if (field == null)
+                {
+                    type = typeof(CalculationFull);
+                    field = type.GetProperty(tb.Name);
+                    field.SetValue(Calculation, tb.Text);
+                    Calculation.OnPropertyChanged(tb.Name);
+                }
+                else
+                {
+                    field.SetValue(this, tb.Text);
+                    Refresh();
+                }
             }
             else
             {
-                Raise(name);
+                if (field == null)
+                {
+                    Calculation.OnPropertyChanged(tb.Name);
+                }
+                else
+                {
+                    Refresh();
+                }
             }
         }
 

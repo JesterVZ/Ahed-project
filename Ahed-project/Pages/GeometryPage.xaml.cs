@@ -20,13 +20,12 @@ namespace Ahed_project.Pages
 
         private void ShowOnClick(object sender, MouseButtonEventArgs e)
         {
-            _viewModel.ShowFull(sender);
+            _viewModel.ShowFull(((TextBox)sender).Name);
         }
 
-        private new void MouseLeave(object sender, MouseEventArgs e)
+        private new void LostFocus(object sender, RoutedEventArgs e)
         {
-            FrameworkElement tb = sender as FrameworkElement;
-            _viewModel.RaiseDeep(tb.Name);
+            _viewModel.RaiseDeep((TextBox)sender);
         }
     }
 }
