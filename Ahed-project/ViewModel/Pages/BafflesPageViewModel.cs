@@ -267,23 +267,37 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
 
-        public void RaiseDeep(TextBox tb)
+        public void RaiseDeep(string name, bool isReadOnly, string text, int alternateValue)
         {
             Config.NumberOfDecimals = _oldCount;
             var type = typeof(BafflesPageViewModel);
-            var field = type.GetProperty(tb.Name);
-            if (tb.IsReadOnly == false)
+            var field = type.GetProperty(name);
+            if (!isReadOnly)
             {
                 if (field == null)
                 {
                     type = typeof(BaffleFull);
-                    field = type.GetProperty(tb.Name);
-                    field.SetValue(Baffle, tb.Text);
-                    Baffle.OnPropertyChanged(tb.Name);
+                    field = type.GetProperty(name);
+                    try
+                    {
+                        field.SetValue(Baffle, text);
+                    }
+                    catch
+                    {
+                        field.SetValue(Baffle,alternateValue);
+                    }
+                    Baffle.OnPropertyChanged(name);
                 }
                 else
                 {
-                    field.SetValue(this, tb.Text);
+                    try
+                    {
+                        field.SetValue(this, text);
+                    }
+                    catch
+                    {
+                        field.SetValue(this, alternateValue);
+                    }
                     Refresh();
                 }
             }
@@ -291,7 +305,7 @@ namespace Ahed_project.ViewModel.Pages
             {
                 if (field == null)
                 {
-                    Baffle.OnPropertyChanged(tb.Name);
+                    Baffle.OnPropertyChanged(name);
                 }
                 else
                 {

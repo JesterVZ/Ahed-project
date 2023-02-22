@@ -20,7 +20,7 @@ namespace Ahed_project.Pages
 
         private void ShowOnClick(object sender, MouseButtonEventArgs e)
         {
-            _viewModel.ShowFull(((TextBox)sender).Name);
+            _viewModel.ShowFull(((FrameworkElement)sender).Name);
         }
 
         private new void LostFocus(object sender, RoutedEventArgs e)

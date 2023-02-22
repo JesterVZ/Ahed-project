@@ -16,12 +16,12 @@ using System.Windows.Shapes;
 namespace Ahed_project.UserControlsCustom
 {
     /// <summary>
-    /// Логика взаимодействия для CustonCheck.xaml
+    /// Логика взаимодействия для CustomCheck.xaml
     /// </summary>
-    public partial class CustonCheck : System.Windows.Controls.UserControl
+    public partial class CustomCheck : System.Windows.Controls.UserControl
     {
-        public static readonly DependencyProperty dependencyPropertyText = DependencyProperty.Register("InputText", typeof(string), typeof(CustonCheck), new PropertyMetadata("", new PropertyChangedCallback(ChangeTextProperty)));
-        public static readonly DependencyProperty dependencyPropertyIsChecked = DependencyProperty.Register("IsChecked", typeof(int), typeof(CustonCheck), new PropertyMetadata(0, new PropertyChangedCallback(ChangeIsCheckedProperty)));
+        public static readonly DependencyProperty dependencyPropertyText = DependencyProperty.Register("InputText", typeof(string), typeof(CustomCheck), new PropertyMetadata("", new PropertyChangedCallback(ChangeTextProperty)));
+        public static readonly DependencyProperty dependencyPropertyIsChecked = DependencyProperty.Register("IsChecked", typeof(int), typeof(CustomCheck), new PropertyMetadata(0, new PropertyChangedCallback(ChangeIsCheckedProperty)));
 
         public int IsChecked
         {
@@ -55,7 +55,7 @@ namespace Ahed_project.UserControlsCustom
             }
         }
 
-        public CustonCheck()
+        public CustomCheck()
         {
             InitializeComponent();
         }
@@ -76,11 +76,11 @@ namespace Ahed_project.UserControlsCustom
         }
         private static void ChangeTextProperty(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as CustonCheck).InputText = (string)e.NewValue;
+            (d as CustomCheck).InputText = (string)e.NewValue;
         }
         private static void ChangeIsCheckedProperty(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as CustonCheck).IsChecked = (int)e.NewValue;
+            (d as CustomCheck).IsChecked = (int)e.NewValue;
         }
 
         private void CustomTextBox_TextChanged(object sender, TextChangedEventArgs e)

@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows;
+using Ahed_project.Settings;
 
 namespace Ahed_project.ViewModel.Pages
 {
@@ -210,23 +211,37 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
 
-        public void RaiseDeep(TextBox tb)
+        public void RaiseDeep(string name,bool isReadOnly, string text,int alternateValue)
         {
             Config.NumberOfDecimals = _oldCount;
             var type = typeof(OverallCalculationViewModel);
-            var field = type.GetProperty(tb.Name);
-            if (tb.IsReadOnly == false)
+            var field = type.GetProperty(name);
+            if (!isReadOnly)
             {
                 if (field == null)
                 {
                     type = typeof(OverallFull);
-                    field = type.GetProperty(tb.Name);
-                    field.SetValue(Overall, tb.Text);
-                    Overall.OnPropertyChanged(tb.Name);
+                    field = type.GetProperty(name);
+                    try
+                    {
+                        field.SetValue(Overall, text);
+                    }
+                    catch
+                    {
+                        field.SetValue(Overall, alternateValue);
+                    }
+                    Overall.OnPropertyChanged(name);
                 }
                 else
                 {
-                    field.SetValue(this, tb.Text);
+                    try
+                    {
+                        field.SetValue(this, text);
+                    }
+                    catch
+                    {
+                        field.SetValue(this, alternateValue);
+                    }
                     Refresh();
                 }
             }
@@ -234,7 +249,7 @@ namespace Ahed_project.ViewModel.Pages
             {
                 if (field == null)
                 {
-                    Overall.OnPropertyChanged(tb.Name);
+                    Overall.OnPropertyChanged(name);
                 }
                 else
                 {

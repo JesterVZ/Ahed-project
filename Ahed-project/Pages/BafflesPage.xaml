@@ -175,7 +175,7 @@
 
                                 <Label Grid.Column="0" Grid.Row="3">Inlet Baffle Spacing (Lbi)</Label>
                                 <Label Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center">mm</Label>
-                                <custom1:CustonCheck x:Name="inlet_baffle_spacing" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" IsEnabled="True"  InputText="{Binding Baffle.inlet_baffle_spacing, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsChecked="{Binding inlet_baffle_spacing_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="3"/>
+                                <custom1:CustomCheck x:Name="inlet_baffle_spacing" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" IsEnabled="True"  InputText="{Binding Baffle.inlet_baffle_spacing, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsChecked="{Binding inlet_baffle_spacing_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="3"/>
                                <!-- <TextBox x:Name="inlet_baffle_spacing" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus"  Style="{StaticResource Default}" Text="{Binding Baffle.inlet_baffle_spacing, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="3"/>-->
                                 <Label Grid.Column="0" Grid.Row="4">Central Baffle Spacing (Lbc)</Label>
                                 <Label Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Center">mm</Label>
@@ -184,10 +184,10 @@
 
                                 <Label Grid.Column="0" Grid.Row="5">Outlet Baffle Spacing (Lbo)</Label>
                                 <Label Grid.Column="1" Grid.Row="5" HorizontalAlignment="Right" VerticalAlignment="Center">mm</Label>
-                                <custom1:CustonCheck x:Name="outlet_baffle_spacing" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" IsEnabled="True"  InputText="{Binding Baffle.outlet_baffle_spacing, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsChecked="{Binding outlet_baffle_spacing_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="5"/>
+                                <custom1:CustomCheck x:Name="outlet_baffle_spacing" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" IsEnabled="True"  InputText="{Binding Baffle.outlet_baffle_spacing, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsChecked="{Binding outlet_baffle_spacing_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="5"/>
 
                                 <Label Grid.Column="0" Grid.Row="6">Number Of Baffles (Nb)</Label>
-                                <custom1:CustonCheck x:Name="number_of_baffles" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" IsEnabled="True"  InputText="{Binding Baffle.number_of_baffles, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsChecked="{Binding number_of_baffles_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="6"/>
+                                <custom1:CustomCheck x:Name="number_of_baffles" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" IsEnabled="True"  InputText="{Binding Baffle.number_of_baffles, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsChecked="{Binding number_of_baffles_is_edit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="6"/>
 
                                 <Label Grid.Column="0" Grid.Row="7">Baffle Thickness</Label>
                                 <Label Grid.Column="1" Grid.Row="7" HorizontalAlignment="Right" VerticalAlignment="Center">mm</Label>
