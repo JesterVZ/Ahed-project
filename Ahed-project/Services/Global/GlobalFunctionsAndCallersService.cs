@@ -48,10 +48,12 @@ namespace Ahed_project.Services.Global
         private static OverallCalculationViewModel _overallCalculationViewModel;
         private static CreateExcelService _createExcelService;
         private static MainViewModel _mainViewModel;
+        private static ProjectsWindowViewModel _projectsWindowViewModel;
 
         public GlobalFunctionsAndCallersService(SendDataService sendDataService, ContentPageViewModel contentPage,
             ProjectPageViewModel projectPageViewModel, IMapper mapper, HeatBalanceViewModel heatBalanceViewModel, TubesFluidViewModel tubesFluidViewModel,
-            ShellFluidViewModel shellFluidViewModel, GeometryPageViewModel geometryPageViewModel, BafflesPageViewModel bufflesPageViewModel, MainViewModel mainViewModel, OverallCalculationViewModel overallCalculationViewModel, CreateExcelService createExcelService)
+            ShellFluidViewModel shellFluidViewModel, GeometryPageViewModel geometryPageViewModel, BafflesPageViewModel bufflesPageViewModel, MainViewModel mainViewModel,
+            OverallCalculationViewModel overallCalculationViewModel, CreateExcelService createExcelService,ProjectsWindowViewModel projectsWindowViewModel)
         {
             _sendDataService = sendDataService;
             _contentPageViewModel = contentPage;
@@ -65,7 +67,7 @@ namespace Ahed_project.Services.Global
             _overallCalculationViewModel = overallCalculationViewModel;
             _mainViewModel = mainViewModel;
             _createExcelService = createExcelService;
-
+            _projectsWindowViewModel= projectsWindowViewModel;
 
         }
 
@@ -1064,7 +1066,10 @@ namespace Ahed_project.Services.Global
             {
                 var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.DELETE_PROJECT, null, selectedProject.project_id.ToString()));
                 GlobalDataCollectorService.ProjectsCollection.Remove(selectedProject);
-            } else
+                _projectsWindowViewModel.Projects.Remove(selectedProject);
+                _projectsWindowViewModel.SelectedProject = null;
+            }
+            else
             { 
                 return;
             }
