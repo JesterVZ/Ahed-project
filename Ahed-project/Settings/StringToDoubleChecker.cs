@@ -11,12 +11,17 @@ namespace Ahed_project.Settings
     {
         public static double ConvertToDouble(string s)
         {
+            if (String.IsNullOrEmpty(s)) return 0;
             return Convert.ToDouble(RemoveLetters(s,out var q).Replace('.', ','));
         }
 
         public static string RemoveLetters(string s, out bool changedCount)
         {
             changedCount = false;
+            if (String.IsNullOrEmpty(s))
+            {
+                return s;
+            }
             int n = s.Length;
             if (s.First()=='.'||s.First()==',')
             {
