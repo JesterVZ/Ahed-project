@@ -9,6 +9,7 @@
     <ApplicationIcon>Visual\favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Visual\baffles-2.png" />
     <None Remove="Visual\banner_hrs.jpg" />
     <None Remove="Visual\logo_header.svg" />
     <None Remove="Visual\splash_screen.png" />

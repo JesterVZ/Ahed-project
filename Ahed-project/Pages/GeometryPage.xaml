@@ -182,8 +182,8 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <Image Source="{Binding Geometry.image_geometry, UpdateSourceTrigger=PropertyChanged}"  Grid.Column="0" Grid.Row="0">
-                        </Image>
+                        <Image  Source="{Binding Geometry.image_geometry, UpdateSourceTrigger=PropertyChanged}" Width="200" Height="400" Grid.Column="0" Grid.Row="0"/>
+
                         <Grid Grid.Column="1" Grid.Row="0">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
