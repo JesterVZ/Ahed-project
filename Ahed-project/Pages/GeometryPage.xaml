@@ -289,7 +289,7 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Horizontal" Grid.Column="0">
                         <Label Grid.Column="0" FontWeight="Bold">Nozzles</Label>
-                        <Button Grid.Column="0" Content="Tubes Assistant" HorizontalAlignment="Left" VerticalAlignment="Center" Width="121" Background="#fc6"/>
+                        <Button IsEnabled="False" Grid.Column="0" Content="Tubes Assistant" HorizontalAlignment="Left" VerticalAlignment="Center" Width="121" Background="#fc6"/>
                     </StackPanel>
 
                     <Label Grid.Column="1" FontWeight="Bold">Parallel Lines Distribution Diagram (per block)</Label>
