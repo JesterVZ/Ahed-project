@@ -117,9 +117,11 @@
                                 <TextBox x:Name="pairs_of_sealing_strips" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus"  Style="{StaticResource Colored}" Text="{Binding Baffle.pairs_of_sealing_strips, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="8"/>
 
                                 <Label Grid.Column="0" Grid.Row="9">Shell Diameter Angle (θds)</Label>
+                                <Label Grid.Column="1" Grid.Row="9" HorizontalAlignment="Right" VerticalAlignment="Center">°</Label>
                                 <TextBox x:Name="shell_diameter_angle" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Baffle.shell_diameter_angle, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="9"/>
 
                                 <Label Grid.Column="0" Grid.Row="10">Center Tube Angle (θctε)</Label>
+                                <Label Grid.Column="1" Grid.Row="10" HorizontalAlignment="Right" VerticalAlignment="Center">°</Label>
                                 <TextBox x:Name="center_tube_angle" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Baffle.center_tube_angle, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="10"/>
 
                                 <Label Grid.Column="0" Grid.Row="11">Diameter To Tube Center (Dctε)</Label>

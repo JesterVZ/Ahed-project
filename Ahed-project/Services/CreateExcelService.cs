@@ -22,7 +22,7 @@ namespace Ahed_project.Services
     {
         private static ProjectPageViewModel _projectPageViewModel;
         private static TubesFluidViewModel _tubesFluidViewModel;
-        public static ShellFluidViewModel _shellFluidViewModel;
+        private static ShellFluidViewModel _shellFluidViewModel;
         private static HeatBalanceViewModel _heatBalanceViewModel;
         private static SLDocument Doc;
         public CreateExcelService(TubesFluidViewModel tubesFluidViewModel, ShellFluidViewModel shellFluidViewModel, ProjectPageViewModel projectPageViewModel, HeatBalanceViewModel heatBalanceViewModel)
@@ -34,7 +34,7 @@ namespace Ahed_project.Services
 
             Doc = new();
         }
-        public async void CreateExcel()
+        public void CreateExcel()
         {
             CreateFull();
         }
@@ -258,7 +258,27 @@ namespace Ahed_project.Services
             Doc.SetCellStyle("C6", "F7", BoldTextStyle());
 
             AddNames();
+            AddUnits();
             AddValues();
+        }
+
+        private static void AddUnits()
+        {
+            Doc.SetCellValue("B11", "kg/hr");
+            Doc.SetCellValue("B12", "°C");
+            Doc.SetCellValue("B13", "kW");
+            Doc.SetCellValue("B14", "bar-a");
+            Doc.SetCellValue("B16", "kg/m³");
+            Doc.SetCellValue("B17", "kJ/kg•°С");
+            Doc.SetCellValue("B18", "W/m•°C");
+            Doc.SetCellValue("B19", "cP");
+            Doc.SetCellValue("B21", "J/kg");
+            Doc.SetCellValue("B23", "kg/m³");
+            Doc.SetCellValue("B24", "kJ/kg•°C");
+            Doc.SetCellValue("B25", "W/m•°C");
+            Doc.SetCellValue("B26", "cP");
+            Doc.SetCellValue("B27", "bar-a");
+            Doc.SetCellValue("B28", "%");
         }
 
         private static void AddNames()
@@ -304,6 +324,18 @@ namespace Ahed_project.Services
             Doc.SetCellValue("C11", _heatBalanceViewModel.Calculation.flow_tube);
             Doc.MergeWorksheetCells("E11", "F11");
             Doc.SetCellValue("E11", _heatBalanceViewModel.Calculation.flow_shell);
+            Doc.SetCellValue("C12", _heatBalanceViewModel.Calculation.temperature_tube_inlet);
+            Doc.SetCellValue("D12", _heatBalanceViewModel.Calculation.temperature_tube_outlet);
+            Doc.SetCellValue("E12", _heatBalanceViewModel.Calculation.temperature_shell_inlet);
+            Doc.SetCellValue("F12", _heatBalanceViewModel.Calculation.temperature_shell_outlet);
+            Doc.MergeWorksheetCells("C13", "D13");
+            Doc.MergeWorksheetCells("E13", "F13");
+            Doc.SetCellValue("C13", _heatBalanceViewModel.Calculation.duty_tube);
+            Doc.SetCellValue("E13", _heatBalanceViewModel.Calculation.duty_shell);
+            Doc.SetCellValue("C16", _heatBalanceViewModel.Calculation.gas_density_tube_inlet);
+            Doc.SetCellValue("D16", _heatBalanceViewModel.Calculation.gas_density_tube_outlet);
+            Doc.SetCellValue("E16", _heatBalanceViewModel.Calculation.gas_density_shell_inlet);
+            Doc.SetCellValue("F16", _heatBalanceViewModel.Calculation.gas_density_shell_outlet);
         }
         #endregion
     }
