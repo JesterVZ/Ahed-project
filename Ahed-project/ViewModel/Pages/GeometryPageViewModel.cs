@@ -4,6 +4,7 @@ using Ahed_project.MasterData.GeometryClasses;
 using Ahed_project.MasterData.Overall;
 using Ahed_project.Migrations;
 using Ahed_project.Services.Global;
+using Ahed_project.Windows;
 using DevExpress.DXBinding.Native;
 using DevExpress.Mvvm;
 using System;
@@ -559,7 +560,8 @@ namespace Ahed_project.ViewModel.Pages
 
         public ICommand ShowTemplate => new DelegateCommand(() =>
         {
-
+            GeometryTemplateWindow window = new GeometryTemplateWindow(Geometry.image_geometry);
+            window.Show();
         });
 
         public ICommand Calculate => new DelegateCommand(() =>

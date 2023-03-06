@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="GeometryTemplateWindow" Height="450" Width="800">
     <Grid>
-        <Image Source="{Binding Geometry.image_geometry, UpdateSourceTrigger=PropertyChanged}"  Grid.Column="0" Grid.Row="0">
+        <Image x:Name="GeometryImage" Grid.Column="0" Grid.Row="0">
         </Image>
     </Grid>
 </Window>

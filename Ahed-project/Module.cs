@@ -49,7 +49,6 @@ namespace Ahed_project
             builder.RegisterType<ShellFluidViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<BafflesPageViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<ReportsPageViewModel>().AsSelf().SingleInstance();
-            builder.RegisterType<GeometryTemplateViewModel>().AsSelf().SingleInstance();
             #endregion
             #region Pages
             builder.RegisterType<_3DPage>().AsSelf().SingleInstance();
