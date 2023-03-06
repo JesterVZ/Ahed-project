@@ -5,8 +5,6 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ahed-project", "Ahed-project\Ahed-project.csproj", "{76ABD281-6295-43BB-8509-E6F1A2699275}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Ahed-setup", "Ahed-setup\Ahed-setup.vdproj", "{915CCB67-70E3-4EA1-AFC5-C67ADC8140A3}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
