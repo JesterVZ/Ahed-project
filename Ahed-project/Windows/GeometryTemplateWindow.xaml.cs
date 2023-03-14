@@ -25,6 +25,7 @@ namespace Ahed_project.Windows
         {
             InitializeComponent();
             this.imageUrl = url;
+            /*
             Image image = new Image();
             BitmapImage bitmapImage = new BitmapImage();
             bitmapImage.BeginInit();
@@ -32,7 +33,7 @@ namespace Ahed_project.Windows
             bitmapImage.EndInit();
             image.Stretch = Stretch.Fill;
             image.Source = bitmapImage;
-            GeometryImage.Source = bitmapImage;
+            GeometryImage.Source = bitmapImage;*/
             PreviewKeyDown += (s, e) => { if (e.Key == Key.Escape) Close(); };
         }
     }

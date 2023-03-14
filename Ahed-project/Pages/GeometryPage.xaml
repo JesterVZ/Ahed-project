@@ -65,6 +65,9 @@
                             <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">Heat Exchanger Type</Label>
                         <ComboBox ItemsSource="{Binding Exchangers}" HorizontalContentAlignment="Left" SelectedItem="{Binding ExchangersSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="0" SelectedIndex="0" Margin="3,3,3,3">
@@ -165,11 +168,20 @@
                         <TextBox x:Name="roughness_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.roughness_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="15" Margin="3,3,3,3"/>
                         <TextBox x:Name="roughness_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.roughness_shell_side, Converter={StaticResource Converter}}" Grid.Column="4" Grid.Row="15" Margin="3,3,3,3"/>
 
-                        <Label Grid.Column="0" Grid.Row="16" Grid.ColumnSpan="2" Margin="0,0,0,15" Grid.RowSpan="2">Bundle type</Label>
-                        <RadioButton IsChecked="{Binding Fixed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="16" GroupName="BundleType" Content="Fixed" VerticalAlignment="Center"/>
-                        <RadioButton IsChecked="{Binding Removable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="16" GroupName="BundleType" Content="Removable" VerticalAlignment="Center"/>
+                        <Label Grid.Column="0" Grid.Row="16">Scraping Frequency</Label>
+                        <Label Grid.Column="1" Grid.Row="16" HorizontalAlignment="Right">rpm</Label>
+                        <TextBox PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.scraping_frequency_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="16" Margin="3,3,3,3"/>
 
-                        <CheckBox IsChecked="{Binding RollerExpanded}" Grid.Column="3" Grid.Row="17" Content="Roller Expanded"/>
+                        <Label Grid.Column="0" Grid.Row="17">Motor Power</Label>
+                        <Label Grid.Column="1" Grid.Row="17" HorizontalAlignment="Right">kW</Label>
+                        <TextBox PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.motor_power_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="17" Margin="3,3,3,3"/>
+
+
+                        <Label Grid.Column="0" Grid.Row="19" Grid.ColumnSpan="2" Margin="0,0,0,15" Grid.RowSpan="2">Bundle type</Label>
+                        <RadioButton IsChecked="{Binding Fixed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="19" GroupName="BundleType" Content="Fixed" VerticalAlignment="Center"/>
+                        <RadioButton IsChecked="{Binding Removable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="19" GroupName="BundleType" Content="Removable" VerticalAlignment="Center"/>
+
+                        <CheckBox IsChecked="{Binding RollerExpanded}" Grid.Column="3" Grid.Row="20" Content="Roller Expanded"/>
                     </Grid>
                     <Grid Grid.Column="1">
                         <Grid.ColumnDefinitions>

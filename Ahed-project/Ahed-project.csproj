@@ -13,6 +13,7 @@
     <None Remove="Visual\banner_hrs.jpg" />
     <None Remove="Visual\logo_header.svg" />
     <None Remove="Visual\splash_screen.png" />
+    <None Remove="Visual\template.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Visual\check.svg">
@@ -29,6 +30,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Visual\Squared_centred.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Visual\template.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Visual\Triangilar.png">

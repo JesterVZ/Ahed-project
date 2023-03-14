@@ -561,7 +561,7 @@ namespace Ahed_project.ViewModel.Pages
         public ICommand ShowTemplate => new DelegateCommand(() =>
         {
             GeometryTemplateWindow window = new GeometryTemplateWindow(Geometry.image_geometry);
-            window.Show();
+            window.ShowDialog();
         });
 
         public ICommand Calculate => new DelegateCommand(() =>

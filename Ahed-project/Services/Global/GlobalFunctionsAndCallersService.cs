@@ -863,6 +863,7 @@ namespace Ahed_project.Services.Global
                 clearances_spacing_min_tube_hole_to_division_plate_groove = geometry.clearances_spacing_min_tube_hole_to_division_plate_groove,
                 clearances_spacing_division_plate_to_tubeplate = geometry.clearances_spacing_division_plate_to_tubeplate,
                 clearances_spacing_minimum_tube_in_tube_spacing = geometry.clearances_spacing_minimum_tube_in_tube_spacing
+                
             });
             var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE_GEOMETRY, json,_heatBalanceViewModel.Calculation.project_id.ToString(),_heatBalanceViewModel.Calculation.calculation_id.ToString()));
             if (response != null)

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="GeometryTemplateWindow" Height="450" Width="800">
     <Grid>
-        <Image x:Name="GeometryImage" Grid.Column="0" Grid.Row="0">
+        <Image x:Name="GeometryImage" Source="../Visual/template.png" Grid.Column="0" Grid.Row="0">
         </Image>
     </Grid>
 </Window>
