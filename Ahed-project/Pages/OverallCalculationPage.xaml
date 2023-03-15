@@ -257,7 +257,7 @@
                             <TextBox x:Name="pressure_drop_shell_side_Pc" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Grid.Column="3" Grid.Row="12" Style="{StaticResource Colored}" Text="{Binding Overall.pressure_drop_shell_side_Pc, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                             <Label Grid.Column="0" Grid.Row="13">Pressure drop in all baffle windows (ΔPw)</Label>
-                            <TextBox Grid.Column="3" Grid.Row="13" Style="{StaticResource Colored}" Text="{Binding Overall.pressure_drop_shell_side_Pw, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox x:Name="pressure_drop_shell_side_Pw" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Grid.Column="3" Grid.Row="13" Style="{StaticResource Colored}" Text="{Binding Overall.pressure_drop_shell_side_Pw, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                             <Label Grid.Column="0" Grid.Row="14">Pressure drop in the extrance and exit baffle spaces (ΔPe)</Label>
                             <TextBox x:Name="pressure_drop_shell_side_Pe" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Grid.Column="3" Grid.Row="14" Style="{StaticResource Colored}" Text="{Binding Overall.pressure_drop_shell_side_Pe, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
