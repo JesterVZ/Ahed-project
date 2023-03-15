@@ -181,6 +181,10 @@ namespace Ahed_project.ViewModel.Pages
         private int _oldCount = 2;
         public void ShowFull(string name)
         {
+            if (String.IsNullOrEmpty(name))
+            {
+                return;
+            }
             var type = typeof(OverallCalculationViewModel);
             var field = type.GetProperty(name);
             object value = null;
@@ -213,6 +217,10 @@ namespace Ahed_project.ViewModel.Pages
 
         public void RaiseDeep(string name,bool isReadOnly, string text,int alternateValue)
         {
+            if (String.IsNullOrEmpty(name))
+            {
+                return;
+            }
             Config.NumberOfDecimals = _oldCount;
             var type = typeof(OverallCalculationViewModel);
             var field = type.GetProperty(name);

@@ -390,6 +390,10 @@ namespace Ahed_project.ViewModel.Pages
         private int _oldCount = 2;
         public void ShowFull(string name)
         {
+            if (String.IsNullOrEmpty(name))
+            {
+                return;
+            }
             var type = typeof(HeatBalanceViewModel);
             var field = type.GetProperty(name);
             object value = null;
@@ -430,6 +434,10 @@ namespace Ahed_project.ViewModel.Pages
 
         public void RaiseDeep(TextBox tb)
         {
+            if (String.IsNullOrEmpty(tb.Name))
+            {
+                return;
+            }
             Config.NumberOfDecimals = _oldCount;
             var type = typeof(HeatBalanceViewModel);
             var field = type.GetProperty(tb.Name);
