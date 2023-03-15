@@ -170,11 +170,11 @@
 
                         <Label Grid.Column="0" Grid.Row="16">Scraping Frequency</Label>
                         <Label Grid.Column="1" Grid.Row="16" HorizontalAlignment="Right">rpm</Label>
-                        <TextBox PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.scraping_frequency_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="16" Margin="3,3,3,3"/>
+                        <TextBox x:Name="scraping_frequency_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.scraping_frequency_tubes_side, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="16" Margin="3,3,3,3"/>
 
                         <Label Grid.Column="0" Grid.Row="17">Motor Power</Label>
                         <Label Grid.Column="1" Grid.Row="17" HorizontalAlignment="Right">kW</Label>
-                        <TextBox PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.motor_power_tubes_side, Converter={StaticResource Converter}}" Grid.Column="3" Grid.Row="17" Margin="3,3,3,3"/>
+                        <TextBox x:Name="motor_power_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.motor_power_tubes_side, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="17" Margin="3,3,3,3"/>
 
 
                         <Label Grid.Column="0" Grid.Row="19" Grid.ColumnSpan="2" Margin="0,0,0,15" Grid.RowSpan="2">Bundle type</Label>
