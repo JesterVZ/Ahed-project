@@ -59,15 +59,15 @@
                     <TextBlock Margin="3" Grid.Column="0" Grid.Row="7" FontWeight="Bold">Project Processes</TextBlock>
                     <TextBox IsReadOnly="{Binding FieldsState, UpdateSourceTrigger=PropertyChanged}" Margin="3" Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2" Text="{Binding CalculationName, UpdateSourceTrigger=PropertyChanged}"/>
                     <Button Style="{StaticResource MainButton}" Grid.Row="7" Grid.Column="3" Margin="3" Command="{Binding CreateCalculationCommand}" Click="Button_Click">Add</Button>
-                    <ListBox Margin="3" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" ItemsSource="{Binding Calculations}" SelectedItem="{Binding SelectedCalculation}">
-                        <ListBox.ContextMenu>
+                    <customGrid:NoRightMouseButtonListBox Margin="3" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="3" ItemsSource="{Binding Calculations}" SelectedItem="{Binding SelectedCalculation}" RightButtonClicked ="{Binding ToOperateCalculation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <customGrid:NoRightMouseButtonListBox.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Delete" Command="{Binding DeleteCalculationsCommand}" CommandParameter="{Binding SelectedCalculation}"/>
-                                <MenuItem Header="Copy" Command="{Binding CopyCalculationsCommand}" CommandParameter="{Binding SelectedCalculation}"/>
+                                <MenuItem Header="Delete" Command="{Binding DeleteCalculationsCommand}" CommandParameter="{Binding ToOperateCalculation}"/>
+                                <MenuItem Header="Copy" Command="{Binding CopyCalculationsCommand}" CommandParameter="{Binding ToOperateCalculation}"/>
                                 <MenuItem Header="Sort"/>
                             </ContextMenu>
-                        </ListBox.ContextMenu>
-                        <ListBox.ItemTemplate>
+                        </customGrid:NoRightMouseButtonListBox.ContextMenu>
+                        <customGrid:NoRightMouseButtonListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBox Style="{StaticResource EditableText}" Text="{Binding Path=name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="50">
                                     <i:Interaction.Triggers>
@@ -77,8 +77,8 @@
                                     </i:Interaction.Triggers>
                                 </TextBox>
                             </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                        </customGrid:NoRightMouseButtonListBox.ItemTemplate>
+                    </customGrid:NoRightMouseButtonListBox>
                     <StackPanel Margin="3" Orientation="Horizontal" Grid.Column="0" Grid.Row="9">
                         <TextBlock Grid.ColumnSpan="4" FontWeight="Bold" Margin="0 0 9 0">Advanced Properties</TextBlock>
                         <Button Width="20" Height="20" Template="{StaticResource RoundedButton}" Command="{Binding ToggleCommand}">

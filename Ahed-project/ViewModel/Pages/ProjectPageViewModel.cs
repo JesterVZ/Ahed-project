@@ -95,6 +95,13 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
 
+        private CalculationFull _toOperateCalculation;
+        public CalculationFull ToOperateCalculation
+        {
+            get => _toOperateCalculation;
+            set=> _toOperateCalculation = value;
+        }
+
         public void Raise()
         {
             RaisePropertiesChanged(nameof(ProjectInfo));
@@ -130,14 +137,14 @@ namespace Ahed_project.ViewModel.Pages
         });
 
         public ICommand DeleteCalculationsCommand => new AsyncCommand<object>((value) => {
-            GlobalFunctionsAndCallersService.DeleteCalculation(value as CalculationFull);
-            GlobalFunctionsAndCallersService.RemoveCalculationFromList(value as CalculationFull);
+            GlobalFunctionsAndCallersService.DeleteCalculation(ToOperateCalculation);
+            GlobalFunctionsAndCallersService.RemoveCalculationFromList(ToOperateCalculation);
             return Task.CompletedTask;
         });
 
         public ICommand CopyCalculationsCommand => new AsyncCommand<object>(async (value) =>
         {
-            GlobalFunctionsAndCallersService.CopyCalculation(value as CalculationFull);
+            GlobalFunctionsAndCallersService.CopyCalculation(ToOperateCalculation);
         });
         #endregion
 
