@@ -4,6 +4,7 @@ using Ahed_project.MasterData.GeometryClasses;
 using Ahed_project.MasterData.Overall;
 using Ahed_project.Migrations;
 using Ahed_project.Services.Global;
+using Ahed_project.Settings;
 using Ahed_project.Windows;
 using DevExpress.DXBinding.Native;
 using DevExpress.Mvvm;
@@ -135,7 +136,7 @@ namespace Ahed_project.ViewModel.Pages
                
                 try
                 {
-                    double outer_diameter_tubes_side = Convert.ToDouble(_geometry?.outer_diameter_tubes_side, CultureInfo.InvariantCulture);
+                    double outer_diameter_tubes_side = Convert.ToDouble(StringToDoubleChecker.ConvertFromInvariantCulture(_geometry?.outer_diameter_tubes_side));
                     if (outer_diameter_tubes_side <= 25)
                     {
                         GlobalFunctionsAndCallersService.SetDiametralTubeDefaultValue("0.3");

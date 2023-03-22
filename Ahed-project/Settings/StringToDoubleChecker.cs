@@ -1,6 +1,7 @@
 ﻿using Ahed_project.MasterData;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,10 +10,17 @@ namespace Ahed_project.Settings
 {
     public class StringToDoubleChecker
     {
+        private static readonly string curr = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+        private static readonly string inv = CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator;
+        public static string ConvertFromInvariantCulture(string s)
+        {
+            return s?.Replace(inv, curr);
+        }
+
         public static double ConvertToDouble(string s)
         {
             if (String.IsNullOrEmpty(s)) return 0;
-            return Convert.ToDouble(RemoveLetters(s,out var q).Replace('.', ','));
+            return Convert.ToDouble(ConvertFromInvariantCulture(RemoveLetters(s,out var q)));
         }
 
         public static string RemoveLetters(string s, out bool changedCount)
