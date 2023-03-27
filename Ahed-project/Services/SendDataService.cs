@@ -297,6 +297,15 @@ namespace Ahed_project.Services
                         }
                         response = restClient.Execute(request);
                         break;
+                    case ProjectMethods.RESTORE_BAFFLE:
+                        restClient = new RestClient(_serviceConfig.RestoreDefaultsBaffle.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        request.Method = Method.Get;
+                        foreach (var header in Headers)
+                        {
+                            request.AddHeader(header.Key, header.Value);
+                        }
+                        response = restClient.Execute(request);
+                        break;
                 }
                 if (response.IsSuccessful)
                     return response.Content;

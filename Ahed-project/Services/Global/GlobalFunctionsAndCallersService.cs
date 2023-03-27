@@ -1088,5 +1088,16 @@ namespace Ahed_project.Services.Global
                 }
             }
         }
+
+        public static async void RestoreDefaultBaffles()
+        {
+            var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.RESTORE_BAFFLE, null, GlobalDataCollectorService.Project.project_id.ToString(), GlobalDataCollectorService.Calculation.calculation_id.ToString()));
+            if (response!=null)
+            {
+                var result = JsonConvert.DeserializeObject<RestoreBaffleResponse>(response);
+                _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = String.IsNullOrEmpty(result.diametral_clearance_tube_baffle)?"0": result.diametral_clearance_tube_baffle;
+                _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = String.IsNullOrEmpty(result.diametral_clearance_shell_baffle)?"0": result.diametral_clearance_shell_baffle;
+            }
+        }
     }
 }

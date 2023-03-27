@@ -303,7 +303,7 @@
 
                                     <Label Grid.Column="0" Grid.Row="1">Diametral Clearance Tube-Baffle</Label>
                                     <TextBox x:Name="diametral_clearance_tube_baffle" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Baffle.diametral_clearance_tube_baffle, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1"/>
-                                    <Button Grid.Column="1" Margin="3" Grid.Row="2" Content="Restore Defaults" HorizontalAlignment="Left" VerticalAlignment="Center" Width="121" Background="#fc6"/>
+                                    <Button Command="{Binding RestoreDefaults}" Grid.Column="1" Margin="3" Grid.Row="2" Content="Restore Defaults" HorizontalAlignment="Left" VerticalAlignment="Center" Width="121" Background="#fc6"/>
 
                                 </Grid>
                             </customGrid:CustomGrid>

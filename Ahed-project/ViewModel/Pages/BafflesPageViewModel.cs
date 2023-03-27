@@ -222,6 +222,11 @@ namespace Ahed_project.ViewModel.Pages
             }
             Task.Run(() => GlobalFunctionsAndCallersService.CalculateBaffle(Baffle));
         });
+
+        public ICommand RestoreDefaults => new DelegateCommand(() =>
+        {
+            GlobalFunctionsAndCallersService.RestoreDefaultBaffles();
+        });
         #endregion
 
         public void Refresh()
