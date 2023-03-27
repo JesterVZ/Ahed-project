@@ -123,10 +123,6 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _geometry = value;
-                if (_geometry != null)
-                {
-                    _geometry.image_geometry = "https://ahead-api.ru" + _geometry.image_geometry;
-                }
                 ExchangersSelector = Exchangers.FirstOrDefault(x => x.Key == value?.head_exchange_type);
                 Orientation = Orientations.FirstOrDefault(x => x.Value == value?.orientation);
                 TubeProfileSelector = TubeProfile.FirstOrDefault(x => x.Value == value?.tube_profile_tubes_side);

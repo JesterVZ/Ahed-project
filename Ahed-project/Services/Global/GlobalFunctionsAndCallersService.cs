@@ -170,6 +170,16 @@ namespace Ahed_project.Services.Global
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка геометрий...")));
             var response = await Task.Run(() => template.SendToServer(ProjectMethods.GET_GEOMETRIES, ""));
             GlobalDataCollectorService.GeometryCollection = JsonConvert.DeserializeObject<ObservableCollection<GeometryFull>>(response);
+            foreach (var g in GlobalDataCollectorService.GeometryCollection)
+            {
+                if (!String.IsNullOrEmpty(g.image_geometry))
+                {
+                    if (!g.image_geometry.Contains("https://ahead-api.ru"))
+                    {
+                        g.image_geometry = "https://ahead-api.ru" + g.image_geometry;
+                    }
+                }
+            }
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка геометрий завершена!")));
             int userId = GlobalDataCollectorService.UserId;
             int id = 0;
@@ -876,6 +886,7 @@ namespace Ahed_project.Services.Global
                         Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
                     }
                     var g = JsonConvert.DeserializeObject<GeometryFull>(result.data.ToString());
+                    g.image_geometry = "https://ahead-api.ru" + g.image_geometry;
                     var ind = GlobalDataCollectorService.GeometryCollection.IndexOf(GlobalDataCollectorService.GeometryCollection.FirstOrDefault(x => x.geometry_id == g.geometry_id));
                     App.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.GeometryCollection[ind] = g);
                     _geometryPageViewModel.Geometry = g;
