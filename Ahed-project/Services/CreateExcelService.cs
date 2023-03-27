@@ -332,11 +332,49 @@ namespace Ahed_project.Services
             Doc.MergeWorksheetCells("E13", "F13");
             Doc.SetCellValue("C13", _heatBalanceViewModel.Calculation.duty_tube);
             Doc.SetCellValue("E13", _heatBalanceViewModel.Calculation.duty_shell);
-            Doc.SetCellValue("C16", _heatBalanceViewModel.Calculation.gas_density_tube_inlet);
-            Doc.SetCellValue("D16", _heatBalanceViewModel.Calculation.gas_density_tube_outlet);
-            Doc.SetCellValue("E16", _heatBalanceViewModel.Calculation.gas_density_shell_inlet);
-            Doc.SetCellValue("F16", _heatBalanceViewModel.Calculation.gas_density_shell_outlet);
+            Doc.SetCellValue("C16", _heatBalanceViewModel.Calculation.liquid_density_tube_inlet);
+            Doc.SetCellValue("D16", _heatBalanceViewModel.Calculation.liquid_density_tube_outlet);
+            Doc.SetCellValue("E16", _heatBalanceViewModel.Calculation.liquid_density_shell_inlet);
+            Doc.SetCellValue("F16", _heatBalanceViewModel.Calculation.liquid_density_shell_outlet);
+            Doc.SetCellValue("C17", _heatBalanceViewModel.Calculation.liquid_specific_heat_tube_inlet);
+            Doc.SetCellValue("D17", _heatBalanceViewModel.Calculation.liquid_specific_heat_tube_outlet);
+            Doc.SetCellValue("E17", _heatBalanceViewModel.Calculation.liquid_specific_heat_shell_inlet);
+            Doc.SetCellValue("F17", _heatBalanceViewModel.Calculation.liquid_specific_heat_shell_outlet);
+            Doc.SetCellValue("C18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_tube_inlet);
+            Doc.SetCellValue("D18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_tube_outlet);
+            Doc.SetCellValue("E18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_shell_inlet);
+            Doc.SetCellValue("F18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_shell_outlet);
+            Doc.SetCellValue("C19", _heatBalanceViewModel.Calculation.liquid_consistency_index_tube_inlet);
+            Doc.SetCellValue("D19", _heatBalanceViewModel.Calculation.liquid_consistency_index_tube_outlet);
+            Doc.SetCellValue("E19", _heatBalanceViewModel.Calculation.liquid_consistency_index_shell_inlet);
+            Doc.SetCellValue("F19", _heatBalanceViewModel.Calculation.liquid_consistency_index_shell_outlet);
+            Doc.SetCellValue("C20", _heatBalanceViewModel.Calculation.liquid_flow_index_tube_inlet);
+            Doc.SetCellValue("D20", _heatBalanceViewModel.Calculation.liquid_flow_index_tube_outlet);
+            Doc.SetCellValue("E20", _heatBalanceViewModel.Calculation.liquid_flow_index_shell_inlet);
+            Doc.SetCellValue("F20", _heatBalanceViewModel.Calculation.liquid_flow_index_shell_inlet);
+            Doc.SetCellValue("C21", _heatBalanceViewModel.Calculation.liquid_latent_heat_tube_inlet);
+            Doc.SetCellValue("D21", _heatBalanceViewModel.Calculation.liquid_latent_heat_tube_outlet);
+            Doc.SetCellValue("E21", _heatBalanceViewModel.Calculation.liquid_latent_heat_shell_inlet);
+            Doc.SetCellValue("F21", _heatBalanceViewModel.Calculation.liquid_latent_heat_shell_inlet);
+            Doc.SetCellValue("C23", _heatBalanceViewModel.Calculation.gas_density_tube_inlet);
+            Doc.SetCellValue("D23", _heatBalanceViewModel.Calculation.gas_density_tube_outlet);
+            Doc.SetCellValue("E23", _heatBalanceViewModel.Calculation.gas_density_shell_inlet);
+            Doc.SetCellValue("F23", _heatBalanceViewModel.Calculation.gas_density_shell_outlet);
+            Doc.SetCellValue("C24", _heatBalanceViewModel.Calculation.gas_specific_heat_tube_inlet);
+            Doc.SetCellValue("D24", _heatBalanceViewModel.Calculation.gas_specific_heat_tube_outlet);
+            Doc.SetCellValue("E24", _heatBalanceViewModel.Calculation.gas_specific_heat_shell_inlet);
+            Doc.SetCellValue("F24", _heatBalanceViewModel.Calculation.gas_specific_heat_shell_outlet);
+            Doc.SetCellValue("C25", _heatBalanceViewModel.Calculation.gas_thermal_conductivity_tube_inlet);
+            Doc.SetCellValue("D25", _heatBalanceViewModel.Calculation.gas_thermal_conductivity_tube_outlet);
+            Doc.SetCellValue("E25", _heatBalanceViewModel.Calculation.gas_thermal_conductivity_shell_inlet);
+            Doc.SetCellValue("F25", _heatBalanceViewModel.Calculation.gas_thermal_conductivity_shell_outlet);
+            Doc.SetCellValue("C26", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_tube_inlet);
+            Doc.SetCellValue("D26", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_tube_outlet);
+            Doc.SetCellValue("E26", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_shell_inlet);
+            Doc.SetCellValue("F26", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_shell_outlet);
+
         }
         #endregion
+
     }
 }
