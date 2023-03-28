@@ -124,10 +124,10 @@ namespace Ahed_project.ViewModel.Pages
             {
                 _geometry = value;
                 ExchangersSelector = Exchangers.FirstOrDefault(x => x.Key == value?.head_exchange_type);
-                Orientation = Orientations.FirstOrDefault(x => x.Value == value?.orientation);
-                TubeProfileSelector = TubeProfile.FirstOrDefault(x => x.Value == value?.tube_profile_tubes_side);
-                ShellMaterial = Materials.FirstOrDefault(x => x.Value.name == value?.material_shell_side);
-                TubesMaterial = Materials.FirstOrDefault(x => x.Value.name == value?.material_tubes_side);
+                Orientation = Orientations.FirstOrDefault(x => x.Key == value?.orientation);
+                TubeProfileSelector = TubeProfile.FirstOrDefault(x => x.Key == value?.tube_profile_tubes_side);
+                ShellMaterial = Materials.FirstOrDefault(x => x.Value.name_short == value?.material_shell_side);
+                TubesMaterial = Materials.FirstOrDefault(x => x.Value.name_short == value?.material_tubes_side);
                 TubeLayout = TubePlateLayouts.FirstOrDefault(x => x.Key == value?.tube_plate_layout_tube_layout);
                
                 try
@@ -151,12 +151,12 @@ namespace Ahed_project.ViewModel.Pages
 
                 switch (value?.bundle_type)
                 {
-                    case "Fixed":
+                    case "fixed":
                         Fixed = true;
                         Removable = false;
                         _geometry.bundle_type = "fixed";
                         break;
-                    case "Removable":
+                    case "removable":
                         Removable = true;
                         Fixed = false;
                         _geometry.bundle_type = "removable";
@@ -169,10 +169,10 @@ namespace Ahed_project.ViewModel.Pages
 
                 switch (value?.roller_expanded)
                 {
-                    case "No":
+                    case "0":
                             RollerExpanded = false;
                         break;
-                    case "Yes":
+                    case "1":
                             RollerExpanded = true;
                         break;
                 }

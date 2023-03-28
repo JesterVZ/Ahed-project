@@ -396,7 +396,7 @@ namespace Ahed_project.Services.Global
             _contentPageViewModel.Validation(false);
             _projectPageViewModel.FieldsState = false;
             _overallCalculationViewModel.Overall = new OverallFull();
-            _overallCalculationViewModel.Refresh();
+            App.Current.Dispatcher.Invoke(()=> _overallCalculationViewModel.Refresh());
         }
 
         //Получение рассчетов
@@ -694,7 +694,15 @@ namespace Ahed_project.Services.Global
                     context.Users.Update(user);
                     context.SaveChanges();
                 }
+                if (!String.IsNullOrEmpty(geometry.image_geometry))
+                {
+                    if (!geometry.image_geometry.Contains("https://ahead-api.ru"))
+                    {
+                        geometry.image_geometry = "https://ahead-api.ru" + geometry.image_geometry;
+                    }
+                }
             }
+            
             _geometryPageViewModel.Geometry = geometry;
             //GlobalDataCollectorService.GeometryCalculated = false;
             _contentPageViewModel.Validation(false);
@@ -1106,9 +1114,15 @@ namespace Ahed_project.Services.Global
             var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.RESTORE_BAFFLE, null, GlobalDataCollectorService.Project.project_id.ToString(), GlobalDataCollectorService.Calculation.calculation_id.ToString()));
             if (response!=null)
             {
-                var result = JsonConvert.DeserializeObject<RestoreBaffleResponse>(response);
-                _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = String.IsNullOrEmpty(result.diametral_clearance_tube_baffle)?"0": result.diametral_clearance_tube_baffle;
-                _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = String.IsNullOrEmpty(result.diametral_clearance_shell_baffle)?"0": result.diametral_clearance_shell_baffle;
+                var result = JsonConvert.DeserializeObject<Responce>(response);
+                for (int i = 0; i < result.logs?.Count; i++)
+                {
+                    Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i]?.type, result.logs[i]?.message)));
+                }
+                var restoreResult = JsonConvert.DeserializeObject<RestoreBaffleResponse>(result.data.ToString());
+                
+                _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = String.IsNullOrEmpty(restoreResult.diametral_clearance_tube_baffle)?"0": restoreResult.diametral_clearance_tube_baffle;
+                _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = String.IsNullOrEmpty(restoreResult.diametral_clearance_shell_baffle)?"0": restoreResult.diametral_clearance_shell_baffle;
             }
         }
     }
