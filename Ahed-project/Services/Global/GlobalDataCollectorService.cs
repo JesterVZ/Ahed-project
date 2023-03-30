@@ -72,7 +72,7 @@ namespace Ahed_project.Services.Global
         public static List<Material> Materials { get; set; }
         #endregion
         #region Baffle
-        public static bool IsBaffleCalculated { get; set;}
+        public static bool IsBaffleCalculated { get; set; }
         #endregion
     }
 }

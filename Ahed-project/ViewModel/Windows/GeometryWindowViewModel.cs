@@ -1,12 +1,9 @@
 ﻿using Ahed_project.MasterData.GeometryClasses;
 using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Ahed_project.ViewModel.Windows
@@ -14,9 +11,9 @@ namespace Ahed_project.ViewModel.Windows
     public class GeometryWindowViewModel : BindableBase
     {
         public GeometryWindowViewModel() { }
-        public ObservableCollection<GeometryFull> Geometries {get; set;}
+        public ObservableCollection<GeometryFull> Geometries { get; set; }
         public List<GeometryFull> BeforeSearch { get; set; }
-        public bool IsGeometrySelected { get; set;}
+        public bool IsGeometrySelected { get; set; }
         private GeometryFull _geometry;
         public GeometryFull SelectedGeometry
         {
@@ -41,7 +38,7 @@ namespace Ahed_project.ViewModel.Windows
                 Geometries = new ObservableCollection<GeometryFull>(BeforeSearch.Where(x => x.name.ToLower().Contains(low)));
             }
         }
-            #region coms
+        #region coms
         public ICommand WindowLoaded => new DelegateCommand(() =>
         {
             BeforeSearch = new List<GeometryFull>(GlobalDataCollectorService.GeometryCollection);

@@ -1,20 +1,14 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.MasterData.BafflesClasses;
-using Ahed_project.MasterData.CalculateClasses;
-using Ahed_project.MasterData.GeometryClasses;
-using Ahed_project.Migrations;
 using Ahed_project.Services.Global;
 using Ahed_project.Settings;
 using DevExpress.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace Ahed_project.ViewModel.Pages
 {
@@ -50,7 +44,7 @@ namespace Ahed_project.ViewModel.Pages
             {
                 _outlet_baffle_spacing_is_edit = value;
                 Baffle.outlet_baffle_spacing_is_edit = value;
-                if(value == 1)
+                if (value == 1)
                 {
                     inlet_baffle_spacing_is_edit = 1;
                     number_of_baffles_is_edit = 1;
@@ -98,14 +92,15 @@ namespace Ahed_project.ViewModel.Pages
         public double SingleSegmentalIsEnables { get; set; }
         public double DoubleSegmentalIsEnables { get; set; }
         private BaffleFull _baffle;
-        public BaffleFull Baffle {
+        public BaffleFull Baffle
+        {
             get => _baffle;
             set
-            { 
+            {
                 _baffle = value;
                 SelectedBaffleType = BaffleType.FirstOrDefault(x => x.Key == value?.method);
                 NumberOfBaffles = _baffle?.number_of_baffles;
-            } 
+            }
         }
         public BafflesPageViewModel()
         {
@@ -142,7 +137,7 @@ namespace Ahed_project.ViewModel.Pages
         private KeyValuePair<string, string> _selectedType;
         public KeyValuePair<string, string> SelectedType
         {
-            get => _selectedType; 
+            get => _selectedType;
             set
             {
                 _selectedType = value;
@@ -152,7 +147,7 @@ namespace Ahed_project.ViewModel.Pages
                     SingleSegmentalIsEnables = 37;
                     DoubleSegmentalIsEnables = 0;
                 }
-                if(value.Key == "double_segmental")
+                if (value.Key == "double_segmental")
                 {
                     SingleSegmentalIsEnables = 0;
                     DoubleSegmentalIsEnables = 37;
@@ -166,12 +161,16 @@ namespace Ahed_project.ViewModel.Pages
             get => _selectedBaffleType;
             set
             {
-                Baffle.method = value.Key;
+                if (Baffle != null)
+                {
+                    Baffle.method = value.Key;
+                }
                 _selectedBaffleType = value;
-                if(value.Key == "no_baffles" || value.Key == "standard_heat_transfer_with_support_baffles")
+                if (value.Key == "no_baffles" || value.Key == "standard_heat_transfer_with_support_baffles")
                 {
                     ColumnVisibility = Visibility.Hidden;
-                } else
+                }
+                else
                 {
                     ColumnVisibility = Visibility.Visible;
                 }
@@ -185,10 +184,10 @@ namespace Ahed_project.ViewModel.Pages
             get => _numberOfBaffles;
             set
             {
-                _numberOfBaffles= value;
-                Baffle.number_of_baffles= value;
+                _numberOfBaffles = value;
+                Baffle.number_of_baffles = value;
                 var converted = StringToDoubleChecker.ConvertToDouble(value);
-                if (converted==1)
+                if (converted == 1)
                 {
                     BaffleType.Clear();
                     BaffleType.Add("no_baffles", "No baffles");
@@ -213,8 +212,9 @@ namespace Ahed_project.ViewModel.Pages
 
         });
 
-        public ICommand CalculateCommand => new DelegateCommand(() => {
-            if(Baffle.method == null)
+        public ICommand CalculateCommand => new DelegateCommand(() =>
+        {
+            if (Baffle.method == null)
             {
                 Baffle.method = "no_baffles";
                 Baffle.type = "single_segmental";
@@ -297,7 +297,7 @@ namespace Ahed_project.ViewModel.Pages
                     }
                     catch
                     {
-                        field.SetValue(Baffle,alternateValue);
+                        field.SetValue(Baffle, alternateValue);
                     }
                     Baffle.OnPropertyChanged(name);
                 }

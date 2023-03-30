@@ -6,26 +6,19 @@ using Ahed_project.MasterData.Overall;
 using Ahed_project.MasterData.Products;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.MasterData.TabClasses;
-using Ahed_project.Migrations;
 using Ahed_project.Services.EF;
-using Ahed_project.Services.EF.Model;
 using Ahed_project.Settings;
 using Ahed_project.ViewModel.ContentPageComponents;
 using Ahed_project.ViewModel.Pages;
 using Ahed_project.ViewModel.Windows;
 using AutoMapper;
-using DevExpress.Internal.WinApi.Windows.UI.Notifications;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
 
 namespace Ahed_project.Services.Global
 {
@@ -53,7 +46,7 @@ namespace Ahed_project.Services.Global
         public GlobalFunctionsAndCallersService(SendDataService sendDataService, ContentPageViewModel contentPage,
             ProjectPageViewModel projectPageViewModel, IMapper mapper, HeatBalanceViewModel heatBalanceViewModel, TubesFluidViewModel tubesFluidViewModel,
             ShellFluidViewModel shellFluidViewModel, GeometryPageViewModel geometryPageViewModel, BafflesPageViewModel bufflesPageViewModel, MainViewModel mainViewModel,
-            OverallCalculationViewModel overallCalculationViewModel, CreateExcelService createExcelService,ProjectsWindowViewModel projectsWindowViewModel)
+            OverallCalculationViewModel overallCalculationViewModel, CreateExcelService createExcelService, ProjectsWindowViewModel projectsWindowViewModel)
         {
             _sendDataService = sendDataService;
             _contentPageViewModel = contentPage;
@@ -67,7 +60,7 @@ namespace Ahed_project.Services.Global
             _overallCalculationViewModel = overallCalculationViewModel;
             _mainViewModel = mainViewModel;
             _createExcelService = createExcelService;
-            _projectsWindowViewModel= projectsWindowViewModel;
+            _projectsWindowViewModel = projectsWindowViewModel;
 
         }
 
@@ -116,7 +109,7 @@ namespace Ahed_project.Services.Global
                         Node monthNode = new Node();
                         monthNode.Id = Guid.NewGuid().ToString();
                         monthNode.Name = new DateTime(1, month.Key, 1).ToString("MMMM");
-                        GlobalDataCollectorService.AllProjects.Add(monthNode.Id, month.Value.OrderBy(x=>DateTime.Parse(x.updatedAt??x.createdAt)).ToList());
+                        GlobalDataCollectorService.AllProjects.Add(monthNode.Id, month.Value.OrderBy(x => DateTime.Parse(x.updatedAt ?? x.createdAt)).ToList());
                         node.Nodes.Add(monthNode);
                     }
                     GlobalDataCollectorService.ProjectNodes.Add(node);
@@ -144,7 +137,7 @@ namespace Ahed_project.Services.Global
             }
         }
         //сохранение состояния вкладок
-        public static  void SetTabState(TabsState tabs)
+        public static void SetTabState(TabsState tabs)
         {
             int calculation_id;
             using (var context = new EFContext())
@@ -187,14 +180,11 @@ namespace Ahed_project.Services.Global
                 var user = context.Users.FirstOrDefault(x => x.Id == userId);
                 id = user.LastGeometryId ?? 0;
             }
-            if(id != 0)
+            if (id != 0)
             {
-                Task.Run(() =>
-                {
-                    Thread.Sleep(new TimeSpan(0, 0, 5));
-                    _geometryPageViewModel.Geometry = GlobalDataCollectorService.GeometryCollection.FirstOrDefault(x => x.geometry_catalog_id == id);
-                });
-            } else
+                _geometryPageViewModel.Geometry = GlobalDataCollectorService.GeometryCollection.FirstOrDefault(x => x.geometry_catalog_id == id);
+            }
+            else
             {
                 _geometryPageViewModel.Geometry = new GeometryFull();
             }
@@ -207,13 +197,14 @@ namespace Ahed_project.Services.Global
                 _overallCalculationViewModel.ScrapingFrequencyRow = 40;
                 _overallCalculationViewModel.MaximumViscosityRow = 40;
                 _overallCalculationViewModel.GridHeight = 745;
-            } else
+            }
+            else
             {
                 _overallCalculationViewModel.ScrapingFrequencyRow = 0;
                 _overallCalculationViewModel.MaximumViscosityRow = 0;
                 _overallCalculationViewModel.GridHeight = 650;
             }
-                
+
         }
 
         //запрос к Overall (когда нажали calculate или просто переключились на вкладку)
@@ -269,10 +260,10 @@ namespace Ahed_project.Services.Global
 
                     var o = JsonConvert.DeserializeObject<OverallFull>(result.data.ToString());
                     _overallCalculationViewModel.Overall = o;
-                    if (o.nozzles_number_of_parallel_lines_shell_side=="2"&&_geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side=="1")
+                    if (o.nozzles_number_of_parallel_lines_shell_side == "2" && _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side == "1")
                     {
                         _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side = "2";
-                        Task.Run(()=>CalculateGeometry(_geometryPageViewModel.Geometry));
+                        CalculateGeometry(_geometryPageViewModel.Geometry);
                     }
                 }
 
@@ -292,7 +283,7 @@ namespace Ahed_project.Services.Global
                     if (o.nozzles_number_of_parallel_lines_shell_side == "2" && _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side == "1")
                     {
                         _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side = "2";
-                        Task.Run(()=>CalculateGeometry(_geometryPageViewModel.Geometry));
+                        CalculateGeometry(_geometryPageViewModel.Geometry);
                     }
                 }
             }
@@ -309,7 +300,7 @@ namespace Ahed_project.Services.Global
             var response = template.SendToServer(ProjectMethods.GET_PRODUCTS, "");
             List<Year> years = JsonConvert.DeserializeObject<List<Year>>(response);
             DoNodes(years);
-            Parallel.ForEach(GlobalDataCollectorService.AllProducts, new ParallelOptions() { },  (x, y) =>
+            Parallel.ForEach(GlobalDataCollectorService.AllProducts, new ParallelOptions() { }, (x, y) =>
             {
                 x.Value?.Sort((z, c) => z.product_id.CompareTo(c.product_id));
             });
@@ -370,7 +361,7 @@ namespace Ahed_project.Services.Global
         }
 
         //Установка проекта
-        public static  void SetProject(ProjectInfoGet projectInfoGet) 
+        public static void SetProject(ProjectInfoGet projectInfoGet)
         {
             ReRender(projectInfoGet.number_of_decimals ?? 2);
             _projectPageViewModel.ProjectInfo = projectInfoGet;
@@ -379,12 +370,12 @@ namespace Ahed_project.Services.Global
                 _projectPageViewModel.SelectedCalculation = null;
             }
             GlobalDataCollectorService.Project = projectInfoGet;
-            SetUserLastProject(projectInfoGet?.project_id??0);
+            SetUserLastProject(projectInfoGet?.project_id ?? 0);
             if (projectInfoGet != null)
             {
                 GetCalculations(_projectPageViewModel.ProjectInfo?.project_id.ToString());
                 _mainViewModel.Title = $"{projectInfoGet?.name} ({_heatBalanceViewModel.Calculation?.name})";
-                
+
             }
             else
             {
@@ -395,11 +386,11 @@ namespace Ahed_project.Services.Global
             _contentPageViewModel.Validation(false);
             _projectPageViewModel.FieldsState = false;
             _overallCalculationViewModel.Overall = new OverallFull();
-            App.Current.Dispatcher.Invoke(()=> _overallCalculationViewModel.Refresh());
+            App.Current.Dispatcher.Invoke(() => _overallCalculationViewModel.Refresh());
         }
 
         //Получение рассчетов
-        public static  void GetCalculations(string projectId)
+        public static void GetCalculations(string projectId)
         {
             var response = _sendDataService.SendToServer(ProjectMethods.GET_PRODUCT_CALCULATIONS, null, projectId);
             if (response != null)
@@ -410,12 +401,12 @@ namespace Ahed_project.Services.Global
                     if (result.data != null)
                     {
                         Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations = JsonConvert.DeserializeObject<ObservableCollection<CalculationFull>>(result.data.ToString()));
-                        if(_projectPageViewModel.Calculations.Count > 0)
+                        if (_projectPageViewModel.Calculations.Count > 0)
                         {
                             SetCalculation(_projectPageViewModel.Calculations.First());
 
                         }
-                        
+
                         for (int i = 0; i < result.logs.Count; i++)
                         {
                             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
@@ -436,10 +427,10 @@ namespace Ahed_project.Services.Global
         }
 
         //копирование расчета
-        public static  void CopyCalculation(CalculationFull calculation)
+        public static void CopyCalculation(CalculationFull calculation)
         {
             var response = _sendDataService.SendToServer(ProjectMethods.COPY_CALCULATION, null, GlobalDataCollectorService.Project.project_id.ToString(), calculation.calculation_id.ToString());
-            if(response != null)
+            if (response != null)
             {
                 Responce result = JsonConvert.DeserializeObject<Responce>(response);
                 for (int i = 0; i < result.logs?.Count; i++)
@@ -451,12 +442,12 @@ namespace Ahed_project.Services.Global
         }
 
         //Сохранение проекта
-        public  static void SaveProject()
+        public static void SaveProject()
         {
 
             if (GlobalDataCollectorService.Project == null)
             {
-               CreateNewProject(true);
+                CreateNewProject(true);
             }
             else
             {
@@ -482,12 +473,12 @@ namespace Ahed_project.Services.Global
         }
 
         //Создание рассчета
-        public  static Task<object> CreateCalculation(string name)
+        public static void CreateCalculation(string name)
         {
-            if (GlobalDataCollectorService.Project==null||GlobalDataCollectorService.Project.project_id==0)
+            if (GlobalDataCollectorService.Project == null || GlobalDataCollectorService.Project.project_id == 0)
             {
                 MessageBox.Show("Необходимо выбрать проект", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
-                return null;
+                return;
             }
             CalculationSend calculationSend = new()
             {
@@ -506,10 +497,9 @@ namespace Ahed_project.Services.Global
             _heatBalanceViewModel.Pressure_tube_inlet_value = "5";
             _heatBalanceViewModel.Pressure_shell_inlet_value = "5";
             _heatBalanceViewModel.Raise("Calculation");
-            return null;
         }
         //изменение имени рассчета
-        public static  void ChangeCalculationName(CalculationFull calc)
+        public static void ChangeCalculationName(CalculationFull calc)
         {
             CalculationUpdate calculationUpdate = new()
             {
@@ -520,15 +510,15 @@ namespace Ahed_project.Services.Global
             string json = JsonConvert.SerializeObject(calculationUpdate);
 
             var response = _sendDataService.SendToServer(ProjectMethods.UPDATE_CHOOSE, json, calc.project_id.ToString(), calc.calculation_id.ToString());
-            if(response != null)
+            if (response != null)
             {
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("success", $"Имя расчета {calc.calculation_id} изменено!")));
             }
-            
+
             //_contentPageViewModel.Validation();
         }
         //расчет температуры при условии того, что в поле pressure_shell_inlet введено значнеие
-        public static  void CalculateTemperature(string pressure_shell_inlet_value, CalculationFull calc,bool shell)
+        public static void CalculateTemperature(string pressure_shell_inlet_value, CalculationFull calc, bool shell)
         {
             var calculationTemperatureSend = new
             {
@@ -562,7 +552,7 @@ namespace Ahed_project.Services.Global
             _heatBalanceViewModel.Raise("Calculation");
         }
 
-        public static  void CalculatePressure(string temperature_inlet, CalculationFull calc, bool isShell)
+        public static void CalculatePressure(string temperature_inlet, CalculationFull calc, bool isShell)
         {
             var calculationPressureSend = new
             {
@@ -593,7 +583,7 @@ namespace Ahed_project.Services.Global
         }
 
         //Выбор расчета
-        public static  void SetCalculation(CalculationFull calc)
+        public static void SetCalculation(CalculationFull calc)
         {
             if (calc != null)
             {
@@ -652,7 +642,7 @@ namespace Ahed_project.Services.Global
                     }
                 }
                 var overallResponse = _sendDataService.SendToServer(ProjectMethods.GET_OVERALL, null, calc?.project_id.ToString(), calc?.calculation_id.ToString());
-                if(overallResponse != null)
+                if (overallResponse != null)
                 {
                     Responce result = JsonConvert.DeserializeObject<Responce>(overallResponse);
                     if (result != null)
@@ -701,7 +691,7 @@ namespace Ahed_project.Services.Global
                     }
                 }
             }
-            
+
             _geometryPageViewModel.Geometry = geometry;
             //GlobalDataCollectorService.GeometryCalculated = false;
             _contentPageViewModel.Validation(false);
@@ -714,7 +704,7 @@ namespace Ahed_project.Services.Global
             if (_heatBalanceViewModel.Calculation != null && _heatBalanceViewModel.Calculation?.product_id_tube != product?.product_id)
             {
                 _heatBalanceViewModel.Calculation.product_id_tube = product?.product_id;
-                Task.Run(UpdateCalculationProducts);
+                UpdateCalculationProducts();
             }
             _tubesFluidViewModel.Product = product;
             _contentPageViewModel.Validation(true);
@@ -737,16 +727,16 @@ namespace Ahed_project.Services.Global
             if (_heatBalanceViewModel.Calculation != null && _heatBalanceViewModel.Calculation?.product_id_shell != product?.product_id)
             {
                 _heatBalanceViewModel.Calculation.product_id_shell = product?.product_id;
-                Task.Run(UpdateCalculationProducts);
+                UpdateCalculationProducts();
             }
             _shellFluidViewModel.Product = product;
             _contentPageViewModel.Validation(true);
         }
 
         //Обновить продукты в рассчете
-        public static  void UpdateCalculationProducts()
+        public static void UpdateCalculationProducts()
         {
-            if (_heatBalanceViewModel.Calculation == null||_heatBalanceViewModel.Calculation.calculation_id==0)
+            if (_heatBalanceViewModel.Calculation == null || _heatBalanceViewModel.Calculation.calculation_id == 0)
             {
                 MessageBox.Show("Не выбран рассчет, следует выбрать для внесения данных", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
@@ -769,14 +759,14 @@ namespace Ahed_project.Services.Global
         }
 
         //Рассчитать
-        public static  void Calculate(CalculationFull calculation)
+        public static void Calculate(CalculationFull calculation)
         {
             if (calculation == null)
             {
                 MessageBox.Show("Выберите рассчет", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-            if (calculation.process_tube==null||calculation.process_shell==null)
+            if (calculation.process_tube == null || calculation.process_shell == null)
             {
                 MessageBox.Show("Выберите процессы", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
@@ -786,8 +776,8 @@ namespace Ahed_project.Services.Global
                 product_id_tube = calculation.product_id_tube ?? 0,
                 product_id_shell = calculation.product_id_shell ?? 0,
                 flow_type = "counter_current",
-                calculate_field = _heatBalanceViewModel.FlowShell?"flow_shell":(_heatBalanceViewModel.TemperatureShellInLet?"temperature_shell_inlet": "temperature_shell_outlet"),
-                process_tube = (calculation.process_tube== "Sensible Heat"||calculation.process_tube=="sensible_heat") ? "sensible_heat" : "condensation",
+                calculate_field = _heatBalanceViewModel.FlowShell ? "flow_shell" : (_heatBalanceViewModel.TemperatureShellInLet ? "temperature_shell_inlet" : "temperature_shell_outlet"),
+                process_tube = (calculation.process_tube == "Sensible Heat" || calculation.process_tube == "sensible_heat") ? "sensible_heat" : "condensation",
                 process_shell = (calculation.process_shell == "Sensible Heat" || calculation.process_shell == "sensible_heat") ? "sensible_heat" : "condensation",
                 flow_tube = calculation.flow_tube,
                 flow_shell = calculation.flow_shell,
@@ -817,9 +807,9 @@ namespace Ahed_project.Services.Global
             _contentPageViewModel.Validation(true);
         }
         //расчет геометрии
-        public static  void CalculateGeometry(GeometryFull geometry)
+        public static void CalculateGeometry(GeometryFull geometry)
         {
-            if (_heatBalanceViewModel.Calculation==null||_heatBalanceViewModel.Calculation.calculation_id==0)
+            if (_heatBalanceViewModel.Calculation == null || _heatBalanceViewModel.Calculation.calculation_id == 0)
             {
                 MessageBox.Show("Выберите рассчет", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
@@ -868,7 +858,7 @@ namespace Ahed_project.Services.Global
                 tube_plate_layout_number_of_passes = geometry.tube_plate_layout_number_of_passes,
                 tube_plate_layout_div_plate_layout = geometry.tube_plate_layout_div_plate_layout,
                 tube_plate_layout_sealing_type = geometry.tube_plate_layout_sealing_type,
-                tube_plate_layout_housings_space =geometry.tube_plate_layout_housings_space,
+                tube_plate_layout_housings_space = geometry.tube_plate_layout_housings_space,
                 tube_plate_layout_div_plate_thickness = geometry.tube_plate_layout_div_plate_thickness,
                 tube_plate_layout_tubeplate_thickness = geometry.tube_plate_layout_tubeplate_thickness,
                 scraping_frequency_tubes_side = geometry.scraping_frequency_tubes_side,
@@ -880,9 +870,9 @@ namespace Ahed_project.Services.Global
                 clearances_spacing_min_tube_hole_to_division_plate_groove = geometry.clearances_spacing_min_tube_hole_to_division_plate_groove,
                 clearances_spacing_division_plate_to_tubeplate = geometry.clearances_spacing_division_plate_to_tubeplate,
                 clearances_spacing_minimum_tube_in_tube_spacing = geometry.clearances_spacing_minimum_tube_in_tube_spacing
-                
+
             });
-            var response = _sendDataService.SendToServer(ProjectMethods.CALCULATE_GEOMETRY, json,_heatBalanceViewModel.Calculation.project_id.ToString(),_heatBalanceViewModel.Calculation.calculation_id.ToString());
+            var response = _sendDataService.SendToServer(ProjectMethods.CALCULATE_GEOMETRY, json, _heatBalanceViewModel.Calculation.project_id.ToString(), _heatBalanceViewModel.Calculation.calculation_id.ToString());
             if (response != null)
             {
                 try
@@ -908,7 +898,7 @@ namespace Ahed_project.Services.Global
         }
 
         //расчет перегородок
-        public static  void CalculateBaffle(BaffleFull baffle)
+        public static void CalculateBaffle(BaffleFull baffle)
         {
             if (_heatBalanceViewModel.Calculation == null || _heatBalanceViewModel.Calculation.calculation_id == 0)
             {
@@ -942,7 +932,7 @@ namespace Ahed_project.Services.Global
                     var b = JsonConvert.DeserializeObject<BaffleFull>(result.data.ToString());
                     _bufflesPageViewModel.Baffle = b;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
 
                 }
@@ -952,7 +942,7 @@ namespace Ahed_project.Services.Global
         }
 
         //Создать проект
-        public static  void CreateNewProject(bool afterSave)
+        public static void CreateNewProject(bool afterSave)
         {
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Начало создания проекта...")));
             var response = _sendDataService.SendToServer(ProjectMethods.CREATE, "");
@@ -982,10 +972,10 @@ namespace Ahed_project.Services.Global
                         newProj.createdAt = _projectPageViewModel.ProjectInfo.createdAt;
                         newProj.updatedAt = _projectPageViewModel.ProjectInfo.updatedAt;
                     }
-                   
 
 
-                    GlobalDataCollectorService.Project = newProj; 
+
+                    GlobalDataCollectorService.Project = newProj;
                     GlobalDataCollectorService.ProjectsCollection.Add(newProj);
                     GlobalDataCollectorService.GeometryCalculated = false;
                     GlobalDataCollectorService.HeatBalanceCalculated = false;
@@ -993,7 +983,7 @@ namespace Ahed_project.Services.Global
 
                     SetProject(newProj);
                     _contentPageViewModel.Validation(true);
-                    
+
                     Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations.Clear());
                     CreateCalculation("Default");
                     SetCalculation(_projectPageViewModel.Calculations.FirstOrDefault());
@@ -1004,18 +994,18 @@ namespace Ahed_project.Services.Global
                 }
             }
         }
-        
+
         //Загрузка материалов
-        public static  void GetMaterials()
+        public static void GetMaterials()
         {
             var response = _sendDataService.SendToServer(ProjectMethods.GET_MATERIALS);
-            if (response!=null)
+            if (response != null)
             {
                 try
                 {
                     var materials = JsonConvert.DeserializeObject<IEnumerable<Material>>(response);
                     GlobalDataCollectorService.Materials = materials.ToList();
-                    _geometryPageViewModel.Materials = GlobalDataCollectorService.Materials.ToDictionary(keySelector: m => m.material_id, elementSelector: m => new Material {material_id = m.material_id, name = m.name, name_short = m.name_short, createdAt = m.createdAt, updatedAt = m.updatedAt});
+                    _geometryPageViewModel.Materials = GlobalDataCollectorService.Materials.ToDictionary(keySelector: m => m.material_id, elementSelector: m => new Material { material_id = m.material_id, name = m.name, name_short = m.name_short, createdAt = m.createdAt, updatedAt = m.updatedAt });
                 }
                 catch (Exception e)
                 {
@@ -1026,7 +1016,7 @@ namespace Ahed_project.Services.Global
 
         //создать полный отчет
 
-        public static  void CreateFullReport()
+        public static void CreateFullReport()
         {
             _createExcelService.CreateExcel();
         }
@@ -1075,13 +1065,13 @@ namespace Ahed_project.Services.Global
             });
         }
 
-        public static  void DeleteProject(ProjectInfoGet selectedProject)
+        public static void DeleteProject(ProjectInfoGet selectedProject)
         {
             if (selectedProject.project_id == _projectPageViewModel.ProjectInfo.project_id)
             {
                 SetProject(null);
             }
-            if(MessageBox.Show("Удалить проект?", "Удаление", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Удалить проект?", "Удаление", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 var response = _sendDataService.SendToServer(ProjectMethods.DELETE_PROJECT, null, selectedProject.project_id.ToString());
                 GlobalDataCollectorService.ProjectsCollection.Remove(selectedProject);
@@ -1089,16 +1079,16 @@ namespace Ahed_project.Services.Global
                 _projectsWindowViewModel.SelectedProject = null;
             }
             else
-            { 
+            {
                 return;
             }
-            
+
         }
 
-        public static  void DeleteCalculation(CalculationFull calculation)
+        public static void DeleteCalculation(CalculationFull calculation)
         {
             var response = _sendDataService.SendToServer(ProjectMethods.DELETE_CALCULATION, null, GlobalDataCollectorService.Project.project_id.ToString(), calculation.calculation_id.ToString());
-            if(response != null)
+            if (response != null)
             {
                 Responce result = JsonConvert.DeserializeObject<Responce>(response);
                 for (int i = 0; i < result.logs?.Count; i++)
@@ -1108,10 +1098,10 @@ namespace Ahed_project.Services.Global
             }
         }
 
-        public static  void RestoreDefaultBaffles()
+        public static void RestoreDefaultBaffles()
         {
             var response = _sendDataService.SendToServer(ProjectMethods.RESTORE_BAFFLE, null, GlobalDataCollectorService.Project.project_id.ToString(), GlobalDataCollectorService.Calculation.calculation_id.ToString());
-            if (response!=null)
+            if (response != null)
             {
                 var result = JsonConvert.DeserializeObject<Responce>(response);
                 for (int i = 0; i < result.logs?.Count; i++)
@@ -1119,9 +1109,9 @@ namespace Ahed_project.Services.Global
                     Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i]?.type, result.logs[i]?.message)));
                 }
                 var restoreResult = JsonConvert.DeserializeObject<RestoreBaffleResponse>(result.data.ToString());
-                
-                _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = String.IsNullOrEmpty(restoreResult.diametral_clearance_tube_baffle)?"0": restoreResult.diametral_clearance_tube_baffle;
-                _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = String.IsNullOrEmpty(restoreResult.diametral_clearance_shell_baffle)?"0": restoreResult.diametral_clearance_shell_baffle;
+
+                _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = String.IsNullOrEmpty(restoreResult.diametral_clearance_tube_baffle) ? "0" : restoreResult.diametral_clearance_tube_baffle;
+                _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = String.IsNullOrEmpty(restoreResult.diametral_clearance_shell_baffle) ? "0" : restoreResult.diametral_clearance_shell_baffle;
             }
         }
     }

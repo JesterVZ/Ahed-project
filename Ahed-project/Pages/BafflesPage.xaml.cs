@@ -28,22 +28,22 @@ namespace Ahed_project.Pages
         {
             string name = null;
             bool isReadOnly = true;
-            string text = null ;
+            string text = null;
             try
             {
                 var tb = (TextBox)sender;
-                name= tb.Name;
+                name = tb.Name;
                 isReadOnly = tb.IsReadOnly;
-                text= tb.Text;
+                text = tb.Text;
             }
             catch
             {
                 var elem = (Control)sender;
-                name= elem.Name;
+                name = elem.Name;
                 text = elem.GetValue(CustomCheck.dependencyPropertyText) as string;
-                isReadOnly = (int)elem.GetValue(CustomCheck.dependencyPropertyIsChecked)==1;
+                isReadOnly = (int)elem.GetValue(CustomCheck.dependencyPropertyIsChecked) == 1;
             }
-            _viewModel.RaiseDeep(name,isReadOnly,text,isReadOnly?1:0);
+            _viewModel.RaiseDeep(name, isReadOnly, text, isReadOnly ? 1 : 0);
         }
     }
 }

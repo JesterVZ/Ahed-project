@@ -1,30 +1,23 @@
-﻿using Ahed_project.MasterData.CalculateClasses;
-using Ahed_project.MasterData;
+﻿using Ahed_project.MasterData;
 using Ahed_project.MasterData.Overall;
-using Ahed_project.Migrations;
 using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Controls;
-using System.Windows;
-using Ahed_project.Settings;
 
 namespace Ahed_project.ViewModel.Pages
 {
     public class OverallCalculationViewModel : BindableBase
     {
         private OverallFull _overall;
-        public OverallFull Overall {
-            get => _overall; 
-            set {
+        public OverallFull Overall
+        {
+            get => _overall;
+            set
+            {
                 _overall = value;
-                if(value != null)
+                if (value != null)
                 {
                     _overall.use_viscosity_correction = 1;
                     if (value.use_viscosity_correction == 1)
@@ -75,8 +68,8 @@ namespace Ahed_project.ViewModel.Pages
                         vibrationExists = false;
                     }
                 }
-                
-            } 
+
+            }
         }
 
         public double ScrapingFrequencyRow { get; set; }
@@ -105,12 +98,14 @@ namespace Ahed_project.ViewModel.Pages
         public bool use_viscosity_correction
         {
             get => _use_viscosity_correction;
-            set { 
+            set
+            {
                 _use_viscosity_correction = value;
                 if (value == true)
                 {
                     Overall.use_viscosity_correction = 1;
-                } else
+                }
+                else
                 {
                     Overall.use_viscosity_correction = 0;
                 }
@@ -118,23 +113,28 @@ namespace Ahed_project.ViewModel.Pages
         }
 
         private bool _acoustic_vibration_exist_inlet;
-        public bool acoustic_vibration_exist_inlet { 
-            get => _acoustic_vibration_exist_inlet; 
-            set { 
+        public bool acoustic_vibration_exist_inlet
+        {
+            get => _acoustic_vibration_exist_inlet;
+            set
+            {
                 _acoustic_vibration_exist_inlet = value;
-                if(value == true)
+                if (value == true)
                 {
                     Overall.acoustic_vibration_exist_inlet = 1;
-                } else
+                }
+                else
                 {
                     Overall.acoustic_vibration_exist_inlet = 0;
                 }
-            } 
+            }
         }
         private bool _acoustic_vibration_exist_central;
-        public bool acoustic_vibration_exist_central {
+        public bool acoustic_vibration_exist_central
+        {
             get => _acoustic_vibration_exist_central;
-            set {
+            set
+            {
                 _acoustic_vibration_exist_central = value;
                 if (value == true)
                 {
@@ -144,10 +144,11 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     Overall.acoustic_vibration_exist_central = 0;
                 }
-            } 
+            }
         }
         private bool _acoustic_vibration_exist_outlet;
-        public bool acoustic_vibration_exist_outlet {
+        public bool acoustic_vibration_exist_outlet
+        {
             get => _acoustic_vibration_exist_outlet;
             set
             {
@@ -173,7 +174,8 @@ namespace Ahed_project.ViewModel.Pages
             Overall = new();
         }
         #region commands
-        public ICommand Calculate => new DelegateCommand(() => {
+        public ICommand Calculate => new DelegateCommand(() =>
+        {
             Task.Run(() => GlobalFunctionsAndCallersService.CalculateOverall(Overall));
         });
         #endregion
@@ -215,7 +217,7 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
 
-        public void RaiseDeep(string name,bool isReadOnly, string text,int alternateValue)
+        public void RaiseDeep(string name, bool isReadOnly, string text, int alternateValue)
         {
             if (String.IsNullOrEmpty(name))
             {

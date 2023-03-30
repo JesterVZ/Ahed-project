@@ -1,21 +1,18 @@
 ﻿using Ahed_project.Pages;
-using Ahed_project.Services;
 using Ahed_project.Services.EF;
 using Ahed_project.Services.Global;
 using Ahed_project.ViewModel.Windows;
 using Ahed_project.Windows;
 using DevExpress.Mvvm;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Navigation;
 
 namespace Ahed_project.ViewModel.ContentPageComponents
 {
     public partial class ContentPageViewModel
     {
-        public ICommand Logout => new DelegateCommand( () =>
+        public ICommand Logout => new DelegateCommand(() =>
         {
             using (var context = new EFContext())
             {
@@ -47,12 +44,12 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             _pageService.OpenWindow<ProjectsWindow>();
         });
 
-        public ICommand NewProjectCommand => new DelegateCommand( () =>
+        public ICommand NewProjectCommand => new DelegateCommand(() =>
         {
             GlobalFunctionsAndCallersService.CreateNewProject(false);
         });
 
-        public ICommand SaveCommand => new DelegateCommand( () =>
+        public ICommand SaveCommand => new DelegateCommand(() =>
         {
             GlobalFunctionsAndCallersService.SaveProject();
         });

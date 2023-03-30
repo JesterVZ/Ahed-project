@@ -1,20 +1,11 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.Pages;
 using Ahed_project.Services;
-using Ahed_project.Services.EF;
-using Ahed_project.Services.EF.Model;
-using Ahed_project.Services.Global;
-using Ahed_project.ViewModel.ContentPageComponents;
 using Ahed_project.ViewModel.Windows;
 using DevExpress.Mvvm;
-using System;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Navigation;
 
 namespace Ahed_project.ViewModel.Pages
 {
@@ -30,14 +21,14 @@ namespace Ahed_project.ViewModel.Pages
             _jwt = jwt;
         }
 
-        public ICommand GoToContent => new DelegateCommand( () =>
+        public ICommand GoToContent => new DelegateCommand(() =>
         {
             {
                 Auth();
             }
         });
 
-        private  void Auth()
+        private void Auth()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             Loading = Visibility.Visible;

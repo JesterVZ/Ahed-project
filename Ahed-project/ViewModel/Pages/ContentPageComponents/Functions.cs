@@ -1,5 +1,4 @@
-﻿using Ahed_project.MasterData;
-using Ahed_project.MasterData.TabClasses;
+﻿using Ahed_project.MasterData.TabClasses;
 using Ahed_project.Services.Global;
 using Newtonsoft.Json;
 using System.IO;
@@ -37,7 +36,8 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     {
                         tabs.tube_fluid = "0";
                         TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
-                    } else
+                    }
+                    else
                     {
                         tabs.tube_fluid = "1";
                         TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
@@ -46,7 +46,8 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     {
                         tabs.shell_fluid = "0";
                         ShellFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
-                    } else
+                    }
+                    else
                     {
                         tabs.shell_fluid = "1";
                         ShellFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
@@ -65,7 +66,8 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     {
                         tabs.geometry = "1";
                         GeometryValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
-                    } else
+                    }
+                    else
                     {
                         tabs.geometry = "0";
                         GeometryValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
@@ -74,19 +76,21 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     {
                         tabs.baffles = "1";
                         BafflesValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
-                    } else
+                    }
+                    else
                     {
                         tabs.baffles = "0";
                         BafflesValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
                     }
-                    if(needSetData)
-                    GlobalFunctionsAndCallersService.SetTabState(tabs); //отправить состояник вкладок по api
-                } else
+                    if (needSetData)
+                        GlobalFunctionsAndCallersService.SetTabState(tabs); //отправить состояник вкладок по api
+                }
+                else
                 {
                     //GlobalDataCollectorService.Logs.Add(new LoggerMessage("warning", "Выберите калькуляцию!"));
                     ProjectValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
                 }
-                
+
             }
             else
             {
@@ -100,18 +104,20 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         {
             var assembly = Assembly.GetExecutingAssembly();
             TabsState tabs = JsonConvert.DeserializeObject<TabsState>(json);
-            if(tabs.tube_fluid != null && tabs.tube_fluid == "1")
+            if (tabs.tube_fluid != null && tabs.tube_fluid == "1")
             {
                 TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
-            } else
+            }
+            else
             {
                 TubesFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
             }
 
-            if(tabs.shell_fluid != null && tabs.shell_fluid == "1")
+            if (tabs.shell_fluid != null && tabs.shell_fluid == "1")
             {
                 ShellFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
-            } else
+            }
+            else
             {
                 ShellFluidValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
             }
@@ -138,11 +144,12 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 GeometryValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";
             }
 
-            if(tabs.baffles != null && tabs.baffles == "1")
+            if (tabs.baffles != null && tabs.baffles == "1")
             {
                 GlobalDataCollectorService.IsBaffleCalculated = true;
                 BafflesValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/check.svg";
-            } else
+            }
+            else
             {
                 GlobalDataCollectorService.IsBaffleCalculated = false;
                 GeometryValidationStatusSource = Path.GetDirectoryName(assembly.Location) + "/Visual/warning.svg";

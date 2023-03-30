@@ -1,7 +1,4 @@
 ﻿using Ahed_project.Pages;
-using Ahed_project.Services.Global;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 
 namespace Ahed_project.ViewModel.ContentPageComponents
