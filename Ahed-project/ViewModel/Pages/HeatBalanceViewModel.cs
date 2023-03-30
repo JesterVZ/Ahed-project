@@ -102,12 +102,12 @@ namespace Ahed_project.ViewModel.Pages
 
 
 
-        private async void GetTemperatureCalculation(bool shell,string value)
+        private  void GetTemperatureCalculation(bool shell,string value)
         {
             GlobalFunctionsAndCallersService.CalculateTemperature(value, Calculation,shell);
         }
 
-        private async void GetPressureCalculation(string value, bool isShell)
+        private  void GetPressureCalculation(string value, bool isShell)
         {
            GlobalFunctionsAndCallersService.CalculatePressure(value, Calculation,isShell);
         }

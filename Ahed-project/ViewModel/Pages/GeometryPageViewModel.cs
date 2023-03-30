@@ -552,7 +552,7 @@ namespace Ahed_project.ViewModel.Pages
 
         #region commands
 
-        public ICommand ToggleCommand => new DelegateCommand(async () =>
+        public ICommand ToggleCommand => new DelegateCommand( () =>
         {
             IsOpen = !IsOpen;
 

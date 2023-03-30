@@ -19,7 +19,7 @@ namespace Ahed_project
     public partial class App : Application
     {
         private static IContainer _containers;
-        protected override async void OnStartup(StartupEventArgs e)
+        protected override  void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
             var builder = new ContainerBuilder();
@@ -40,7 +40,7 @@ namespace Ahed_project
             {
                 string email = active.Email;
                 string password = active.Password;
-                var result = await Task.Run(() => jwt.AuthenticateUser(email, password));
+                var result = jwt.AuthenticateUser(email, password);
 
                 vm.FramePage = content;
             } else

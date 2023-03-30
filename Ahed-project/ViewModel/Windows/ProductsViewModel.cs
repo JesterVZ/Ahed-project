@@ -52,7 +52,7 @@ namespace Ahed_project.ViewModel.Windows
                 }
             }
         }
-        public ICommand SelectProductCommand => new AsyncCommand<object>(async (val) =>
+        public ICommand SelectProductCommand => new DelegateCommand<object>( (val) =>
         {
             var selected = (Node)val;
             if (selected.Nodes == null && selected.Id != null)

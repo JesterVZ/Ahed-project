@@ -46,7 +46,7 @@ namespace Ahed_project.Services.Global
             set
             {
                 _userId = value;
-                Task.Run(GlobalFunctionsAndCallersService.SetupUserDataAsync);
+                Task.Run(GlobalFunctionsAndCallersService.SetupUserData);
             }
         }
         #endregion

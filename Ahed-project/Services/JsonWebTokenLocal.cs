@@ -25,7 +25,7 @@ namespace Ahed_project.Services
         /// </summary>
         /// <param name="password"></param>
         /// <returns></returns>
-        public async Task<object> AuthenticateUser(string email, string password)
+        public User AuthenticateUser(string email, string password)
         {
             try
             {
@@ -40,12 +40,12 @@ namespace Ahed_project.Services
                     pass = password
                 });
                 Token token = null;
-                var login = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.LOGIN, json));
+                var login = _sendDataService.SendToServer(ProjectMethods.LOGIN, json);
                 if (!login.Contains("token"))
                     return null;
                 token = JsonConvert.DeserializeObject<Token>(login);
                 _sendDataService.AddHeader(token.token);
-                var auth = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.AUTH));
+                var auth = _sendDataService.SendToServer(ProjectMethods.AUTH);
                 token = JsonConvert.DeserializeObject<Token>(auth);
                 _sendDataService.AddHeader(token.token);
                 if (user == null)

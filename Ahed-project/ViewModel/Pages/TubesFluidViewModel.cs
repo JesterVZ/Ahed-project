@@ -75,7 +75,7 @@ namespace Ahed_project.ViewModel.Pages
             }
         });
 
-        private async void CreateCharts()
+        private  void CreateCharts()
         {
             FirstChart = new PlotModel();
             SecondChart = new PlotModel();

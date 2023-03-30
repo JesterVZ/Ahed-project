@@ -777,10 +777,10 @@ namespace Ahed_project.MasterData.CalculateClasses
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
-        public ICommand ChangeNameCommand => new AsyncCommand<object>((calc) =>
+        public ICommand ChangeNameCommand => new DelegateCommand<object>((calc) =>
         {
             var c = (CalculationFull)calc;
-            return Task.Run(() => GlobalFunctionsAndCallersService.ChangeCalculationName(c));
+             GlobalFunctionsAndCallersService.ChangeCalculationName(c);
         });
 
     }

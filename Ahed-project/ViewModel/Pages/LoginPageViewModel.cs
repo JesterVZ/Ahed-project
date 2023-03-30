@@ -30,18 +30,18 @@ namespace Ahed_project.ViewModel.Pages
             _jwt = jwt;
         }
 
-        public ICommand GoToContent => new AsyncCommand(async () =>
+        public ICommand GoToContent => new DelegateCommand( () =>
         {
             {
                 Auth();
             }
         });
 
-        private async void Auth()
+        private  void Auth()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             Loading = Visibility.Visible;
-            var result = await Task.Run(() => _jwt.AuthenticateUser(email, pass));
+            var result = _jwt.AuthenticateUser(email, pass);
             Loading = Visibility.Hidden;
             if (result is User)
             {

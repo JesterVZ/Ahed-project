@@ -121,28 +121,27 @@ namespace Ahed_project.ViewModel.Pages
         public string CalculationName { get; set; }
         #endregion
         #region Comms
-        public ICommand CreateCalculationCommand => new AsyncCommand(async () =>
+        public ICommand CreateCalculationCommand => new DelegateCommand( () =>
         {
             if(CalculationName != "")
             {
-                await Task.Run(() => GlobalFunctionsAndCallersService.CreateCalculation(CalculationName));
+                GlobalFunctionsAndCallersService.CreateCalculation(CalculationName);
                 CalculationName = "";
             }
             
         });
 
-        public ICommand ToggleCommand => new DelegateCommand(async () =>
+        public ICommand ToggleCommand => new DelegateCommand( () =>
         {
             IsOpen = !IsOpen;
         });
 
-        public ICommand DeleteCalculationsCommand => new AsyncCommand<object>((value) => {
+        public ICommand DeleteCalculationsCommand => new DelegateCommand<object>((value) => {
             GlobalFunctionsAndCallersService.DeleteCalculation(ToOperateCalculation);
             GlobalFunctionsAndCallersService.RemoveCalculationFromList(ToOperateCalculation);
-            return Task.CompletedTask;
         });
 
-        public ICommand CopyCalculationsCommand => new AsyncCommand<object>(async (value) =>
+        public ICommand CopyCalculationsCommand => new DelegateCommand<object>( (value) =>
         {
             GlobalFunctionsAndCallersService.CopyCalculation(ToOperateCalculation);
         });
