@@ -800,7 +800,7 @@ namespace Ahed_project.Services.Global
                 pressure_shell_inlet = calculation.pressure_shell_inlet
             };
             string json = JsonConvert.SerializeObject(calculateSend);
-            var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.CALCULATE, json, calculation.project_id.ToString()));
+            var response = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CALCULATION, json, calculation.project_id.ToString(), calculation.calculation_id.ToString()));
             Responce result = JsonConvert.DeserializeObject<Responce>(response);
             if (result?.logs != null)
             {
@@ -813,7 +813,6 @@ namespace Ahed_project.Services.Global
                 calculationGet.project_id = calculation.project_id;
                 _heatBalanceViewModel.Calculation = calculationGet;
             }
-            var saveResponse = await Task.Run(() => _sendDataService.SendToServer(ProjectMethods.UPDATE_CALCULATION, json, calculation.project_id.ToString(), calculation.calculation_id.ToString()));
             GlobalDataCollectorService.HeatBalanceCalculated = true;
             _contentPageViewModel.Validation(true);
         }
