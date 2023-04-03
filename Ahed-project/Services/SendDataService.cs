@@ -79,7 +79,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.UPDATE:
-                        restClient = new RestClient(_serviceConfig.UpdateLink.Replace("{projectId}",projectId));
+                        restClient = new RestClient(_serviceConfig.UpdateLink.Replace("{projectId}", projectId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -124,7 +124,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.CREATE_CALCULATION:
-                        restClient = new RestClient(_serviceConfig.CreateCalculationLink.Replace("{projectId}",projectId));
+                        restClient = new RestClient(_serviceConfig.CreateCalculationLink.Replace("{projectId}", projectId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -186,7 +186,7 @@ namespace Ahed_project.Services
                         }
                         response = restClient.Execute(request);
                         break;
-                    case ProjectMethods.CALCULATE_GEOMETRY:       
+                    case ProjectMethods.CALCULATE_GEOMETRY:
                         restClient = new RestClient(_serviceConfig.CalculateGeometryLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)

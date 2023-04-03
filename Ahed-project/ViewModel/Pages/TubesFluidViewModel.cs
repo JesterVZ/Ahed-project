@@ -1,12 +1,9 @@
-﻿using Ahed_project.MasterData;
-using Ahed_project.MasterData.Products;
-using Ahed_project.Services.Global;
+﻿using Ahed_project.MasterData.Products;
 using DevExpress.Mvvm;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using System;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -14,7 +11,7 @@ namespace Ahed_project.ViewModel.Pages
 {
     public class TubesFluidViewModel : BindableBase
     {
-        public TubesFluidViewModel(){}
+        public TubesFluidViewModel() { }
         private ProductGet _product;
         public ProductGet Product
         {
@@ -46,7 +43,7 @@ namespace Ahed_project.ViewModel.Pages
 
         public ICommand CreateBaseOxyPlots => new DelegateCommand(() =>
         {
-            if (FirstChart==null)
+            if (FirstChart == null)
             {
                 FirstChart = new PlotModel();
                 SecondChart = new PlotModel();
@@ -75,7 +72,7 @@ namespace Ahed_project.ViewModel.Pages
             }
         });
 
-        private async void CreateCharts()
+        private void CreateCharts()
         {
             FirstChart = new PlotModel();
             SecondChart = new PlotModel();

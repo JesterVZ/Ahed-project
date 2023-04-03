@@ -47,7 +47,7 @@ namespace Ahed_project.ViewModel.Windows
             }
         }
 
-        public ICommand SelectProjectCommand => new AsyncCommand<object>(async (val) =>
+        public ICommand SelectProjectCommand => new DelegateCommand<object>((val) =>
         {
             var selected = (Node)val;
             if (selected.Nodes == null && selected.Id != null)

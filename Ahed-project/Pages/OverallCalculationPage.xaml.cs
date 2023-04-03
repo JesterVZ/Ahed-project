@@ -16,7 +16,7 @@ namespace Ahed_project.Pages
         {
             InitializeComponent();
             DataContext = vm;
-            _viewModel= vm;
+            _viewModel = vm;
         }
 
         private void ShowOnClick(object sender, MouseButtonEventArgs e)
@@ -41,9 +41,9 @@ namespace Ahed_project.Pages
                 var elem = (Control)sender;
                 name = elem.Name;
                 text = elem.GetValue(CustomCheck.dependencyPropertyText) as string;
-                isReadOnly = (int)elem.GetValue(CustomCheck.dependencyPropertyIsChecked)==1;
+                isReadOnly = (int)elem.GetValue(CustomCheck.dependencyPropertyIsChecked) == 1;
             }
-            _viewModel.RaiseDeep(name, isReadOnly, text,isReadOnly?1:0);
+            _viewModel.RaiseDeep(name, isReadOnly, text, isReadOnly ? 1 : 0);
         }
     }
 }

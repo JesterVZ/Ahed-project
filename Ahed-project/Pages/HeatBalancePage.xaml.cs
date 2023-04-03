@@ -1,9 +1,7 @@
 ﻿using Ahed_project.ViewModel.Pages;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace Ahed_project.Pages
 {

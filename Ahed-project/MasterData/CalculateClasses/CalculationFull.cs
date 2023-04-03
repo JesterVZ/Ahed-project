@@ -3,12 +3,11 @@ using DevExpress.Mvvm;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Ahed_project.MasterData.CalculateClasses
 {
-    public class CalculationFull:INotifyPropertyChanged
+    public class CalculationFull : INotifyPropertyChanged
     {
         private int _calculation_id;
         private int _project_id;
@@ -777,10 +776,10 @@ namespace Ahed_project.MasterData.CalculateClasses
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
-        public ICommand ChangeNameCommand => new AsyncCommand<object>((calc) =>
+        public ICommand ChangeNameCommand => new DelegateCommand<object>((calc) =>
         {
             var c = (CalculationFull)calc;
-            return Task.Run(() => GlobalFunctionsAndCallersService.ChangeCalculationName(c));
+            GlobalFunctionsAndCallersService.ChangeCalculationName(c);
         });
 
     }

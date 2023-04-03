@@ -1,14 +1,8 @@
-﻿using Ahed_project.MasterData;
-using Ahed_project.MasterData.CalculateClasses;
+﻿using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
-using DocumentFormat.OpenXml.Office2010.ExcelAc;
-using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -34,19 +28,22 @@ namespace Ahed_project.ViewModel.Pages
         public string ButtonImagePath { get; set; }
 
         private bool _isOpen;
-        public bool IsOpen { 
+        public bool IsOpen
+        {
 
-            get => _isOpen; 
-            set { 
+            get => _isOpen;
+            set
+            {
                 _isOpen = value;
-                if(value == true)
+                if (value == true)
                 {
                     ArrowAngle = "180";
-                } else
+                }
+                else
                 {
                     ArrowAngle = "0";
                 }
-            } 
+            }
         }
         public bool FieldsState { get; set; } //enabled/disabled
 
@@ -56,7 +53,7 @@ namespace Ahed_project.ViewModel.Pages
         {
             get => _projectInfo;
             set
-            { 
+            {
                 SetValue(ref _projectInfo, value);
                 ProjectName = value?.name;
                 System = value?.units;
@@ -99,7 +96,7 @@ namespace Ahed_project.ViewModel.Pages
         public CalculationFull ToOperateCalculation
         {
             get => _toOperateCalculation;
-            set=> _toOperateCalculation = value;
+            set => _toOperateCalculation = value;
         }
 
         public void Raise()
@@ -121,28 +118,28 @@ namespace Ahed_project.ViewModel.Pages
         public string CalculationName { get; set; }
         #endregion
         #region Comms
-        public ICommand CreateCalculationCommand => new AsyncCommand(async () =>
+        public ICommand CreateCalculationCommand => new DelegateCommand(() =>
         {
-            if(CalculationName != "")
+            if (CalculationName != "")
             {
-                await Task.Run(() => GlobalFunctionsAndCallersService.CreateCalculation(CalculationName));
+                GlobalFunctionsAndCallersService.CreateCalculation(CalculationName);
                 CalculationName = "";
             }
-            
+
         });
 
-        public ICommand ToggleCommand => new DelegateCommand(async () =>
+        public ICommand ToggleCommand => new DelegateCommand(() =>
         {
             IsOpen = !IsOpen;
         });
 
-        public ICommand DeleteCalculationsCommand => new AsyncCommand<object>((value) => {
+        public ICommand DeleteCalculationsCommand => new DelegateCommand<object>((value) =>
+        {
             GlobalFunctionsAndCallersService.DeleteCalculation(ToOperateCalculation);
             GlobalFunctionsAndCallersService.RemoveCalculationFromList(ToOperateCalculation);
-            return Task.CompletedTask;
         });
 
-        public ICommand CopyCalculationsCommand => new AsyncCommand<object>(async (value) =>
+        public ICommand CopyCalculationsCommand => new DelegateCommand<object>((value) =>
         {
             GlobalFunctionsAndCallersService.CopyCalculation(ToOperateCalculation);
         });
@@ -150,7 +147,7 @@ namespace Ahed_project.ViewModel.Pages
 
         public void SelectCalc(CalculationFull calc)
         {
-            _selectedCalculation= calc;
+            _selectedCalculation = calc;
             RaisePropertiesChanged(nameof(SelectedCalculation));
         }
     }

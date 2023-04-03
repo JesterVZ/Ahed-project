@@ -1,25 +1,16 @@
 ﻿using Ahed_project.MasterData;
-using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.GeometryClasses;
-using Ahed_project.MasterData.Overall;
-using Ahed_project.Migrations;
 using Ahed_project.Services.Global;
 using Ahed_project.Settings;
 using Ahed_project.Windows;
-using DevExpress.DXBinding.Native;
 using DevExpress.Mvvm;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
 
 namespace Ahed_project.ViewModel.Pages
 {
@@ -64,7 +55,7 @@ namespace Ahed_project.ViewModel.Pages
                 switch (value)
                 {
                     case "1":
-                        divplate.Add("none","None");
+                        divplate.Add("none", "None");
                         break;
                     case "2":
                         divplate.Add("horizontal", "Horizontal");
@@ -110,7 +101,7 @@ namespace Ahed_project.ViewModel.Pages
                     DivPlateItems.Clear();
                     DivPlateItems = divplate;
                 });
-                if (DivPlateItems.Count>0)
+                if (DivPlateItems.Count > 0)
                 {
                     DivPlateItem = DivPlateItems.First();
                 }
@@ -129,7 +120,7 @@ namespace Ahed_project.ViewModel.Pages
                 ShellMaterial = Materials.FirstOrDefault(x => x.Value.name_short == value?.material_shell_side);
                 TubesMaterial = Materials.FirstOrDefault(x => x.Value.name_short == value?.material_tubes_side);
                 TubeLayout = TubePlateLayouts.FirstOrDefault(x => x.Key == value?.tube_plate_layout_tube_layout);
-               
+
                 try
                 {
                     double outer_diameter_tubes_side = Convert.ToDouble(StringToDoubleChecker.ConvertFromInvariantCulture(_geometry?.outer_diameter_tubes_side));
@@ -143,11 +134,11 @@ namespace Ahed_project.ViewModel.Pages
                     }
                     RaisePropertiesChanged("GeometryPageViewModel");
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Console.WriteLine(e.ToString());
                 }
-                
+
 
                 switch (value?.bundle_type)
                 {
@@ -170,10 +161,10 @@ namespace Ahed_project.ViewModel.Pages
                 switch (value?.roller_expanded)
                 {
                     case "0":
-                            RollerExpanded = false;
+                        RollerExpanded = false;
                         break;
                     case "1":
-                            RollerExpanded = true;
+                        RollerExpanded = true;
                         break;
                 }
 
@@ -201,12 +192,13 @@ namespace Ahed_project.ViewModel.Pages
                 if (value?.tube_plate_layout_number_of_passes == null || value?.tube_plate_layout_number_of_passes == "")
                 {
                     Tube_plate_layout_number_of_passes = "1";
-                } else
+                }
+                else
                 {
                     Tube_plate_layout_number_of_passes = value.tube_plate_layout_number_of_passes;
                 }
                 DivPlateItem = DivPlateItems.FirstOrDefault(x => x.Key == value?.tube_plate_layout_div_plate_layout);
-                if(value?.tube_plate_layout_sealing_type == null)
+                if (value?.tube_plate_layout_sealing_type == null)
                 {
                     SealingTypeItem = SealingTypeItems.First();
                 }
@@ -328,7 +320,7 @@ namespace Ahed_project.ViewModel.Pages
                 else
                 {
                     GridColumnWidth = 0;
-                    
+
                 }
                 _exchangersSelector = value;
                 GlobalFunctionsAndCallersService.ChengeRow(value.Key);
@@ -359,7 +351,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _fixed = value;
-                
+
                 if (value == true)
                 {
                     GlobalFunctionsAndCallersService.SetDiametralShellDefaultValue("3");
@@ -552,7 +544,7 @@ namespace Ahed_project.ViewModel.Pages
 
         #region commands
 
-        public ICommand ToggleCommand => new DelegateCommand(async () =>
+        public ICommand ToggleCommand => new DelegateCommand(() =>
         {
             IsOpen = !IsOpen;
 
@@ -585,11 +577,11 @@ namespace Ahed_project.ViewModel.Pages
                     break;
             }
 
-            if(Geometry.head_exchange_type == null)
+            if (Geometry.head_exchange_type == null)
             {
                 ExchangersSelector = Exchangers.First();
             }
-            if(Geometry.material_tubes_side == null)
+            if (Geometry.material_tubes_side == null)
             {
                 TubesMaterial = Materials.First();
             }
@@ -609,7 +601,7 @@ namespace Ahed_project.ViewModel.Pages
             {
                 TubeLayout = TubePlateLayouts.First();
             }
-            if(Geometry.tube_plate_layout_sealing_type == null)
+            if (Geometry.tube_plate_layout_sealing_type == null)
             {
                 SealingTypeItem = SealingTypeItems.First();
             }

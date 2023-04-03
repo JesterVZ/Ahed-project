@@ -1,10 +1,6 @@
 ﻿using Ahed_project.MasterData;
-using Ahed_project.Services.Global;
-using Ahed_project.ViewModel.Windows;
 using Autofac;
-using System;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Ahed_project.Services
 {
@@ -24,14 +20,15 @@ namespace Ahed_project.Services
         public void OpenWindow<T>(OpenWindowType type = OpenWindowType.DIALOG)
         {
             var window = (Window)(_context.Resolve<T>() as object);
-            if(type == OpenWindowType.DIALOG)
+            if (type == OpenWindowType.DIALOG)
             {
                 window.ShowDialog();
-            } else if(type == OpenWindowType.WINDOW)
+            }
+            else if (type == OpenWindowType.WINDOW)
             {
                 window.Show();
             }
-            
+
         }
     }
 }

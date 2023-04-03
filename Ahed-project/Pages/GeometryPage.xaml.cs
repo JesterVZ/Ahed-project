@@ -15,7 +15,7 @@ namespace Ahed_project.Pages
         {
             InitializeComponent();
             DataContext = vm;
-            _viewModel= vm;
+            _viewModel = vm;
         }
 
         private void ShowOnClick(object sender, MouseButtonEventArgs e)

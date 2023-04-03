@@ -1,27 +1,20 @@
-﻿using Ahed_project.Services.EF;
-using Ahed_project.Services.Global;
+﻿using Ahed_project.MasterData.ProjectClasses;
+using Ahed_project.Pages;
 using Ahed_project.Services;
+using Ahed_project.Services.EF;
+using Ahed_project.Services.Global;
 using Ahed_project.ViewModel.ContentPageComponents;
 using Ahed_project.ViewModel.Pages;
 using Ahed_project.ViewModel.Windows;
+using Ahed_project.Windows;
 using Autofac;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using System.ServiceModel.Channels;
-using Ahed_project.MasterData.ProjectClasses;
-using Ahed_project.Pages;
-using Ahed_project.Windows;
-using System.Windows.Navigation;
+using System.Net;
 
 namespace Ahed_project
 {
-    internal class Module: Autofac.Module
+    internal class Module : Autofac.Module
     {
         protected override void Load(ContainerBuilder builder)
         {
@@ -75,7 +68,7 @@ namespace Ahed_project
             #endregion
             #region Services
             builder.RegisterType<SendDataService>().AsSelf().SingleInstance();
-            builder.Register(x=>new PageService(x.Resolve<IComponentContext>())).As<PageService>().SingleInstance();
+            builder.Register(x => new PageService(x.Resolve<IComponentContext>())).As<PageService>().SingleInstance();
             builder.RegisterType<WebClient>().AsSelf().SingleInstance();
             builder.RegisterType<JsonWebTokenLocal>().AsSelf().SingleInstance();
             builder.RegisterType<WindowTitleService>().AsSelf().SingleInstance();

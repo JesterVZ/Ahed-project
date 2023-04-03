@@ -1,10 +1,6 @@
 ﻿using Ahed_project.Settings;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
@@ -18,7 +14,7 @@ namespace Ahed_project.MasterData
             {
                 return null;
             }
-            if (Config.NumberOfDecimals==0)
+            if (Config.NumberOfDecimals == 0)
             {
                 return values[0]?.ToString();
             }
@@ -41,24 +37,24 @@ namespace Ahed_project.MasterData
                 string val = StringToDoubleChecker.ToCorrectFormat(System.Convert.ToDouble(StringToDoubleChecker.ConvertFromInvariantCulture(value?.ToString())).ToString($"F{Config.NumberOfDecimals}"));
                 return val;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 return "";
             }
-            
+
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
         {
-            return new object[] { StringToDoubleChecker.ConvertToDouble(StringToDoubleChecker.RemoveLetters(value.ToString(),out var q)) };
+            return new object[] { StringToDoubleChecker.ConvertToDouble(StringToDoubleChecker.RemoveLetters(value.ToString(), out var q)) };
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             try
             {
-                return StringToDoubleChecker.RemoveLetters(value.ToString(),out var cC);
+                return StringToDoubleChecker.RemoveLetters(value.ToString(), out var cC);
             }
             catch
             {

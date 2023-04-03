@@ -1,23 +1,19 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.MasterData.Products;
 using Ahed_project.Services.Global;
-using Ahed_project.ViewModel.ContentPageComponents;
 using Ahed_project.ViewModel.Pages;
 using DocumentFormat.OpenXml.Spreadsheet;
 using SpreadsheetLight;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Ahed_project.Services
 {
-    
+
     public class CreateExcelService
     {
         private static ProjectPageViewModel _projectPageViewModel;
@@ -51,18 +47,19 @@ namespace Ahed_project.Services
                     AddShellData();
                     AddHeatBalanceData();
                     Doc.SaveAs("FullReport.xlsx");
-                } else
+                }
+                else
                 {
 
                 }
-                
+
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Error", $"Message: {e.Message}\r\nExcep: {e}")));
             }
-            
+
         }
 
         #region styles
