@@ -114,9 +114,12 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _geometry = value;
-                ExchangersSelector = Exchangers.FirstOrDefault(x => x.Key == value?.head_exchange_type);
-                Orientation = Orientations.FirstOrDefault(x => x.Key == value?.orientation);
-                TubeProfileSelector = TubeProfile.FirstOrDefault(x => x.Key == value?.tube_profile_tubes_side);
+                var tempExchangeSelector = Exchangers.FirstOrDefault(x => x.Key == value?.head_exchange_type);
+                ExchangersSelector = tempExchangeSelector.Key == null ? Exchangers.FirstOrDefault(x => x.Value == value?.head_exchange_type) : tempExchangeSelector;
+                var tempOrientation= Orientations.FirstOrDefault(x => x.Key == value?.orientation);
+                Orientation = tempOrientation.Key == null ? Orientations.FirstOrDefault(x => x.Value == value?.orientation) : tempOrientation;
+                var tempTubesProfile = TubeProfile.FirstOrDefault(x => x.Key == value?.tube_profile_tubes_side);
+                TubeProfileSelector = tempTubesProfile.Key == null ? TubeProfile.FirstOrDefault(x => x.Value == value?.tube_profile_tubes_side) : tempTubesProfile;
                 ShellMaterial = Materials.FirstOrDefault(x => x.Value.name_short == value?.material_shell_side);
                 TubesMaterial = Materials.FirstOrDefault(x => x.Value.name_short == value?.material_tubes_side);
                 var tempLayout = TubePlateLayouts.FirstOrDefault(x => x.Key == value?.tube_plate_layout_tube_layout);
