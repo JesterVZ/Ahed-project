@@ -105,6 +105,10 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     DivPlateItem = DivPlateItems.First();
                 }
+                if (_geometry != null)
+                {
+                    _geometry.tube_plate_layout_number_of_passes = value;
+                }
             }
         }
         private GeometryFull _geometry;
