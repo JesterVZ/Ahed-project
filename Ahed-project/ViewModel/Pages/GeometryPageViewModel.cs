@@ -119,7 +119,8 @@ namespace Ahed_project.ViewModel.Pages
                 TubeProfileSelector = TubeProfile.FirstOrDefault(x => x.Key == value?.tube_profile_tubes_side);
                 ShellMaterial = Materials.FirstOrDefault(x => x.Value.name_short == value?.material_shell_side);
                 TubesMaterial = Materials.FirstOrDefault(x => x.Value.name_short == value?.material_tubes_side);
-                TubeLayout = TubePlateLayouts.FirstOrDefault(x => x.Key == value?.tube_plate_layout_tube_layout);
+                var tempLayout = TubePlateLayouts.FirstOrDefault(x => x.Key == value?.tube_plate_layout_tube_layout);
+                TubeLayout = tempLayout.Key==null?TubePlateLayouts.FirstOrDefault(x=>x.Value.Name==value?.tube_plate_layout_tube_layout):tempLayout;
 
                 try
                 {
