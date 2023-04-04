@@ -819,7 +819,7 @@ namespace Ahed_project.Services.Global
             }
             string json = JsonConvert.SerializeObject(new
             {
-                head_exchange_type = geometry.head_exchange_type,
+                head_exchange_type = geometry.head_exchange_type.ToLower().Replace(' ','_'),
                 name = geometry.name,
                 outer_diameter_inner_side = geometry.outer_diameter_inner_side,
                 outer_diameter_tubes_side = geometry.outer_diameter_tubes_side,
@@ -831,8 +831,8 @@ namespace Ahed_project.Services.Global
                 material_shell_side = geometry.material_shell_side,
                 number_of_tubes = geometry.number_of_tubes,
                 tube_inner_length = geometry.tube_inner_length,
-                orientation = geometry.orientation,
-                tube_profile_tubes_side = geometry.tube_profile_tubes_side,
+                orientation = geometry.orientation.ToLower().Replace(' ', '_'),
+                tube_profile_tubes_side = geometry.tube_profile_tubes_side.ToLower().Replace(' ', '_'),
                 roughness_tubes_side = geometry.roughness_tubes_side,
                 roughness_shell_side = geometry.roughness_shell_side,
                 bundle_type = geometry.bundle_type,
@@ -857,10 +857,10 @@ namespace Ahed_project.Services.Global
                 nozzles_number_of_parallel_lines_shell_side = geometry.nozzles_number_of_parallel_lines_shell_side,
                 shell_nozzle_orientation = geometry.shell_nozzle_orientation,
                 tube_plate_layout_tube_pitch = geometry.tube_plate_layout_tube_pitch,
-                tube_plate_layout_tube_layout = geometry.tube_plate_layout_tube_layout,
+                tube_plate_layout_tube_layout = geometry.tube_plate_layout_tube_layout.ToLower().Replace(' ', '_'),
                 tube_plate_layout_number_of_passes = geometry.tube_plate_layout_number_of_passes,
                 tube_plate_layout_div_plate_layout = geometry.tube_plate_layout_div_plate_layout,
-                tube_plate_layout_sealing_type = geometry.tube_plate_layout_sealing_type,
+                tube_plate_layout_sealing_type = geometry.tube_plate_layout_sealing_type.ToLower().Replace(' ', '_'),
                 tube_plate_layout_housings_space = geometry.tube_plate_layout_housings_space,
                 tube_plate_layout_div_plate_thickness = geometry.tube_plate_layout_div_plate_thickness,
                 tube_plate_layout_tubeplate_thickness = geometry.tube_plate_layout_tubeplate_thickness,
