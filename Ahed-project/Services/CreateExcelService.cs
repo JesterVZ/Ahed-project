@@ -4,11 +4,13 @@ using Ahed_project.Services.Global;
 using Ahed_project.ViewModel.Pages;
 using DocumentFormat.OpenXml.Spreadsheet;
 using SpreadsheetLight;
+using SpreadsheetLight.Drawing;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Windows;
 
@@ -21,13 +23,15 @@ namespace Ahed_project.Services
         private static TubesFluidViewModel _tubesFluidViewModel;
         private static ShellFluidViewModel _shellFluidViewModel;
         private static HeatBalanceViewModel _heatBalanceViewModel;
+        private static GeometryPageViewModel _geometryPageViewModel;
         private static SLDocument Doc;
-        public CreateExcelService(TubesFluidViewModel tubesFluidViewModel, ShellFluidViewModel shellFluidViewModel, ProjectPageViewModel projectPageViewModel, HeatBalanceViewModel heatBalanceViewModel)
+        public CreateExcelService(TubesFluidViewModel tubesFluidViewModel, ShellFluidViewModel shellFluidViewModel, ProjectPageViewModel projectPageViewModel, HeatBalanceViewModel heatBalanceViewModel, GeometryPageViewModel geometryPageViewModel)
         {
             _projectPageViewModel = projectPageViewModel;
             _tubesFluidViewModel = tubesFluidViewModel;
             _shellFluidViewModel = shellFluidViewModel;
             _heatBalanceViewModel = heatBalanceViewModel;
+            _geometryPageViewModel = geometryPageViewModel;
 
             Doc = new();
         }
@@ -421,7 +425,22 @@ namespace Ahed_project.Services
             AddGeometryNozzlesNames();
             AddGeometryTitle("A50", "E50", "Baffles");
             AddGeometryBafflesNames();
+            AddGeometryValues();
 
+            DownloadImage(_geometryPageViewModel.Geometry.image_geometry);
+
+        }
+
+        private static void DownloadImage(string url)
+        {
+            WebClient client = new();
+            var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            Directory.CreateDirectory($"{path}\\Apora");
+
+            client.DownloadFile(new Uri(_geometryPageViewModel.Geometry.image_geometry), @$"{path}\\Apora\\geometry_image.png");
+            SLPicture pic = new SLPicture(@$"{path}\\Apora\\geometry_image.png");
+            pic.SetPosition(6, 7);
+            Doc.InsertPicture(pic);
         }
 
         private static void AddGeometryNames()
@@ -458,6 +477,7 @@ namespace Ahed_project.Services
             Doc.SetCellValue("A34", "Tube Distribution");
             Doc.SetCellValue("A35", "Tube-Tube Spacing");
             Doc.SetCellStyle("A26", "E35", BorderCellsStyle());
+            Doc.SetCellStyle("A26", "A35", BoldTextStyle());
         }
 
         private static void AddGeometryNozzlesNames()
@@ -474,6 +494,7 @@ namespace Ahed_project.Services
             Doc.SetCellValue("A47", "Number of Modules per Block");
             Doc.SetCellValue("A48", "Shell nozzle orientation");
             Doc.SetCellStyle("A38", "E48", BorderCellsStyle());
+            Doc.SetCellStyle("A38", "A48", BoldTextStyle());
         }
         private static void AddGeometryBafflesNames()
         {
@@ -484,7 +505,8 @@ namespace Ahed_project.Services
             Doc.SetCellValue("A55", "Outlet baffle spacing (Lbo)");
             Doc.SetCellValue("A56", "Baffle thickness");
             Doc.SetCellValue("A57", "Pairs of sealing strips (Nss)");
-            Doc.SetCellStyle("A38", "E48", BorderCellsStyle());
+            Doc.SetCellStyle("A51", "E57", BorderCellsStyle());
+            Doc.SetCellStyle("A51", "A57", BoldTextStyle());
         }
 
         private static void AddGeometryTitle(string position1, string position2, string title)
@@ -492,6 +514,40 @@ namespace Ahed_project.Services
             Doc.MergeWorksheetCells(position1, position2);
             Doc.SetCellValue(position1, title);
             Doc.SetCellStyle(position1, BoldHeaderTextStyle());
+        }
+
+        private static void AddGeometryValues()
+        {
+            Doc.SetCellValue("C8", _geometryPageViewModel.Geometry.outer_diameter_inner_side);
+            Doc.SetCellValue("D8", _geometryPageViewModel.Geometry.outer_diameter_tubes_side);
+            Doc.SetCellValue("E8", _geometryPageViewModel.Geometry.outer_diameter_shell_side);
+            Doc.SetCellValue("C9", _geometryPageViewModel.Geometry.thickness_inner_side);
+            Doc.SetCellValue("D9", _geometryPageViewModel.Geometry.thickness_tubes_side);
+            Doc.SetCellValue("E9", _geometryPageViewModel.Geometry.thickness_shell_side);
+            Doc.SetCellValue("C10", _geometryPageViewModel.Geometry.inner_diameter_inner_side);
+            Doc.SetCellValue("D10", _geometryPageViewModel.Geometry.inner_diameter_tubes_side);
+            Doc.SetCellValue("E10", _geometryPageViewModel.Geometry.inner_diameter_shell_side);
+            Doc.MergeWorksheetCells("C11", "D11");
+            Doc.SetCellValue("C11", _geometryPageViewModel.Geometry.material_tubes_side);
+            Doc.SetCellValue("E11", _geometryPageViewModel.Geometry.material_shell_side);
+            Doc.SetCellValue("D12", _geometryPageViewModel.Geometry.number_of_tubes);
+            Doc.SetCellValue("D13", _geometryPageViewModel.Geometry.tube_inner_length);
+            Doc.MergeWorksheetCells("C14", "E14");
+            Doc.SetCellValue("D14", _geometryPageViewModel.Geometry.tube_inner_length);
+            Doc.SetCellValue("D15", _geometryPageViewModel.Geometry.wetted_perimeter_tubes_side);
+            Doc.SetCellValue("E15", _geometryPageViewModel.Geometry.wetted_perimeter_shell_side);
+            Doc.SetCellValue("D16", _geometryPageViewModel.Geometry.hydraulic_diameter_tubes_side);
+            Doc.SetCellValue("E16", _geometryPageViewModel.Geometry.hydraulic_diameter_shell_side);
+            Doc.SetCellValue("D17", _geometryPageViewModel.Geometry.area_module);
+            Doc.SetCellValue("D18", _geometryPageViewModel.Geometry.volume_module_tubes_side);
+            Doc.SetCellValue("E18", _geometryPageViewModel.Geometry.volume_module_shell_side);
+            Doc.MergeWorksheetCells("C19", "D19");
+            Doc.SetCellValue("C19", _geometryPageViewModel.Geometry.tube_profile_tubes_side);
+            Doc.SetCellValue("D20", _geometryPageViewModel.Geometry.roughness_tubes_side);
+            Doc.SetCellValue("E20", _geometryPageViewModel.Geometry.roughness_shell_side);
+            Doc.MergeWorksheetCells("C21", "E21");
+            Doc.SetCellValue("C21", _geometryPageViewModel.Geometry.bundle_type);
+            Doc.SetCellValue("D22", _geometryPageViewModel.Geometry.roller_expanded);
         }
 
         #endregion
