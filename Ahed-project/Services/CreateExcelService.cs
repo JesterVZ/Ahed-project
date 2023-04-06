@@ -439,7 +439,8 @@ namespace Ahed_project.Services
 
             client.DownloadFile(new Uri(_geometryPageViewModel.Geometry.image_geometry), @$"{path}\\Apora\\geometry_image.png");
             SLPicture pic = new SLPicture(@$"{path}\\Apora\\geometry_image.png");
-            pic.SetPosition(6, 7);
+            pic.ResizeInPixels(300, 300);
+            pic.SetPosition(6, 5);
             Doc.InsertPicture(pic);
         }
 
@@ -548,6 +549,31 @@ namespace Ahed_project.Services
             Doc.MergeWorksheetCells("C21", "E21");
             Doc.SetCellValue("C21", _geometryPageViewModel.Geometry.bundle_type);
             Doc.SetCellValue("D22", _geometryPageViewModel.Geometry.roller_expanded);
+            Doc.SetCellValue("D26", _geometryPageViewModel.Geometry.tube_plate_layout_tube_pitch);
+            Doc.SetCellValue("D27", _geometryPageViewModel.Geometry.tube_plate_layout_tube_layout);
+            Doc.SetCellValue("D28", _geometryPageViewModel.Geometry.tube_plate_layout_number_of_passes);
+            Doc.SetCellValue("D29", _geometryPageViewModel.Geometry.tube_plate_layout_div_plate_layout);
+            Doc.SetCellValue("D30", _geometryPageViewModel.Geometry.tube_plate_layout_div_plate_thickness);
+            Doc.SetCellValue("D31", _geometryPageViewModel.Geometry.tube_plate_layout_tubes_cross_section_pre_pass);
+            Doc.SetCellValue("E31", _geometryPageViewModel.Geometry.tube_plate_layout_shell_cross_section);
+            Doc.SetCellValue("D32", _geometryPageViewModel.Geometry.tube_plate_layout_perimeter);
+            Doc.SetCellValue("D33", _geometryPageViewModel.Geometry.tube_plate_layout_max_nr_tubes);
+            Doc.SetCellValue("D34", _geometryPageViewModel.Geometry.tube_plate_layout_tube_distribution);
+            Doc.SetCellValue("D35", _geometryPageViewModel.Geometry.tube_plate_layout_tube_tube_spacing);
+            Doc.SetCellValue("C38", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_inner_side);
+            Doc.SetCellValue("D38", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_tubes_side);
+            Doc.SetCellValue("E38", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_shell_side);
+            //Doc.SetCellValue("C39", _geometryPageViewModel.Geometry.nozzles);
+            //Doc.SetCellValue("D39", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_tubes_side);
+            //Doc.SetCellValue("E39", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_shell_side);
+            Doc.SetCellValue("C40", _geometryPageViewModel.Geometry.nozzles_in_inner_diam_inner_side);
+            Doc.SetCellValue("D40", _geometryPageViewModel.Geometry.nozzles_in_inner_diam_tubes_side);
+            Doc.SetCellValue("E40", _geometryPageViewModel.Geometry.nozzles_in_inner_diam_shell_side);
+            Doc.SetCellValue("D41", _geometryPageViewModel.Geometry.nozzles_in_length_tubes_side);
+            Doc.SetCellValue("E41", _geometryPageViewModel.Geometry.nozzles_in_length_shell_side);
+            Doc.SetCellValue("C40", _geometryPageViewModel.Geometry.nozzles_in_inner_diam_inner_side);
+            Doc.SetCellValue("D40", _geometryPageViewModel.Geometry.nozzles_in_inner_diam_tubes_side);
+            Doc.SetCellValue("E40", _geometryPageViewModel.Geometry.nozzles_in_inner_diam_shell_side);
         }
 
         #endregion
