@@ -326,5 +326,21 @@ namespace Ahed_project.ViewModel.Pages
                 }
             }
         }
+
+        private Visibility _notAnnularVisibility;
+
+        public Visibility NotAnnularVisibility
+        {
+            get => _notAnnularVisibility;
+            set => _notAnnularVisibility = value;
+        }
+
+        private Visibility _annularVisibility;
+
+        public Visibility AnnularVisibility
+        {
+            get => _annularVisibility;
+            set => _annularVisibility = value;
+        }
     }
 }

@@ -206,7 +206,16 @@ namespace Ahed_project.Services.Global
                 _overallCalculationViewModel.MaximumViscosityRow = 0;
                 _overallCalculationViewModel.GridHeight = 650;
             }
-
+            if (head_exchange_type=="annular_space")
+            {
+                _bufflesPageViewModel.NotAnnularVisibility = Visibility.Collapsed;
+                _bufflesPageViewModel.AnnularVisibility = Visibility.Visible;
+            }
+            else
+            {
+                _bufflesPageViewModel.NotAnnularVisibility = Visibility.Visible;
+                _bufflesPageViewModel.AnnularVisibility = Visibility.Collapsed;
+            }
         }
 
         //запрос к Overall (когда нажали calculate или просто переключились на вкладку)
