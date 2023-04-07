@@ -571,9 +571,17 @@ namespace Ahed_project.Services
             Doc.SetCellValue("E40", _geometryPageViewModel.Geometry.nozzles_in_inner_diam_shell_side);
             Doc.SetCellValue("D41", _geometryPageViewModel.Geometry.nozzles_in_length_tubes_side);
             Doc.SetCellValue("E41", _geometryPageViewModel.Geometry.nozzles_in_length_shell_side);
-            Doc.SetCellValue("C40", _geometryPageViewModel.Geometry.nozzles_in_inner_diam_inner_side);
-            Doc.SetCellValue("D40", _geometryPageViewModel.Geometry.nozzles_in_inner_diam_tubes_side);
-            Doc.SetCellValue("E40", _geometryPageViewModel.Geometry.nozzles_in_inner_diam_shell_side);
+            Doc.SetCellValue("C42", _geometryPageViewModel.Geometry.nozzles_out_outer_diam_inner_side);
+            Doc.SetCellValue("D42", _geometryPageViewModel.Geometry.nozzles_out_outer_diam_tubes_side);
+            Doc.SetCellValue("E42", _geometryPageViewModel.Geometry.nozzles_out_outer_diam_shell_side);
+            Doc.SetCellValue("D44", _geometryPageViewModel.Geometry.nozzles_out_inner_diam_tubes_side);
+            Doc.SetCellValue("E44", _geometryPageViewModel.Geometry.nozzles_out_inner_diam_shell_side);
+            Doc.SetCellValue("D45", _geometryPageViewModel.Geometry.nozzles_out_length_tubes_side);
+            Doc.SetCellValue("E45", _geometryPageViewModel.Geometry.nozzles_out_length_shell_side);
+            Doc.SetCellValue("D46", _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_tubes_side);
+            Doc.SetCellValue("E46", _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side);
+            Doc.SetCellValue("D47", _geometryPageViewModel.Geometry.nozzles_number_of_modules_pre_block);
+            Doc.SetCellValue("D48", _geometryPageViewModel.Geometry.shell_nozzle_orientation);
         }
 
         #endregion
