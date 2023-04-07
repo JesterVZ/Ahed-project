@@ -51,18 +51,18 @@ namespace Ahed_project.ViewModel.Pages
                 FourthChart = new PlotModel();
                 FifthChart = new PlotModel();
                 SixthChart = new PlotModel();
-                FirstChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
-                FirstChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Density", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
-                SecondChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
-                SecondChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Specific Heat", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
-                ThirdChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
-                ThirdChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Thermal Conductivity", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
-                FourthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
-                FourthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Consistency Index", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
-                FifthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
-                FifthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Flow Index", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
-                SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
-                SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Latent Heat", AbsoluteMaximum = 1, AbsoluteMinimum = 1 });
+                FirstChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", AbsoluteMaximum = 1, AbsoluteMinimum = 1, MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                FirstChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Density", AbsoluteMaximum = 1, AbsoluteMinimum = 1, MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                SecondChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", AbsoluteMaximum = 1, AbsoluteMinimum = 1, MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                SecondChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Specific Heat", AbsoluteMaximum = 1, AbsoluteMinimum = 1, MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                ThirdChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", AbsoluteMaximum = 1, AbsoluteMinimum = 1, MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                ThirdChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Thermal Conductivity", AbsoluteMaximum = 1, AbsoluteMinimum = 1, MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                FourthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", AbsoluteMaximum = 1, AbsoluteMinimum = 1, MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                FourthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Consistency Index", AbsoluteMaximum = 1, AbsoluteMinimum = 1, MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                FifthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", AbsoluteMaximum = 1, AbsoluteMinimum = 1, MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                FifthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Flow Index", AbsoluteMaximum = 1, AbsoluteMinimum = 1, MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", AbsoluteMaximum = 1, AbsoluteMinimum = 1, MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Latent Heat", AbsoluteMaximum = 1, AbsoluteMinimum = 1, MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
                 FirstChart.Series.Add(new LineSeries());
                 SecondChart.Series.Add(new LineSeries());
                 ThirdChart.Series.Add(new LineSeries());
@@ -88,18 +88,18 @@ namespace Ahed_project.ViewModel.Pages
             var sixthSeries = new LineSeries() { Color = OxyColor.Parse("#ff8c00") };
             if (TabIndex == 0)
             {
-                FirstChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature" });
-                FirstChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Density" });
-                SecondChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature" });
-                SecondChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Specific Heat" });
-                ThirdChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature" });
-                ThirdChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Thermal Conductivity" });
-                FourthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature" });
-                FourthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Consistency Index" });
-                FifthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature" });
-                FifthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Flow Index" });
-                SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature" });
-                SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Latent Heat" });
+                FirstChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                FirstChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Density", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                SecondChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                SecondChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Specific Heat", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                ThirdChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                ThirdChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Thermal Conductivity", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                FourthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                FourthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Consistency Index", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                FifthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                FifthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Flow Index", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Latent Heat", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
                 if (Product != null && Product.product_properties != null)
                 {
                     foreach (var property in Product?.product_properties)
@@ -116,18 +116,18 @@ namespace Ahed_project.ViewModel.Pages
             }
             else
             {
-                FirstChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature" });
-                FirstChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Density" });
-                SecondChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature" });
-                SecondChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Specific Heat" });
-                ThirdChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature" });
-                ThirdChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Thermal Conductivity" });
-                FourthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature" });
-                FourthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Dynamic Viscosity" });
-                FifthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature" });
-                FifthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Vapour Pressure" });
-                SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature" });
-                SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Mass Vapour Fraction" });
+                FirstChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                FirstChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Density", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                SecondChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                SecondChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Specific Heat", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                ThirdChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                ThirdChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Thermal Conductivity", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                FourthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                FourthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Dynamic Viscosity", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                FifthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                FifthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Vapour Pressure", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Temperature", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
+                SixthChart.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Mass Vapour Fraction", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot });
                 if (Product != null && Product.product_properties != null)
                 {
                     foreach (var property in Product?.product_properties)

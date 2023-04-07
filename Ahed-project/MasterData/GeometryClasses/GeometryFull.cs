@@ -104,10 +104,6 @@ namespace Ahed_project.MasterData.GeometryClasses
         private string _image_geometry;
         private DateTime? _createdAt;
         private DateTime? _updatedAt;
-        private string _diametral_clearance_tube_baffle;
-        private string _diametral_clearance_shell_baffle;
-        public string diametral_clearance_tube_baffle { get => _diametral_clearance_tube_baffle; set { _diametral_clearance_tube_baffle = value;OnPropertyChanged(nameof(diametral_clearance_tube_baffle)); } }
-        public string diametral_clearance_shell_baffle { get => _diametral_clearance_shell_baffle; set { _diametral_clearance_shell_baffle = value; OnPropertyChanged(nameof(diametral_clearance_shell_baffle)); } }
         public int geometry_catalog_id { get => _geometry_catalog_id; set { _geometry_catalog_id = value; OnPropertyChanged(nameof(geometry_catalog_id)); } }
         public int geometry_id { get => _geometry_id; set { _geometry_id = value; OnPropertyChanged(nameof(geometry_id)); } }
         public int calculation_id { get => _calculation_id; set { _calculation_id = value; OnPropertyChanged(nameof(calculation_id)); } }
