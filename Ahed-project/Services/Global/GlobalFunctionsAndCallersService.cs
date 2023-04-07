@@ -396,8 +396,8 @@ namespace Ahed_project.Services.Global
             }
             _contentPageViewModel.Validation(false);
             _projectPageViewModel.FieldsState = false;
-            _overallCalculationViewModel.Overall = new OverallFull();
-            App.Current.Dispatcher.Invoke(() => _overallCalculationViewModel.Refresh());
+            //_overallCalculationViewModel.Overall = new OverallFull();
+            //App.Current.Dispatcher.Invoke(() => _overallCalculationViewModel.Refresh());
         }
 
         //Получение рассчетов
