@@ -47,27 +47,28 @@
                             <ColumnDefinition Width="120*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
+                            <RowDefinition Height="18*"/>
+                            <RowDefinition Height="12*"/>
+                            <RowDefinition Height="20*"/>
+                            <RowDefinition Height="18*"/>
+                            <RowDefinition Height="18*"/>
+                            <RowDefinition Height="18*"/>
+                            <RowDefinition Height="18*"/>
+                            <RowDefinition Height="18*"/>
+                            <RowDefinition Height="18*"/>
+                            <RowDefinition Height="18*"/>
+                            <RowDefinition Height="18*"/>
+                            <RowDefinition Height="18*"/>
+                            <RowDefinition Height="18*"/>
+                            <RowDefinition Height="18*"/>
+                            <RowDefinition Height="18*"/>
+                            <RowDefinition Height="18*"/>
+                            <RowDefinition Height="18*"/>
+                            <RowDefinition Height="18*"/>
+                            <RowDefinition Height="0*"/>
+                            <RowDefinition Height="13*"/>
+                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="20.549"/>
                         </Grid.RowDefinitions>
                         <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">Heat Exchanger Type</Label>
                         <ComboBox ItemsSource="{Binding Exchangers}" HorizontalContentAlignment="Left" SelectedItem="{Binding ExchangersSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="0" SelectedIndex="0" Margin="3,3,3,3">
@@ -175,12 +176,17 @@
                         <Label Grid.Column="1" Grid.Row="17" HorizontalAlignment="Right">kW</Label>
                         <TextBox x:Name="motor_power_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.motor_power_tubes_side, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="17" Margin="3,3,3,3"/>
 
+                        <Label Grid.Column="0" Grid.Row="19">Diametral clearance baffle</Label>
+                        <Label Grid.Column="1" Grid.Row="19" HorizontalAlignment="Right">kW</Label>
+                        <TextBox x:Name="diametral_clearance_tube_baffle" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.diametral_clearance_tube_baffle, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="19" Margin="3,3,3,3"/>
+                        <TextBox x:Name="diametral_clearance_shell_baffle" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.diametral_clearance_shell_baffle, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="19" Margin="3,3,3,3"/>
 
-                        <Label Grid.Column="0" Grid.Row="19" Grid.ColumnSpan="2" Margin="0,0,0,15" Grid.RowSpan="2">Bundle type</Label>
-                        <RadioButton IsChecked="{Binding Fixed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="19" GroupName="BundleType" Content="Fixed" VerticalAlignment="Center"/>
-                        <RadioButton IsChecked="{Binding Removable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="19" GroupName="BundleType" Content="Removable" VerticalAlignment="Center"/>
 
-                        <CheckBox IsChecked="{Binding RollerExpanded}" Grid.Column="3" Grid.Row="20" Content="Roller Expanded"/>
+                        <Label Grid.Column="0" Grid.Row="20" Grid.ColumnSpan="2" Margin="0,0,0,15" Grid.RowSpan="2">Bundle type</Label>
+                        <RadioButton IsChecked="{Binding Fixed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="20" GroupName="BundleType" Content="Fixed" VerticalAlignment="Center"/>
+                        <RadioButton IsChecked="{Binding Removable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="20" GroupName="BundleType" Content="Removable" VerticalAlignment="Center"/>
+
+                        <CheckBox IsChecked="{Binding RollerExpanded}" Grid.Column="3" Grid.Row="21" Content="Roller Expanded"/>
                     </Grid>
                     <Grid Grid.Column="1">
                         <Grid.ColumnDefinitions>
@@ -243,6 +249,11 @@
 
                             <Label Visibility="{Binding SealingTypeVis}" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center">Sealing Type</Label>
                             <ComboBox Visibility="{Binding SealingTypeVis}" HorizontalContentAlignment="Left" ItemsSource="{Binding SealingTypeItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SealingTypeItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ComboboxDefault}" Grid.Column="2" SelectedIndex="0" Grid.Row="4">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding Value}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
                             </ComboBox>
 
                             <Label Grid.Column="0" Grid.Row="5" Visibility="{Binding HousingSpaceVis, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center">Housing Space</Label>

@@ -4,10 +4,13 @@ using Ahed_project.Services.Global;
 using Ahed_project.ViewModel.Pages;
 using DocumentFormat.OpenXml.Spreadsheet;
 using SpreadsheetLight;
+using SpreadsheetLight.Drawing;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Windows;
 
@@ -20,13 +23,15 @@ namespace Ahed_project.Services
         private static TubesFluidViewModel _tubesFluidViewModel;
         private static ShellFluidViewModel _shellFluidViewModel;
         private static HeatBalanceViewModel _heatBalanceViewModel;
+        private static GeometryPageViewModel _geometryPageViewModel;
         private static SLDocument Doc;
-        public CreateExcelService(TubesFluidViewModel tubesFluidViewModel, ShellFluidViewModel shellFluidViewModel, ProjectPageViewModel projectPageViewModel, HeatBalanceViewModel heatBalanceViewModel)
+        public CreateExcelService(TubesFluidViewModel tubesFluidViewModel, ShellFluidViewModel shellFluidViewModel, ProjectPageViewModel projectPageViewModel, HeatBalanceViewModel heatBalanceViewModel, GeometryPageViewModel geometryPageViewModel)
         {
             _projectPageViewModel = projectPageViewModel;
             _tubesFluidViewModel = tubesFluidViewModel;
             _shellFluidViewModel = shellFluidViewModel;
             _heatBalanceViewModel = heatBalanceViewModel;
+            _geometryPageViewModel = geometryPageViewModel;
 
             Doc = new();
         }
@@ -39,19 +44,21 @@ namespace Ahed_project.Services
         {
             try
             {
-                var assembly = Assembly.GetExecutingAssembly();
-                string path = assembly.Location;
-                if (!File.Exists($"{path}\\FullReport.xlsx"))
-                {
-                    AddTubeData();
-                    AddShellData();
-                    AddHeatBalanceData();
-                    Doc.SaveAs("FullReport.xlsx");
+                var directory = Directory.GetCurrentDirectory();
+                if (File.Exists($"{directory}\\FullReport.xlsx")){
+                    File.Delete($"{directory}\\FullReport.xlsx");
                 }
-                else
+                AddTubeData();
+                AddShellData();
+                AddHeatBalanceData();
+                AddGeometryData();
+                Doc.SaveAs("FullReport.xlsx");
+                var p = new System.Diagnostics.Process();
+                p.StartInfo = new ProcessStartInfo($"{directory}\\FullReport.xlsx")
                 {
-
-                }
+                    UseShellExecute = true,
+                };
+                p.Start();
 
 
             }
@@ -113,7 +120,7 @@ namespace Ahed_project.Services
             Doc.SetCellValue("A2", "Revision Nr");
             Doc.SetCellValue("C2", _projectPageViewModel.ProjectInfo.revision.ToString());
             Doc.SetCellValue("A3", "Process");
-            Doc.SetCellValue("C3", _projectPageViewModel.SelectedCalculation.name);
+            Doc.SetCellValue("C3", _projectPageViewModel.SelectedCalculation.name); 
             Doc.SetCellValue("A4", "Name");
             Doc.SetCellValue("C4", _tubesFluidViewModel.Product.name);
 
@@ -369,8 +376,214 @@ namespace Ahed_project.Services
             Doc.SetCellValue("D26", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_tube_outlet);
             Doc.SetCellValue("E26", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_shell_inlet);
             Doc.SetCellValue("F26", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_shell_outlet);
+            Doc.SetCellValue("C27", _heatBalanceViewModel.Calculation.gas_vapour_pressure_tube_inlet);
+            Doc.SetCellValue("D27", _heatBalanceViewModel.Calculation.gas_vapour_pressure_tube_outlet);
+            Doc.SetCellValue("E27", _heatBalanceViewModel.Calculation.gas_vapour_pressure_shell_inlet);
+            Doc.SetCellValue("F27", _heatBalanceViewModel.Calculation.gas_vapour_pressure_shell_outlet);
+            Doc.SetCellValue("C28", _heatBalanceViewModel.Calculation.gas_mass_vapour_fraction_tube_inlet);
+            Doc.SetCellValue("D28", _heatBalanceViewModel.Calculation.gas_mass_vapour_fraction_tube_outlet);
+            Doc.SetCellValue("E28", _heatBalanceViewModel.Calculation.gas_mass_vapour_fraction_shell_inlet);
+            Doc.SetCellValue("F28", _heatBalanceViewModel.Calculation.gas_mass_vapour_fraction_shell_outlet);
+        }
+        #endregion
+
+        #region geometry
+        private static void AddGeometryData()
+        {
+            Doc.AddWorksheet("GeometryReport");
+            Doc.MergeWorksheetCells("A1", "B1");
+            Doc.MergeWorksheetCells("A2", "B2");
+            Doc.MergeWorksheetCells("A3", "B3");
+            Doc.MergeWorksheetCells("A4", "B4");
+            Doc.MergeWorksheetCells("C1", "F1");
+            Doc.MergeWorksheetCells("C3", "F3");
+            Doc.MergeWorksheetCells("C4", "F4");
+            Doc.SetCellValue("A1", "Project name");
+            Doc.SetCellValue("C1", _projectPageViewModel.ProjectName);
+            Doc.SetCellStyle("A1", "A6", BoldTextStyle());
+            Doc.SetCellStyle("A1", "F1", BorderCellsStyle());
+            Doc.SetCellStyle("A2", "C2", BorderCellsStyle());
+            Doc.SetCellStyle("A3", "F3", BorderCellsStyle());
+            Doc.SetColumnWidth("A", "M", 15);
+            Doc.SetCellValue("A2", "Revision Nr");
+            Doc.SetCellValue("C2", _projectPageViewModel.ProjectInfo.revision.ToString());
+            Doc.SetCellValue("A3", "Process");
+            Doc.SetCellValue("C3", _projectPageViewModel.SelectedCalculation.name);
+
+            AddGeometryTitle("A6", "E6", "Tube & Shell Geometry");
+
+            Doc.SetCellValue("C7", "Inner Side");
+            Doc.SetCellValue("D7", "Tube Side");
+            Doc.SetCellValue("E7", "Shell Side");
+
+            Doc.SetCellStyle("C7", "E7", BorderCellsStyle());
+            Doc.SetCellStyle("C7", "F7", BoldTextStyle());
+            AddGeometryNames();
+            AddGeometryTitle("A25", "E25", "Tubeplate Layout");
+            AddGeometryTubeplateNames();
+            AddGeometryTitle("A37", "E37", "Nozzles");
+            AddGeometryNozzlesNames();
+            AddGeometryTitle("A50", "E50", "Baffles");
+            AddGeometryBafflesNames();
+            AddGeometryValues();
+
+            DownloadImage(_geometryPageViewModel.Geometry.image_geometry);
 
         }
+
+        private static void DownloadImage(string url)
+        {
+            WebClient client = new();
+            var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            Directory.CreateDirectory($"{path}\\Apora");
+
+            client.DownloadFile(new Uri(_geometryPageViewModel.Geometry.image_geometry), @$"{path}\\Apora\\geometry_image.png");
+            SLPicture pic = new SLPicture(@$"{path}\\Apora\\geometry_image.png");
+            pic.ResizeInPixels(300, 300);
+            pic.SetPosition(6, 5);
+            Doc.InsertPicture(pic);
+        }
+
+        private static void AddGeometryNames()
+        {
+            Doc.SetCellValue("A8", "Outer Diameter");
+            Doc.SetCellValue("A9", "Thickness");
+            Doc.SetCellValue("A10", "Inner Diameter");
+            Doc.SetCellValue("A11", "Material");
+            Doc.SetCellValue("A12", "Number of Tubes");
+            Doc.SetCellValue("A13", "Tube Inner Length (Lti)");
+            Doc.SetCellValue("A14", "Orientation");
+            Doc.SetCellValue("A15", "Wetted Perimeter (per pass)");
+            Doc.SetCellValue("A16", "Hydraulic Diameter");
+            Doc.SetCellValue("A17", "Area / Module");
+            Doc.SetCellValue("A18", "Volume / Module");
+            Doc.SetCellValue("A19", "Tube Profile");
+            Doc.SetCellValue("A20", "Roughness (ε)");
+            Doc.SetCellValue("A21", "Bundle Type");
+            Doc.SetCellValue("A22", "Roller Expanded");
+            Doc.SetCellStyle("A8", "E22", BorderCellsStyle());
+            Doc.SetCellStyle("A8", "A22", BoldTextStyle());
+        }
+
+        private static void AddGeometryTubeplateNames()
+        {
+            Doc.SetCellValue("A26", "Tube Pitch");
+            Doc.SetCellValue("A27", "Tube Layout");
+            Doc.SetCellValue("A28", "Number of Passes");
+            Doc.SetCellValue("A29", "Div. Plate Layout");
+            Doc.SetCellValue("A30", "Div. Plate Thickness");
+            Doc.SetCellValue("A31", "Flow cross section");
+            Doc.SetCellValue("A32", "Perimeter");
+            Doc.SetCellValue("A33", "Max. Nr. Tubes");
+            Doc.SetCellValue("A34", "Tube Distribution");
+            Doc.SetCellValue("A35", "Tube-Tube Spacing");
+            Doc.SetCellStyle("A26", "E35", BorderCellsStyle());
+            Doc.SetCellStyle("A26", "A35", BoldTextStyle());
+        }
+
+        private static void AddGeometryNozzlesNames()
+        {
+            Doc.SetCellValue("A38", "Inlet nozzle OD");
+            Doc.SetCellValue("A39", "Inlet nozzle wall");
+            Doc.SetCellValue("A40", "Inlet nozzle ID");
+            Doc.SetCellValue("A41", "In Length");
+            Doc.SetCellValue("A42", "Outlet nozzle OD");
+            Doc.SetCellValue("A43", "Outlet nozzle wall");
+            Doc.SetCellValue("A44", "Outlet nozzle ID");
+            Doc.SetCellValue("A45", "Out Length");
+            Doc.SetCellValue("A46", "Number of Parallel Lines");
+            Doc.SetCellValue("A47", "Number of Modules per Block");
+            Doc.SetCellValue("A48", "Shell nozzle orientation");
+            Doc.SetCellStyle("A38", "E48", BorderCellsStyle());
+            Doc.SetCellStyle("A38", "A48", BoldTextStyle());
+        }
+        private static void AddGeometryBafflesNames()
+        {
+            Doc.SetCellValue("A51", "Nr. Baffles");
+            Doc.SetCellValue("A52", "Baffle cut (% ID)");
+            Doc.SetCellValue("A53", "Inlet baffle spacing (Lbi)");
+            Doc.SetCellValue("A54", "Central baffle spacing (Lbc)");
+            Doc.SetCellValue("A55", "Outlet baffle spacing (Lbo)");
+            Doc.SetCellValue("A56", "Baffle thickness");
+            Doc.SetCellValue("A57", "Pairs of sealing strips (Nss)");
+            Doc.SetCellStyle("A51", "E57", BorderCellsStyle());
+            Doc.SetCellStyle("A51", "A57", BoldTextStyle());
+        }
+
+        private static void AddGeometryTitle(string position1, string position2, string title)
+        {
+            Doc.MergeWorksheetCells(position1, position2);
+            Doc.SetCellValue(position1, title);
+            Doc.SetCellStyle(position1, BoldHeaderTextStyle());
+        }
+
+        private static void AddGeometryValues()
+        {
+            Doc.SetCellValue("C8", _geometryPageViewModel.Geometry.outer_diameter_inner_side);
+            Doc.SetCellValue("D8", _geometryPageViewModel.Geometry.outer_diameter_tubes_side);
+            Doc.SetCellValue("E8", _geometryPageViewModel.Geometry.outer_diameter_shell_side);
+            Doc.SetCellValue("C9", _geometryPageViewModel.Geometry.thickness_inner_side);
+            Doc.SetCellValue("D9", _geometryPageViewModel.Geometry.thickness_tubes_side);
+            Doc.SetCellValue("E9", _geometryPageViewModel.Geometry.thickness_shell_side);
+            Doc.SetCellValue("C10", _geometryPageViewModel.Geometry.inner_diameter_inner_side);
+            Doc.SetCellValue("D10", _geometryPageViewModel.Geometry.inner_diameter_tubes_side);
+            Doc.SetCellValue("E10", _geometryPageViewModel.Geometry.inner_diameter_shell_side);
+            Doc.MergeWorksheetCells("C11", "D11");
+            Doc.SetCellValue("C11", _geometryPageViewModel.Geometry.material_tubes_side);
+            Doc.SetCellValue("E11", _geometryPageViewModel.Geometry.material_shell_side);
+            Doc.SetCellValue("D12", _geometryPageViewModel.Geometry.number_of_tubes);
+            Doc.SetCellValue("D13", _geometryPageViewModel.Geometry.tube_inner_length);
+            Doc.MergeWorksheetCells("C14", "E14");
+            Doc.SetCellValue("D14", _geometryPageViewModel.Geometry.tube_inner_length);
+            Doc.SetCellValue("D15", _geometryPageViewModel.Geometry.wetted_perimeter_tubes_side);
+            Doc.SetCellValue("E15", _geometryPageViewModel.Geometry.wetted_perimeter_shell_side);
+            Doc.SetCellValue("D16", _geometryPageViewModel.Geometry.hydraulic_diameter_tubes_side);
+            Doc.SetCellValue("E16", _geometryPageViewModel.Geometry.hydraulic_diameter_shell_side);
+            Doc.SetCellValue("D17", _geometryPageViewModel.Geometry.area_module);
+            Doc.SetCellValue("D18", _geometryPageViewModel.Geometry.volume_module_tubes_side);
+            Doc.SetCellValue("E18", _geometryPageViewModel.Geometry.volume_module_shell_side);
+            Doc.MergeWorksheetCells("C19", "D19");
+            Doc.SetCellValue("C19", _geometryPageViewModel.Geometry.tube_profile_tubes_side);
+            Doc.SetCellValue("D20", _geometryPageViewModel.Geometry.roughness_tubes_side);
+            Doc.SetCellValue("E20", _geometryPageViewModel.Geometry.roughness_shell_side);
+            Doc.MergeWorksheetCells("C21", "E21");
+            Doc.SetCellValue("C21", _geometryPageViewModel.Geometry.bundle_type);
+            Doc.SetCellValue("D22", _geometryPageViewModel.Geometry.roller_expanded);
+            Doc.SetCellValue("D26", _geometryPageViewModel.Geometry.tube_plate_layout_tube_pitch);
+            Doc.SetCellValue("D27", _geometryPageViewModel.Geometry.tube_plate_layout_tube_layout);
+            Doc.SetCellValue("D28", _geometryPageViewModel.Geometry.tube_plate_layout_number_of_passes);
+            Doc.SetCellValue("D29", _geometryPageViewModel.Geometry.tube_plate_layout_div_plate_layout);
+            Doc.SetCellValue("D30", _geometryPageViewModel.Geometry.tube_plate_layout_div_plate_thickness);
+            Doc.SetCellValue("D31", _geometryPageViewModel.Geometry.tube_plate_layout_tubes_cross_section_pre_pass);
+            Doc.SetCellValue("E31", _geometryPageViewModel.Geometry.tube_plate_layout_shell_cross_section);
+            Doc.SetCellValue("D32", _geometryPageViewModel.Geometry.tube_plate_layout_perimeter);
+            Doc.SetCellValue("D33", _geometryPageViewModel.Geometry.tube_plate_layout_max_nr_tubes);
+            Doc.SetCellValue("D34", _geometryPageViewModel.Geometry.tube_plate_layout_tube_distribution);
+            Doc.SetCellValue("D35", _geometryPageViewModel.Geometry.tube_plate_layout_tube_tube_spacing);
+            Doc.SetCellValue("C38", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_inner_side);
+            Doc.SetCellValue("D38", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_tubes_side);
+            Doc.SetCellValue("E38", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_shell_side);
+            //Doc.SetCellValue("C39", _geometryPageViewModel.Geometry.nozzles);
+            //Doc.SetCellValue("D39", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_tubes_side);
+            //Doc.SetCellValue("E39", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_shell_side);
+            Doc.SetCellValue("C40", _geometryPageViewModel.Geometry.nozzles_in_inner_diam_inner_side);
+            Doc.SetCellValue("D40", _geometryPageViewModel.Geometry.nozzles_in_inner_diam_tubes_side);
+            Doc.SetCellValue("E40", _geometryPageViewModel.Geometry.nozzles_in_inner_diam_shell_side);
+            Doc.SetCellValue("D41", _geometryPageViewModel.Geometry.nozzles_in_length_tubes_side);
+            Doc.SetCellValue("E41", _geometryPageViewModel.Geometry.nozzles_in_length_shell_side);
+            Doc.SetCellValue("C42", _geometryPageViewModel.Geometry.nozzles_out_outer_diam_inner_side);
+            Doc.SetCellValue("D42", _geometryPageViewModel.Geometry.nozzles_out_outer_diam_tubes_side);
+            Doc.SetCellValue("E42", _geometryPageViewModel.Geometry.nozzles_out_outer_diam_shell_side);
+            Doc.SetCellValue("D44", _geometryPageViewModel.Geometry.nozzles_out_inner_diam_tubes_side);
+            Doc.SetCellValue("E44", _geometryPageViewModel.Geometry.nozzles_out_inner_diam_shell_side);
+            Doc.SetCellValue("D45", _geometryPageViewModel.Geometry.nozzles_out_length_tubes_side);
+            Doc.SetCellValue("E45", _geometryPageViewModel.Geometry.nozzles_out_length_shell_side);
+            Doc.SetCellValue("D46", _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_tubes_side);
+            Doc.SetCellValue("E46", _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side);
+            Doc.SetCellValue("D47", _geometryPageViewModel.Geometry.nozzles_number_of_modules_pre_block);
+            Doc.SetCellValue("D48", _geometryPageViewModel.Geometry.shell_nozzle_orientation);
+        }
+
         #endregion
 
     }
