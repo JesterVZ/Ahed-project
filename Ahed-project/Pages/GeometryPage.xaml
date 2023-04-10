@@ -280,7 +280,7 @@
                             <Label Grid.Column="1" Grid.Row="10" VerticalAlignment="Center">mm</Label>
                             <TextBox x:Name="tube_plate_layout_perimeter" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_perimeter, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="10"/>
                         </Grid>
-                        <Grid Grid.Column="0" Grid.Row="1">
+                        <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,329,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="38"/>
                                 <RowDefinition Height="38"/>
@@ -288,18 +288,18 @@
                                 <RowDefinition Height="38"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="30"/>
-                                <ColumnDefinition/>
+                                <ColumnDefinition Width="118*"/>
+                                <ColumnDefinition Width="33.999"/>
+                                <ColumnDefinition Width="119*"/>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">Max Nr.Tubes</Label>
-                            <Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">Tubes Distribution</Label>
-                            <Label Grid.Column="0" Grid.Row="2" VerticalAlignment="Center">Tube-Tube Spacing</Label>
-                            <Label Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">mm</Label>
+                            <Label Grid.Column="0" VerticalAlignment="Center" Height="26">Max Nr.Tubes</Label>
+                            <Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Height="26">Tubes Distribution</Label>
+                            <Label Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Height="26">Tube-Tube Spacing</Label>
+                            <Label Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Height="26" Margin="4,0,0,0">mm</Label>
 
-                            <TextBox x:Name="tube_plate_layout_max_nr_tubes" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_max_nr_tubes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="0"/>
-                            <TextBox x:Name="tube_plate_layout_tube_distribution" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_tube_distribution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="1"/>
-                            <TextBox x:Name="tube_plate_layout_tube_tube_spacing" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_tube_tube_spacing, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="2"/>
+                            <TextBox x:Name="tube_plate_layout_max_nr_tubes" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_max_nr_tubes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="0" Margin="3,4,3,4"/>
+                            <TextBox x:Name="tube_plate_layout_tube_distribution" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_tube_distribution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" Margin="0,4,3,4" Grid.ColumnSpan="2"/>
+                            <TextBox x:Name="tube_plate_layout_tube_tube_spacing" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_tube_tube_spacing, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="2" Margin="3,4,3,4"/>
                         </Grid>
                     </Grid>
                 </Grid>
