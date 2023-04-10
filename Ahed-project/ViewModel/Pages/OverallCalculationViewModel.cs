@@ -10,6 +10,8 @@ namespace Ahed_project.ViewModel.Pages
 {
     public class OverallCalculationViewModel : BindableBase
     {
+        private bool _isProcess = true;
+        public bool IsProcess { get => _isProcess; set { _isProcess = value; } }
         private OverallFull _overall;
         public OverallFull Overall
         {
@@ -174,9 +176,11 @@ namespace Ahed_project.ViewModel.Pages
             Overall = new();
         }
         #region commands
-        public ICommand Calculate => new DelegateCommand(() =>
+        public ICommand Calculate => new DelegateCommand(async () =>
         {
-            Task.Run(() => GlobalFunctionsAndCallersService.CalculateOverall(Overall));
+            IsProcess = false;
+            await Task.Run(() => GlobalFunctionsAndCallersService.CalculateOverall(Overall));
+            IsProcess = true;
         });
         #endregion
 
