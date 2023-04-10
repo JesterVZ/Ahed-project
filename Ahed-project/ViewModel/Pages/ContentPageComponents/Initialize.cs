@@ -2,7 +2,11 @@
 using Ahed_project.Services;
 using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Reflection;
 
 namespace Ahed_project.ViewModel.ContentPageComponents
 {
@@ -51,6 +55,17 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             QuoteState.IsEnabled = false;
             ThreeDState.IsEnabled = false;
             _pageService = pageService;
+
+            var assembly = Assembly.GetExecutingAssembly();
+            var path = Path.GetDirectoryName(assembly.Location)+"/Visual/";
+
+            _checkPaths = new Dictionary<int, string>()
+            {
+                { 0,String.Empty},
+                {1,$"{path}cancel.svg" },
+                {2,$"{path}check.svg" },
+                {3,$"{path}warning.svg" }
+            };
         }
 
     }
