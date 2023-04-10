@@ -260,7 +260,7 @@ namespace Ahed_project.Services.Global
                     vibration_exist = overall.vibration_exist
 
                 });
-                var response = template.SendToServer(ProjectMethods.CALCULATE_OVERALL, json, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString(), 100000);
+                var response = template.SendToServer(ProjectMethods.CALCULATE_OVERALL, json, GlobalDataCollectorService.Project.project_id.ToString(), calculation_id.ToString(), 300000);
                 if (response != null)
                 {
                     Responce result = JsonConvert.DeserializeObject<Responce>(response);

@@ -21,7 +21,7 @@
             <Grid Background="White" Width="1800" HorizontalAlignment="Left">
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
-                        <Button Content="Calculate" Command="{Binding Calculate}" Margin="0 0 12 0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
+                        <Button Content="Calculate" Command="{Binding Calculate}" Margin="0 0 12 0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6" IsEnabled="{Binding IsProcess}"/>
                         <Button Content="Batch calculation"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6" IsEnabled="False"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">

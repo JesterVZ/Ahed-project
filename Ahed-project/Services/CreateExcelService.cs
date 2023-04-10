@@ -24,14 +24,16 @@ namespace Ahed_project.Services
         private static ShellFluidViewModel _shellFluidViewModel;
         private static HeatBalanceViewModel _heatBalanceViewModel;
         private static GeometryPageViewModel _geometryPageViewModel;
+        private static BafflesPageViewModel _bafflesPageViewModel;
         private static SLDocument Doc;
-        public CreateExcelService(TubesFluidViewModel tubesFluidViewModel, ShellFluidViewModel shellFluidViewModel, ProjectPageViewModel projectPageViewModel, HeatBalanceViewModel heatBalanceViewModel, GeometryPageViewModel geometryPageViewModel)
+        public CreateExcelService(TubesFluidViewModel tubesFluidViewModel, ShellFluidViewModel shellFluidViewModel, ProjectPageViewModel projectPageViewModel, HeatBalanceViewModel heatBalanceViewModel, GeometryPageViewModel geometryPageViewModel, BafflesPageViewModel bafflesPageViewModel)
         {
             _projectPageViewModel = projectPageViewModel;
             _tubesFluidViewModel = tubesFluidViewModel;
             _shellFluidViewModel = shellFluidViewModel;
             _heatBalanceViewModel = heatBalanceViewModel;
             _geometryPageViewModel = geometryPageViewModel;
+            _bafflesPageViewModel = bafflesPageViewModel;
 
             Doc = new();
         }
@@ -93,6 +95,8 @@ namespace Ahed_project.Services
             style.SetTopBorder(BorderStyleValues.Thin, System.Drawing.Color.Black);
             style.SetLeftBorder(BorderStyleValues.Thin, System.Drawing.Color.Black);
             style.SetBottomBorder(BorderStyleValues.Thin, System.Drawing.Color.Black);
+            style.SetHorizontalAlignment(HorizontalAlignmentValues.Center);
+            style.SetWrapText(true);
             return style;
         }
         #endregion
@@ -582,6 +586,20 @@ namespace Ahed_project.Services
             Doc.SetCellValue("E46", _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side);
             Doc.SetCellValue("D47", _geometryPageViewModel.Geometry.nozzles_number_of_modules_pre_block);
             Doc.SetCellValue("D48", _geometryPageViewModel.Geometry.shell_nozzle_orientation);
+            Doc.MergeWorksheetCells("C49", "E49");
+            Doc.SetCellValue("D49", _bafflesPageViewModel.Baffle.number_of_baffles);
+            Doc.MergeWorksheetCells("C50", "E50");
+            Doc.SetCellValue("D50", _bafflesPageViewModel.Baffle.buffle_cut);
+            Doc.MergeWorksheetCells("C51", "E51");
+            Doc.SetCellValue("D51", _bafflesPageViewModel.Baffle.inlet_baffle_spacing);
+            Doc.MergeWorksheetCells("C52", "E52");
+            Doc.SetCellValue("D52", _bafflesPageViewModel.Baffle.central_baffle_spacing);
+            Doc.MergeWorksheetCells("C53", "E53");
+            Doc.SetCellValue("D53", _bafflesPageViewModel.Baffle.outlet_baffle_spacing);
+            Doc.MergeWorksheetCells("C54", "E54");
+            Doc.SetCellValue("D54", _bafflesPageViewModel.Baffle.baffle_thickness);
+            Doc.MergeWorksheetCells("C55", "E55");
+            Doc.SetCellValue("D55", _bafflesPageViewModel.Baffle.pairs_of_sealing_strips);
         }
 
         #endregion
