@@ -168,13 +168,13 @@
                         <Label Grid.Column="1" Grid.Row="15" HorizontalAlignment="Right">&#956;m</Label>
                         <TextBox x:Name="roughness_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.roughness_tubes_side, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="15" Margin="3,3,3,3"/>
                         <TextBox x:Name="roughness_shell_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.roughness_shell_side, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="15" Margin="3,3,3,3"/>
-                        <Label Grid.Column="0" Grid.Row="16">Scraping Frequency</Label>
-                        <Label Grid.Column="1" Grid.Row="16" HorizontalAlignment="Right">rpm</Label>
-                        <TextBox x:Name="scraping_frequency_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.scraping_frequency_tubes_side, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="16" Margin="3,3,3,3"/>
+                        <Label Visibility="{Binding ShowScrapingFrequencyAndMotorPower}" Grid.Column="0" Grid.Row="16">Scraping Frequency</Label>
+                        <Label Visibility="{Binding ShowScrapingFrequencyAndMotorPower}" Grid.Column="1" Grid.Row="16" HorizontalAlignment="Right">rpm</Label>
+                        <TextBox Visibility="{Binding ShowScrapingFrequencyAndMotorPower}" x:Name="scraping_frequency_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.scraping_frequency_tubes_side, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="16" Margin="3,3,3,3"/>
 
-                        <Label Grid.Column="0" Grid.Row="17">Motor Power</Label>
-                        <Label Grid.Column="1" Grid.Row="17" HorizontalAlignment="Right">kW</Label>
-                        <TextBox x:Name="motor_power_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.motor_power_tubes_side, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="17" Margin="3,3,3,3"/>
+                        <Label Visibility="{Binding ShowScrapingFrequencyAndMotorPower}" Grid.Column="0" Grid.Row="17">Motor Power</Label>
+                        <Label Visibility="{Binding ShowScrapingFrequencyAndMotorPower}" Grid.Column="1" Grid.Row="17" HorizontalAlignment="Right">kW</Label>
+                        <TextBox Visibility="{Binding ShowScrapingFrequencyAndMotorPower}" x:Name="motor_power_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.motor_power_tubes_side, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="17" Margin="3,3,3,3"/>
 
                         <Label Grid.Column="0" Grid.Row="19">Diametral clearance baffle</Label>
                         <Label Grid.Column="1" Grid.Row="19" HorizontalAlignment="Right">kW</Label>

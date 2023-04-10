@@ -336,7 +336,22 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     Geometry.head_exchange_type = value.Key;
                 }
+                if(value.Key=="r_series"||value.Key=="unicus")
+                {
+                    ShowScrapingFrequencyAndMotorPower = Visibility.Visible;
+                }
+                else
+                {
+                    ShowScrapingFrequencyAndMotorPower = Visibility.Collapsed;
+                }
             }
+        }
+
+        private Visibility _showScrapingFrequencyAndMotorPower = Visibility.Collapsed;
+        public Visibility ShowScrapingFrequencyAndMotorPower
+        {
+            get => _showScrapingFrequencyAndMotorPower;
+            set => _showScrapingFrequencyAndMotorPower= value;
         }
 
         private KeyValuePair<string, string> _tubeProfileSelector;
