@@ -197,9 +197,9 @@ namespace Ahed_project.MasterData.GeometryClasses
         public string clearances_spacing_minimum_tube_in_tube_spacing { get => _clearances_spacing_minimum_tube_in_tube_spacing; set { _clearances_spacing_minimum_tube_in_tube_spacing = value; OnPropertyChanged(nameof(clearances_spacing_minimum_tube_in_tube_spacing)); } }
         public string clearances_spacing_actual_tube_hole_to_tubeplate_edge { get => _clearances_spacing_actual_tube_hole_to_tubeplate_edge; set { _clearances_spacing_actual_tube_hole_to_tubeplate_edge = value; OnPropertyChanged(nameof(clearances_spacing_actual_tube_hole_to_tubeplate_edge)); } }
         public string clearances_spacing_actual_tube_hole_to_tube_hole { get => _clearances_spacing_actual_tube_hole_to_tube_hole; set { _clearances_spacing_actual_tube_hole_to_tube_hole = value; OnPropertyChanged(nameof(clearances_spacing_actual_tube_hole_to_tube_hole)); } }
+        public string image_geometry { get => _image_geometry; set { _image_geometry = value; OnPropertyChanged(nameof(image_geometry)); } }
         public string diametral_clearance_shell_baffle { get => _diametral_clearance_shell_baffle; set { _diametral_clearance_shell_baffle = value; OnPropertyChanged(nameof(diametral_clearance_shell_baffle)); } }
         public string diametral_clearance_tube_baffle { get => _diametral_clearance_tube_baffle; set { _diametral_clearance_tube_baffle = value; OnPropertyChanged(nameof(diametral_clearance_tube_baffle)); } }
-        public string image_geometry { get => _image_geometry; set { _image_geometry = value; OnPropertyChanged(nameof(image_geometry)); } }
         public DateTime? createdAt { get => _createdAt; set { _createdAt = value; OnPropertyChanged(nameof(createdAt)); } }
         public DateTime? updatedAt { get => _updatedAt; set { _updatedAt = value; OnPropertyChanged(nameof(updatedAt)); } }
 

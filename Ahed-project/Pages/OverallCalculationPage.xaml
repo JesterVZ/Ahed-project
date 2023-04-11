@@ -21,7 +21,7 @@
             <Grid Background="White" Width="1800" HorizontalAlignment="Left">
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
-                        <Button Content="Calculate" Command="{Binding Calculate}" Margin="0 0 12 0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
+                        <Button Content="Calculate" Command="{Binding Calculate}" Margin="0 0 12 0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6" IsEnabled="{Binding IsProcess}"/>
                         <Button Content="Batch calculation"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6" IsEnabled="False"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
@@ -75,15 +75,15 @@
 
                             <Label Grid.Column="0" Grid.Row="3">Flow</Label>
                             <Label Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right">kg/hr</Label>
-                            <TextBox  x:Name="flow_tube" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Overall.flow_tube, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2"/>
-                            <TextBox  x:Name="flow_shell" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Overall.flow_shell, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="5" Grid.ColumnSpan="2"/>
+                            <TextBox  x:Name="flow_tube" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Overall.flow_tube, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2"/>
+                            <TextBox  x:Name="flow_shell" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Overall.flow_shell, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="5" Grid.ColumnSpan="2"/>
 
                             <Label Grid.Column="0" Grid.Row="4">Temperature</Label>
                             <Label Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right">°C</Label>
-                            <TextBox  x:Name="temperature_tube_inlet" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Overall.temperature_tube_inlet, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="2"/>
-                            <TextBox  x:Name="temperature_tube_outlet" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Overall.temperature_tube_outlet, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="3"/>
+                            <TextBox  x:Name="temperature_tube_inlet" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Overall.temperature_tube_inlet, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="2"/>
+                            <TextBox  x:Name="temperature_tube_outlet" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Overall.temperature_tube_outlet, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="3"/>
 
-                            <TextBox  x:Name="temperature_shell_inlet" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Overall.temperature_shell_inlet, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="5"/>
+                            <TextBox  x:Name="temperature_shell_inlet" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Overall.temperature_shell_inlet, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="5"/>
                             <TextBox  x:Name="temperature_shell_outlet" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Overall.temperature_shell_outlet, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="6"/>
 
                             <Label Grid.Column="0" Grid.Row="5">Duty</Label>
