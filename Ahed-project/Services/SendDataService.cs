@@ -2,6 +2,7 @@
 using Ahed_project.Services.Global;
 using Newtonsoft.Json;
 using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -17,21 +18,23 @@ namespace Ahed_project.Services
         {
             _serviceConfig = serviceConfig;
         }
-        public string SendToServer(ProjectMethods projectMethod, string body = null, string projectId = null, string calculationId = null, int timeout = 6000)
+        public string SendToServer(ProjectMethods projectMethod, string body = null, string projectId = null, string calculationId = null, int timeout = 60000)
         {
             Headers.TryAdd("Content-Type", "application/json");
             RestResponse response = null;
             var request = new RestRequest();
             if (body != null)
                 request.AddBody(body);
-            request.Timeout = timeout;
-            RestClient restClient = null;
+            using RestClient restClient = new RestClient(new RestClientOptions()
+            {
+                MaxTimeout = timeout
+            });
             try
             {
                 switch (projectMethod)
                 {
                     case ProjectMethods.LOGIN:
-                        restClient = new RestClient(_serviceConfig.LoginLink);
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.LoginLink);
                         request.Method = Method.Post;
                         Headers.TryGetValue("Authorization", out var authHeader);
                         if (authHeader != null)
@@ -52,7 +55,7 @@ namespace Ahed_project.Services
                             return JsonConvert.SerializeObject(new object());
                         }
                     case ProjectMethods.AUTH:
-                        restClient = new RestClient(_serviceConfig.AuthLink);
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.AuthLink);
                         request.Method = Method.Get;
                         foreach (var header in Headers)
                         {
@@ -61,7 +64,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.CREATE:
-                        restClient = new RestClient(_serviceConfig.CreateLink);
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.CreateLink);
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -70,7 +73,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.GET:
-                        restClient = new RestClient(_serviceConfig.GetLink);
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.GetLink);
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -79,7 +82,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.UPDATE:
-                        restClient = new RestClient(_serviceConfig.UpdateLink.Replace("{projectId}", projectId));
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.UpdateLink.Replace("{projectId}", projectId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -88,7 +91,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.GET_PROJECTS:
-                        restClient = new RestClient(_serviceConfig.GetProjectsLink);
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.GetProjectsLink);
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -97,7 +100,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.GET_PRODUCTS:
-                        restClient = new RestClient(_serviceConfig.GetProductsList);
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.GetProductsList);
                         request.Method = Method.Get;
                         foreach (var header in Headers)
                         {
@@ -106,7 +109,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.GET_PRODUCT:
-                        restClient = new RestClient(_serviceConfig.GetProduct + body);
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.GetProduct + body);
                         request.Method = Method.Get;
                         foreach (var header in Headers)
                         {
@@ -115,7 +118,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.CALCULATE:
-                        restClient = new RestClient(_serviceConfig.Calculate);
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.Calculate);
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -124,7 +127,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.CREATE_CALCULATION:
-                        restClient = new RestClient(_serviceConfig.CreateCalculationLink.Replace("{projectId}", projectId));
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.CreateCalculationLink.Replace("{projectId}", projectId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -133,7 +136,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.UPDATE_CHOOSE:
-                        restClient = new RestClient(_serviceConfig.UpdateChooseLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.UpdateChooseLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -142,7 +145,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.CALCULATE_TEMPERATURE:
-                        restClient = new RestClient(_serviceConfig.CalculateTemperatureLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.CalculateTemperatureLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -151,7 +154,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.CALCULATE_PRESSURE:
-                        restClient = new RestClient(_serviceConfig.CalculatePressureLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.CalculatePressureLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -160,7 +163,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.GET_PRODUCT_CALCULATIONS:
-                        restClient = new RestClient(_serviceConfig.GetProductCalculationLink.Replace("{projectId}", projectId));
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.GetProductCalculationLink.Replace("{projectId}", projectId));
                         request.Method = Method.Get;
                         foreach (var header in Headers)
                         {
@@ -169,7 +172,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.UPDATE_CALCULATION:
-                        restClient = new RestClient(_serviceConfig.UpdateCalculationLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.UpdateCalculationLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -178,7 +181,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.GET_MATERIALS:
-                        restClient = new RestClient(_serviceConfig.Materials);
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.Materials);
                         request.Method = Method.Get;
                         foreach (var header in Headers)
                         {
@@ -187,7 +190,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.CALCULATE_GEOMETRY:
-                        restClient = new RestClient(_serviceConfig.CalculateGeometryLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.CalculateGeometryLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -196,7 +199,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.GET_GEOMETRIES:
-                        restClient = new RestClient(_serviceConfig.GetGeometries);
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.GetGeometries);
                         request.Method = Method.Get;
                         foreach (var header in Headers)
                         {
@@ -205,7 +208,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.GET_TAB_STATE:
-                        restClient = new RestClient(_serviceConfig.GetTabStateLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.GetTabStateLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
                         request.Method = Method.Get;
                         foreach (var header in Headers)
                         {
@@ -214,7 +217,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.SET_TAB_STATE:
-                        restClient = new RestClient(_serviceConfig.SetTabStateLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.SetTabStateLink.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -223,7 +226,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.CALCULATE_BAFFLE:
-                        restClient = new RestClient(_serviceConfig.CalculateBaffle.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.CalculateBaffle.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -233,7 +236,7 @@ namespace Ahed_project.Services
 
                         break;
                     case ProjectMethods.GET_BAFFLE:
-                        restClient = new RestClient(_serviceConfig.GetBaffle.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.GetBaffle.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
                         request.Method = Method.Get;
                         foreach (var header in Headers)
                         {
@@ -243,7 +246,7 @@ namespace Ahed_project.Services
 
                         break;
                     case ProjectMethods.GET_GEOMETRY:
-                        restClient = new RestClient(_serviceConfig.GetGeometry.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.GetGeometry.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
                         request.Method = Method.Get;
                         foreach (var header in Headers)
                         {
@@ -253,7 +256,7 @@ namespace Ahed_project.Services
 
                         break;
                     case ProjectMethods.CALCULATE_OVERALL:
-                        restClient = new RestClient(_serviceConfig.CalculateOverall.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.CalculateOverall.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -262,7 +265,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.DELETE_PROJECT:
-                        restClient = new RestClient(_serviceConfig.DeleteProject.Replace("{projectId}", projectId));
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.DeleteProject.Replace("{projectId}", projectId));
                         request.Method = Method.Post;
                         foreach (var header in Headers)
                         {
@@ -271,7 +274,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.GET_OVERALL:
-                        restClient = new RestClient(_serviceConfig.GetOverall.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.GetOverall.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
                         request.Method = Method.Get;
                         foreach (var header in Headers)
                         {
@@ -280,7 +283,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.DELETE_CALCULATION:
-                        restClient = new RestClient(_serviceConfig.DeleteCalculation.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.DeleteCalculation.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
                         request.Method = Method.Get;
                         foreach (var header in Headers)
                         {
@@ -289,7 +292,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.COPY_CALCULATION:
-                        restClient = new RestClient(_serviceConfig.CopyCalculation.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.CopyCalculation.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
                         request.Method = Method.Get;
                         foreach (var header in Headers)
                         {
@@ -298,7 +301,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.RESTORE_BAFFLE:
-                        restClient = new RestClient(_serviceConfig.RestoreDefaultsBaffle.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.RestoreDefaultsBaffle.Replace("{projectId}", projectId).Replace("{calculationId}", calculationId));
                         request.Method = Method.Get;
                         foreach (var header in Headers)
                         {
