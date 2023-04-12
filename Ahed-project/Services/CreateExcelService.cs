@@ -25,8 +25,9 @@ namespace Ahed_project.Services
         private static HeatBalanceViewModel _heatBalanceViewModel;
         private static GeometryPageViewModel _geometryPageViewModel;
         private static BafflesPageViewModel _bafflesPageViewModel;
+        private static OverallCalculationViewModel _overallCalculationViewModel;
         private static SLDocument Doc;
-        public CreateExcelService(TubesFluidViewModel tubesFluidViewModel, ShellFluidViewModel shellFluidViewModel, ProjectPageViewModel projectPageViewModel, HeatBalanceViewModel heatBalanceViewModel, GeometryPageViewModel geometryPageViewModel, BafflesPageViewModel bafflesPageViewModel)
+        public CreateExcelService(TubesFluidViewModel tubesFluidViewModel, ShellFluidViewModel shellFluidViewModel, ProjectPageViewModel projectPageViewModel, HeatBalanceViewModel heatBalanceViewModel, GeometryPageViewModel geometryPageViewModel, BafflesPageViewModel bafflesPageViewModel, OverallCalculationViewModel overallCalculationViewModel)
         {
             _projectPageViewModel = projectPageViewModel;
             _tubesFluidViewModel = tubesFluidViewModel;
@@ -34,6 +35,7 @@ namespace Ahed_project.Services
             _heatBalanceViewModel = heatBalanceViewModel;
             _geometryPageViewModel = geometryPageViewModel;
             _bafflesPageViewModel = bafflesPageViewModel;
+            _overallCalculationViewModel = overallCalculationViewModel;
 
             Doc = new();
         }
@@ -54,6 +56,7 @@ namespace Ahed_project.Services
                 AddShellData();
                 AddHeatBalanceData();
                 AddGeometryData();
+                AddOverallData();
                 Doc.SaveAs("FullReport.xlsx");
                 var p = new System.Diagnostics.Process();
                 p.StartInfo = new ProcessStartInfo($"{directory}\\FullReport.xlsx")
@@ -430,6 +433,7 @@ namespace Ahed_project.Services
             AddGeometryTitle("A50", "E50", "Baffles");
             AddGeometryBafflesNames();
             AddGeometryValues();
+            AddGeometryUnits();
 
             DownloadImage(_geometryPageViewModel.Geometry.image_geometry);
 
@@ -602,6 +606,373 @@ namespace Ahed_project.Services
             Doc.SetCellValue("D55", _bafflesPageViewModel.Baffle.pairs_of_sealing_strips);
         }
 
+        private static void AddGeometryUnits()
+        {
+            Doc.SetCellValue("B8", "mm");
+            Doc.SetCellValue("B9", "mm");
+            Doc.SetCellValue("B10", "mm");
+            Doc.SetCellValue("B13", "mm");
+            Doc.SetCellValue("B15", "mm");
+            Doc.SetCellValue("B16", "mm");
+            Doc.SetCellValue("B17", "m²");
+            Doc.SetCellValue("B18", "l");
+            Doc.SetCellValue("B20", "μm");
+            Doc.SetCellValue("B26", "mm");
+            Doc.SetCellValue("B30", "mm");
+            Doc.SetCellValue("B31", "m²");
+            Doc.SetCellValue("B32", "mm");
+            Doc.SetCellValue("B35", "mm");
+            Doc.SetCellValue("B38", "mm");
+            Doc.SetCellValue("B39", "mm");
+            Doc.SetCellValue("B40", "mm");
+            Doc.SetCellValue("B41", "mm");
+            Doc.SetCellValue("B42", "mm");
+            Doc.SetCellValue("B43", "mm");
+            Doc.SetCellValue("B44", "mm");
+            Doc.SetCellValue("B45", "mm");
+            Doc.SetCellValue("B53", "mm");
+            Doc.SetCellValue("B54", "mm");
+            Doc.SetCellValue("B55", "mm");
+            Doc.SetCellValue("B56", "mm");
+            Doc.SetColumnWidth("B", 15);
+
+        }
+
+        #endregion
+
+        #region overall
+        private static void AddOverallData()
+        {
+            Doc.AddWorksheet("Heat Transfer Report");
+            Doc.MergeWorksheetCells("A1", "B1");
+            Doc.MergeWorksheetCells("A2", "B2");
+            Doc.MergeWorksheetCells("A3", "B3");
+            Doc.MergeWorksheetCells("A4", "B4");
+            Doc.MergeWorksheetCells("C1", "F1");
+            Doc.MergeWorksheetCells("C3", "F3");
+            Doc.MergeWorksheetCells("C4", "F4");
+            Doc.SetCellValue("A1", "Project name");
+            Doc.SetCellValue("C1", _projectPageViewModel.ProjectName);
+            Doc.SetCellStyle("A1", "A6", BoldTextStyle());
+            Doc.SetCellStyle("A1", "F1", BorderCellsStyle());
+            Doc.SetCellStyle("A2", "C2", BorderCellsStyle());
+            Doc.SetCellStyle("A3", "F3", BorderCellsStyle());
+            Doc.SetColumnWidth("A", "M", 15);
+            Doc.SetCellValue("A2", "Revision Nr");
+            Doc.SetCellValue("C2", _projectPageViewModel.ProjectInfo.revision.ToString());
+            Doc.SetCellValue("A3", "Process");
+            Doc.SetCellValue("C3", _projectPageViewModel.SelectedCalculation.name);
+
+            AddGeometryTitle("A6", "F6", "Flow Data");
+            AddGeometryTitle("A25", "F25", "Heat Transfer Data");
+            AddGeometryTitle("A38", "F38", "Areas");
+            AddGeometryTitle("A45", "F45", "Logarithmic Mean Temperature Difference (LMTD)");
+            AddGeometryTitle("A50", "F50", "Pressure Drop");
+            AddGeometryTitle("A52", "F52", "Tubes Side");
+            AddGeometryTitle("A60", "F60", "Shell Side");
+            AddGeometryTitle("A70", "F70", "Vibrations");
+            Doc.MergeWorksheetCells("C7", "D7");
+            Doc.MergeWorksheetCells("E7", "F7");
+            Doc.SetCellValue("C7", "Tube Side");
+            Doc.SetCellValue("E7", "Shell Side");
+            Doc.SetCellValue("C8", "Inlet");
+            Doc.SetCellValue("D8", "Outlet");
+            Doc.SetCellValue("E8", "Inlet");
+            Doc.SetCellValue("F8", "Outlet");
+            Doc.SetCellStyle("C7", "F8", BorderCellsStyle());
+            Doc.SetCellStyle("C7", "F8", BoldTextStyle());
+            AddHeatTransferFlowDataNames();
+            AddHeatTransferHeatTransferDataNames();
+            AddHeatTransferAreaNames();
+            AddHeatTransferTempNames();
+            AddHeatTransferPressureDropNames();
+            AddHeatTransferVibrationsNames();
+            AddHeatTransferData();
+        }
+
+        private static void AddHeatTransferFlowDataNames()
+        {
+            Doc.SetCellValue("A9", "Fluid Name");
+            Doc.SetCellValue("A10", "Flow");
+            Doc.SetCellValue("A11", "Temperature");
+            Doc.SetCellValue("A12", "Duty");
+            Doc.SetCellValue("A13", "Fluid Velocity");
+            Doc.SetCellValue("A14", "Shear Rate");
+            Doc.SetCellValue("A15", "Flow Type");
+            Doc.SetCellValue("A16", "Liquid Phase");
+            Doc.SetCellValue("A17", "   App. viscosity");
+            Doc.SetCellValue("A18", "   Reynolds");
+            Doc.SetCellValue("A19", "Prandtl");
+            Doc.SetCellValue("A20", "Gas Phase");
+            Doc.SetCellValue("A21", "   Dynamic viscosity gas");
+            Doc.SetCellValue("A22", "   Reynolds");
+            Doc.SetCellValue("A23", "   Prandtl");
+            Doc.SetCellStyle("A9", "F23", BorderCellsStyle());
+            Doc.SetCellStyle("A9", "A23", BoldTextStyle());
+        }
+
+        private static void AddHeatTransferHeatTransferDataNames()
+        {
+            Doc.SetCellValue("A26", "Wall temperature");
+            Doc.SetCellValue("A27", "Average metal temp.");
+            Doc.SetCellValue("A28", "Wall Consistency Index");
+            Doc.SetCellValue("A29", "Nusselt");
+            Doc.SetCellValue("A30", "K Side");
+            Doc.SetCellValue("A31", "Fouling Factor");
+            Doc.SetCellValue("A33", "K Unfouled");
+            Doc.SetCellValue("A34", "K Fouled");
+            Doc.SetCellValue("A35", "K Global Fouled");
+            Doc.SetCellValue("A36", "K Effective");
+            Doc.SetCellStyle("A26", "F36", BorderCellsStyle());
+            Doc.SetCellStyle("A26", "A36", BoldTextStyle());
+        }
+        private static void AddHeatTransferAreaNames()
+        {
+            Doc.SetCellValue("A39", "Surface Area Required");
+            Doc.SetCellValue("A40", "Area / Module");
+            Doc.SetCellValue("A41", "Nr. Modules");
+            Doc.SetCellValue("A42", "Fitted Area");
+            Doc.SetCellValue("A43", "Excess Area");
+
+            Doc.SetCellStyle("A39", "F43", BorderCellsStyle());
+            Doc.SetCellStyle("A39", "A43", BoldTextStyle());
+        }
+        private static void AddHeatTransferTempNames()
+        {
+            Doc.SetCellValue("A46", "LMTD");
+            Doc.SetCellValue("A47", "LMTD Correction Factor 'F'");
+            Doc.SetCellValue("A48", "Adjusted LMTD");
+
+            Doc.SetCellStyle("A46", "F48", BorderCellsStyle());
+            Doc.SetCellStyle("A46", "A48", BoldTextStyle());
+        }
+        private static void AddHeatTransferPressureDropNames()
+        {
+            Doc.SetCellValue("A54", "Modules");
+            Doc.SetCellValue("A55", "Inlet Nozzles");
+            Doc.SetCellValue("A56", "Outlet Nozzles");
+            Doc.SetCellValue("A57", "Bends");
+            Doc.SetCellValue("A58", "Total");
+            Doc.SetCellValue("C53", "v  m/s");
+            Doc.SetCellValue("D53", "ρ·V²  kg/m·s²");
+            Doc.SetCellValue("E53", "ΔP  bar-a");
+            Doc.SetCellStyle("C53", "E53", BorderCellsStyle());
+            Doc.SetCellStyle("C53", "E53", BoldTextStyle());
+
+            Doc.SetCellStyle("A54", "E58", BorderCellsStyle());
+            Doc.SetCellStyle("A54", "A58", BoldTextStyle());
+
+            Doc.SetCellValue("A62", "Modules");
+            Doc.SetCellValue("A63", "Inlet Nozzles");
+            Doc.SetCellValue("A64", "Outlet Nozzles");
+            Doc.SetCellValue("A65", "Pressure drop in all central baffle spaces (∆Pc)");
+            Doc.SetCellValue("A66", "Pressure drop in all baffle windows (∆Pw)");
+            Doc.SetCellValue("A67", "Pressure drop in the entrance and exit baffle spaces (∆Pe)");
+            Doc.SetCellValue("A68", "Total");
+            Doc.SetCellValue("C61", "v  m/s");
+            Doc.SetCellValue("D61", "ρ·V²  kg/m·s²");
+            Doc.SetCellValue("E61", "ΔP  bar-a");
+            Doc.SetCellStyle("C61", "E61", BorderCellsStyle());
+            Doc.SetCellStyle("C61", "E61", BoldTextStyle());
+
+            Doc.SetCellStyle("A62", "E68", BorderCellsStyle());
+            Doc.SetCellStyle("A62", "A68", BoldTextStyle());
+        }
+        private static void AddHeatTransferVibrationsNames()
+        {
+            Doc.SetCellValue("A72", "Span Length");
+            Doc.SetCellValue("A73", "Span Length / TEMA Lb,max");
+            Doc.SetCellValue("A74", "Tubes Natural Frequency");
+            Doc.SetCellValue("A75", "Shell Acoustic Frequency (gases)");
+            Doc.SetCellValue("A76", "Fluidelastic Instability");
+            Doc.SetCellValue("A77", "Cross Flow Velocity");
+            Doc.SetCellValue("A78", "Critical Velocity");
+            Doc.SetCellValue("A79", "Average Cross Flow Velocity Ratio");
+            Doc.SetCellValue("A80", "Vibration Amplitude");
+            Doc.SetCellValue("A81", "Vortex Shedding Ratio");
+            Doc.SetCellValue("A82", "Turbulent Buffeting Ratio");
+            Doc.SetCellValue("A83", "Acoustic Vibrations (gases)");
+            Doc.SetCellValue("A84", "Acoustic Vibration Exists");
+            Doc.SetCellValue("A85", "Vibration Exists");
+            Doc.SetCellStyle("A72", "E85", BorderCellsStyle());
+            Doc.SetCellStyle("A72", "A85", BoldTextStyle());
+        }
+
+        private static void AddHeatTransferData()
+        {
+            Doc.MergeWorksheetCells("C9", "D9");
+            Doc.MergeWorksheetCells("E9", "F9");
+            Doc.MergeWorksheetCells("C10", "D10");
+            Doc.MergeWorksheetCells("E10", "F10");
+            Doc.MergeWorksheetCells("C12", "D12");
+            Doc.MergeWorksheetCells("E12", "F12");
+            Doc.MergeWorksheetCells("C27", "D27");
+            Doc.MergeWorksheetCells("E27", "F27");
+            Doc.MergeWorksheetCells("C31", "D31");
+            Doc.MergeWorksheetCells("E31", "F31");
+            Doc.MergeWorksheetCells("C32", "D32");
+            Doc.MergeWorksheetCells("E32", "F32");
+            Doc.MergeWorksheetCells("C33", "D33");
+            Doc.MergeWorksheetCells("E33", "F33");
+            Doc.MergeWorksheetCells("C34", "D34");
+            Doc.MergeWorksheetCells("E34", "F34");
+            Doc.MergeWorksheetCells("C35", "F35");
+            Doc.MergeWorksheetCells("C36", "F36");
+            Doc.MergeWorksheetCells("C39", "F39");
+            Doc.MergeWorksheetCells("C40", "F40");
+            Doc.MergeWorksheetCells("C41", "F41");
+            Doc.MergeWorksheetCells("C42", "F42");
+            Doc.MergeWorksheetCells("C43", "F43");
+            Doc.MergeWorksheetCells("C46", "F46");
+            Doc.MergeWorksheetCells("C47", "F47");
+            Doc.MergeWorksheetCells("C48", "F48");
+            Doc.MergeWorksheetCells("A65", "D65");
+            Doc.MergeWorksheetCells("A66", "D66");
+            Doc.MergeWorksheetCells("A67", "D67");
+            Doc.SetCellValue("C9", _overallCalculationViewModel.Overall.fluid_name_tube);
+            Doc.SetCellValue("E9", _overallCalculationViewModel.Overall.fluid_name_shell);
+            Doc.SetCellValue("C10", _overallCalculationViewModel.Overall.flow_tube);
+            Doc.SetCellValue("E10", _overallCalculationViewModel.Overall.flow_shell);
+            Doc.SetCellValue("C11", _overallCalculationViewModel.Overall.temperature_tube_inlet);
+            Doc.SetCellValue("D11", _overallCalculationViewModel.Overall.temperature_tube_outlet);
+            Doc.SetCellValue("E11", _overallCalculationViewModel.Overall.temperature_shell_inlet);
+            Doc.SetCellValue("F11", _overallCalculationViewModel.Overall.temperature_shell_outlet);
+            Doc.SetCellValue("C12", _overallCalculationViewModel.Overall.duty_tube);
+            Doc.SetCellValue("E12", _overallCalculationViewModel.Overall.duty_shell);
+            Doc.SetCellValue("C13", _overallCalculationViewModel.Overall.fluid_velocity_tube_inlet);
+            Doc.SetCellValue("D13", _overallCalculationViewModel.Overall.fluid_velocity_tube_outlet);
+            Doc.SetCellValue("E13", _overallCalculationViewModel.Overall.fluid_velocity_shell_inlet);
+            Doc.SetCellValue("F13", _overallCalculationViewModel.Overall.fluid_velocity_shell_outlet);
+            Doc.SetCellValue("C14", _overallCalculationViewModel.Overall.shear_rate_tube_inlet);
+            Doc.SetCellValue("D14", _overallCalculationViewModel.Overall.shear_rate_tube_outlet);
+            Doc.SetCellValue("E14", _overallCalculationViewModel.Overall.shear_rate_shell_inlet);
+            Doc.SetCellValue("F14", _overallCalculationViewModel.Overall.shear_rate_shell_outlet);
+            Doc.SetCellValue("C15", _overallCalculationViewModel.Overall.flow_type_tube_inlet);
+            Doc.SetCellValue("D15", _overallCalculationViewModel.Overall.flow_type_tube_outlet);
+            Doc.SetCellValue("E15", _overallCalculationViewModel.Overall.flow_type_shell_inlet);
+            Doc.SetCellValue("F15", _overallCalculationViewModel.Overall.flow_type_shell_outlet);
+
+            Doc.SetCellValue("C17", _overallCalculationViewModel.Overall.liquid_phase_app_viscosity_tube_inlet);
+            Doc.SetCellValue("D17", _overallCalculationViewModel.Overall.liquid_phase_app_viscosity_tube_outlet);
+            Doc.SetCellValue("E17", _overallCalculationViewModel.Overall.liquid_phase_app_viscosity_shell_inlet);
+            Doc.SetCellValue("F17", _overallCalculationViewModel.Overall.liquid_phase_app_viscosity_shell_inlet);
+            Doc.SetCellValue("C18", _overallCalculationViewModel.Overall.liquid_phase_reynolds_tube_inlet);
+            Doc.SetCellValue("D18", _overallCalculationViewModel.Overall.liquid_phase_reynolds_tube_outlet);
+            Doc.SetCellValue("E18", _overallCalculationViewModel.Overall.liquid_phase_reynolds_shell_inlet);
+            Doc.SetCellValue("F18", _overallCalculationViewModel.Overall.liquid_phase_reynolds_shell_outlet);
+            Doc.SetCellValue("C19", _overallCalculationViewModel.Overall.liquid_phase_prandtl_tube_inlet);
+            Doc.SetCellValue("D19", _overallCalculationViewModel.Overall.liquid_phase_prandtl_tube_outlet);
+            Doc.SetCellValue("E19", _overallCalculationViewModel.Overall.liquid_phase_prandtl_shell_inlet);
+            Doc.SetCellValue("F19", _overallCalculationViewModel.Overall.liquid_phase_prandtl_shell_outlet);
+
+            Doc.SetCellValue("C21", _overallCalculationViewModel.Overall.gas_phase_app_viscosity_tube_inlet);
+            Doc.SetCellValue("D21", _overallCalculationViewModel.Overall.gas_phase_app_viscosity_tube_outlet);
+            Doc.SetCellValue("E21", _overallCalculationViewModel.Overall.gas_phase_app_viscosity_shell_inlet);
+            Doc.SetCellValue("F21", _overallCalculationViewModel.Overall.gas_phase_app_viscosity_shell_outlet);
+            Doc.SetCellValue("C22", _overallCalculationViewModel.Overall.gas_phase_reynolds_tube_inlet);
+            Doc.SetCellValue("D22", _overallCalculationViewModel.Overall.gas_phase_reynolds_tube_outlet);
+            Doc.SetCellValue("E22", _overallCalculationViewModel.Overall.gas_phase_reynolds_shell_inlet);
+            Doc.SetCellValue("F22", _overallCalculationViewModel.Overall.gas_phase_reynolds_shell_outlet);
+            Doc.SetCellValue("C23", _overallCalculationViewModel.Overall.gas_phase_prandtl_tube_inlet);
+            Doc.SetCellValue("D23", _overallCalculationViewModel.Overall.gas_phase_prandtl_tube_outlet);
+            Doc.SetCellValue("E23", _overallCalculationViewModel.Overall.gas_phase_prandtl_shell_inlet);
+            Doc.SetCellValue("F23", _overallCalculationViewModel.Overall.gas_phase_prandtl_shell_outlet);
+
+            Doc.SetCellValue("C26", _overallCalculationViewModel.Overall.wall_temperature_tube_inlet);
+            Doc.SetCellValue("D26", _overallCalculationViewModel.Overall.wall_temperature_tube_outlet);
+            Doc.SetCellValue("E26", _overallCalculationViewModel.Overall.wall_temperature_shell_inlet);
+            Doc.SetCellValue("F26", _overallCalculationViewModel.Overall.wall_temperature_shell_outlet);
+
+            //TODO: Добавить свойство average metall temp
+
+            Doc.SetCellValue("C28", _overallCalculationViewModel.Overall.wall_consistency_index_tube_inlet);
+            Doc.SetCellValue("D28", _overallCalculationViewModel.Overall.wall_consistency_index_tube_outlet);
+            Doc.SetCellValue("E28", _overallCalculationViewModel.Overall.wall_consistency_index_shell_inlet);
+            Doc.SetCellValue("F28", _overallCalculationViewModel.Overall.wall_consistency_index_shell_inlet);
+            Doc.SetCellValue("C29", _overallCalculationViewModel.Overall.nusselt_tube_inlet);
+            Doc.SetCellValue("D29", _overallCalculationViewModel.Overall.nusselt_tube_outlet);
+            Doc.SetCellValue("E29", _overallCalculationViewModel.Overall.nusselt_shell_inlet);
+            Doc.SetCellValue("F29", _overallCalculationViewModel.Overall.nusselt_shell_outlet);
+            Doc.SetCellValue("C30", _overallCalculationViewModel.Overall.k_side_tube_inlet);
+            Doc.SetCellValue("D30", _overallCalculationViewModel.Overall.k_side_tube_outlet);
+            Doc.SetCellValue("E30", _overallCalculationViewModel.Overall.k_side_shell_inlet);
+            Doc.SetCellValue("F30", _overallCalculationViewModel.Overall.k_side_shell_outlet);
+            Doc.SetCellValue("C31", _overallCalculationViewModel.Overall.fouling_factor_tube);
+            Doc.SetCellValue("E31", _overallCalculationViewModel.Overall.fouling_factor_shell);
+            Doc.SetCellValue("C32", "Inlet");
+            Doc.SetCellValue("E32", "Outlet");
+            Doc.SetCellValue("C33", _overallCalculationViewModel.Overall.k_unfouled_inlet);
+            Doc.SetCellValue("E33", _overallCalculationViewModel.Overall.k_unfouled_outlet);
+            Doc.SetCellValue("C34", _overallCalculationViewModel.Overall.k_fouled_inlet);
+            Doc.SetCellValue("E34", _overallCalculationViewModel.Overall.k_fouled_outlet);
+            Doc.SetCellValue("C35", _overallCalculationViewModel.Overall.k_global_fouled);
+            Doc.SetCellValue("C36", _overallCalculationViewModel.Overall.k_effective);
+            Doc.SetCellValue("C39", _overallCalculationViewModel.Overall.surface_area_required);
+            Doc.SetCellValue("C40", _overallCalculationViewModel.Overall.area_module);
+            Doc.SetCellValue("C41", _overallCalculationViewModel.Overall.nr_modules);
+            Doc.SetCellValue("C42", _overallCalculationViewModel.Overall.area_fitted);
+            Doc.SetCellValue("C43", _overallCalculationViewModel.Overall.excess_area);
+            Doc.SetCellValue("C46", _overallCalculationViewModel.Overall.LMTD);
+            Doc.SetCellValue("C47", _overallCalculationViewModel.Overall.LMTD_correction_factor);
+            Doc.SetCellValue("C48", _overallCalculationViewModel.Overall.adjusted_LMTD);
+            Doc.SetCellValue("C54", _overallCalculationViewModel.Overall.pressure_drop_tube_side_modules_V);
+            Doc.SetCellValue("E54", _overallCalculationViewModel.Overall.pressure_drop_tube_side_modules_P);
+            Doc.SetCellValue("C55", _overallCalculationViewModel.Overall.pressure_drop_tube_side_inlet_nozzles_V);
+            Doc.SetCellValue("D55", _overallCalculationViewModel.Overall.pressure_drop_tube_side_inlet_nozzles_pV);
+            Doc.SetCellValue("E55", _overallCalculationViewModel.Overall.pressure_drop_tube_side_inlet_nozzles_P);
+            Doc.SetCellValue("C56", _overallCalculationViewModel.Overall.pressure_drop_tube_side_outlet_nozzles_V);
+            Doc.SetCellValue("D56", _overallCalculationViewModel.Overall.pressure_drop_tube_side_outlet_nozzles_pV);
+            Doc.SetCellValue("E56", _overallCalculationViewModel.Overall.pressure_drop_tube_side_outlet_nozzles_P);
+            Doc.SetCellValue("C57", _overallCalculationViewModel.Overall.pressure_drop_tube_side_bends_V);
+            Doc.SetCellValue("E57", _overallCalculationViewModel.Overall.pressure_drop_tube_side_bends_P);
+            Doc.SetCellValue("E58", _overallCalculationViewModel.Overall.pressure_drop_tube_side_total_P);
+            Doc.SetCellValue("C62", _overallCalculationViewModel.Overall.pressure_drop_shell_side_modules_V);
+            Doc.SetCellValue("E62", _overallCalculationViewModel.Overall.pressure_drop_shell_side_modules_P);
+            Doc.SetCellValue("C63", _overallCalculationViewModel.Overall.pressure_drop_shell_side_inlet_nozzles_V);
+            Doc.SetCellValue("D63", _overallCalculationViewModel.Overall.pressure_drop_shell_side_inlet_nozzles_pV);
+            Doc.SetCellValue("E63", _overallCalculationViewModel.Overall.pressure_drop_shell_side_inlet_nozzles_P);
+
+            Doc.SetCellValue("C64", _overallCalculationViewModel.Overall.pressure_drop_shell_side_outlet_nozzles_V);
+            Doc.SetCellValue("D64", _overallCalculationViewModel.Overall.pressure_drop_shell_side_outlet_nozzles_pV);
+            Doc.SetCellValue("E64", _overallCalculationViewModel.Overall.pressure_drop_shell_side_outlet_nozzles_P);
+            //Doc.SetCellValue("E65", _overallCalculationViewModel.Overall.win);
+            Doc.SetCellValue("E68", _overallCalculationViewModel.Overall.pressure_drop_shell_side_total_p);
+            Doc.SetCellValue("C72", _overallCalculationViewModel.Overall.vibrations_inlet_span_length);
+            Doc.SetCellValue("D72", _overallCalculationViewModel.Overall.vibrations_central_span_length);
+            Doc.SetCellValue("E72", _overallCalculationViewModel.Overall.vibrations_outlet_span_length);
+            Doc.SetCellValue("C73", _overallCalculationViewModel.Overall.vibrations_inlet_span_length_tema_lb);
+            Doc.SetCellValue("D73", _overallCalculationViewModel.Overall.vibrations_central_span_length_tema_lb);
+            Doc.SetCellValue("E73", _overallCalculationViewModel.Overall.vibrations_outlet_span_length_tema_lb);
+            Doc.SetCellValue("C74", _overallCalculationViewModel.Overall.vibrations_inlet_tubes_natural_frequency);
+            Doc.SetCellValue("D74", _overallCalculationViewModel.Overall.vibrations_central_tubes_natural_frequency);
+            Doc.SetCellValue("E74", _overallCalculationViewModel.Overall.vibrations_outlet_tubes_natural_frequency);
+            Doc.SetCellValue("C75", _overallCalculationViewModel.Overall.vibrations_inlet_shell_acoustic_frequency_gases);
+            Doc.SetCellValue("D75", _overallCalculationViewModel.Overall.vibrations_central_shell_acoustic_frequency_gases);
+            Doc.SetCellValue("E75", _overallCalculationViewModel.Overall.vibrations_outlet_shell_acoustic_frequency_gases);
+
+            Doc.SetCellValue("C77", _overallCalculationViewModel.Overall.vibrations_inlet_cross_flow_velocity);
+            Doc.SetCellValue("D77", _overallCalculationViewModel.Overall.vibrations_central_cross_flow_velocity);
+            Doc.SetCellValue("E77", _overallCalculationViewModel.Overall.vibrations_outlet_cross_flow_velocity);
+            Doc.SetCellValue("C78", _overallCalculationViewModel.Overall.vibrations_inlet_cricical_velocity);
+            Doc.SetCellValue("D78", _overallCalculationViewModel.Overall.vibrations_central_cricical_velocity);
+            Doc.SetCellValue("E78", _overallCalculationViewModel.Overall.vibrations_outlet_cricical_velocity);
+            Doc.SetCellValue("C79", _overallCalculationViewModel.Overall.vibrations_inlet_average_cross_flow_velocity_ratio);
+            Doc.SetCellValue("D79", _overallCalculationViewModel.Overall.vibrations_central_average_cross_flow_velocity_ratio);
+            Doc.SetCellValue("E79", _overallCalculationViewModel.Overall.vibrations_outlet_average_cross_flow_velocity_ratio);
+
+            Doc.SetCellValue("C81", _overallCalculationViewModel.Overall.vibrations_inlet_vortex_shedding_ratio);
+            Doc.SetCellValue("D81", _overallCalculationViewModel.Overall.vibrations_central_vortex_shedding_ratio);
+            Doc.SetCellValue("E81", _overallCalculationViewModel.Overall.vibrations_outlet_vortex_shedding_ratio);
+            Doc.SetCellValue("C82", _overallCalculationViewModel.Overall.vibrations_inlet_turbulent_buffeting_ratio);
+            Doc.SetCellValue("D82", _overallCalculationViewModel.Overall.vibrations_central_turbulent_buffeting_ratio);
+            Doc.SetCellValue("E82", _overallCalculationViewModel.Overall.vibrations_outlet_turbulent_buffeting_ratio);
+
+            Doc.SetCellValue("C84", _overallCalculationViewModel.Overall.acoustic_vibration_exist_inlet == 1 ? "Yes" : "No");
+            Doc.SetCellValue("D84", _overallCalculationViewModel.Overall.acoustic_vibration_exist_central == 1 ? "Yes" : "No");
+            Doc.SetCellValue("E84", _overallCalculationViewModel.Overall.acoustic_vibration_exist_outlet == 1 ? "Yes" : "No");
+
+        }
+            
         #endregion
 
     }
