@@ -155,7 +155,7 @@
                             <ColumnDefinition Width="17"/>
                         </Grid.ColumnDefinitions>
                         <materialDesign:PackIcon Kind="Lock" Grid.Column="0" Foreground="Red" VerticalAlignment="Center" Visibility="{Binding Path=OverallCalculationState.LockVisibillity, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label Grid.Column="1" FontSize="12" Width="110" HorizontalAlignment="Left" Grid.ColumnSpan="2">Overall Calculation</Label>
+                        <Label Grid.Column="1" FontSize="11" Width="110" HorizontalAlignment="Left" Grid.ColumnSpan="2">Overall Calculation</Label>
                         <SVG:SvgViewbox Margin="3"  Grid.Column="2" Source="{Binding Path=OverallValidationStatusSource, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                 </TabItem.Header>
