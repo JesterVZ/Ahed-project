@@ -261,7 +261,6 @@ namespace Ahed_project.ViewModel.Pages
 
                 }
             }
-
         }
 
         private KeyValuePair<string, string> _orientation;
