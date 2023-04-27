@@ -88,6 +88,48 @@ namespace Ahed_project.Services
             }
         }
         #endregion
+        #region Heat Balance
+        public static string GetProcessTubeToSend(string processTube)
+        {
+            var processTubeTemp = processTube.ToLower();
+            switch (processTubeTemp)
+            {
+                case "sensible_heat":
+                    return "Sensible Heat";
+                case "condensation":
+                    return "Condensation";
+                default: return processTube;
+            }
+        }
+        #endregion
+        #region Baffles
+        public static string GetTypeToSend(string type)
+        {
+            var typeTemp = type.ToLower();
+            switch (typeTemp)
+            {
+                case "single_segmental":
+                    return "Single Segmental";
+                case "double_segmental":
+                    return "Double Segmental";
+                default: return type;
+            }
+        }
 
+        public static string GetBuffleTypeToSend(string type)
+        {
+            var typeTemp = type.ToLower();
+            switch (typeTemp)
+            {
+                case "no_baffles":
+                    return "No baffles";
+                case "standard_heat_transfer_with_support_baffles":
+                    return "Standard heat transfer with SUPPORT baffles";
+                case "full_baffles_heat_transfer_calculation":
+                    return "Full baffles heat transfer calculation";
+                default: return type;
+            }
+        }
+        #endregion
     }
 }
