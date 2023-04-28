@@ -57,6 +57,7 @@ namespace Ahed_project.Services
                 AddHeatBalanceData();
                 AddGeometryData();
                 AddOverallData();
+                AddTemaSheetData();
                 Doc.SaveAs("FullReport.xlsx");
                 var p = new System.Diagnostics.Process();
                 p.StartInfo = new ProcessStartInfo($"{directory}\\FullReport.xlsx")
@@ -81,6 +82,17 @@ namespace Ahed_project.Services
             style.Font.FontSize = 11;
             style.Font.Bold = true;
             style.SetWrapText(true);
+            return style;
+        }
+
+        private static SLStyle BoldTemaHeaderTextStyle()
+        {
+            var style = new SLStyle();
+            style.Font.FontSize = 9;
+            style.Font.Bold = true;
+            style.SetWrapText(true);
+            style.Alignment.Horizontal = HorizontalAlignmentValues.Center;
+            style.Fill.SetPattern(PatternValues.Solid, System.Drawing.Color.LightGray, System.Drawing.Color.Blue);
             return style;
         }
         private static SLStyle BoldHeaderTextStyle()
@@ -972,7 +984,332 @@ namespace Ahed_project.Services
             Doc.SetCellValue("E84", _overallCalculationViewModel.Overall.acoustic_vibration_exist_outlet == 1 ? "Yes" : "No");
 
         }
+
+        #endregion
+
+        #region TEMA SHEET
+        private static void AddTemaSheetData()
+        {
+            Doc.AddWorksheet("TEMA Sheet");
+            //Doc.SetCellStyle("A1", "Q62", BorderCellsStyle());
+            Doc.SetColumnWidth("A", 4);
+            Doc.SetColumnWidth("B", 20);
+            Doc.SetColumnWidth("C", 4);
+            Doc.SetColumnWidth("D", 11);
+            Doc.SetColumnWidth("E", 11);
+            Doc.SetColumnWidth("F", 5);
+            Doc.SetColumnWidth("G", 2);
+            Doc.SetColumnWidth("H", 5);
+            Doc.SetColumnWidth("I", 5);
+            Doc.SetColumnWidth("J", 2);
+            Doc.SetColumnWidth("K", 5);
+            Doc.SetColumnWidth("L", 5);
+            Doc.SetColumnWidth("M", 2);
+            Doc.SetColumnWidth("N", 5);
+            Doc.SetColumnWidth("O", 5);
+            Doc.SetColumnWidth("P", 2);
+            Doc.SetColumnWidth("Q", 5);
+
+            SetTemaHeader("A1", "Q1", "Customer and revision information");
+            Doc.SetCellValue("A2", "1");
+            Doc.MergeWorksheetCells("B2", "C2");
+            Doc.SetCellValue("B2", "Customer");
+            Doc.MergeWorksheetCells("D2", "K2");
+            Doc.SetCellValue("D2", _projectPageViewModel.ProjectInfo.customer);
+
+            Doc.SetCellValue("A3", "2");
+            Doc.MergeWorksheetCells("B3", "C3");
+            Doc.SetCellValue("B3", "Revision Nr");
+            Doc.MergeWorksheetCells("D3", "K3");
+            Doc.SetCellValue("D3", _projectPageViewModel.ProjectInfo.revision.ToString());
+
+            Doc.SetCellValue("A4", "3");
+            Doc.MergeWorksheetCells("B4", "C4");
+            Doc.SetCellValue("B4", "Date");
+            Doc.MergeWorksheetCells("D4", "K4");
+            Doc.SetCellValue("D4", "");
+
+            Doc.SetCellValue("A5", "4");
+            Doc.MergeWorksheetCells("B5", "C5");
+            Doc.SetCellValue("B5", "Author");
+            Doc.MergeWorksheetCells("D5", "K5");
+            Doc.SetCellValue("D5", _projectPageViewModel.ProjectInfo.name);
+
+            Doc.MergeWorksheetCells("L2", "Q6");
+
+            SetTemaHeader("A6", "K6", "Heat exchanger summary");
+            Doc.SetCellValue("A7", "5");
+            Doc.SetCellValue("B7", "Module");
+            Doc.MergeWorksheetCells("C7", "D7");
+
+            Doc.SetCellValue("C7", _geometryPageViewModel.Geometry.name);
+
+            Doc.SetCellValue("A8", "6");
+            Doc.SetCellValue("B8", "Area / Module");
+            Doc.SetCellValue("C8", "m²");
+            Doc.SetCellValue("D8", _geometryPageViewModel.Geometry.area_module);
+
+            Doc.SetCellValue("E7", "Nr.");
+            Doc.MergeWorksheetCells("F7", "H7");
+            Doc.SetCellValue("F7", _geometryPageViewModel.Geometry.nr_baffles);
+
+            Doc.SetCellValue("E8", "Total area");
+            Doc.MergeWorksheetCells("F8", "H8");
+            Doc.SetCellValue("F8", "m²");
+
+            Doc.MergeWorksheetCells("I7", "N7");
+            Doc.SetCellValue("I7", "Parallel Lines (Tubes/Shell)");
+
+            Doc.MergeWorksheetCells("I8", "Q8");
+            Doc.SetCellValue("I8", _overallCalculationViewModel.Overall.surface_area_required);
+
+            SetTemaHeader("A9", "Q9", "Heat exchanger performance");
+            Doc.MergeWorksheetCells("B10", "D10");
+            Doc.MergeWorksheetCells("F10", "H10");
+            Doc.SetCellValue("F10", "Tube In");
+            Doc.MergeWorksheetCells("I10", "K10");
+            Doc.SetCellValue("I10", "Tube Out");
+            Doc.MergeWorksheetCells("L10", "N10");
+            Doc.SetCellValue("L10", "Shell In");
+            Doc.MergeWorksheetCells("O10", "Q10");
+            Doc.SetCellValue("O10", "Shell Out");
+
+            Doc.MergeWorksheetCells("B11", "D11");
             
+            Doc.SetCellValue("B11", "Fluid Name");
+            Doc.MergeWorksheetCells("F11", "K11");
+            Doc.SetCellValue("F11", _tubesFluidViewModel.Product.name);
+            Doc.MergeWorksheetCells("L11", "Q11");
+            Doc.SetCellValue("L11", _shellFluidViewModel.Product.name);
+
+            TemaUnits();
+            TemaNames();
+            TemaHBValues();
+
+        }
+
+        private static void TemaUnits()
+        {
+            Doc.SetCellValue("A10", "7");
+            Doc.SetCellValue("A11", "8");
+            Doc.SetCellValue("A12", "9");
+            Doc.SetCellValue("A13", "10");
+            Doc.SetCellValue("A14", "11");
+            Doc.SetCellValue("A15", "12");
+            Doc.SetCellValue("A16", "13");
+            Doc.SetCellValue("A17", "14");
+            Doc.SetCellValue("A18", "15");
+            Doc.SetCellValue("A19", "16");
+            Doc.SetCellValue("A20", "17");
+            Doc.SetCellValue("A21", "18");
+            Doc.SetCellValue("A22", "19");
+            Doc.SetCellValue("A23", "20");
+            Doc.SetCellValue("A24", "21");
+            Doc.SetCellValue("A25", "22");
+            Doc.SetCellValue("A26", "23");
+            Doc.SetCellValue("A27", "24");
+            Doc.SetCellValue("A28", "25");
+            Doc.SetCellValue("A29", "26");
+
+            Doc.SetCellValue("E12", "kg/hr");
+            Doc.SetCellValue("E13", "kg/hr");
+            Doc.SetCellValue("E14", "kg/hr");
+            Doc.SetCellValue("E15", "°C");
+            Doc.SetCellValue("E16", "kg/m³");
+            Doc.SetCellValue("E17", "kcal/kg·°C");
+            Doc.SetCellValue("E18", "kcal/m·hr·°C");
+            Doc.SetCellValue("E19", "cP");
+            Doc.SetCellValue("E20", "kcal/kg");
+            Doc.SetCellValue("E21", "bar-a");
+            Doc.SetCellValue("E22", "m/s");
+            Doc.SetCellValue("E23", "bar-a");
+            Doc.SetCellValue("E24", "bar-a");
+            Doc.SetCellValue("E25", "°C");
+            Doc.SetCellValue("E26", "kcal/hr");
+            Doc.SetCellValue("E27", "kcal/hr·m²·°C");
+            Doc.SetCellValue("E28", "hr·m²·°C/kcal");
+            Doc.SetCellValue("E29", "kcal/hr·m²·°C");
+        }
+
+        private static void TemaNames()
+        {
+            Doc.MergeWorksheetCells("B12", "D12");
+            Doc.SetCellValue("B12", "Flow total");
+
+            Doc.MergeWorksheetCells("B13", "D13");
+            Doc.SetCellValue("B13", "Gas phase");
+
+            Doc.MergeWorksheetCells("B14", "D14");
+            Doc.SetCellValue("B14", "Liquid phase");
+
+            Doc.MergeWorksheetCells("B15", "D15");
+            Doc.SetCellValue("B15", "Temperature");
+
+            Doc.MergeWorksheetCells("B16", "D16");
+            Doc.SetCellValue("B16", "Density");
+
+            Doc.MergeWorksheetCells("B17", "D17");
+            Doc.SetCellValue("B17", "Specific heat");
+
+            Doc.MergeWorksheetCells("B18", "D18");
+            Doc.SetCellValue("B18", "Therm. Cond.");
+
+            Doc.MergeWorksheetCells("B19", "D19");
+            Doc.SetCellValue("B19", "Viscosity");
+
+            Doc.MergeWorksheetCells("B20", "D20");
+            Doc.SetCellValue("B20", "Latent heat");
+
+            Doc.MergeWorksheetCells("B21", "D21");
+            Doc.SetCellValue("B21", "Vapour pressure");
+
+            Doc.MergeWorksheetCells("B22", "D22");
+            Doc.SetCellValue("B22", "Velocity");
+
+            Doc.MergeWorksheetCells("B23", "D23");
+            Doc.SetCellValue("B23", "Max pressure drop");
+
+            Doc.MergeWorksheetCells("B24", "D24");
+            Doc.SetCellValue("B24", "Calculated pressure drop");
+
+            Doc.MergeWorksheetCells("B25", "D25");
+            Doc.SetCellValue("B25", "LMTD corrected");
+
+            Doc.MergeWorksheetCells("B26", "D26");
+            Doc.SetCellValue("B26", "Duty");
+
+            Doc.MergeWorksheetCells("B27", "D27");
+            Doc.SetCellValue("B27", "Global fouled coefficient");
+
+            Doc.MergeWorksheetCells("B28", "D28");
+            Doc.SetCellValue("B28", "Fouling factor");
+
+            Doc.MergeWorksheetCells("B29", "D29");
+            Doc.SetCellValue("B29", "Effective heat transfer coefficient");
+        }
+
+        private static void TemaHBValues()
+        {
+            Doc.MergeWorksheetCells("F12", "K12");
+            Doc.SetCellValue("F12", _heatBalanceViewModel.Calculation.flow_tube);
+            Doc.MergeWorksheetCells("L12", "Q12");
+            Doc.SetCellValue("L12", _heatBalanceViewModel.Calculation.flow_shell);
+
+            Doc.MergeWorksheetCells("F13", "H13");
+            Doc.SetCellValue("F13", _heatBalanceViewModel.Calculation.gas_density_tube_inlet);
+            Doc.MergeWorksheetCells("I13", "K13");
+            Doc.SetCellValue("I13", _heatBalanceViewModel.Calculation.gas_density_tube_outlet);
+            Doc.MergeWorksheetCells("L13", "N13");
+            Doc.SetCellValue("L13", _heatBalanceViewModel.Calculation.gas_density_shell_inlet);
+            Doc.MergeWorksheetCells("O13", "Q13");
+            Doc.SetCellValue("O13", _heatBalanceViewModel.Calculation.gas_density_shell_outlet);
+
+            Doc.MergeWorksheetCells("F14", "H14");
+            Doc.SetCellValue("F14", _heatBalanceViewModel.Calculation.liquid_density_tube_inlet);
+            Doc.MergeWorksheetCells("I14", "K14");
+            Doc.SetCellValue("I14", _heatBalanceViewModel.Calculation.liquid_density_tube_outlet);
+            Doc.MergeWorksheetCells("L14", "N14");
+            Doc.SetCellValue("L14", _heatBalanceViewModel.Calculation.liquid_density_shell_inlet);
+            Doc.MergeWorksheetCells("O14", "Q14");
+            Doc.SetCellValue("O14", _heatBalanceViewModel.Calculation.liquid_density_shell_inlet);
+
+            Doc.MergeWorksheetCells("F15", "H15");
+            Doc.SetCellValue("F15", _heatBalanceViewModel.Calculation.temperature_tube_inlet);
+            Doc.MergeWorksheetCells("I15", "K15");
+            Doc.SetCellValue("I15", _heatBalanceViewModel.Calculation.temperature_tube_outlet);
+            Doc.MergeWorksheetCells("L15", "N15");
+            Doc.SetCellValue("L15", _heatBalanceViewModel.Calculation.temperature_shell_inlet);
+            Doc.MergeWorksheetCells("O15", "Q15");
+            Doc.SetCellValue("O15", _heatBalanceViewModel.Calculation.temperature_shell_outlet);
+
+            Doc.MergeWorksheetCells("F16", "H16");
+            Doc.SetCellValue("F16", _heatBalanceViewModel.Calculation.liquid_density_tube_inlet);
+            Doc.MergeWorksheetCells("I16", "K16");
+            Doc.SetCellValue("I16", _heatBalanceViewModel.Calculation.liquid_density_tube_outlet);
+            Doc.MergeWorksheetCells("L16", "N16");
+            Doc.SetCellValue("L16", _heatBalanceViewModel.Calculation.liquid_density_shell_inlet);
+            Doc.MergeWorksheetCells("O16", "Q16");
+            Doc.SetCellValue("O16", _heatBalanceViewModel.Calculation.liquid_density_shell_outlet);
+
+            Doc.MergeWorksheetCells("F17", "H17");
+            Doc.SetCellValue("F17", _heatBalanceViewModel.Calculation.liquid_specific_heat_tube_inlet);
+            Doc.MergeWorksheetCells("I17", "K17");
+            Doc.SetCellValue("I17", _heatBalanceViewModel.Calculation.liquid_specific_heat_tube_outlet);
+            Doc.MergeWorksheetCells("L17", "N17");
+            Doc.SetCellValue("L17", _heatBalanceViewModel.Calculation.liquid_specific_heat_shell_inlet);
+            Doc.MergeWorksheetCells("O17", "Q17");
+            Doc.SetCellValue("O17", _heatBalanceViewModel.Calculation.liquid_specific_heat_shell_outlet);
+
+            Doc.MergeWorksheetCells("F18", "H18");
+            Doc.SetCellValue("F18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_tube_inlet);
+            Doc.MergeWorksheetCells("I18", "K18");
+            Doc.SetCellValue("I18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_tube_outlet);
+            Doc.MergeWorksheetCells("L18", "N18");
+            Doc.SetCellValue("L18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_shell_inlet);
+            Doc.MergeWorksheetCells("O18", "Q18");
+            Doc.SetCellValue("O18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_shell_outlet);
+
+            Doc.MergeWorksheetCells("F19", "H19");
+            Doc.SetCellValue("F19", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_tube_inlet);
+            Doc.MergeWorksheetCells("I19", "K19");
+            Doc.SetCellValue("I19", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_tube_outlet);
+            Doc.MergeWorksheetCells("L19", "N19");
+            Doc.SetCellValue("L19", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_shell_inlet);
+            Doc.MergeWorksheetCells("O19", "Q19");
+            Doc.SetCellValue("O19", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_shell_outlet);
+
+            Doc.MergeWorksheetCells("F20", "H20");
+            Doc.SetCellValue("F20", _heatBalanceViewModel.Calculation.liquid_latent_heat_tube_inlet);
+            Doc.MergeWorksheetCells("I20", "K20");
+            Doc.SetCellValue("I20", _heatBalanceViewModel.Calculation.liquid_latent_heat_tube_outlet);
+            Doc.MergeWorksheetCells("L20", "N20");
+            Doc.SetCellValue("L20", _heatBalanceViewModel.Calculation.liquid_latent_heat_shell_inlet);
+            Doc.MergeWorksheetCells("O20", "Q20");
+            Doc.SetCellValue("O20", _heatBalanceViewModel.Calculation.liquid_latent_heat_shell_outlet);
+
+            Doc.MergeWorksheetCells("F21", "H21");
+            Doc.SetCellValue("F21", _heatBalanceViewModel.Calculation.gas_vapour_pressure_tube_inlet);
+            Doc.MergeWorksheetCells("I21", "K21");
+            Doc.SetCellValue("I21", _heatBalanceViewModel.Calculation.gas_vapour_pressure_tube_outlet);
+            Doc.MergeWorksheetCells("L21", "N21");
+            Doc.SetCellValue("L21", _heatBalanceViewModel.Calculation.gas_vapour_pressure_shell_inlet);
+            Doc.MergeWorksheetCells("O21", "Q21");
+            Doc.SetCellValue("O21", _heatBalanceViewModel.Calculation.gas_vapour_pressure_shell_outlet);
+
+            Doc.MergeWorksheetCells("F22", "H22");
+            Doc.SetCellValue("F22", _overallCalculationViewModel.Overall.fluid_velocity_tube_inlet);
+            Doc.MergeWorksheetCells("I22", "K22");
+            Doc.SetCellValue("I22", _overallCalculationViewModel.Overall.fluid_velocity_tube_outlet);
+            Doc.MergeWorksheetCells("L22", "N22");
+            Doc.SetCellValue("L22", _overallCalculationViewModel.Overall.fluid_velocity_shell_inlet);
+            Doc.MergeWorksheetCells("O22", "Q22");
+            Doc.SetCellValue("O22", _overallCalculationViewModel.Overall.fluid_velocity_shell_outlet);
+
+            Doc.MergeWorksheetCells("F23", "K23");
+            //Doc.SetCellValue("F23", _overallCalculationViewModel.Overall.Flulinf);
+            Doc.MergeWorksheetCells("J23", "Q23");
+
+            Doc.MergeWorksheetCells("F24", "K24");
+            //Doc.SetCellValue("F23", _overallCalculationViewModel.Overall.Flulinf);
+            Doc.MergeWorksheetCells("J24", "Q24");
+
+            Doc.MergeWorksheetCells("F25", "Q25");
+            Doc.SetCellValue("F25", _overallCalculationViewModel.Overall.LMTD);
+
+            Doc.MergeWorksheetCells("F26", "Q26");
+            Doc.SetCellValue("F26", _overallCalculationViewModel.Overall.duty_tube);
+        }
+
+        private static void SetTemaHeader(string start, string end, string text)
+
+        {
+            Doc.MergeWorksheetCells(start, end);
+            Doc.SetCellStyle(start, BoldTemaHeaderTextStyle());
+            Doc.SetCellValue(start, text);
+            
+
+        }
+
         #endregion
 
     }
