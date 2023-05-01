@@ -1082,6 +1082,11 @@ namespace Ahed_project.Services
             Doc.MergeWorksheetCells("L11", "Q11");
             Doc.SetCellValue("L11", _shellFluidViewModel.Product.name);
 
+            SetTemaHeader("A30", "Q30", "Construction data");
+            Doc.MergeWorksheetCells("B31", "C31");
+            Doc.SetCellValue("D31", "Shell side");
+            Doc.SetCellValue("E31", "Tubes side");
+
             TemaUnits();
             TemaNames();
             TemaHBValues();
@@ -1111,6 +1116,28 @@ namespace Ahed_project.Services
             Doc.SetCellValue("A28", "25");
             Doc.SetCellValue("A29", "26");
 
+            Doc.SetCellValue("A31", "27");
+            Doc.SetCellValue("A32", "28");
+            Doc.SetCellValue("A33", "29");
+            Doc.SetCellValue("A34", "30");
+            Doc.SetCellValue("A35", "31");
+            Doc.SetCellValue("A36", "32");
+            Doc.SetCellValue("A37", "33");
+            Doc.SetCellValue("A38", "34");
+            Doc.SetCellValue("A39", "35");
+            Doc.SetCellValue("A40", "36");
+            Doc.SetCellValue("A41", "37");
+            Doc.SetCellValue("A42", "38");
+            Doc.SetCellValue("A43", "39");
+            Doc.SetCellValue("A44", "40");
+            Doc.SetCellValue("A45", "41");
+            Doc.SetCellValue("A46", "42");
+            Doc.SetCellValue("A47", "43");
+            Doc.SetCellValue("A48", "44");
+            Doc.SetCellValue("A49", "45");
+            Doc.SetCellValue("A50", "46");
+            Doc.SetCellValue("A51", "47");
+
             Doc.SetCellValue("E12", "kg/hr");
             Doc.SetCellValue("E13", "kg/hr");
             Doc.SetCellValue("E14", "kg/hr");
@@ -1129,6 +1156,21 @@ namespace Ahed_project.Services
             Doc.SetCellValue("E27", "kcal/hr·m²·°C");
             Doc.SetCellValue("E28", "hr·m²·°C/kcal");
             Doc.SetCellValue("E29", "kcal/hr·m²·°C");
+
+            Doc.SetCellValue("C32", "bar-a");
+            Doc.SetCellValue("C33", "bar-a");
+            Doc.SetCellValue("C34", "°C");
+            Doc.SetCellValue("C36", "mm");
+            Doc.SetCellValue("C37", "mm");
+            Doc.SetCellValue("C38", "mm");
+            Doc.SetCellValue("C40", "mm");
+            Doc.SetCellValue("C41", "I");
+            Doc.SetCellValue("C42", "mm");
+            Doc.SetCellValue("C43", "mm");
+            Doc.SetCellValue("C48", "%");
+            Doc.SetCellValue("C49", "Y/N");
+            Doc.SetCellValue("C50", "Y/N");
+
         }
 
         private static void TemaNames()
@@ -1186,6 +1228,35 @@ namespace Ahed_project.Services
 
             Doc.MergeWorksheetCells("B29", "D29");
             Doc.SetCellValue("B29", "Effective heat transfer coefficient");
+
+            Doc.SetCellValue("B32", "Design pressure");
+            Doc.SetCellValue("B33", "Test pressure");
+            Doc.SetCellValue("B34", "Design temperature");
+            Doc.MergeWorksheetCells("B35", "C35");
+            Doc.SetCellValue("B35", "Nr. Passes");
+            Doc.SetCellValue("B36", "Corrosion Allowance");
+            Doc.SetCellValue("B37", "OD");
+            Doc.SetCellValue("B38", "Thickness");
+            Doc.MergeWorksheetCells("B39", "C39");
+            Doc.SetCellValue("B39", "Nr. Tubes");
+            Doc.SetCellValue("B40", "Tube length");
+            Doc.SetCellValue("B41", "Volume");
+            Doc.SetCellValue("B42", "Inlet connection (OD)");
+            Doc.SetCellValue("B43", "Outlet connection (OD)");
+            Doc.MergeWorksheetCells("B44", "C44");
+            Doc.SetCellValue("B44", "Shell nozzle orientation");
+            Doc.MergeWorksheetCells("B45", "C45");
+            Doc.SetCellValue("B45", "Construction material");
+            Doc.MergeWorksheetCells("B46", "C46");
+            Doc.SetCellValue("B46", "Gasket material");
+            Doc.MergeWorksheetCells("B47", "C47");
+            Doc.SetCellValue("B47", "Nr. Baffles");
+            Doc.SetCellValue("B48", "Baffle cut (% ID)");
+            Doc.SetCellValue("B49", "Impingement protection");
+            Doc.SetCellValue("B50", "Expansion joint fitted");
+            Doc.MergeWorksheetCells("B51", "C51");
+            Doc.SetCellValue("B51", "TEMA class");
+            Doc.MergeWorksheetCells("F31", "Q51");
         }
 
         private static void TemaHBValues()
@@ -1298,7 +1369,38 @@ namespace Ahed_project.Services
 
             Doc.MergeWorksheetCells("F26", "Q26");
             Doc.SetCellValue("F26", _overallCalculationViewModel.Overall.duty_tube);
+
+            Doc.MergeWorksheetCells("F27", "Q27");
+            Doc.SetCellValue("F27", _overallCalculationViewModel.Overall.k_global_fouled);
+
+            Doc.MergeWorksheetCells("F28", "K28");
+            Doc.SetCellValue("F28", _overallCalculationViewModel.Overall.fouling_factor_tube);
+
+            Doc.MergeWorksheetCells("L28", "Q28");
+            Doc.SetCellValue("L28", _overallCalculationViewModel.Overall.fouling_factor_shell);
+
+            Doc.MergeWorksheetCells("F29", "Q28");
+            Doc.SetCellValue("F29", _overallCalculationViewModel.Overall.k_effective);
+            Doc.SetCellValue("D35", _geometryPageViewModel.Geometry.tube_plate_layout_number_of_passes);
+            Doc.SetCellValue("E35", _geometryPageViewModel.Geometry.tube_plate_layout_number_of_passes);
+            Doc.SetCellValue("D37", _geometryPageViewModel.Geometry.outer_diameter_shell_side);
+            Doc.SetCellValue("E37", _geometryPageViewModel.Geometry.outer_diameter_tubes_side);
+            Doc.SetCellValue("D38", _geometryPageViewModel.Geometry.thickness_shell_side);
+            Doc.SetCellValue("E38", _geometryPageViewModel.Geometry.thickness_tubes_side);
+            Doc.SetCellValue("E39", _geometryPageViewModel.Geometry.tube_plate_layout_max_nr_tubes);
+            Doc.SetCellValue("E40", _geometryPageViewModel.Geometry.tube_inner_length);
+
+            Doc.SetCellValue("D41", _geometryPageViewModel.Geometry.volume_module_shell_side);
+            Doc.SetCellValue("E41", _geometryPageViewModel.Geometry.volume_module_tubes_side);
+            //Doc.SetCellValue("D42", _geometryPageViewModel.Geometry.);
+            //Doc.SetCellValue("E42", _geometryPageViewModel.Geometry.volume_module_tubes_side);
+
+            SLPicture pic = new SLPicture(@$"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\Apora\\geometry_image.png");
+            pic.ResizeInPixels(300, 300);
+            pic.SetPosition(30, 6);
+            Doc.InsertPicture(pic);
         }
+
 
         private static void SetTemaHeader(string start, string end, string text)
 
