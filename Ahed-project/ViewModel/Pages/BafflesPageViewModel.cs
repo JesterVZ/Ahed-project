@@ -3,6 +3,7 @@ using Ahed_project.MasterData.BafflesClasses;
 using Ahed_project.Services.Global;
 using Ahed_project.Settings;
 using DevExpress.Mvvm;
+using DocumentFormat.OpenXml.Vml.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Ahed_project.ViewModel.Pages
     public class BafflesPageViewModel : BindableBase
     {
         public Dictionary<string, string> Type { get; set; }
-        public Dictionary<string, string> BaffleType { get; set; } // No baffles, Standard heat transfer with SUPPORT baffles, Full baffles heat transfer calculation
+        public Dictionary<string, EnabledLabel> BaffleType { get; set; } // No baffles, Standard heat transfer with SUPPORT baffles, Full baffles heat transfer calculation
         public Dictionary<string, string> CutDirection { get; set; }
         public Visibility ColumnVisibility { get; set; }
 
@@ -105,7 +106,7 @@ namespace Ahed_project.ViewModel.Pages
         public BafflesPageViewModel()
         {
             Type = new Dictionary<string, string>();
-            BaffleType = new Dictionary<string, string>();
+            BaffleType = new Dictionary<string, EnabledLabel>();
             CutDirection = new Dictionary<string, string>();
             Baffle = new BaffleFull();
             ArrowAngle = "0";
@@ -115,9 +116,9 @@ namespace Ahed_project.ViewModel.Pages
             CutDirection.Add("horizontal", "Horizontal");
             CutDirection.Add("vertical", "Vertical");
 
-            BaffleType.Add("no_baffles", "No baffles");
-            BaffleType.Add("standard_heat_transfer_with_support_baffles", "Standard heat transfer with SUPPORT baffles");
-            BaffleType.Add("full_baffles_heat_transfer_calculation", "Full baffles heat transfer calculation");
+            BaffleType.Add("no_baffles", new EnabledLabel() { Value = "No baffles", Enabled = true });
+            BaffleType.Add("standard_heat_transfer_with_support_baffles", new EnabledLabel() { Value = "Standard heat transfer with SUPPORT baffles", Enabled = true });
+            BaffleType.Add("full_baffles_heat_transfer_calculation", new EnabledLabel() { Value = "Full baffles heat transfer calculation", Enabled = false });
             ColumnVisibility = Visibility.Hidden;
             SingleSegmentalIsEnables = 37;
             DoubleSegmentalIsEnables = 0;
@@ -155,8 +156,8 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
 
-        private KeyValuePair<string, string> _selectedBaffleType;
-        public KeyValuePair<string, string> SelectedBaffleType
+        private KeyValuePair<string,EnabledLabel> _selectedBaffleType;
+        public KeyValuePair<string,EnabledLabel> SelectedBaffleType
         {
             get => _selectedBaffleType;
             set
@@ -190,15 +191,15 @@ namespace Ahed_project.ViewModel.Pages
                 if (converted == 1)
                 {
                     BaffleType.Clear();
-                    BaffleType.Add("no_baffles", "No baffles");
+                    BaffleType.Add("no_baffles", new EnabledLabel() { Value = "No baffles", Enabled = true });
                     SelectedBaffleType = BaffleType.First();
                 }
                 else
                 {
                     if (BaffleType.Count == 1)
                     {
-                        BaffleType.Add("standard_heat_transfer_with_support_baffles", "Standard heat transfer with SUPPORT baffles");
-                        BaffleType.Add("full_baffles_heat_transfer_calculation", "Full baffles heat transfer calculation");
+                        BaffleType.Add("standard_heat_transfer_with_support_baffles", new EnabledLabel() { Value = "Standard heat transfer with SUPPORT baffles", Enabled = true });
+                        BaffleType.Add("full_baffles_heat_transfer_calculation", new EnabledLabel() { Value = "Full baffles heat transfer calculation", Enabled = false });
                     }
                 }
                 RaisePropertyChanged(nameof(BaffleType));

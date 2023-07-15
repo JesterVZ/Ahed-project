@@ -26,10 +26,17 @@
                         <Button Content="Calculate" Command="{Binding CalculateCommand}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" >
-                        <ComboBox Width="300" Style="{StaticResource ComboboxDefault}" ItemsSource="{Binding BaffleType, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedBaffleType, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0">
+                        <ComboBox IsTextSearchEnabled="False" Width="300" Style="{StaticResource ComboboxDefault}" ItemsSource="{Binding BaffleType, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedBaffleType, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0">
+                            <ComboBox.ItemContainerStyle>
+                                <Style TargetType="ComboBoxItem">
+                                    <Setter
+                                    Property="IsEnabled"
+                                     Value="{Binding Value.Enabled}" />
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Label Content="{Binding Value}"/>
+                                    <Label Content="{Binding Value.Value}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
