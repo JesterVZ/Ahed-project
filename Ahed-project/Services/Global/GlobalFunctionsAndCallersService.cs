@@ -169,12 +169,14 @@ namespace Ahed_project.Services.Global
             if (id != 0)
             {
                 _geometryPageViewModel.Geometry = GlobalDataCollectorService.GeometryCollection.FirstOrDefault(x => x.geometry_catalog_id == id);
+                _overallCalculationViewModel.Name = _geometryPageViewModel.Geometry.name;
                 _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = _geometryPageViewModel?.Geometry.diametral_clearance_tube_baffle;
                 _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = _geometryPageViewModel?.Geometry.diametral_clearance_shell_baffle;
             }
             else
             {
                 _geometryPageViewModel.Geometry = new GeometryFull();
+                _overallCalculationViewModel.Name = _geometryPageViewModel.Geometry.name;
             }
         }
 
@@ -689,6 +691,7 @@ namespace Ahed_project.Services.Global
             }
 
             _geometryPageViewModel.Geometry = geometry;
+            _overallCalculationViewModel.Name = _geometryPageViewModel.Geometry.name;
             _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = geometry?.diametral_clearance_tube_baffle;
             _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = geometry?.diametral_clearance_shell_baffle;
             //GlobalDataCollectorService.GeometryCalculated = false;
@@ -882,6 +885,7 @@ namespace Ahed_project.Services.Global
                     var ind = GlobalDataCollectorService.GeometryCollection.IndexOf(GlobalDataCollectorService.GeometryCollection.FirstOrDefault(x => x.geometry_id == g.geometry_id));
                     App.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.GeometryCollection[ind] = g);
                     _geometryPageViewModel.Geometry = g;
+                    _overallCalculationViewModel.Name = _geometryPageViewModel.Geometry.name;
                     _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = g.diametral_clearance_tube_baffle;
                     _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = g.diametral_clearance_shell_baffle;
                 }
@@ -1156,6 +1160,11 @@ namespace Ahed_project.Services.Global
                 }
             }
             return result;
+        }
+
+        internal static void UpdateNameInOverall(string value)
+        {
+            _overallCalculationViewModel.Name = value;
         }
     }
 }

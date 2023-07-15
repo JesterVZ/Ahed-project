@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ahed_project.Services.Global;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -108,7 +109,15 @@ namespace Ahed_project.MasterData.GeometryClasses
         public int geometry_id { get => _geometry_id; set { _geometry_id = value; OnPropertyChanged(nameof(geometry_id)); } }
         public int calculation_id { get => _calculation_id; set { _calculation_id = value; OnPropertyChanged(nameof(calculation_id)); } }
         public int project_id { get => _project_id; set { _project_id = value; OnPropertyChanged(nameof(project_id)); } }
-        public string name { get => _name; set { _name = value; OnPropertyChanged(nameof(name)); } }
+        public string name 
+        {
+            get => _name; set
+            { 
+                _name = value;
+                OnPropertyChanged(nameof(name));
+                GlobalFunctionsAndCallersService.UpdateNameInOverall(value);
+            } 
+        }
         public string head_exchange_type { get => _head_exchange_type; set { _head_exchange_type = value; OnPropertyChanged(nameof(head_exchange_type)); } }
         public string owner { get => _owner; set { _owner = value; OnPropertyChanged(nameof(owner)); } }
         public string comment { get => _comment; set { _comment = value; OnPropertyChanged(nameof(comment)); } }

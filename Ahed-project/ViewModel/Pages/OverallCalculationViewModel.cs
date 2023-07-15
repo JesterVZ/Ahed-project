@@ -10,6 +10,16 @@ namespace Ahed_project.ViewModel.Pages
 {
     public class OverallCalculationViewModel : BindableBase
     {
+        private string _name;
+        public string Name 
+        { 
+            get => _name;
+            set
+            {
+                _name = value;
+            }
+        }
+
         private bool _isProcess = true;
         public bool IsProcess { get => _isProcess; set { _isProcess = value; } }
         private OverallFull _overall;
