@@ -7,7 +7,7 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         Closed="Window_Closed"
         mc:Ignorable="d"
-        Title="GeometryWindow" Height="450" Width="800">
+        Title="GeometryWindow" Height="450" Width="800" Activated="Window_Activated">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding WindowLoaded}"/>
@@ -36,9 +36,11 @@
                 <DataGrid Grid.Row="0" Margin="4" IsReadOnly="True" ItemsSource="{Binding Geometries}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedGeometry, UpdateSourceTrigger=PropertyChanged}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Path=name}" Header="Name" Width="150"/>
-                        <DataGridTextColumn Binding="{Binding Path=geometry_catalog_id}" Header="Id" />
-                        <DataGridTextColumn Binding="{Binding Path=head_exchange_type}" Header="Head Exchange Type" />
-                        <DataGridTextColumn Binding="{Binding Path=tube_plate_layout_tube_layout}" Header="Tube Plate"/>
+                        <DataGridTextColumn Binding="{Binding Path=owner}" Header="Owner" />
+                        <DataGridTextColumn Header="Shared" />
+                        <DataGridTextColumn Binding="{Binding Path=createdAt}" Header="Date Created" />
+                        <DataGridTextColumn Binding="{Binding Path=updatedAt}" Header="Date Modified" />
+                        <DataGridTextColumn Binding="{Binding Path=geometry_catalog_id}" Header="Id"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <TextBlock Text="Description" Grid.Row="1" Margin="4"/>
@@ -51,7 +53,7 @@
                     <ColumnDefinition Width="80"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Search" VerticalAlignment="Center" Margin="4"/>
-                <TextBox Grid.Column="1" Margin="4" Text="{Binding TextBox, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox x:Name="searchTextBox" Grid.Column="1" Margin="4" Text="{Binding TextBox, UpdateSourceTrigger=PropertyChanged}"/>
                 <Button Style="{StaticResource MainButton}" IsCancel="True" Click="Button_Click" IsEnabled="{Binding IsGeometrySelected, UpdateSourceTrigger=PropertyChanged}" Command="{Binding SelectGeometryCommand}" Grid.Column="2" Margin="4">Select</Button>
             </Grid>
         </Grid>
