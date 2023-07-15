@@ -426,7 +426,7 @@
                         </Image>
                     </Button>
                 </StackPanel>
-                <customGrid:CustomGrid IsOpen="True" Style="{StaticResource AnimatedGrid}">
+                <customGrid:CustomGrid IsOpen="{Binding IsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource AnimatedGrid}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
