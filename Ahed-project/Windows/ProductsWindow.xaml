@@ -26,7 +26,7 @@
             <ComboBoxItem IsSelected="True">Date Created</ComboBoxItem>
             <ComboBoxItem>Date Modified</ComboBoxItem>
         </ComboBox>
-        <Button Style="{StaticResource MainButton}" Grid.Column="1" Grid.Row="0" Width="100" HorizontalAlignment="Right" Margin="0,4,3,4" Command="{Binding GetCurrentProducts}">GetAll</Button>
+        <Button Visibility="Hidden" IsEnabled="False" Style="{StaticResource MainButton}" Grid.Column="1" Grid.Row="0" Width="100" HorizontalAlignment="Right" Margin="0,4,3,4" Command="{Binding GetCurrentProducts}">GetAll</Button>
         <TreeView x:Name="ProductTreeView" Grid.Column="0" Grid.Row="1" Margin="4" ItemsSource="{Binding Nodes, UpdateSourceTrigger=PropertyChanged}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectedItemChanged">
@@ -47,8 +47,8 @@
             <DataGrid ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Margin="4" AutoGenerateColumns="False" IsReadOnly="True" AllowDrop="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Path=name}" Header="Name" Width="150"/>
-                    <!--<DataGridTextColumn Header="Owner" Width="100"/>
-                    <DataGridTextColumn Header="Shared"/>-->
+                    <DataGridTextColumn Binding="{Binding Path=user_name}" Header="Owner" Width="100"/>
+                    <DataGridTextColumn Header="Shared"/>
                     <DataGridTextColumn Binding="{Binding Path=createdAt, StringFormat='yyyy-MM-dd HH:mm:ss'}" Header="Date Created"/>
                     <DataGridTextColumn Binding="{Binding Path=updatedAt, StringFormat='yyyy-MM-dd HH:mm:ss'}" Header="Date Modified" />
                     <!--<DataGridTextColumn Header="Preset" />-->

@@ -19,5 +19,6 @@ namespace Ahed_project.MasterData.Products
         public IEnumerable<ProductProperties> product_properties { get; set; }
         public DateTime createdAt { get; set; }
         public DateTime updatedAt { get; set; }
+        public string user_name { get; set; }
     }
 }
