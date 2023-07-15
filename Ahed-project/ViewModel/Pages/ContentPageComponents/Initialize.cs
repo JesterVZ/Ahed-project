@@ -50,10 +50,13 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             BafflesState.IsEnabled = false;
             OverallCalculationState.IsEnabled = false;
             BatchState.IsEnabled = false;
+            BatchState.LockVisibillity = System.Windows.Visibility.Hidden;
             GraphState.IsEnabled = false;
             ReportsState.IsEnabled = false;
             QuoteState.IsEnabled = false;
+            QuoteState.LockVisibillity = System.Windows.Visibility.Hidden;
             ThreeDState.IsEnabled = false;
+            ThreeDState.LockVisibillity = System.Windows.Visibility.Hidden;
             _pageService = pageService;
 
             var assembly = Assembly.GetExecutingAssembly();

@@ -19,7 +19,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             OverallCalculationState.IsEnabled = tabs.left_overall=="0";
             GraphState.IsEnabled = tabs.left_graphs=="0";
             ReportsState.IsEnabled = tabs.left_reports=="0";
-            QuoteState.IsEnabled = tabs.left_quote=="0";
+            QuoteState.IsEnabled = false;// tabs.left_quote=="0";
             TubesFluidState.IsEnabled = true;
             ShellFluidState.IsEnabled = true;
             HeatBalanceState.IsEnabled = true;
@@ -47,7 +47,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             GeometryState.IsEnabled = true;
             BafflesState.IsEnabled = true;
             OverallCalculationState.IsEnabled = false;
-            BatchState.IsEnabled = true;
+            BatchState.IsEnabled = false;
             GraphState.IsEnabled = false;
             ReportsState.IsEnabled = false;
             QuoteState.IsEnabled = false;
