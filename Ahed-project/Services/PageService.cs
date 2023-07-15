@@ -1,4 +1,7 @@
 ﻿using Ahed_project.MasterData;
+using Ahed_project.MasterData.Products;
+using Ahed_project.ViewModel.Windows;
+using Ahed_project.Windows;
 using Autofac;
 using System.Windows;
 
@@ -29,6 +32,14 @@ namespace Ahed_project.Services
                 window.Show();
             }
 
+        }
+
+        public void OpenProductWindow(ProductGet product)
+        {
+            var vm = _context.Resolve<ProductWindowViewModel>();
+            vm.Product = product;
+            var window = new ProductWindow(vm);
+            window.Show();
         }
     }
 }

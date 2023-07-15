@@ -5,13 +5,13 @@ using DevExpress.Mvvm;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Ahed_project.ViewModel.Windows
 {
     public class ProductsViewModel : BindableBase
     {
-
         public ObservableCollection<Node> Nodes
         {
             get => GlobalDataCollectorService.Nodes;
@@ -78,9 +78,16 @@ namespace Ahed_project.ViewModel.Windows
             GlobalFunctionsAndCallersService.SelectProductShell(SelectedProduct);
             //GlobalFunctionsAndCallersService.ChangePage(2);
         });
-        public ICommand NewfluidCommand => new DelegateCommand(() => { });
-        public ICommand EditfluidCommand => new DelegateCommand(() => { });
-
+        public ICommand NewfluidCommand => new DelegateCommand(() => {
+            GlobalFunctionsAndCallersService.OpenNewProductWindow();
+        });
+        public ICommand EditfluidCommand => new DelegateCommand(() => {
+            var res = GlobalFunctionsAndCallersService.OpenNewProductWindow(SelectedProduct);
+            if (!res)
+            {
+                MessageBox.Show("Cannot edit fluid. No Access");
+            }
+        });
 
         private string _searchBox = string.Empty;
         public string SearchBox
@@ -96,7 +103,7 @@ namespace Ahed_project.ViewModel.Windows
             }
         }
 
-        private void SearchCondition()
+        public void SearchCondition()
         {
             if (string.IsNullOrEmpty(SearchBox))
             {

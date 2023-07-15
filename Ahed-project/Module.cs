@@ -42,6 +42,7 @@ namespace Ahed_project
             builder.RegisterType<ShellFluidViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<BafflesPageViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<ReportsPageViewModel>().AsSelf().SingleInstance();
+            builder.RegisterType<ProductWindowViewModel>().AsSelf();
             #endregion
             #region Pages
             builder.RegisterType<_3DPage>().AsSelf().SingleInstance();
@@ -65,6 +66,7 @@ namespace Ahed_project
             builder.RegisterType<Presets>().AsSelf();
             builder.RegisterType<ProductsWindow>().AsSelf();
             builder.RegisterType<ProjectsWindow>().AsSelf();
+            builder.RegisterType<ProductWindow>().AsSelf();
             #endregion
             #region Services
             builder.RegisterType<SendDataService>().AsSelf().SingleInstance();

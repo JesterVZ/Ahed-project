@@ -54,7 +54,17 @@
                     <!--<DataGridTextColumn Header="Preset" />-->
                     <DataGridTextColumn Binding="{Binding Path=product_id}" Header="Id" />
                 </DataGrid.Columns>
-
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+                                <ContextMenu>
+                                    <MenuItem Header="Delete" Command="{Binding DeleteFluidCommand}"/>
+                                </ContextMenu>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DataGrid.RowStyle>
             </DataGrid>
             <TextBlock Text="Description" Grid.Row="1" Margin="4"/>
 
@@ -72,8 +82,8 @@
             <TextBox x:Name="searchTextBox" Grid.Column="1" Margin="4" Text="{Binding Path=SearchBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Style="{StaticResource MainButton}" Grid.Column="2" Click="Button_Click" IsCancel="True" IsEnabled="{Binding IsProductSelected, UpdateSourceTrigger=PropertyChanged}" Command="{Binding OpenInTubesCommand}" Margin="4">Open in Tubes</Button>
             <Button Style="{StaticResource MainButton}" Grid.Column="3" Click="Button_Click" IsCancel="True" IsEnabled="{Binding IsProductSelected, UpdateSourceTrigger=PropertyChanged}" Command="{Binding OpenInShellCommand}" Margin="4">Open in Shell</Button>
-            <Button Grid.Column="4" Margin="4" Command="{Binding NewfluidCommand}" Visibility="Hidden">New Fluid</Button>
-            <Button Grid.Column="5" IsEnabled="{Binding IsProductSelected, UpdateSourceTrigger=PropertyChanged}" Command="{Binding EditfluidCommand}" Margin="4" Visibility="Hidden">Edit Fluid</Button>
+            <Button Style="{StaticResource MainButton}" Grid.Column="4" Margin="4" Command="{Binding NewfluidCommand}">New Fluid</Button>
+            <Button Style="{StaticResource MainButton}" Grid.Column="5" IsEnabled="{Binding IsProductSelected, UpdateSourceTrigger=PropertyChanged}" Command="{Binding EditfluidCommand}" Margin="4">Edit Fluid</Button>
         </Grid>
     </Grid>
 </Window>

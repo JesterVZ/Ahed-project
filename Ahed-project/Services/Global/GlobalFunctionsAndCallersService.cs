@@ -11,6 +11,7 @@ using Ahed_project.Settings;
 using Ahed_project.ViewModel.ContentPageComponents;
 using Ahed_project.ViewModel.Pages;
 using Ahed_project.ViewModel.Windows;
+using Ahed_project.Windows;
 using AutoMapper;
 using Newtonsoft.Json;
 using System;
@@ -42,11 +43,14 @@ namespace Ahed_project.Services.Global
         private static CreateExcelService _createExcelService;
         private static MainViewModel _mainViewModel;
         private static ProjectsWindowViewModel _projectsWindowViewModel;
+        private static PageService _pageService;
+        private static ProductsViewModel _productsViewModel;
 
         public GlobalFunctionsAndCallersService(SendDataService sendDataService, ContentPageViewModel contentPage,
             ProjectPageViewModel projectPageViewModel, IMapper mapper, HeatBalanceViewModel heatBalanceViewModel, TubesFluidViewModel tubesFluidViewModel,
             ShellFluidViewModel shellFluidViewModel, GeometryPageViewModel geometryPageViewModel, BafflesPageViewModel bufflesPageViewModel, MainViewModel mainViewModel,
-            OverallCalculationViewModel overallCalculationViewModel, CreateExcelService createExcelService, ProjectsWindowViewModel projectsWindowViewModel)
+            OverallCalculationViewModel overallCalculationViewModel, CreateExcelService createExcelService, ProjectsWindowViewModel projectsWindowViewModel,
+            PageService pageService, ProductsViewModel productsViewModel)
         {
             _sendDataService = sendDataService;
             _contentPageViewModel = contentPage;
@@ -61,7 +65,8 @@ namespace Ahed_project.Services.Global
             _mainViewModel = mainViewModel;
             _createExcelService = createExcelService;
             _projectsWindowViewModel = projectsWindowViewModel;
-
+            _pageService= pageService;
+            _productsViewModel= productsViewModel;
         }
 
         //Первичная загрузка после входа
@@ -1106,6 +1111,51 @@ namespace Ahed_project.Services.Global
                 _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = String.IsNullOrEmpty(restoreResult.diametral_clearance_tube_baffle) ? "0" : restoreResult.diametral_clearance_tube_baffle;
                 _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = String.IsNullOrEmpty(restoreResult.diametral_clearance_shell_baffle) ? "0" : restoreResult.diametral_clearance_shell_baffle;
             }
+        }
+
+        public static void OpenNewProductWindow()
+        {
+            _pageService.OpenWindow<ProductWindow>();
+        }
+
+        internal static bool OpenNewProductWindow(ProductGet selectedProduct)
+        {
+            bool result = CheckAccess(selectedProduct.user_name);
+            if (!result)
+            {
+                return result;
+            }
+            _pageService.OpenProductWindow(selectedProduct);
+            return result;
+        }
+
+        internal static bool DeleteProduct(ProductGet selectedProduct)
+        {
+            bool result = CheckAccess(selectedProduct.user_name);
+            if (!result)
+            {
+                return result;
+            }
+            //Удаление продукта добавить с правками запрос
+            var temp = GlobalDataCollectorService.AllProducts.FirstOrDefault(x=>x.Value.Any(x=>x.product_id== selectedProduct.product_id));
+            var product = temp.Value.FirstOrDefault(x=>x.product_id== selectedProduct.product_id);
+            GlobalDataCollectorService.AllProducts[temp.Key].Remove(product);
+            _productsViewModel.SearchCondition();
+            return result;
+        }
+
+        private static bool CheckAccess(string userName)
+        {
+            bool result = false;
+            using (var context = new EFContext())
+            {
+                var user = context.Users.FirstOrDefault(x => x.Id == GlobalDataCollectorService.UserId);
+                if (user.Email == "APORA Agent" || user.Email == userName)
+                {
+                    result = true;
+                }
+            }
+            return result;
         }
     }
 }
