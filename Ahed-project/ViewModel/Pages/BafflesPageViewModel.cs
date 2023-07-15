@@ -28,12 +28,6 @@ namespace Ahed_project.ViewModel.Pages
             {
                 _inlet_baffle_spacing_is_edit = value;
                 Baffle.inlet_baffle_spacing_is_edit = value;
-                if (value == 1)
-                {
-                    outlet_baffle_spacing_is_edit = 1;
-                    number_of_baffles_is_edit = 1;
-                }
-
             }
         }
 
@@ -45,11 +39,6 @@ namespace Ahed_project.ViewModel.Pages
             {
                 _outlet_baffle_spacing_is_edit = value;
                 Baffle.outlet_baffle_spacing_is_edit = value;
-                if (value == 1)
-                {
-                    inlet_baffle_spacing_is_edit = 1;
-                    number_of_baffles_is_edit = 1;
-                }
             }
         }
 
@@ -61,11 +50,6 @@ namespace Ahed_project.ViewModel.Pages
             {
                 _number_of_baffles_is_edit = value;
                 Baffle.number_of_baffles_is_edit = value;
-                if (value == 1)
-                {
-                    inlet_baffle_spacing_is_edit = 1;
-                    outlet_baffle_spacing_is_edit = 1;
-                }
             }
         }
 
@@ -101,6 +85,9 @@ namespace Ahed_project.ViewModel.Pages
                 _baffle = value;
                 SelectedBaffleType = BaffleType.FirstOrDefault(x => x.Key == value?.method);
                 NumberOfBaffles = _baffle?.number_of_baffles;
+                _notEditedLbi = StringToDoubleChecker.ConvertToDouble(value.inlet_baffle_spacing);
+                _notEditedLbo = StringToDoubleChecker.ConvertToDouble(value.outlet_baffle_spacing);
+                _notEditedNumberOfBaffles = StringToDoubleChecker.ConvertToDouble(value.number_of_baffles);
             }
         }
         public BafflesPageViewModel()
@@ -213,6 +200,10 @@ namespace Ahed_project.ViewModel.Pages
 
         });
 
+        private double _notEditedLbi = 0;
+        private double _notEditedLbo = 0;
+        private double _notEditedNumberOfBaffles = 0;
+
         public ICommand CalculateCommand => new DelegateCommand(() =>
         {
             if (Baffle.method == null)
@@ -221,6 +212,9 @@ namespace Ahed_project.ViewModel.Pages
                 Baffle.type = "single_segmental";
                 Baffle.buffle_cut_diraction = "horizontal";
             }
+            Baffle.inlet_baffle_spacing_is_edit = StringToDoubleChecker.ConvertToDouble(Baffle.inlet_baffle_spacing) != _notEditedLbi ? 1 : 0;
+            Baffle.outlet_baffle_spacing_is_edit = StringToDoubleChecker.ConvertToDouble(Baffle.outlet_baffle_spacing) != _notEditedLbo ? 1 : 0;
+            Baffle.number_of_baffles_is_edit = StringToDoubleChecker.ConvertToDouble(Baffle.number_of_baffles)!=_notEditedNumberOfBaffles? 1 : 0;
             Task.Run(() => GlobalFunctionsAndCallersService.CalculateBaffle(Baffle));
         });
 

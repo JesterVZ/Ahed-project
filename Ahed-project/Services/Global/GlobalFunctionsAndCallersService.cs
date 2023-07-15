@@ -897,20 +897,21 @@ namespace Ahed_project.Services.Global
                 MessageBox.Show("Выберите рассчет", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-            string json = JsonConvert.SerializeObject(new
-            {
-                type = baffle.type,
-                buffle_cut = baffle.buffle_cut,
-                method = baffle.method,
-                buffle_cut_diraction = baffle.buffle_cut_diraction,
-                diametral_clearance_shell_baffle = baffle.diametral_clearance_shell_baffle,
-                diametral_clearance_tube_baffle = baffle.diametral_clearance_tube_baffle,
-                inlet_baffle_spacing = baffle.inlet_baffle_spacing,
-                outlet_baffle_spacing = baffle.outlet_baffle_spacing,
-                number_of_baffles = baffle.number_of_baffles,
-                baffle_thickness = baffle.baffle_thickness,
+            //string json = JsonConvert.SerializeObject(new
+            //{
+            //    type = baffle.type,
+            //    buffle_cut = baffle.buffle_cut,
+            //    method = baffle.method,
+            //    buffle_cut_diraction = baffle.buffle_cut_diraction,
+            //    diametral_clearance_shell_baffle = baffle.diametral_clearance_shell_baffle,
+            //    diametral_clearance_tube_baffle = baffle.diametral_clearance_tube_baffle,
+            //    inlet_baffle_spacing = baffle.inlet_baffle_spacing,
+            //    outlet_baffle_spacing = baffle.outlet_baffle_spacing,
+            //    number_of_baffles = baffle.number_of_baffles,
+            //    baffle_thickness = baffle.baffle_thickness,
 
-            });
+            //});
+            string json = JsonConvert.SerializeObject(baffle);
             var response = _sendDataService.SendToServer(ProjectMethods.CALCULATE_BAFFLE, json, _heatBalanceViewModel.Calculation.project_id.ToString(), _heatBalanceViewModel.Calculation.calculation_id.ToString());
             if (response != null)
             {
