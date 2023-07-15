@@ -1,4 +1,6 @@
 ﻿using Ahed_project.ViewModel.Windows;
+using System;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 
@@ -25,5 +27,15 @@ namespace Ahed_project.Windows
         {
             searchTextBox.Text = "";
         }
+
+        private void Window_Activated(object sender, System.EventArgs e)
+        {
+            searchTextBox.Focus();
+            var absolutePos = searchTextBox.PointToScreen(new System.Windows.Point(0, 0));
+            SetCursorPos(Convert.ToInt32(absolutePos.X), Convert.ToInt32(absolutePos.Y));
+        }
+
+        [DllImport("User32.dll")]
+        private static extern bool SetCursorPos(int X, int Y);
     }
 }

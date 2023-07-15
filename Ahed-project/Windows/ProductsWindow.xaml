@@ -6,7 +6,7 @@
         xmlns:attach="clr-namespace:Ahed_project.Services"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="ProductsWindow" Height="450" Width="800" Closing="Window_Closing">
+        Title="ProductsWindow" Height="450" Width="800" Closing="Window_Closing" Activated="Window_Activated">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding GetCurrentProducts}"/>
