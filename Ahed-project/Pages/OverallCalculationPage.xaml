@@ -114,11 +114,11 @@
                             <TextBox  x:Name="shear_rate_shell_outlet" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Overall.shear_rate_shell_outlet, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="7" Grid.Column="6"/>
 
                             <Label Grid.Column="0" Grid.Row="8">Flow Type</Label>
-                            <TextBox x:Name="flow_type_tube_inlet" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Overall.flow_type_tube_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="8" Grid.Column="2"/>
-                            <TextBox x:Name="flow_type_tube_outlet" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Overall.flow_type_tube_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="8" Grid.Column="3"/>
+                            <TextBox x:Name="flow_type_tube_inlet" BorderBrush="{Binding TubeInB}" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding FlowTypeTubeInlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="8" Grid.Column="2"/>
+                            <TextBox x:Name="flow_type_tube_outlet" BorderBrush="{Binding TubeOutB}" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding FlowTypeTubeOutlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="8" Grid.Column="3"/>
 
-                            <TextBox x:Name="flow_type_shell_inlet" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Overall.flow_type_shell_inlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="8" Grid.Column="5"/>
-                            <TextBox x:Name="flow_type_shell_outlet" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Overall.flow_type_shell_outlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="8" Grid.Column="6"/>
+                            <TextBox x:Name="flow_type_shell_inlet" BorderBrush="{Binding ShellInB}" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding FlowTypeShellInlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="8" Grid.Column="5"/>
+                            <TextBox x:Name="flow_type_shell_outlet" BorderBrush="{Binding ShellOutB}" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding FlowTypeShellOutlet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="8" Grid.Column="6"/>
 
                             <Label Grid.Column="0" Grid.Row="9">Scraping Frequency</Label>
                             <TextBox Style="{StaticResource Colored}" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="2"/>

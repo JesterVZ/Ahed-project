@@ -1,5 +1,6 @@
 ﻿using Ahed_project.Pages;
 using Ahed_project.Services.Global;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -593,6 +594,27 @@ namespace Ahed_project.MasterData.Overall
                 {
                     Task.Run(()=>GlobalFunctionsAndCallersService.Uncheck(new System.Collections.Generic.List<string>() { nameof(OverallCalculationPage) }));
                 }
+            }
+            List<string> toBeYellowed = new List<string>();
+            if (_flow_type_shell_inlet=="Transition")
+            {
+                toBeYellowed.Add(nameof(_flow_type_shell_inlet));
+            }
+            if (_flow_type_shell_outlet=="Transition")
+            {
+                toBeYellowed.Add(nameof(_flow_type_shell_outlet));
+            }
+            if (_flow_type_tube_inlet == "Transition")
+            {
+                toBeYellowed.Add(nameof(_flow_type_tube_inlet));
+            }
+            if (_flow_type_tube_outlet == "Transition")
+            {
+                toBeYellowed.Add(nameof(_flow_type_tube_outlet));
+            }
+            if (toBeYellowed.Count > 0)
+            {
+                GlobalFunctionsAndCallersService.OverallCalculationTransition(toBeYellowed);
             }
         }
     }

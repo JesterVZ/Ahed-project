@@ -14,6 +14,7 @@ using Ahed_project.ViewModel.Pages;
 using Ahed_project.ViewModel.Windows;
 using Ahed_project.Windows;
 using AutoMapper;
+using DevExpress.Internal.WinApi.Windows.UI.Notifications;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -1218,6 +1219,18 @@ namespace Ahed_project.Services.Global
         internal static bool CheckIfLocked(string v)
         {
             return _contentPageViewModel.GetPageIsLocked(v);
+        }
+
+        internal static void OverallCalculationTransition(List<string> toBeYellowed)
+        {
+            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Warning", "Flow Parameters calculation finished with warnings")));
+            foreach (var item in toBeYellowed)
+            {
+                var message = item.Contains("shell") ? "Shell side transition flow can lead to inaccurate area calculation. Consider changing to laminar or turbulent flow."
+                    : "Tube side transition flow can lead to inaccurate area calculation. Consider changing to laminar or turbulent flow.";
+                Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Warning", message)));
+            }
+            _contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(OverallCalculationPage), "3") });
         }
     }
 }

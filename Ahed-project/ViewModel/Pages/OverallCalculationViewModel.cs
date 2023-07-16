@@ -5,6 +5,7 @@ using DevExpress.Mvvm;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Ahed_project.ViewModel.Pages
 {
@@ -79,6 +80,10 @@ namespace Ahed_project.ViewModel.Pages
                     {
                         vibrationExists = false;
                     }
+                    FlowTypeTubeInlet = Overall.flow_type_tube_inlet;
+                    FlowTypeTubeOutlet = Overall.flow_type_tube_outlet;
+                    FlowTypeShellInlet = Overall.flow_type_shell_inlet;
+                    FlowTypeShellOutlet = Overall.flow_type_shell_outlet;
                 }
 
             }
@@ -280,6 +285,75 @@ namespace Ahed_project.ViewModel.Pages
                     Refresh();
                 }
             }
+        }
+
+        private string _flowTypeTubeInlet;
+        public string FlowTypeTubeInlet
+        {
+            get => _flowTypeTubeInlet;
+            set
+            {
+                _flowTypeTubeInlet = value;
+                Overall.flow_type_tube_inlet = value;
+                TubeInB = value == "Transition" ? Brushes.Orange : Brushes.DarkGray;
+            }
+        }
+
+        private string _flowTypeTubeOutlet;
+        public string FlowTypeTubeOutlet
+        {
+            get => _flowTypeTubeOutlet;
+            set
+            {
+                _flowTypeTubeOutlet = value;
+                Overall.flow_type_tube_outlet = value;
+                TubeOutB = value == "Transition" ? Brushes.Orange : Brushes.DarkGray;
+            }
+        }
+
+        private string _flowTypeShellInlet;
+        public string FlowTypeShellInlet
+        {
+            get => _flowTypeShellInlet;
+            set
+            {
+                _flowTypeShellInlet = value;
+                Overall.flow_type_shell_inlet = value;
+                ShellInB = value == "Transition" ? Brushes.Orange : Brushes.DarkGray;
+            }
+        }
+
+        private string _flowTypeShellOutlet;
+        public string FlowTypeShellOutlet
+        {
+            get => _flowTypeShellOutlet;
+            set
+            {
+                _flowTypeShellOutlet = value;
+                Overall.flow_type_shell_outlet = value;
+                ShellOutB = value == "Transition" ? Brushes.Orange : Brushes.DarkGray;
+            }
+        }
+
+        private SolidColorBrush _shellOutB = Brushes.DarkGray;
+        public SolidColorBrush ShellOutB
+        {
+            get => _shellOutB; set=>_shellOutB = value;
+        }
+        private SolidColorBrush _shellInB = Brushes.DarkGray;
+        public SolidColorBrush ShellInB
+        {
+            get =>_shellInB; set=>_shellInB = value;
+        }
+        private SolidColorBrush _tubeOutB = Brushes.DarkGray;
+        public SolidColorBrush TubeOutB
+        {
+            get => _tubeOutB; set => _tubeOutB = value;
+        }
+        private SolidColorBrush _tubeInB = Brushes.DarkGray;
+        public SolidColorBrush TubeInB
+        {
+            get => _tubeInB; set => _tubeInB = value;
         }
     }
 }
