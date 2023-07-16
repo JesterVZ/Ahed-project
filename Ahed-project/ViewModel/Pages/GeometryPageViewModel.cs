@@ -687,12 +687,30 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     type = typeof(GeometryFull);
                     field = type.GetProperty(tb.Name);
-                    field.SetValue(Geometry, tb.Text);
-                    Geometry.OnPropertyChanged(tb.Name);
+                    var value = field.GetValue(Geometry)?.ToString();
+                    if (value != tb.Text)
+                    {
+                        try
+                        {
+                            field.SetValue(Geometry, tb.Text);
+                        }
+                        catch (ArgumentException e)
+                        {
+
+                        }
+                        Geometry.OnPropertyChanged(tb.Name);
+                    }
                 }
                 else
                 {
-                    field.SetValue(this, tb.Text);
+                    try
+                    {
+                        field.SetValue(this, tb.Text);
+                    }
+                    catch(ArgumentException e)
+                    {
+
+                    }
                     Refresh();
                 }
             }

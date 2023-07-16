@@ -263,7 +263,7 @@ namespace Ahed_project.ViewModel.Pages
             Config.NumberOfDecimals = 0;
             if (type == typeof(BaffleFull))
             {
-                Baffle.OnPropertyChanged(name);
+                Baffle.OnPropertyChanged(name,false);
             }
             else
             {
@@ -294,7 +294,7 @@ namespace Ahed_project.ViewModel.Pages
                     {
                         field.SetValue(Baffle, alternateValue);
                     }
-                    Baffle.OnPropertyChanged(name);
+                    Baffle.OnPropertyChanged(name,false);
                 }
                 else
                 {
@@ -313,7 +313,7 @@ namespace Ahed_project.ViewModel.Pages
             {
                 if (field == null)
                 {
-                    Baffle.OnPropertyChanged(name);
+                    Baffle.OnPropertyChanged(name,false);
                 }
                 else
                 {

@@ -1,8 +1,11 @@
-﻿using Ahed_project.Services.Global;
+﻿using Ahed_project.Pages;
+using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Ahed_project.MasterData.CalculateClasses
@@ -770,10 +773,16 @@ namespace Ahed_project.MasterData.CalculateClasses
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        public void OnPropertyChanged([CallerMemberName] string prop = "", bool uncheck = true)
         {
             if (PropertyChanged != null)
+            {
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+                if (uncheck)
+                {
+                    Task.Run(()=>GlobalFunctionsAndCallersService.Uncheck(new List<string>() { nameof(HeatBalancePage), nameof(OverallCalculationPage) }));
+                }
+            }
         }
 
         public ICommand ChangeNameCommand => new DelegateCommand<object>((calc) =>
@@ -781,6 +790,5 @@ namespace Ahed_project.MasterData.CalculateClasses
             var c = (CalculationFull)calc;
             GlobalFunctionsAndCallersService.ChangeCalculationName(c);
         });
-
     }
 }

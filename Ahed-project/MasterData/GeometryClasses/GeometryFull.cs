@@ -1,7 +1,10 @@
-﻿using Ahed_project.Services.Global;
+﻿using Ahed_project.Pages;
+using Ahed_project.Services.Global;
+using Ahed_project.Settings;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace Ahed_project.MasterData.GeometryClasses
 {
@@ -213,10 +216,78 @@ namespace Ahed_project.MasterData.GeometryClasses
         public DateTime? updatedAt { get => _updatedAt; set { _updatedAt = value; OnPropertyChanged(nameof(updatedAt)); } }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        public void OnPropertyChanged([CallerMemberName] string prop = "", bool uncheck = true)
         {
             if (PropertyChanged != null)
+            {
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+                Task.Run(() =>
+                {
+                    if (uncheck)
+                    {
+                        GlobalFunctionsAndCallersService.Uncheck(new System.Collections.Generic.List<string>() { nameof(GeometryPage), nameof(BafflesPage) });
+                    }
+                    Check();
+                });
+            }
+        }
+
+        private void Check()
+        {
+            var inneDiamTubes = StringToDoubleChecker.ConvertToDouble(_inner_diameter_tubes_side);
+            var inneDiamShell = StringToDoubleChecker.ConvertToDouble(_inner_diameter_shell_side);
+            var numberOfTubes = StringToDoubleChecker.ConvertToDouble(_number_of_tubes);
+            var numberOfPasses = StringToDoubleChecker.ConvertToDouble(_tube_plate_layout_number_of_passes);
+            var tubeInnerLenght =  StringToDoubleChecker.ConvertToDouble(_tube_inner_length);
+            var routhnessTubes = StringToDoubleChecker.ConvertToDouble(_roughness_tubes_side);
+            var routhnessShell = StringToDoubleChecker.ConvertToDouble(_roughness_shell_side);
+            var inInnerDiam = StringToDoubleChecker.ConvertToDouble(_inner_diameter_inner_side);
+            var innerLength = StringToDoubleChecker.ConvertToDouble(_tube_inner_length);
+            var outerDiamInner = StringToDoubleChecker.ConvertToDouble(_outer_diameter_inner_side);
+            var outLengthTubes = StringToDoubleChecker.ConvertToDouble(_nozzles_out_length_tubes_side);
+            var outLengthShell = StringToDoubleChecker.ConvertToDouble(_nozzles_out_length_shell_side);
+            var numberOfParallelLinesTubes = StringToDoubleChecker.ConvertToDouble(_nozzles_number_of_parallel_lines_tubes_side);
+            var numberOfParallelLinesShell = StringToDoubleChecker.ConvertToDouble(_nozzles_number_of_parallel_lines_shell_side);
+            var minTubeHole = StringToDoubleChecker.ConvertToDouble(_clearances_spacing_minimum_tube_hole_to_tubeplate_edge);
+            var tubePitch = StringToDoubleChecker.ConvertToDouble(_tube_plate_layout_tube_pitch);
+            var divPlateThinkness = StringToDoubleChecker.ConvertToDouble(_tube_plate_layout_div_plate_thickness);
+            var tubePlateThinkness = StringToDoubleChecker.ConvertToDouble(_tube_plate_layout_tubeplate_thickness);
+            if (numberOfTubes<=0)
+            {
+                numberOfTubes = 12;
+                _number_of_tubes = "12";
+                PropertyChanged(this, new PropertyChangedEventArgs(nameof(number_of_tubes)));
+            }
+            if (inneDiamTubes<=0|| inneDiamShell<=0||
+                numberOfTubes<numberOfPasses||
+                tubeInnerLenght<500||
+                routhnessTubes <= 0|| routhnessShell<=0||
+                inInnerDiam<=0||innerLength<=0||
+                outerDiamInner<=0||
+                outLengthTubes<=0|| outLengthShell<=0||
+                numberOfParallelLinesTubes<=0|| numberOfParallelLinesShell<=0||
+                minTubeHole<3||
+                numberOfPasses<=0||
+                divPlateThinkness<=0||tubePlateThinkness<=0||
+                (_head_exchange_type!= "annular_space"&&outerDiamInner*1.25>tubePitch)
+                )
+            {
+                GlobalFunctionsAndCallersService.SetIncorrect(new System.Collections.Generic.List<string>() { nameof(GeometryPage) });
+                return;
+            }
+            var type = typeof(GeometryFull);
+            var props = type.GetProperties();
+            foreach (var prop in props)
+            {
+                if (double.TryParse(prop.GetValue(this)?.ToString(),out var val))
+                {
+                    if (val<0)
+                    {
+                        GlobalFunctionsAndCallersService.SetIncorrect(new System.Collections.Generic.List<string>() { nameof(GeometryPage) });
+                        return;
+                    }
+                }
+            }
         }
     }
 }

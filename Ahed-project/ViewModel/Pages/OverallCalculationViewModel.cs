@@ -223,7 +223,7 @@ namespace Ahed_project.ViewModel.Pages
             Config.NumberOfDecimals = 0;
             if (type == typeof(OverallFull))
             {
-                Overall.OnPropertyChanged(name);
+                Overall.OnPropertyChanged(name,false);
             }
             else
             {
@@ -254,7 +254,7 @@ namespace Ahed_project.ViewModel.Pages
                     {
                         field.SetValue(Overall, alternateValue);
                     }
-                    Overall.OnPropertyChanged(name);
+                    Overall.OnPropertyChanged(name,false);
                 }
                 else
                 {
@@ -273,7 +273,7 @@ namespace Ahed_project.ViewModel.Pages
             {
                 if (field == null)
                 {
-                    Overall.OnPropertyChanged(name);
+                    Overall.OnPropertyChanged(name,false);
                 }
                 else
                 {

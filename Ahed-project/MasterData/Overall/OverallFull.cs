@@ -1,5 +1,8 @@
-﻿using System.ComponentModel;
+﻿using Ahed_project.Pages;
+using Ahed_project.Services.Global;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace Ahed_project.MasterData.Overall
 {
@@ -581,10 +584,16 @@ namespace Ahed_project.MasterData.Overall
         public string nozzles_number_of_parallel_lines_shell_side { get => _nozzles_number_of_parallel_lines_shell_side; set { _nozzles_number_of_parallel_lines_shell_side = value; OnPropertyChanged(nameof(nozzles_number_of_parallel_lines_shell_side)); } }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        public void OnPropertyChanged([CallerMemberName] string prop = "", bool uncheck = true)
         {
             if (PropertyChanged != null)
+            {
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+                if (uncheck)
+                {
+                    Task.Run(()=>GlobalFunctionsAndCallersService.Uncheck(new System.Collections.Generic.List<string>() { nameof(OverallCalculationPage) }));
+                }
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.MasterData.CalculateClasses;
+using Ahed_project.Pages;
 using Ahed_project.Services.Global;
 using Ahed_project.Settings;
 using DevExpress.Mvvm;
@@ -73,6 +74,7 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     Pressure_shell_inlet_value = value;
                 }
+                ChangesMaded();
             }
         }
 
@@ -90,6 +92,7 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     GetTemperatureCalculation(false, value);
                 }
+                ChangesMaded();
             }
         }
 
@@ -205,6 +208,7 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     TemperatureTubesOut = true;
                 }
+                ChangesMaded();
             }
         }
 
@@ -232,6 +236,7 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     TubesInletTemp = value;
                 }
+                ChangesMaded();
             }
         }
 
@@ -257,6 +262,7 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     ShellInletTemp = value;
                 }
+                ChangesMaded();
             }
         }
 
@@ -306,6 +312,7 @@ namespace Ahed_project.ViewModel.Pages
                     TemperatureShellOutLetTB = false;
                 }
                 ChangeProcess.Execute(this);
+                ChangesMaded();
             }
         }
 
@@ -409,7 +416,7 @@ namespace Ahed_project.ViewModel.Pages
             Config.NumberOfDecimals = 0;
             if (type == typeof(CalculationFull))
             {
-                Calculation.OnPropertyChanged(name);
+                Calculation.OnPropertyChanged(name,false);
             }
             else
             {
@@ -440,8 +447,12 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     type = typeof(CalculationFull);
                     field = type.GetProperty(tb.Name);
-                    field.SetValue(Calculation, tb.Text);
-                    Calculation.OnPropertyChanged(tb.Name);
+                    var value = field.GetValue(Calculation)?.ToString();
+                    if (value != tb.Text)
+                    {
+                        field.SetValue(Calculation, tb.Text);
+                        Calculation.OnPropertyChanged(tb.Name);
+                    }
                 }
                 else
                 {
@@ -453,7 +464,7 @@ namespace Ahed_project.ViewModel.Pages
             {
                 if (field == null)
                 {
-                    Calculation.OnPropertyChanged(tb.Name);
+                    Calculation.OnPropertyChanged(tb.Name,false);
                 }
                 else
                 {
@@ -470,6 +481,11 @@ namespace Ahed_project.ViewModel.Pages
             {
                 _borderVisible = value;
             }
+        }
+
+        private void ChangesMaded()
+        {
+            Task.Run(()=>GlobalFunctionsAndCallersService.Uncheck(new List<string>() { nameof(HeatBalancePage), nameof(OverallCalculationPage) }));
         }
     }
 }

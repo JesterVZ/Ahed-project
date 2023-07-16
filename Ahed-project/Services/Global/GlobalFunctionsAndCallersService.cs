@@ -6,6 +6,7 @@ using Ahed_project.MasterData.Overall;
 using Ahed_project.MasterData.Products;
 using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.MasterData.TabClasses;
+using Ahed_project.Pages;
 using Ahed_project.Services.EF;
 using Ahed_project.Settings;
 using Ahed_project.ViewModel.ContentPageComponents;
@@ -286,7 +287,13 @@ namespace Ahed_project.Services.Global
                     }
                 }
             }
-            Task.Run(GetTabState);
+            Task.Run(() =>
+            {
+                //var overallState = _contentPageViewModel.GetValidationSource(nameof(HeatBalancePage));
+                //GetTabState();
+                //_contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(HeatBalancePage), overallState) });
+                _contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(OverallCalculationPage), "2") });
+            });
         }
 
         // Загрузка продуктов
@@ -802,7 +809,13 @@ namespace Ahed_project.Services.Global
                 _heatBalanceViewModel.Calculation = calculationGet;
             }
             GlobalDataCollectorService.HeatBalanceCalculated = true;
-            Task.Run(GetTabState);
+            Task.Run(() =>
+            {
+                //var overallState = _contentPageViewModel.GetValidationSource(nameof(OverallCalculationPage));
+                //GetTabState();
+                //_contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(OverallCalculationPage), overallState) });
+                _contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(HeatBalancePage), "2") });
+            });
         }
         //расчет геометрии
         public static void CalculateGeometry(GeometryFull geometry)
@@ -895,7 +908,13 @@ namespace Ahed_project.Services.Global
                 }
             }
             GlobalDataCollectorService.GeometryCalculated = true;
-            Task.Run(GetTabState);
+            Task.Run(() =>
+            {
+                //var overallState = _contentPageViewModel.GetValidationSource(nameof(BafflesPage));
+                //GetTabState();
+                //_contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(BafflesPage), overallState) });
+                _contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(GeometryPage), "2") });
+            });
         }
 
         //расчет перегородок
@@ -940,7 +959,13 @@ namespace Ahed_project.Services.Global
                 }
             }
             GlobalDataCollectorService.IsBaffleCalculated = true;
-            Task.Run(GetTabState);
+            Task.Run(() =>
+            {
+                //var overallState = _contentPageViewModel.GetValidationSource(nameof(GeometryPage));
+                //GetTabState();
+                //_contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(GeometryPage), overallState) });
+                _contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(BafflesPage), "2") });
+            });
         }
 
         //Создать проект
@@ -1165,6 +1190,27 @@ namespace Ahed_project.Services.Global
         internal static void UpdateNameInOverall(string value)
         {
             _overallCalculationViewModel.Name = value;
+        }
+
+        internal static void Uncheck(List<string> pages)
+        {
+            if (_contentPageViewModel != null)
+            {
+                _contentPageViewModel.Uncheck(pages);
+            }
+        }
+
+        internal static void SetIncorrect(List<string> list)
+        {
+            if (_contentPageViewModel != null)
+            {
+                _contentPageViewModel.SetIncorrect(list);
+            }
+        }
+
+        internal static bool CheckIfLocked(string v)
+        {
+            return _contentPageViewModel.GetPageIsLocked(v);
         }
     }
 }

@@ -1,5 +1,11 @@
-﻿using System.ComponentModel;
+﻿using Ahed_project.MasterData.GeometryClasses;
+using Ahed_project.Pages;
+using Ahed_project.Services.Global;
+using Ahed_project.Settings;
+using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace Ahed_project.MasterData.BafflesClasses
 {
@@ -105,10 +111,60 @@ namespace Ahed_project.MasterData.BafflesClasses
         public int number_of_baffles_is_edit { get => _number_of_baffles_is_edit; set { _number_of_baffles_is_edit = value; OnPropertyChanged(nameof(number_of_baffles_is_edit)); } }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        public void OnPropertyChanged([CallerMemberName] string prop = "", bool uncheck = true)
         {
             if (PropertyChanged != null)
+            {
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+                Task.Run(() =>
+                {
+                    if (uncheck)
+                    {
+                        GlobalFunctionsAndCallersService.Uncheck(new System.Collections.Generic.List<string>() { nameof(BafflesPage), nameof(OverallCalculationPage) });
+                    }
+                    Check();
+                });
+            }
+        }
+
+        private void Check()
+        {
+            if (GlobalFunctionsAndCallersService.CheckIfLocked(nameof(BafflesPage)))
+            {
+                return;
+            }
+            var baffleCut = StringToDoubleChecker.ConvertToDouble(_buffle_cut);
+            var inletBaffleSpacing = StringToDoubleChecker.ConvertToDouble(_inlet_baffle_spacing);
+            var centralBaffleSpacing = StringToDoubleChecker.ConvertToDouble(_central_baffle_spacing);
+            var outletBaffleSpacing = StringToDoubleChecker.ConvertToDouble(_outlet_baffle_spacing);
+            var baffleThickness = StringToDoubleChecker.ConvertToDouble(_baffle_thickness);
+            var inletDiam = StringToDoubleChecker.ConvertToDouble(_shell_inner_diameter);
+            var outDiam = StringToDoubleChecker.ConvertToDouble(_tubes_outer_diameter);
+
+            //var shellNozzleInOuterDiam = StringToDoubleChecker.ConvertToDouble(_shell_);
+            if (baffleCut<10||baffleCut>45||
+                centralBaffleSpacing<=0||
+                inletBaffleSpacing< inletDiam+200 ||
+                outletBaffleSpacing < outDiam+200||
+                baffleThickness <=0
+                )
+            {
+                GlobalFunctionsAndCallersService.SetIncorrect(new System.Collections.Generic.List<string>() { nameof(BafflesPage) });
+                return;
+            }
+            var type = typeof(BaffleFull);
+            var props = type.GetProperties();
+            foreach (var prop in props)
+            {
+                if (double.TryParse(prop.GetValue(this)?.ToString(), out var val))
+                {
+                    if (val < 0)
+                    {
+                        GlobalFunctionsAndCallersService.SetIncorrect(new System.Collections.Generic.List<string>() { nameof(BafflesPage) });
+                        return;
+                    }
+                }
+            }
         }
     }
 }
