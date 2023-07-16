@@ -176,10 +176,10 @@
                         <Label Visibility="{Binding ShowScrapingFrequencyAndMotorPower}" Grid.Column="1" Grid.Row="17" HorizontalAlignment="Right">kW</Label>
                         <TextBox Visibility="{Binding ShowScrapingFrequencyAndMotorPower}" x:Name="motor_power_tubes_side" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.motor_power_tubes_side, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="17" Margin="3,3,3,3"/>
 
-                        <Label Grid.Column="0" Grid.Row="19">Diametral clearance baffle</Label>
-                        <Label Grid.Column="1" Grid.Row="19" HorizontalAlignment="Right">kW</Label>
-                        <TextBox x:Name="diametral_clearance_tube_baffle" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.diametral_clearance_tube_baffle, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="19" Margin="3,3,3,3"/>
-                        <TextBox x:Name="diametral_clearance_shell_baffle" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.diametral_clearance_shell_baffle, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="19" Margin="3,3,3,3"/>
+                        <Label Grid.Column="0" Grid.Row="19" Visibility="{Binding HousingSpaceVis}">Diametral clearance baffle</Label>
+                        <Label Grid.Column="1" Visibility="{Binding HousingSpaceVis}" Grid.Row="19" HorizontalAlignment="Right">kW</Label>
+                        <TextBox Visibility="{Binding HousingSpaceVis}" x:Name="diametral_clearance_tube_baffle" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.diametral_clearance_tube_baffle, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="19" Margin="3,3,3,3"/>
+                        <TextBox Visibility="{Binding HousingSpaceVis}" x:Name="diametral_clearance_shell_baffle" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Default}" Text="{Binding Geometry.diametral_clearance_shell_baffle, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="19" Margin="3,3,3,3"/>
 
 
                         <Label Grid.Column="0" Grid.Row="20" Grid.ColumnSpan="2" Margin="0,0,0,15" Grid.RowSpan="2">Bundle type</Label>
@@ -257,7 +257,7 @@
                             </ComboBox>
 
                             <Label Grid.Column="0" Grid.Row="5" Visibility="{Binding HousingSpaceVis, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center">Housing Space</Label>
-                            <Label Grid.Column="1" Grid.Row="5" VerticalAlignment="Center">mm</Label>
+                            <Label Grid.Column="1" Grid.Row="5" Visibility="{Binding HousingSpaceVis}" VerticalAlignment="Center">mm</Label>
                             <TextBox x:Name="HousingSpaceVis" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Visibility="{Binding HousingSpaceVis, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False" Text="{Binding Geometry.tube_plate_layout_housings_space, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="5"/>
 
                             <Label Grid.Column="0" Grid.Row="6" VerticalAlignment="Center">Div.Plate Thickness</Label>
@@ -310,7 +310,7 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Horizontal" Grid.Column="0">
                         <Label Grid.Column="0" FontWeight="Bold">Nozzles</Label>
-                        <Button IsEnabled="False" Grid.Column="0" Content="Tubes Assistant" HorizontalAlignment="Left" VerticalAlignment="Center" Width="121" Background="#fc6"/>
+                        <Button Visibility="Hidden" IsEnabled="False" Grid.Column="0" Content="Tubes Assistant" HorizontalAlignment="Left" VerticalAlignment="Center" Width="121" Background="#fc6"/>
                     </StackPanel>
 
                     <Label Grid.Column="1" FontWeight="Bold">Parallel Lines Distribution Diagram (per block)</Label>

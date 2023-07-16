@@ -148,7 +148,7 @@ namespace Ahed_project.Services.Global
             var template = _sendDataService.ReturnCopy();
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка геометрий...")));
             var response = template.SendToServer(ProjectMethods.GET_GEOMETRIES, "");
-            GlobalDataCollectorService.GeometryCollection = JsonConvert.DeserializeObject<ObservableCollection<GeometryFull>>(response);
+            GlobalDataCollectorService.GeometryCollection = new ObservableCollection<GeometryFull>(JsonConvert.DeserializeObject<IEnumerable<GeometryFull>>(response).Where(x=>x.owner== "HRS Agent"));
             foreach (var g in GlobalDataCollectorService.GeometryCollection)
             {
                 if (!String.IsNullOrEmpty(g.image_geometry))
@@ -170,14 +170,14 @@ namespace Ahed_project.Services.Global
             if (id != 0)
             {
                 _geometryPageViewModel.Geometry = GlobalDataCollectorService.GeometryCollection.FirstOrDefault(x => x.geometry_catalog_id == id);
-                _overallCalculationViewModel.Name = _geometryPageViewModel.Geometry.name;
+                _overallCalculationViewModel.Name = _geometryPageViewModel.Geometry?.name;
                 _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = _geometryPageViewModel?.Geometry.diametral_clearance_tube_baffle;
                 _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = _geometryPageViewModel?.Geometry.diametral_clearance_shell_baffle;
             }
             else
             {
                 _geometryPageViewModel.Geometry = new GeometryFull();
-                _overallCalculationViewModel.Name = _geometryPageViewModel.Geometry.name;
+                _overallCalculationViewModel.Name = _geometryPageViewModel.Geometry?.name;
             }
         }
 
@@ -698,10 +698,14 @@ namespace Ahed_project.Services.Global
             }
 
             _geometryPageViewModel.Geometry = geometry;
-            _overallCalculationViewModel.Name = _geometryPageViewModel.Geometry.name;
+            _overallCalculationViewModel.Name = _geometryPageViewModel.Geometry?.name;
             _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = geometry?.diametral_clearance_tube_baffle;
             _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = geometry?.diametral_clearance_shell_baffle;
             //GlobalDataCollectorService.GeometryCalculated = false;
+            if (geometry!=null)
+            {
+                CalculateGeometry(geometry);
+            }
         }
 
         //Выбор продукта Tube
@@ -896,9 +900,12 @@ namespace Ahed_project.Services.Global
                     var g = JsonConvert.DeserializeObject<GeometryFull>(result.data.ToString());
                     g.image_geometry = "https://ahead-api.ru" + g.image_geometry;
                     var ind = GlobalDataCollectorService.GeometryCollection.IndexOf(GlobalDataCollectorService.GeometryCollection.FirstOrDefault(x => x.geometry_id == g.geometry_id));
-                    App.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.GeometryCollection[ind] = g);
+                    if (ind != -1)
+                    {
+                        App.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.GeometryCollection[ind] = g);
+                    }
                     _geometryPageViewModel.Geometry = g;
-                    _overallCalculationViewModel.Name = _geometryPageViewModel.Geometry.name;
+                    _overallCalculationViewModel.Name = _geometryPageViewModel.Geometry?.name;
                     _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = g.diametral_clearance_tube_baffle;
                     _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = g.diametral_clearance_shell_baffle;
                 }

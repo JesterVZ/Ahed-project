@@ -18,8 +18,16 @@ namespace Ahed_project.MasterData
             {
                 return values[0]?.ToString();
             }
-            string value = StringToDoubleChecker.ToCorrectFormat(System.Convert.ToDouble(StringToDoubleChecker.ConvertFromInvariantCulture(values[0]?.ToString())).ToString($"F{Config.NumberOfDecimals}"));
-            return value;
+            var doubleValue = System.Convert.ToDouble(StringToDoubleChecker.ConvertFromInvariantCulture(values[0]?.ToString()));
+            if (doubleValue < 0.1 * Math.Pow(10,Config.NumberOfDecimals - 1))
+            {
+                return StringToDoubleChecker.ToCorrectFormat(doubleValue.ToString());
+            }
+            else 
+            {
+                string value = StringToDoubleChecker.ToCorrectFormat(doubleValue.ToString($"F{Config.NumberOfDecimals}"));
+                return value;
+            }
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -34,8 +42,16 @@ namespace Ahed_project.MasterData
                 {
                     return value?.ToString();
                 }
-                string val = StringToDoubleChecker.ToCorrectFormat(System.Convert.ToDouble(StringToDoubleChecker.ConvertFromInvariantCulture(value?.ToString())).ToString($"F{Config.NumberOfDecimals}"));
-                return val;
+                var doubleValue = System.Convert.ToDouble(StringToDoubleChecker.ConvertFromInvariantCulture(value?.ToString()));
+                if (doubleValue < 0.1 * Math.Pow(10, Config.NumberOfDecimals - 1))
+                {
+                    return StringToDoubleChecker.ToCorrectFormat(doubleValue.ToString());
+                }
+                else
+                {
+                    string val = StringToDoubleChecker.ToCorrectFormat(doubleValue.ToString($"F{Config.NumberOfDecimals}"));
+                    return val;
+                }
             }
             catch (Exception e)
             {

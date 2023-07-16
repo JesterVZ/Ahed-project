@@ -338,10 +338,12 @@ namespace Ahed_project.ViewModel.Pages
                 }
                 if(value.Key=="r_series"||value.Key=="unicus")
                 {
+                    HousingSpaceVis = Visibility.Hidden;
                     ShowScrapingFrequencyAndMotorPower = Visibility.Visible;
                 }
                 else
                 {
+                    HousingSpaceVis = HousingSpaceVis==Visibility.Hidden?Visibility.Visible:HousingSpaceVis;
                     ShowScrapingFrequencyAndMotorPower = Visibility.Collapsed;
                 }
             }
