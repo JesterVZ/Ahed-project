@@ -168,7 +168,7 @@
                     <TextBox Style="{StaticResource Enabled}" Margin="0,3,0,3" Text="{Binding Calculation.flow_tube, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" x:Name="flow_tube" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus"/>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">
                         <TextBox Style="{StaticResource SubEnabled}" Text="{Binding TubesInletTemp, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" x:Name="TubesInletTemp" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus"/>
-                        <TextBox Style="{StaticResource SubEnabled}" Margin="0,3,0,3" Text="{Binding Calculation.temperature_tube_outlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" x:Name="temperature_tube_outlet" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus"/>
+                        <TextBox Style="{StaticResource SubEnabled}" Margin="0,3,0,3" Text="{Binding Temperature_tube_outlet, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}" x:Name="temperature_tube_outlet" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus"/>
                     </StackPanel>
                     <TextBox Style="{StaticResource TextBoxHeatBalance}"  Text="{Binding Calculation.duty_tube, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}"  x:Name="duty_tube" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus"/>
                     <StackPanel Style="{StaticResource HeatBalanceChild}">

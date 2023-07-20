@@ -78,6 +78,30 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
 
+        private string _temperature_tube_outlet;
+        public string Temperature_tube_outlet
+        {
+            get => _temperature_tube_outlet;
+            set
+            {
+                value = StringToDoubleChecker.RemoveLetters(value, out var check);
+                if (!check)
+                {
+                    _temperature_tube_outlet= value;
+                    Calculation.temperature_tube_outlet = value;
+                    if (ShellProcessSelector.Value.ToLower() == "condensation")
+                    {
+                        Calculation.temperature_shell_outlet = value;
+                    }
+                }
+                else
+                {
+                    Temperature_tube_outlet = value;
+                }
+                ChangesMaded();
+            }
+        }
+
         private string _pressure_tube_inlet_value;
         public string Pressure_tube_inlet_value
         {
@@ -185,6 +209,7 @@ namespace Ahed_project.ViewModel.Pages
                     {
                         FlowShell = true;
                     }
+                    Temperature_tube_outlet = Calculation.temperature_tube_outlet;
                 }
             }
         }
