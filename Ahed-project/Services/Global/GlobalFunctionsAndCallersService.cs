@@ -338,7 +338,7 @@ namespace Ahed_project.Services.Global
                         Name = new DateTime(1, month.month_number, 1).ToString("MMMM")
                     };
                     node.Nodes.Add(monthNode);
-                    GlobalDataCollectorService.AllProducts.Add(month.Id, month.products.ToList());
+                    GlobalDataCollectorService.AllProducts.Add(month.Id, month.products.Where(x=>x.delete==0).ToList());
                 }
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Nodes.Add(node));
             }
@@ -832,7 +832,7 @@ namespace Ahed_project.Services.Global
             }
             string json = JsonConvert.SerializeObject(new
             {
-                head_exchange_type = geometry.head_exchange_type.ToLower().Replace(' ','_'),
+                head_exchange_type = geometry.head_exchange_type?.ToLower()?.Replace(' ','_'),
                 name = geometry.name,
                 outer_diameter_inner_side = geometry.outer_diameter_inner_side,
                 outer_diameter_tubes_side = geometry.outer_diameter_tubes_side,
@@ -844,8 +844,8 @@ namespace Ahed_project.Services.Global
                 material_shell_side = geometry.material_shell_side,
                 number_of_tubes = geometry.number_of_tubes,
                 tube_inner_length = geometry.tube_inner_length,
-                orientation = geometry.orientation.ToLower().Replace(' ', '_'),
-                tube_profile_tubes_side = geometry.tube_profile_tubes_side.ToLower().Replace(' ', '_'),
+                orientation = geometry.orientation?.ToLower()?.Replace(' ', '_'),
+                tube_profile_tubes_side = geometry.tube_profile_tubes_side?.ToLower()?.Replace(' ', '_'),
                 roughness_tubes_side = geometry.roughness_tubes_side,
                 roughness_shell_side = geometry.roughness_shell_side,
                 bundle_type = geometry.bundle_type,
@@ -870,10 +870,10 @@ namespace Ahed_project.Services.Global
                 nozzles_number_of_parallel_lines_shell_side = geometry.nozzles_number_of_parallel_lines_shell_side,
                 shell_nozzle_orientation = geometry.shell_nozzle_orientation,
                 tube_plate_layout_tube_pitch = geometry.tube_plate_layout_tube_pitch,
-                tube_plate_layout_tube_layout = geometry.tube_plate_layout_tube_layout.ToLower().Replace(' ', '_'),
+                tube_plate_layout_tube_layout = geometry.tube_plate_layout_tube_layout?.ToLower()?.Replace(' ', '_'),
                 tube_plate_layout_number_of_passes = geometry.tube_plate_layout_number_of_passes,
                 tube_plate_layout_div_plate_layout = geometry.tube_plate_layout_div_plate_layout,
-                tube_plate_layout_sealing_type = geometry.tube_plate_layout_sealing_type.ToLower().Replace(' ', '_'),
+                tube_plate_layout_sealing_type = geometry.tube_plate_layout_sealing_type?.ToLower()?.Replace(' ', '_'),
                 tube_plate_layout_housings_space = geometry.tube_plate_layout_housings_space,
                 tube_plate_layout_div_plate_thickness = geometry.tube_plate_layout_div_plate_thickness,
                 tube_plate_layout_tubeplate_thickness = geometry.tube_plate_layout_tubeplate_thickness,
@@ -1173,11 +1173,8 @@ namespace Ahed_project.Services.Global
             {
                 return result;
             }
-            //Удаление продукта добавить с правками запрос
-            var temp = GlobalDataCollectorService.AllProducts.FirstOrDefault(x=>x.Value.Any(x=>x.product_id== selectedProduct.product_id));
-            var product = temp.Value.FirstOrDefault(x=>x.product_id== selectedProduct.product_id);
-            GlobalDataCollectorService.AllProducts[temp.Key].Remove(product);
-            _productsViewModel.SearchCondition();
+            _sendDataService.SendToServer(ProjectMethods.DELETE_FLUID, productId: selectedProduct.product_id);
+            Reopen();
             return result;
         }
 
@@ -1191,6 +1188,11 @@ namespace Ahed_project.Services.Global
                 {
                     result = true;
                 }
+            }
+            var customerName = _projectPageViewModel.ProjectInfo.customer;
+            if (customerName=="APORA Agent"||customerName==userName)
+            {
+                result = true;
             }
             return result;
         }
@@ -1223,14 +1225,45 @@ namespace Ahed_project.Services.Global
 
         internal static void OverallCalculationTransition(List<string> toBeYellowed)
         {
-            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Warning", "Flow Parameters calculation finished with warnings")));
-            foreach (var item in toBeYellowed)
+            if (GlobalDataCollectorService.IsActiveOverall)
             {
-                var message = item.Contains("shell") ? "Shell side transition flow can lead to inaccurate area calculation. Consider changing to laminar or turbulent flow."
-                    : "Tube side transition flow can lead to inaccurate area calculation. Consider changing to laminar or turbulent flow.";
-                Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Warning", message)));
+                Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Warning", "Flow Parameters calculation finished with warnings")));
+                foreach (var item in toBeYellowed)
+                {
+                    var message = item.Contains("shell") ? "Shell side transition flow can lead to inaccurate area calculation. Consider changing to laminar or turbulent flow."
+                        : "Tube side transition flow can lead to inaccurate area calculation. Consider changing to laminar or turbulent flow.";
+                    Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Warning", message)));
+                }
+                _contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(OverallCalculationPage), "3") });
             }
-            _contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(OverallCalculationPage), "3") });
+        }
+
+        internal static void SaveProduct(ProductGet product)
+        {
+            if (String.IsNullOrEmpty(product.user_name))
+            {
+                product.user_name = _projectPageViewModel.ProjectInfo.customer;
+            }
+            string json =  JsonConvert.SerializeObject(product,new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore});
+            var res = _sendDataService.SendToServer(ProjectMethods.ADD_OR_UPDATE_PRODUCT, json);
+            Reopen();
+            var curr = Application.Current.Windows.OfType<ProductWindow>().ToList();
+            curr.ForEach(x => x.Topmost = true);
+        }
+
+
+        private static void Reopen()
+        {
+            _isProductsDownloaded = false;
+            DownLoadProducts();
+            var productWindows = Application.Current.Windows.OfType<ProductsWindow>().ToList();
+            productWindows.ForEach(x => x.Close());
+            _pageService.OpenWindow<ProductsWindow>(OpenWindowType.WINDOW);
+        }
+
+        internal static void RaiseOverall()
+        {
+            _overallCalculationViewModel.Overall.OnPropertyChanged(String.Empty,false);
         }
     }
 }

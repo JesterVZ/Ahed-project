@@ -27,5 +27,7 @@
 	"DeleteProject": "https://ahead-api.ru/api/he/project/delete/{projectId}",
 	"DeleteCalculation": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/delete",
 	"CopyCalculation": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/copy",
-	"RestoreDefaultsBaffle": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/baffle/restore"
+	"RestoreDefaultsBaffle": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/baffle/restore",
+	"AddOrUpdateFluid": "https://ahead-api.ru/api/he/product/update-or-create",
+	"DeleteFluid": "https://ahead-api.ru/api/he/project/delete/{productId}"
 }

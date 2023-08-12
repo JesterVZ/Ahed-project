@@ -1,4 +1,5 @@
 ﻿using Ahed_project.MasterData.Products;
+using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,7 @@ namespace Ahed_project.ViewModel.Windows
         }
         public ICommand SaveProduct => new DelegateCommand(() => 
         {
-
+            GlobalFunctionsAndCallersService.SaveProduct(Product);
         });
     }
 }

@@ -43,7 +43,7 @@ namespace Ahed_project.MasterData
                     return value?.ToString();
                 }
                 var doubleValue = System.Convert.ToDouble(StringToDoubleChecker.ConvertFromInvariantCulture(value?.ToString()));
-                if (doubleValue < 0.1 * Math.Pow(10, Config.NumberOfDecimals - 1))
+                if (Math.Abs(doubleValue) < 0.1 / Math.Pow(10, Config.NumberOfDecimals - 1))
                 {
                     return StringToDoubleChecker.ToCorrectFormat(doubleValue.ToString());
                 }

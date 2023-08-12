@@ -74,5 +74,20 @@ namespace Ahed_project.Services.Global
         #region Baffle
         public static bool IsBaffleCalculated { get; set; }
         #endregion
+        private static bool _isActiveOverall;
+        public static bool IsActiveOverall {
+            get
+            {
+                return _isActiveOverall;
+            } 
+            set 
+            {
+                _isActiveOverall = value;
+                if (value)
+                {
+                    GlobalFunctionsAndCallersService.RaiseOverall();
+                }
+            } 
+        } 
     }
 }

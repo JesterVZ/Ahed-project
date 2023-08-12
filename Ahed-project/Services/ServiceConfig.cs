@@ -52,5 +52,7 @@ namespace Ahed_project.Services
         public string DeleteCalculation { get; set; }
         public string CopyCalculation { get; set; }
         public string RestoreDefaultsBaffle { get; set; }
+        public string AddOrUpdateFluid { get; set; }
+        public string DeleteFluid { get; set; }
     }
 }

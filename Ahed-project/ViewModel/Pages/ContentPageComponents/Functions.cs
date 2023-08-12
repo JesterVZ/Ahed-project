@@ -330,6 +330,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 && HeatBalanceValidationStatusSource?.Contains("check") == true
                 && BafflesValidationStatusSource?.Contains("check") == true)
             {
+                OverallCalculationState.IsEnabled= true;
                 return true;
             }
             OverallCalculationState.IsEnabled = false;
@@ -345,6 +346,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                && BafflesValidationStatusSource?.Contains("check") == true
                && OverallValidationStatusSource?.Contains("check") == true)
             {
+                GraphState.IsEnabled= true;
                 return true;
             }
             GraphState.IsEnabled = false;

@@ -52,7 +52,7 @@ namespace Ahed_project.UserControlsCustom
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            CustomTextBox.IsEnabled = true;
+            CustomTextBox.IsReadOnly = false;
             IsChecked = 1;
             CustomTextBox.Background = new SolidColorBrush(Colors.White);
             //CustomTextBox.Background = new SolidColorBrush(Color.FromRgb(249, 239, 229));
@@ -60,7 +60,7 @@ namespace Ahed_project.UserControlsCustom
 
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            CustomTextBox.IsEnabled = false;
+            CustomTextBox.IsReadOnly = true;
             IsChecked = 0;
             CustomTextBox.Background = new SolidColorBrush(Color.FromRgb(249, 239, 229));
         }

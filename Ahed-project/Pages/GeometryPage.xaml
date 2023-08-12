@@ -298,8 +298,8 @@
                             <Label Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Height="26" Margin="4,0,0,0">mm</Label>
 
                             <TextBox x:Name="tube_plate_layout_max_nr_tubes" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_max_nr_tubes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource Converter}}" Grid.Column="2" Grid.Row="0" Margin="3,4,3,4"/>
-                            <TextBox x:Name="tube_plate_layout_tube_distribution" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_tube_distribution, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" Margin="0,4,3,4" Grid.ColumnSpan="2"/>
-                            <TextBox x:Name="tube_plate_layout_tube_tube_spacing" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_tube_tube_spacing, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="2" Margin="3,4,3,4"/>
+                            <TextBox x:Name="tube_plate_layout_tube_distribution" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_tube_distribution, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" Margin="0,4,3,4" Grid.ColumnSpan="2"/>
+                            <TextBox x:Name="tube_plate_layout_tube_tube_spacing" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Style="{StaticResource Colored}" Text="{Binding Geometry.tube_plate_layout_tube_tube_spacing, Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="2" Margin="3,4,3,4"/>
                         </Grid>
                     </Grid>
                 </Grid>

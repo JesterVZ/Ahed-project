@@ -30,6 +30,8 @@
         DELETE_PROJECT,
         DELETE_CALCULATION,
         COPY_CALCULATION,
-        RESTORE_BAFFLE
+        RESTORE_BAFFLE,
+        ADD_OR_UPDATE_PRODUCT,
+        DELETE_FLUID
     }
 }

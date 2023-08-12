@@ -20,10 +20,10 @@
         <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
             <Grid Background="White" Width="1800" HorizontalAlignment="Left">
                 <StackPanel Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal">
-                        <Button Content="Calculate" Command="{Binding Calculate}" Margin="0 0 12 0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6" IsEnabled="{Binding IsProcess}"/>
-                        <Button Content="Batch calculation"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6" IsEnabled="False"/>
-                        <TextBox Style="{StaticResource Colored}" Text="{Binding Name}" IsReadOnly="True"  Width="350" Margin="12 0 0 0"/>
+                    <StackPanel Height="25" Orientation="Horizontal" Background="Yellow">
+                        <Button Content="Calculate" Command="{Binding Calculate}" Margin="0 0 12 0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="121" Background="#fc6" IsEnabled="{Binding IsProcess}"/>
+                        <Button Content="Batch calculation"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="121" Background="#fc6" IsEnabled="False"/>
+                        <TextBox Style="{StaticResource Colored}" Text="{Binding Name}" IsReadOnly="True" VerticalAlignment="Center" Height="20"  Width="350" Margin="12 0 0 0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Margin="250,0,0,0">Flow Type</Label>

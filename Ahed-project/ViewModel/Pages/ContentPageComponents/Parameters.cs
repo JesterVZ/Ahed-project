@@ -1,4 +1,5 @@
 ﻿using Ahed_project.Pages;
+using Ahed_project.Services.Global;
 using System.Windows.Controls;
 
 namespace Ahed_project.ViewModel.ContentPageComponents
@@ -12,6 +13,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             set
             {
                 _selectedPage = value;
+                GlobalDataCollectorService.IsActiveOverall = value == 6;
             }
         }
         public string ProjectValidationStatusSource { get; set; }
