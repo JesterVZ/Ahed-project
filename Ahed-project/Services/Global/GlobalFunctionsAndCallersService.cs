@@ -149,7 +149,7 @@ namespace Ahed_project.Services.Global
             var template = _sendDataService.ReturnCopy();
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка геометрий...")));
             var response = template.SendToServer(ProjectMethods.GET_GEOMETRIES, "");
-            GlobalDataCollectorService.GeometryCollection = new ObservableCollection<GeometryFull>(JsonConvert.DeserializeObject<IEnumerable<GeometryFull>>(response).Where(x=>x.owner== "HRS Agent"));
+            GlobalDataCollectorService.GeometryCollection = new ObservableCollection<GeometryFull>(JsonConvert.DeserializeObject<IEnumerable<GeometryFull>>(response)/*.Where(x=>x.owner== "HRS Agent")*/);
             foreach (var g in GlobalDataCollectorService.GeometryCollection)
             {
                 if (!String.IsNullOrEmpty(g.image_geometry))
