@@ -13,6 +13,7 @@
     <None Remove="Visual\banner_hrs.jpg" />
     <None Remove="Visual\logo_header.svg" />
     <None Remove="Visual\splash_screen.png" />
+    <None Remove="Visual\splash_screen4watermark.png" />
     <None Remove="Visual\template.png" />
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +119,11 @@
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <SplashScreen Include="Visual\splash_screen.png" />
+    <Content Include="Visual\splash_screen4watermark.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <SplashScreen Include="Visual\splash_screen.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </SplashScreen>
   </ItemGroup>
 </Project>

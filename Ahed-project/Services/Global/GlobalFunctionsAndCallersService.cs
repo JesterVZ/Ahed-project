@@ -47,12 +47,13 @@ namespace Ahed_project.Services.Global
         private static ProjectsWindowViewModel _projectsWindowViewModel;
         private static PageService _pageService;
         private static ProductsViewModel _productsViewModel;
+        private static GraphsPageViewModel _graphsPageViewModel;
 
         public GlobalFunctionsAndCallersService(SendDataService sendDataService, ContentPageViewModel contentPage,
             ProjectPageViewModel projectPageViewModel, IMapper mapper, HeatBalanceViewModel heatBalanceViewModel, TubesFluidViewModel tubesFluidViewModel,
             ShellFluidViewModel shellFluidViewModel, GeometryPageViewModel geometryPageViewModel, BafflesPageViewModel bufflesPageViewModel, MainViewModel mainViewModel,
             OverallCalculationViewModel overallCalculationViewModel, CreateExcelService createExcelService, ProjectsWindowViewModel projectsWindowViewModel,
-            PageService pageService, ProductsViewModel productsViewModel)
+            PageService pageService, ProductsViewModel productsViewModel, GraphsPageViewModel graphsPageViewModel)
         {
             _sendDataService = sendDataService;
             _contentPageViewModel = contentPage;
@@ -69,6 +70,7 @@ namespace Ahed_project.Services.Global
             _projectsWindowViewModel = projectsWindowViewModel;
             _pageService= pageService;
             _productsViewModel= productsViewModel;
+            _graphsPageViewModel= graphsPageViewModel;
         }
 
         //Первичная загрузка после входа
@@ -172,6 +174,7 @@ namespace Ahed_project.Services.Global
             {
                 _geometryPageViewModel.Geometry = GlobalDataCollectorService.GeometryCollection.FirstOrDefault(x => x.geometry_catalog_id == id);
                 _overallCalculationViewModel.Name = _geometryPageViewModel.Geometry?.name;
+                RefreshGraphsData();
                 _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = _geometryPageViewModel?.Geometry.diametral_clearance_tube_baffle;
                 _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = _geometryPageViewModel?.Geometry.diametral_clearance_shell_baffle;
             }
@@ -179,6 +182,7 @@ namespace Ahed_project.Services.Global
             {
                 _geometryPageViewModel.Geometry = new GeometryFull();
                 _overallCalculationViewModel.Name = _geometryPageViewModel.Geometry?.name;
+                RefreshGraphsData();
             }
         }
 
@@ -211,6 +215,7 @@ namespace Ahed_project.Services.Global
         //запрос к Overall (когда нажали calculate или просто переключились на вкладку)
         public static void CalculateOverall(OverallFull overall = null)
         {
+            _isCalculatingToLogOnce = true;
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Начало расчета overall...")));
             int calculation_id;
             using (var context = new EFContext())
@@ -295,6 +300,8 @@ namespace Ahed_project.Services.Global
                 //_contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(HeatBalancePage), overallState) });
                 _contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(OverallCalculationPage), "2") });
             });
+            _isCalculatingToLogOnce = false;
+            RefreshGraphsData();
         }
 
         // Загрузка продуктов
@@ -556,6 +563,7 @@ namespace Ahed_project.Services.Global
                 _heatBalanceViewModel.Raise(nameof(_heatBalanceViewModel.TubesInletTemp));
             }
             _heatBalanceViewModel.Raise("Calculation");
+            RefreshGraphsData();
         }
 
         public static void CalculatePressure(string temperature_inlet, CalculationFull calc, bool isShell)
@@ -586,6 +594,7 @@ namespace Ahed_project.Services.Global
                 _heatBalanceViewModel.Calculation.pressure_tube_inlet = data.pressure;
             }
             _heatBalanceViewModel.Raise("Calculation");
+            RefreshGraphsData();
         }
 
         //Выбор расчета
@@ -676,6 +685,7 @@ namespace Ahed_project.Services.Global
             }
             //_contentPageViewModel.Validation(false);
             _projectPageViewModel.SelectCalc(calc);
+            RefreshGraphsData();
         }
         //выбор геометрии
         public static void SelectGeometry(GeometryFull geometry)
@@ -700,6 +710,7 @@ namespace Ahed_project.Services.Global
 
             _geometryPageViewModel.Geometry = geometry;
             _overallCalculationViewModel.Name = _geometryPageViewModel.Geometry?.name;
+            RefreshGraphsData();
             _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = geometry?.diametral_clearance_tube_baffle;
             _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = geometry?.diametral_clearance_shell_baffle;
             //GlobalDataCollectorService.GeometryCalculated = false;
@@ -719,6 +730,7 @@ namespace Ahed_project.Services.Global
                 UpdateCalculationProducts();
             }
             _tubesFluidViewModel.Product = product;
+            RefreshGraphsData();
             Task.Run(GetTabState);
         }
         //ссылка на _tubesFluidViewModel.Product
@@ -742,6 +754,7 @@ namespace Ahed_project.Services.Global
                 UpdateCalculationProducts();
             }
             _shellFluidViewModel.Product = product;
+            RefreshGraphsData();
             Task.Run(GetTabState);
         }
 
@@ -907,6 +920,7 @@ namespace Ahed_project.Services.Global
                     }
                     _geometryPageViewModel.Geometry = g;
                     _overallCalculationViewModel.Name = _geometryPageViewModel.Geometry?.name;
+                    RefreshGraphsData();
                     _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = g.diametral_clearance_tube_baffle;
                     _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = g.diametral_clearance_shell_baffle;
                 }
@@ -1223,9 +1237,11 @@ namespace Ahed_project.Services.Global
             return _contentPageViewModel.GetPageIsLocked(v);
         }
 
+        private static bool _isCalculatingToLogOnce { get; set; }
+
         internal static void OverallCalculationTransition(List<string> toBeYellowed)
         {
-            if (GlobalDataCollectorService.IsActiveOverall)
+            if (GlobalDataCollectorService.IsActiveOverall&&!_isCalculatingToLogOnce)
             {
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Warning", "Flow Parameters calculation finished with warnings")));
                 foreach (var item in toBeYellowed)
@@ -1264,6 +1280,29 @@ namespace Ahed_project.Services.Global
         internal static void RaiseOverall()
         {
             _overallCalculationViewModel.Overall.OnPropertyChanged(String.Empty,false);
+        }
+
+        internal static void RefreshGraphsData()
+        {
+            _graphsPageViewModel.TubesFluid= _tubesFluidViewModel.Product?.name;
+            _graphsPageViewModel.ShellFluid = _shellFluidViewModel.Product?.name;
+            _graphsPageViewModel.TubesFlow = _heatBalanceViewModel.Calculation?.flow_tube;
+            _graphsPageViewModel.ShellFlow = _heatBalanceViewModel.Calculation?.flow_shell;
+            _graphsPageViewModel.TubesTempIn = _heatBalanceViewModel.Calculation?.temperature_tube_inlet;
+            _graphsPageViewModel.ShellTempIn = _heatBalanceViewModel.Calculation?.temperature_shell_inlet;
+            _graphsPageViewModel.TubesTempOut = _heatBalanceViewModel.Calculation?.temperature_tube_outlet;
+            _graphsPageViewModel.ShellTempOut = _heatBalanceViewModel.Calculation?.temperature_tube_outlet;
+            _graphsPageViewModel.ModuleName = _geometryPageViewModel.Geometry?.name;
+            //_graphsPageViewModel.NrModules = _geometryPageViewModel.Geometry?.nr_baffles;
+            _graphsPageViewModel.ModulsPerBlock = _geometryPageViewModel.Geometry?.nozzles_number_of_modules_pre_block;
+            //_graphsPageViewModel.NumberOfBlocks = _geometryPageViewModel.Geometry?.;
+            //_graphsPageViewModel.SurfaceAreaRequired = _geometryPageViewModel.Geometry?.;
+            //_graphsPageViewModel.AreaFitted = _geometryPageViewModel.Geometry?.;
+            _graphsPageViewModel.GraphsData =  _overallCalculationViewModel.Overall?.array_graph;
+            if (_graphsPageViewModel.GraphsData != null)
+            {
+                _graphsPageViewModel.SetGraphsData();
+            }
         }
     }
 }
