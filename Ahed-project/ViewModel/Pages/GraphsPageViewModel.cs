@@ -197,7 +197,7 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     if (Double.TryParse(elem.y.ToString(), out var yDouble))
                     {
-                        tempSeries.Points.Add(new DataPoint(elem.x, yDouble));
+                        tempSeries.Points.Add(new DataPoint(Math.Pow(10,elem.x), yDouble));
                     }
                 }
                 ShellGraph.Series.Add(tempSeries);
@@ -209,7 +209,7 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     if (Double.TryParse(elem.y.ToString(), out var yDouble))
                     {
-                        tempSeries.Points.Add(new DataPoint(elem.x, yDouble));
+                        tempSeries.Points.Add(new DataPoint(Math.Pow(10, elem.x), yDouble));
                     }
                 }
                 ShellGraph.Series.Add(tempSeries);
@@ -242,7 +242,7 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     if (Double.TryParse(elem.y.ToString(), out var yDouble))
                     {
-                        tempSeries.Points.Add(new DataPoint(elem.x, yDouble));
+                        tempSeries.Points.Add(new DataPoint(Math.Pow(10, elem.x), yDouble));
                     }
                 }
                 TubesGraph.Series.Add(tempSeries);
@@ -254,7 +254,7 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     if (Double.TryParse(elem.y.ToString(), out var yDouble))
                     {
-                        tempSeries.Points.Add(new DataPoint(elem.x, yDouble));
+                        tempSeries.Points.Add(new DataPoint(Math.Pow(10, elem.x), yDouble));
                     }
                 }
                 TubesGraph.Series.Add(tempSeries);
