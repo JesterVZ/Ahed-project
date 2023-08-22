@@ -195,9 +195,12 @@ namespace Ahed_project.ViewModel.Pages
                 var tempSeries = new LineSeries() { Color = OxyColor.Parse("#FF0000"), Title = "Hard Corrugation", RenderInLegend = true };
                 foreach (var elem in GraphsData.nusselt_shell_hard)
                 {
-                    if (Double.TryParse(elem.y.ToString(), out var yDouble))
+                    if (elem.y != null)
                     {
-                        tempSeries.Points.Add(new DataPoint(Math.Pow(10,elem.x), yDouble));
+                        if (Double.TryParse(elem.y.ToString(), out var yDouble))
+                        {
+                            tempSeries.Points.Add(new DataPoint(Math.Pow(10, elem.x), yDouble));
+                        }
                     }
                 }
                 ShellGraph.Series.Add(tempSeries);
@@ -207,9 +210,12 @@ namespace Ahed_project.ViewModel.Pages
                 var tempSeries = new LineSeries() { Color = OxyColor.Parse("#0000FF"), Title = "Smooth Tube", RenderInLegend = true };
                 foreach (var elem in GraphsData.nusselt_shell_smooth)
                 {
-                    if (Double.TryParse(elem.y.ToString(), out var yDouble))
+                    if (elem.y != null)
                     {
-                        tempSeries.Points.Add(new DataPoint(Math.Pow(10, elem.x), yDouble));
+                        if (Double.TryParse(elem.y.ToString(), out var yDouble))
+                        {
+                            tempSeries.Points.Add(new DataPoint(Math.Pow(10, elem.x), yDouble));
+                        }
                     }
                 }
                 ShellGraph.Series.Add(tempSeries);
@@ -240,9 +246,12 @@ namespace Ahed_project.ViewModel.Pages
                 var tempSeries = new LineSeries() { Color = OxyColor.Parse("#FF0000"), Title = "Hard Corrugation", RenderInLegend = true };
                 foreach (var elem in GraphsData.nusselt_tube_hard)
                 {
-                    if (Double.TryParse(elem.y.ToString(), out var yDouble))
+                    if (elem.y != null)
                     {
-                        tempSeries.Points.Add(new DataPoint(Math.Pow(10, elem.x), yDouble));
+                        if (Double.TryParse(elem.y.ToString(), out var yDouble))
+                        {
+                            tempSeries.Points.Add(new DataPoint(Math.Pow(10, elem.x), yDouble));
+                        }
                     }
                 }
                 TubesGraph.Series.Add(tempSeries);
@@ -252,9 +261,12 @@ namespace Ahed_project.ViewModel.Pages
                 var tempSeries = new LineSeries() { Color = OxyColor.Parse("#0000FF"), Title = "Smooth Tube", RenderInLegend = true };
                 foreach (var elem in GraphsData.nusselt_tube_smooth)
                 {
-                    if (Double.TryParse(elem.y.ToString(), out var yDouble))
+                    if (elem.y != null)
                     {
-                        tempSeries.Points.Add(new DataPoint(Math.Pow(10, elem.x), yDouble));
+                        if (Double.TryParse(elem.y.ToString(), out var yDouble))
+                        {
+                            tempSeries.Points.Add(new DataPoint(Math.Pow(10, elem.x), yDouble));
+                        }
                     }
                 }
                 TubesGraph.Series.Add(tempSeries);
@@ -285,9 +297,12 @@ namespace Ahed_project.ViewModel.Pages
                 var tempSeries = new LineSeries() { Color = OxyColor.Parse("#808080"), BrokenLineStyle = LineStyle.LongDash, LineStyle = LineStyle.LongDash, Title = "Tube temp.", RenderInLegend = true };
                 foreach (var elem in GraphsData.tube_temp)
                 {
-                    if (Double.TryParse(elem.y.ToString(), out var yDouble))
+                    if (elem.y != null)
                     {
-                        tempSeries.Points.Add(new DataPoint(elem.x, yDouble));
+                        if (Double.TryParse(elem.y.ToString(), out var yDouble))
+                        {
+                            tempSeries.Points.Add(new DataPoint(elem.x, yDouble));
+                        }
                     }
                 }
                 Temperatures.Series.Add(tempSeries);
@@ -297,9 +312,12 @@ namespace Ahed_project.ViewModel.Pages
                 var tempSeries = new LineSeries() { Color = OxyColor.Parse("#FF0000"), Title = "Bulk Fluid T. Shell Side", RenderInLegend = true };
                 foreach (var elem in GraphsData.bulk_fluid_shell_side)
                 {
-                    if (Double.TryParse(elem.y.ToString(), out var yDouble))
+                    if (elem.y != null)
                     {
-                        tempSeries.Points.Add(new DataPoint(elem.x, yDouble));
+                        if (Double.TryParse(elem.y.ToString(), out var yDouble))
+                        {
+                            tempSeries.Points.Add(new DataPoint(elem.x, yDouble));
+                        }
                     }
                 }
                 Temperatures.Series.Add(tempSeries);
@@ -309,9 +327,12 @@ namespace Ahed_project.ViewModel.Pages
                 var tempSeries = new LineSeries() { Color = OxyColor.Parse("#FF0000"), Title = "Fluid Wall T. Shell Side", LineStyle = LineStyle.LongDash, RenderInLegend = true };
                 foreach (var elem in GraphsData.fluid_wall_shell_side)
                 {
-                    if (Double.TryParse(elem.y.ToString(), out var yDouble))
+                    if (elem.y != null)
                     {
-                        tempSeries.Points.Add(new DataPoint(elem.x, yDouble));
+                        if (Double.TryParse(elem.y.ToString(), out var yDouble))
+                        {
+                            tempSeries.Points.Add(new DataPoint(elem.x, yDouble));
+                        }
                     }
                 }
                 Temperatures.Series.Add(tempSeries);
@@ -321,9 +342,12 @@ namespace Ahed_project.ViewModel.Pages
                 var tempSeries = new LineSeries() { Color = OxyColor.Parse("#0000FF"), Title = "Bulk Fluid T. Tube Side", RenderInLegend = true };
                 foreach (var elem in GraphsData.bulk_fluid_tube_side)
                 {
-                    if (Double.TryParse(elem.y.ToString(), out var yDouble))
+                    if (elem.y != null)
                     {
-                        tempSeries.Points.Add(new DataPoint(elem.x, yDouble));
+                        if (Double.TryParse(elem.y.ToString(), out var yDouble))
+                        {
+                            tempSeries.Points.Add(new DataPoint(elem.x, yDouble));
+                        }
                     }
                 }
                 Temperatures.Series.Add(tempSeries);
@@ -333,9 +357,12 @@ namespace Ahed_project.ViewModel.Pages
                 var tempSeries = new LineSeries() { Color = OxyColor.Parse("#0000FF"), Title = "Fluid Wall T. Tube Side", LineStyle = LineStyle.LongDash, RenderInLegend = true };
                 foreach (var elem in GraphsData.fluid_wall_tube_side)
                 {
-                    if (Double.TryParse(elem.y.ToString(), out var yDouble))
+                    if (elem.y != null)
                     {
-                        tempSeries.Points.Add(new DataPoint(elem.x, yDouble));
+                        if (Double.TryParse(elem.y.ToString(), out var yDouble))
+                        {
+                            tempSeries.Points.Add(new DataPoint(elem.x, yDouble));
+                        }
                     }
                 }
                 Temperatures.Series.Add(tempSeries);
