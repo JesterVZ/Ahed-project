@@ -1195,16 +1195,7 @@ namespace Ahed_project.Services.Global
         private static bool CheckAccess(string userName)
         {
             bool result = false;
-            using (var context = new EFContext())
-            {
-                var user = context.Users.FirstOrDefault(x => x.Id == GlobalDataCollectorService.UserId);
-                if (user.Email == "APORA Agent" || user.Email == userName)
-                {
-                    result = true;
-                }
-            }
-            var customerName = _projectPageViewModel.ProjectInfo.customer;
-            if (customerName=="APORA Agent"||customerName==userName)
+            if (GlobalDataCollectorService.User.name == "APORA Agent"|| GlobalDataCollectorService.User.name == userName)
             {
                 result = true;
             }
@@ -1258,7 +1249,7 @@ namespace Ahed_project.Services.Global
         {
             if (String.IsNullOrEmpty(product.user_name))
             {
-                product.user_name = _projectPageViewModel.ProjectInfo.customer;
+                product.user_name = GlobalDataCollectorService.User.name;
             }
             string json =  JsonConvert.SerializeObject(product,new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore});
             var res = _sendDataService.SendToServer(ProjectMethods.ADD_OR_UPDATE_PRODUCT, json);

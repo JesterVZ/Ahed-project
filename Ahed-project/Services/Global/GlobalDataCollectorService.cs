@@ -88,6 +88,8 @@ namespace Ahed_project.Services.Global
                     GlobalFunctionsAndCallersService.RaiseOverall();
                 }
             } 
-        } 
+        }
+
+        public static User User { get; internal set; }
     }
 }

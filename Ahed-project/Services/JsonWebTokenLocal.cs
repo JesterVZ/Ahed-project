@@ -101,6 +101,7 @@ namespace Ahed_project.Services
                     field.SetValue(user, value);
                 }
             }
+            GlobalDataCollectorService.User = user;
             return user;
         }
     }
