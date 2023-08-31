@@ -89,7 +89,7 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     _temperature_tube_outlet= value;
                     Calculation.temperature_tube_outlet = value;
-                    if (ShellProcessSelector.Value.ToLower() == "condensation")
+                    if (ShellProcessSelector.Value?.ToLower() == "condensation")
                     {
                         Calculation.temperature_shell_outlet = value;
                     }
@@ -299,7 +299,7 @@ namespace Ahed_project.ViewModel.Pages
 
         public ICommand ChangeProcess => new DelegateCommand(() =>
         {
-            if (ShellProcessSelector.Value.ToLower() == "condensation")
+            if (ShellProcessSelector.Value?.ToLower() == "condensation")
             {
                 FlowShell = true;
                 TSIE = false;
