@@ -907,22 +907,25 @@ namespace Ahed_project.Services.Global
                 try
                 {
                     Responce result = JsonConvert.DeserializeObject<Responce>(response);
-                    for (int i = 0; i < result.logs.Count; i++)
+                    if (result?.data != null)
                     {
-                        Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
+                        for (int i = 0; i < result.logs?.Count; i++)
+                        {
+                            Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
+                        }
+                        var g = JsonConvert.DeserializeObject<GeometryFull>(result.data.ToString());
+                        g.image_geometry = "https://ahead-api.ru" + g.image_geometry;
+                        var ind = GlobalDataCollectorService.GeometryCollection.IndexOf(GlobalDataCollectorService.GeometryCollection.FirstOrDefault(x => x.geometry_id == g.geometry_id));
+                        if (ind != -1)
+                        {
+                            App.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.GeometryCollection[ind] = g);
+                        }
+                        _geometryPageViewModel.Geometry = g;
+                        _overallCalculationViewModel.Name = _geometryPageViewModel.Geometry?.name;
+                        RefreshGraphsData();
+                        _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = g.diametral_clearance_tube_baffle;
+                        _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = g.diametral_clearance_shell_baffle;
                     }
-                    var g = JsonConvert.DeserializeObject<GeometryFull>(result.data.ToString());
-                    g.image_geometry = "https://ahead-api.ru" + g.image_geometry;
-                    var ind = GlobalDataCollectorService.GeometryCollection.IndexOf(GlobalDataCollectorService.GeometryCollection.FirstOrDefault(x => x.geometry_id == g.geometry_id));
-                    if (ind != -1)
-                    {
-                        App.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.GeometryCollection[ind] = g);
-                    }
-                    _geometryPageViewModel.Geometry = g;
-                    _overallCalculationViewModel.Name = _geometryPageViewModel.Geometry?.name;
-                    RefreshGraphsData();
-                    _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = g.diametral_clearance_tube_baffle;
-                    _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = g.diametral_clearance_shell_baffle;
                 }
                 catch (Exception e)
                 {
