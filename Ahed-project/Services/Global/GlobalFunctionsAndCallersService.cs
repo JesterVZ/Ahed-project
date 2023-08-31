@@ -395,7 +395,7 @@ namespace Ahed_project.Services.Global
             {
                 _mainViewModel.Title = "";
                 _projectPageViewModel.Calculations.Clear();
-                SetCalculation(null);
+                SetCalculation(null, false);
             }
             _projectPageViewModel.FieldsState = false;
             //_overallCalculationViewModel.Overall = new OverallFull();
@@ -416,7 +416,7 @@ namespace Ahed_project.Services.Global
                         Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations = JsonConvert.DeserializeObject<ObservableCollection<CalculationFull>>(result.data.ToString()));
                         if (_projectPageViewModel.Calculations.Count > 0)
                         {
-                            SetCalculation(_projectPageViewModel.Calculations.First());
+                            SetCalculation(_projectPageViewModel.Calculations.First(),false);
 
                         }
 
@@ -598,7 +598,7 @@ namespace Ahed_project.Services.Global
         }
 
         //Выбор расчета
-        public static void SetCalculation(CalculationFull calc)
+        public static void SetCalculation(CalculationFull calc, bool isNewProject)
         {
             if (calc != null)
             {
@@ -632,7 +632,7 @@ namespace Ahed_project.Services.Global
                     //geometry = GlobalDataCollectorService.GeometryCollection.FirstOrDefault(x => x.geometry_id == geometry.geometry_catalog_id);
                     if (geometry != null)
                     {
-                        SelectGeometry(geometry);
+                        SelectGeometry(geometry, isNewProject);
                     }
                 }
                 var baffleResponse = _sendDataService.SendToServer(ProjectMethods.GET_BAFFLE, null, calc?.project_id.ToString(), calc?.calculation_id.ToString());
@@ -680,15 +680,16 @@ namespace Ahed_project.Services.Global
             }
             else
             {
-                SelectGeometry(null);
+                SelectGeometry(null,isNewProject);
                 _bufflesPageViewModel.Baffle = new();
             }
             //_contentPageViewModel.Validation(false);
             _projectPageViewModel.SelectCalc(calc);
             RefreshGraphsData();
         }
+
         //выбор геометрии
-        public static void SelectGeometry(GeometryFull geometry)
+        public static void SelectGeometry(GeometryFull geometry, bool isNewProject)
         {
             if (geometry != null)
             {
@@ -714,7 +715,7 @@ namespace Ahed_project.Services.Global
             _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = geometry?.diametral_clearance_tube_baffle;
             _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = geometry?.diametral_clearance_shell_baffle;
             //GlobalDataCollectorService.GeometryCalculated = false;
-            if (geometry!=null)
+            if (geometry!=null&&!isNewProject)
             {
                 CalculateGeometry(geometry);
             }
@@ -845,7 +846,7 @@ namespace Ahed_project.Services.Global
             }
             string json = JsonConvert.SerializeObject(new
             {
-                head_exchange_type = geometry.head_exchange_type?.ToLower()?.Replace(' ','_'),
+                head_exchange_type = geometry.head_exchange_type?.ToLower()?.Replace(' ', '_'),
                 name = geometry.name,
                 outer_diameter_inner_side = geometry.outer_diameter_inner_side,
                 outer_diameter_tubes_side = geometry.outer_diameter_tubes_side,
@@ -1037,7 +1038,7 @@ namespace Ahed_project.Services.Global
 
                     Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations.Clear());
                     CreateCalculation("Default");
-                    SetCalculation(_projectPageViewModel.Calculations.FirstOrDefault());
+                    SetCalculation(_projectPageViewModel.Calculations.FirstOrDefault(),true);
                 }
                 catch (Exception e)
                 {

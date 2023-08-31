@@ -111,7 +111,7 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _selectedCalculation = value;
-                GlobalFunctionsAndCallersService.SetCalculation(_selectedCalculation);
+                GlobalFunctionsAndCallersService.SetCalculation(_selectedCalculation, false);
             }
         }
         public ObservableCollection<CalculationFull> Calculations { get; set; }
