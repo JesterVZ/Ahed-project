@@ -73,7 +73,7 @@ namespace Ahed_project.UserControlsCustom
             (d as CustomCheck).IsChecked = (int)e.NewValue;
         }
 
-        private void CustomTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void CustomTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             InputText = CustomTextBox.Text;
         }
