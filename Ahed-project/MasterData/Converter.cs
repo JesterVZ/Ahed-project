@@ -19,9 +19,9 @@ namespace Ahed_project.MasterData
                 return values[0]?.ToString();
             }
             var doubleValue = System.Convert.ToDouble(StringToDoubleChecker.ConvertFromInvariantCulture(values[0]?.ToString()));
-            if (doubleValue < 0.1 * Math.Pow(10,Config.NumberOfDecimals - 1))
+            if ((doubleValue < 0.1 * Math.Pow(10,Config.NumberOfDecimals - 1)&&doubleValue!=0))
             {
-                return StringToDoubleChecker.ToCorrectFormat(doubleValue.ToString());
+                return string.Format("{0:0.##E+00}", doubleValue);
             }
             else 
             {
@@ -43,9 +43,9 @@ namespace Ahed_project.MasterData
                     return value?.ToString();
                 }
                 var doubleValue = System.Convert.ToDouble(StringToDoubleChecker.ConvertFromInvariantCulture(value?.ToString()));
-                if (Math.Abs(doubleValue) < 0.1 / Math.Pow(10, Config.NumberOfDecimals - 1))
+                if ((Math.Abs(doubleValue) < 0.1 / Math.Pow(10, Config.NumberOfDecimals - 1))&&doubleValue!=0)
                 {
-                    return StringToDoubleChecker.ToCorrectFormat(doubleValue.ToString());
+                    return string.Format("{0:0.##E+00}", doubleValue);
                 }
                 else
                 {
