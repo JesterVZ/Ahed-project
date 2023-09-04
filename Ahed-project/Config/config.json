@@ -29,5 +29,5 @@
 	"CopyCalculation": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/copy",
 	"RestoreDefaultsBaffle": "https://ahead-api.ru/api/he/project/{projectId}/calculation/{calculationId}/baffle/restore",
 	"AddOrUpdateFluid": "https://ahead-api.ru/api/he/product/update-or-create",
-	"DeleteFluid": "https://ahead-api.ru/api/he/project/delete/{productId}"
+	"DeleteFluid": "https://ahead-api.ru/api/he/product/delete/{productId}"
 }
