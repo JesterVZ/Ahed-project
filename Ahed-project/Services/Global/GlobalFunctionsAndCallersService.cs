@@ -224,6 +224,7 @@ namespace Ahed_project.Services.Global
                 calculation_id = user.LastCalculationId ?? 0;
             }
             var template = _sendDataService.ReturnCopy();
+            bool wasError = false;
             if (overall != null)
             {
                 string json = JsonConvert.SerializeObject(new
@@ -262,6 +263,10 @@ namespace Ahed_project.Services.Global
                     for (int i = 0; i < result.logs?.Count; i++)
                     {
                         Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i]?.type, result.logs[i]?.message)));
+                        if (result.logs[i]?.type?.ToLower() == "error")
+                        {
+                            wasError = true;
+                        }
                     }
 
                     var o = JsonConvert.DeserializeObject<OverallFull>(result.data.ToString());
@@ -283,6 +288,10 @@ namespace Ahed_project.Services.Global
                     for (int i = 0; i < result.logs?.Count; i++)
                     {
                         Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i]?.type, result.logs[i]?.message)));
+                        if (result.logs[i]?.type?.ToLower() == "error")
+                        {
+                            wasError = true;
+                        }
                     }
                     var o = JsonConvert.DeserializeObject<OverallFull>(result.data.ToString());
                     _overallCalculationViewModel.Overall = o;
@@ -293,13 +302,26 @@ namespace Ahed_project.Services.Global
                     }
                 }
             }
-            Task.Run(() =>
+            if (wasError)
             {
-                //var overallState = _contentPageViewModel.GetValidationSource(nameof(HeatBalancePage));
-                //GetTabState();
-                //_contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(HeatBalancePage), overallState) });
-                _contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(OverallCalculationPage), "2") });
-            });
+                Task.Run(() =>
+                {
+                    //var overallState = _contentPageViewModel.GetValidationSource(nameof(HeatBalancePage));
+                    //GetTabState();
+                    //_contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(HeatBalancePage), overallState) });
+                    _contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(OverallCalculationPage), "1") });
+                });
+            }
+            else
+            {
+                Task.Run(() =>
+                {
+                    //var overallState = _contentPageViewModel.GetValidationSource(nameof(HeatBalancePage));
+                    //GetTabState();
+                    //_contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(HeatBalancePage), overallState) });
+                    _contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(OverallCalculationPage), "2") });
+                });
+            }
             _isCalculatingToLogOnce = false;
             RefreshGraphsData();
         }
@@ -816,11 +838,16 @@ namespace Ahed_project.Services.Global
             string json = JsonConvert.SerializeObject(calculateSend);
             var response = _sendDataService.SendToServer(ProjectMethods.UPDATE_CALCULATION, json, calculation.project_id.ToString(), calculation.calculation_id.ToString());
             Responce result = JsonConvert.DeserializeObject<Responce>(response);
+            bool wasError = false;
             if (result?.logs != null)
             {
                 for (int i = 0; i < result.logs.Count; i++)
                 {
                     Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
+                    if (result.logs[i]?.type?.ToLower() == "error")
+                    {
+                        wasError = true;
+                    }
                 }
                 CalculationFull calculationGet = JsonConvert.DeserializeObject<CalculationFull>(result.data.ToString());
                 calculationGet.calculation_id = calculation.calculation_id;
@@ -828,13 +855,26 @@ namespace Ahed_project.Services.Global
                 _heatBalanceViewModel.Calculation = calculationGet;
             }
             GlobalDataCollectorService.HeatBalanceCalculated = true;
-            Task.Run(() =>
+            if (wasError)
             {
-                //var overallState = _contentPageViewModel.GetValidationSource(nameof(OverallCalculationPage));
-                //GetTabState();
-                //_contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(OverallCalculationPage), overallState) });
-                _contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(HeatBalancePage), "2") });
-            });
+                Task.Run(() =>
+                {
+                    //var overallState = _contentPageViewModel.GetValidationSource(nameof(OverallCalculationPage));
+                    //GetTabState();
+                    //_contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(OverallCalculationPage), overallState) });
+                    _contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(HeatBalancePage), "1") });
+                });
+            }
+            else
+            {
+                Task.Run(() =>
+                {
+                    //var overallState = _contentPageViewModel.GetValidationSource(nameof(OverallCalculationPage));
+                    //GetTabState();
+                    //_contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(OverallCalculationPage), overallState) });
+                    _contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(HeatBalancePage), "2") });
+                });
+            }
         }
         //расчет геометрии
         public static void CalculateGeometry(GeometryFull geometry)
@@ -902,6 +942,7 @@ namespace Ahed_project.Services.Global
                 clearances_spacing_minimum_tube_in_tube_spacing = geometry.clearances_spacing_minimum_tube_in_tube_spacing
 
             });
+            bool wasErrors = false;
             var response = _sendDataService.SendToServer(ProjectMethods.CALCULATE_GEOMETRY, json, _heatBalanceViewModel.Calculation.project_id.ToString(), _heatBalanceViewModel.Calculation.calculation_id.ToString());
             if (response != null)
             {
@@ -913,6 +954,10 @@ namespace Ahed_project.Services.Global
                         for (int i = 0; i < result.logs?.Count; i++)
                         {
                             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
+                            if (result.logs[i]?.type?.ToLower()=="error")
+                            {
+                                wasErrors= true;
+                            }
                         }
                         var g = JsonConvert.DeserializeObject<GeometryFull>(result.data.ToString());
                         g.image_geometry = "https://ahead-api.ru" + g.image_geometry;
@@ -934,13 +979,26 @@ namespace Ahed_project.Services.Global
                 }
             }
             GlobalDataCollectorService.GeometryCalculated = true;
-            Task.Run(() =>
+            if (wasErrors)
             {
-                //var overallState = _contentPageViewModel.GetValidationSource(nameof(BafflesPage));
-                //GetTabState();
-                //_contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(BafflesPage), overallState) });
-                _contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(GeometryPage), "2") });
-            });
+                Task.Run(() =>
+                {
+                    //var overallState = _contentPageViewModel.GetValidationSource(nameof(BafflesPage));
+                    //GetTabState();
+                    //_contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(BafflesPage), overallState) });
+                    _contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(GeometryPage), "1") });
+                });
+            }
+            else
+            {
+                Task.Run(() =>
+                {
+                    //var overallState = _contentPageViewModel.GetValidationSource(nameof(BafflesPage));
+                    //GetTabState();
+                    //_contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(BafflesPage), overallState) });
+                    _contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(GeometryPage), "2") });
+                });
+            }
         }
 
         //расчет перегородок
@@ -967,6 +1025,7 @@ namespace Ahed_project.Services.Global
             //});
             string json = JsonConvert.SerializeObject(baffle);
             var response = _sendDataService.SendToServer(ProjectMethods.CALCULATE_BAFFLE, json, _heatBalanceViewModel.Calculation.project_id.ToString(), _heatBalanceViewModel.Calculation.calculation_id.ToString());
+            bool wasError = false;
             if (response != null)
             {
                 try
@@ -975,6 +1034,10 @@ namespace Ahed_project.Services.Global
                     for (int i = 0; i < result.logs.Count; i++)
                     {
                         Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
+                        if (result.logs[i]?.type?.ToLower() == "error")
+                        {
+                            wasError = true;
+                        }
                     }
                     var b = JsonConvert.DeserializeObject<BaffleFull>(result.data.ToString());
                     _bufflesPageViewModel.Baffle = b;
@@ -985,13 +1048,26 @@ namespace Ahed_project.Services.Global
                 }
             }
             GlobalDataCollectorService.IsBaffleCalculated = true;
-            Task.Run(() =>
+            if (wasError)
             {
-                //var overallState = _contentPageViewModel.GetValidationSource(nameof(GeometryPage));
-                //GetTabState();
-                //_contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(GeometryPage), overallState) });
-                _contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(BafflesPage), "2") });
-            });
+                Task.Run(() =>
+                {
+                    //var overallState = _contentPageViewModel.GetValidationSource(nameof(GeometryPage));
+                    //GetTabState();
+                    //_contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(GeometryPage), overallState) });
+                    _contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(BafflesPage), "1") });
+                });
+            }
+            else
+            {
+                Task.Run(() =>
+                {
+                    //var overallState = _contentPageViewModel.GetValidationSource(nameof(GeometryPage));
+                    //GetTabState();
+                    //_contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(GeometryPage), overallState) });
+                    _contentPageViewModel.SetValidationSource(new List<(string, string)>() { new(nameof(BafflesPage), "2") });
+                });
+            }
         }
 
         //Создать проект
