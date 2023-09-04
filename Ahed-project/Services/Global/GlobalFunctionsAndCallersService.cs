@@ -1073,6 +1073,7 @@ namespace Ahed_project.Services.Global
         //Создать проект
         public static void CreateNewProject(bool afterSave)
         {
+            ChangePage(0);
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Начало создания проекта...")));
             var response = _sendDataService.SendToServer(ProjectMethods.CREATE, "");
             if (response != null)
