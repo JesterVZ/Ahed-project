@@ -739,7 +739,7 @@ namespace Ahed_project.Services.Global
             //GlobalDataCollectorService.GeometryCalculated = false;
             if (geometry!=null&&!isNewProject)
             {
-                CalculateGeometry(geometry);
+                CalculateGeometry(_geometryPageViewModel.Geometry);
             }
         }
 
