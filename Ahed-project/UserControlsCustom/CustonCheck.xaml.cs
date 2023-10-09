@@ -10,11 +10,11 @@ namespace Ahed_project.UserControlsCustom
     public partial class CustomCheck : System.Windows.Controls.UserControl
     {
         public static readonly DependencyProperty dependencyPropertyText = DependencyProperty.Register("InputText", typeof(string), typeof(CustomCheck), new PropertyMetadata("", new PropertyChangedCallback(ChangeTextProperty)));
-        public static readonly DependencyProperty dependencyPropertyIsChecked = DependencyProperty.Register("IsChecked", typeof(int), typeof(CustomCheck), new PropertyMetadata(0, new PropertyChangedCallback(ChangeIsCheckedProperty)));
+        public static readonly DependencyProperty dependencyPropertyIsChecked = DependencyProperty.Register("IsChecked", typeof(int?), typeof(CustomCheck), new PropertyMetadata(0, new PropertyChangedCallback(ChangeIsCheckedProperty)));
 
-        public int IsChecked
+        public int? IsChecked
         {
-            get => (int)GetValue(dependencyPropertyIsChecked);
+            get => (int?)GetValue(dependencyPropertyIsChecked);
             set
             {
                 SetValue(dependencyPropertyIsChecked, value);
@@ -70,7 +70,10 @@ namespace Ahed_project.UserControlsCustom
         }
         private static void ChangeIsCheckedProperty(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as CustomCheck).IsChecked = (int)e.NewValue;
+            if (e.NewValue != null)
+            {
+                (d as CustomCheck).IsChecked = (int)e.NewValue;
+            }
         }
 
         private void CustomTextBox_LostFocus(object sender, RoutedEventArgs e)
