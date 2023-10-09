@@ -420,6 +420,12 @@ namespace Ahed_project.Services.Global
             _projectPageViewModel.FieldsState = false;
             //_overallCalculationViewModel.Overall = new OverallFull();
             //App.Current.Dispatcher.Invoke(() => _overallCalculationViewModel.Refresh());
+            if (_bufflesPageViewModel!=null)
+            {
+                _bufflesPageViewModel.inlet_baffle_spacing_is_edit = 0;
+                _bufflesPageViewModel.outlet_baffle_spacing_is_edit = 0;
+                _bufflesPageViewModel.number_of_baffles_is_edit = 0;
+            }
         }
 
         //Получение рассчетов
