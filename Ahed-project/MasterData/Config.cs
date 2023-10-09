@@ -2,7 +2,7 @@
 {
     public static class Config
     {
-        public static int NumberOfDecimals;
+        public static int NumberOfDecimals = 2;
 
         public static char DoubleSplitter = '.';
     }
