@@ -23,6 +23,8 @@ namespace Ahed_project.ViewModel.Pages
             _watermark = new ImageBrush(new BitmapImage(new Uri(file)));
             _watermark.Opacity = 0.1;
             Temperatures = new PlotModel();
+            _showLegend = true;
+            _showModules = true;
         }
 
         private string _tubesFluid;
@@ -216,8 +218,8 @@ namespace Ahed_project.ViewModel.Pages
                 }
                 ShellGraph.Series.Add(tempSeries);
             }
-            ShellGraph.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Reynolds", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot, MinorGridlineStyle = LineStyle.Dot, MinorGridlineColor = OxyColor.FromRgb(128, 128, 128), MinorGridlineThickness = 0.5 });
-            ShellGraph.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Nusselt", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot, MinorGridlineStyle = LineStyle.Dot, MinorGridlineColor = OxyColor.FromRgb(128, 128, 128), MinorGridlineThickness = 0.5 });
+            ShellGraph.Axes.Add(new LogarithmicAxis() { UseSuperExponentialFormat= true,  Position = AxisPosition.Bottom, Title = "Reynolds", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot, MinorGridlineStyle = LineStyle.Dot, MinorGridlineColor = OxyColor.FromRgb(128, 128, 128), MinorGridlineThickness = 0.5 });
+            ShellGraph.Axes.Add(new LogarithmicAxis() { UseSuperExponentialFormat = true, Position = AxisPosition.Left, Title = "Nusselt", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot, MinorGridlineStyle = LineStyle.Dot, MinorGridlineColor = OxyColor.FromRgb(128, 128, 128), MinorGridlineThickness = 0.5 });
             if (ShowLegend)
             {
                 ShellGraph.Legends.Add(new Legend()
@@ -267,8 +269,8 @@ namespace Ahed_project.ViewModel.Pages
                 }
                 TubesGraph.Series.Add(tempSeries);
             }
-            TubesGraph.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "Reynolds", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot, MinorGridlineStyle = LineStyle.Dot, MinorGridlineColor = OxyColor.FromRgb(128, 128, 128), MinorGridlineThickness = 0.5 });
-            TubesGraph.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "Nusselt", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot, MinorGridlineStyle = LineStyle.Dot, MinorGridlineColor = OxyColor.FromRgb(128, 128, 128), MinorGridlineThickness = 0.5 });
+            TubesGraph.Axes.Add(new LogarithmicAxis() { Position = AxisPosition.Bottom, Title = "Reynolds", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot, MinorGridlineStyle = LineStyle.Dot, MinorGridlineColor = OxyColor.FromRgb(128, 128, 128), MinorGridlineThickness = 0.5 , UseSuperExponentialFormat =true});
+            TubesGraph.Axes.Add(new LogarithmicAxis() { Position = AxisPosition.Left, Title = "Nusselt", MajorGridlineColor = OxyColor.FromRgb(128, 128, 128), MajorGridlineStyle = LineStyle.Dot, MinorGridlineStyle = LineStyle.Dot, MinorGridlineColor = OxyColor.FromRgb(128, 128, 128), MinorGridlineThickness = 0.5 , UseSuperExponentialFormat=true});
             if (ShowLegend)
             {
                 TubesGraph.Legends.Add(new Legend()
