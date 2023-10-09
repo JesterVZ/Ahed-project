@@ -216,7 +216,7 @@ namespace Ahed_project.MasterData.GeometryClasses
         public DateTime? updatedAt { get => _updatedAt; set { _updatedAt = value; OnPropertyChanged(nameof(updatedAt)); } }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "", bool uncheck = true)
+        public void OnPropertyChanged([CallerMemberName] string prop = "", bool uncheck = true, bool fromCheck = false)
         {
             if (PropertyChanged != null)
             {
@@ -227,12 +227,12 @@ namespace Ahed_project.MasterData.GeometryClasses
                     {
                         GlobalFunctionsAndCallersService.Uncheck(new System.Collections.Generic.List<string>() { nameof(GeometryPage), nameof(BafflesPage) });
                     }
-                    Check();
+                    Check(fromCheck);
                 });
             }
         }
 
-        private void Check()
+        private void Check(bool fromCheck)
         {
             var inneDiamTubes = StringToDoubleChecker.ConvertToDouble(_inner_diameter_tubes_side);
             var inneDiamShell = StringToDoubleChecker.ConvertToDouble(_inner_diameter_shell_side);
@@ -272,7 +272,7 @@ namespace Ahed_project.MasterData.GeometryClasses
                 (_head_exchange_type != "annular_space" && outerDiamInner * 1.25 > tubePitch)
                 )
             {
-                GlobalFunctionsAndCallersService.SetIncorrect(new System.Collections.Generic.List<string>() { nameof(GeometryPage) });
+                GlobalFunctionsAndCallersService.SetIncorrect(new System.Collections.Generic.List<string>() { nameof(GeometryPage) }, fromCheck);
                 return;
             }
             var type = typeof(GeometryFull);
@@ -283,7 +283,7 @@ namespace Ahed_project.MasterData.GeometryClasses
                 {
                     if (val < 0)
                     {
-                        GlobalFunctionsAndCallersService.SetIncorrect(new System.Collections.Generic.List<string>() { nameof(GeometryPage) });
+                        GlobalFunctionsAndCallersService.SetIncorrect(new System.Collections.Generic.List<string>() { nameof(GeometryPage) }, fromCheck);
                         return;
                     }
                 }

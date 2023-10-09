@@ -109,7 +109,7 @@ namespace Ahed_project.MasterData.BafflesClasses
         public int number_of_baffles_is_edit { get => _number_of_baffles_is_edit; set { _number_of_baffles_is_edit = value; OnPropertyChanged(nameof(number_of_baffles_is_edit)); } }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "", bool uncheck = true)
+        public void OnPropertyChanged([CallerMemberName] string prop = "", bool uncheck = true, bool fromCheck = false)
         {
             if (PropertyChanged != null)
             {
@@ -120,12 +120,12 @@ namespace Ahed_project.MasterData.BafflesClasses
                     {
                         GlobalFunctionsAndCallersService.Uncheck(new System.Collections.Generic.List<string>() { nameof(BafflesPage), nameof(OverallCalculationPage) });
                     }
-                    Check();
+                    Check(fromCheck);
                 });
             }
         }
 
-        private void Check()
+        private void Check(bool fromCheck)
         {
             if (GlobalFunctionsAndCallersService.CheckIfLocked(nameof(BafflesPage)))
             {
@@ -147,7 +147,7 @@ namespace Ahed_project.MasterData.BafflesClasses
                 baffleThickness <= 0
                 )
             {
-                GlobalFunctionsAndCallersService.SetIncorrect(new System.Collections.Generic.List<string>() { nameof(BafflesPage) });
+                GlobalFunctionsAndCallersService.SetIncorrect(new System.Collections.Generic.List<string>() { nameof(BafflesPage) }, fromCheck);
                 return;
             }
             var type = typeof(BaffleFull);
@@ -158,7 +158,7 @@ namespace Ahed_project.MasterData.BafflesClasses
                 {
                     if (val < 0)
                     {
-                        GlobalFunctionsAndCallersService.SetIncorrect(new System.Collections.Generic.List<string>() { nameof(BafflesPage) });
+                        GlobalFunctionsAndCallersService.SetIncorrect(new System.Collections.Generic.List<string>() { nameof(BafflesPage) }, fromCheck);
                         return;
                     }
                 }

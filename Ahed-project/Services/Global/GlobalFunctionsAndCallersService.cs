@@ -1294,11 +1294,11 @@ namespace Ahed_project.Services.Global
             }
         }
 
-        internal static void SetIncorrect(List<string> list)
+        internal static void SetIncorrect(List<string> list, bool fromCheck = false)
         {
             if (_contentPageViewModel != null)
             {
-                _contentPageViewModel.SetIncorrect(list);
+                _contentPageViewModel.SetIncorrect(list, fromCheck);
             }
         }
 
@@ -1372,6 +1372,22 @@ namespace Ahed_project.Services.Global
             if (_graphsPageViewModel.GraphsData != null)
             {
                 _graphsPageViewModel.SetGraphsData();
+            }
+        }
+
+        public static void CheckGeometry()
+        {
+            if (_geometryPageViewModel?.Geometry != null)
+            {
+                _geometryPageViewModel.Geometry.OnPropertyChanged(uncheck: false, fromCheck:true);
+            }
+        }
+
+        public static void CheckBaffle()
+        {
+            if (_bufflesPageViewModel.Baffle != null)
+            {
+                _bufflesPageViewModel.Baffle.OnPropertyChanged(uncheck: false, fromCheck: true);
             }
         }
     }

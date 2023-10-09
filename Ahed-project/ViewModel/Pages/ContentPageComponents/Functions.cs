@@ -1,5 +1,6 @@
 ﻿using Ahed_project.MasterData.TabClasses;
 using Ahed_project.Pages;
+using Ahed_project.Services.Global;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -187,7 +188,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             RaisePropertiesChanged();
         }
 
-        public void SetIncorrect(List<string> pages)
+        public void SetIncorrect(List<string> pages, bool fromCheck)
         {
             foreach (string page in pages)
             {
@@ -232,8 +233,8 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                     TubesFluidValidationStatusSource = _checkPaths[1];
                 }
             }
-            AllowToChangeOverall();
-            AllowToChangeGraphs();
+            AllowToChangeOverall(!fromCheck);
+            AllowToChangeGraphs(!fromCheck);
             RaisePropertiesChanged();
         }
 
@@ -318,8 +319,13 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         }
 
 
-        private bool AllowToChangeOverall()
+        private bool AllowToChangeOverall(bool withCheck = true)
         {
+            if (withCheck)
+            {
+                GlobalFunctionsAndCallersService.CheckGeometry();
+                GlobalFunctionsAndCallersService.CheckBaffle();
+            }
             if (TubesFluidValidationStatusSource?.Contains("check") == true
                 && ShellFluidValidationStatusSource?.Contains("check") == true
                 && GeometryValidationStatusSource?.Contains("check") == true
@@ -333,8 +339,13 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             return false;
         }
 
-        private bool AllowToChangeGraphs()
+        private bool AllowToChangeGraphs(bool withCheck = true)
         {
+            if (withCheck)
+            {
+                GlobalFunctionsAndCallersService.CheckGeometry();
+                GlobalFunctionsAndCallersService.CheckBaffle();
+            }
             if (TubesFluidValidationStatusSource?.Contains("check") == true
                && ShellFluidValidationStatusSource?.Contains("check") == true
                && GeometryValidationStatusSource?.Contains("check") == true

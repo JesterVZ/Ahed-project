@@ -665,7 +665,7 @@ namespace Ahed_project.ViewModel.Pages
             Config.NumberOfDecimals = 0;
             if (type == typeof(GeometryFull))
             {
-                Geometry.OnPropertyChanged(name);
+                Geometry.OnPropertyChanged(name, false);
             }
             else
             {
