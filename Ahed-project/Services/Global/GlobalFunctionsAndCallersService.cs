@@ -78,6 +78,12 @@ namespace Ahed_project.Services.Global
             var response = _sendDataService.SendToServer(ProjectMethods.GET_PROJECTS, "");
             Responce result = JsonConvert.DeserializeObject<Responce>(response);
             List<ProjectInfoGet> projects = JsonConvert.DeserializeObject<List<ProjectInfoGet>>(result.data.ToString());
+            var ownersResponse = _sendDataService.SendToServer(ProjectMethods.GET_OWNERS, "");
+            var owners = JsonConvert.DeserializeObject<List<Owner>>(ownersResponse);
+            projects.ForEach(x =>
+            {
+                x.owner = owners.FirstOrDefault(y => y.user_id == x.user_id)?.name;
+            });
             GlobalDataCollectorService.ProjectsCollection = projects;
             _projectPageViewModel.ProjectInfo.number_of_decimals = 2;
             _projectPageViewModel.Raise();

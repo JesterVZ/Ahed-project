@@ -7,7 +7,7 @@
         xmlns:attach="clr-namespace:Ahed_project.Services"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="ProjectsWindow" Height="450" Width="800" Closing="Window_Closing">
+        Title="Manage Project" Height="450" Width="800" Closing="Window_Closing">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding WindowLoaded}"/>
@@ -34,7 +34,16 @@
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
-        <DataGrid Grid.Column="1" ItemsSource="{Binding Projects}" CanUserSortColumns="True" Margin="5 5 5 5" IsReadOnly="True" AllowDrop="False" SelectedItem="{Binding SelectedProject, Mode=TwoWay}"/>
+        <DataGrid Grid.Column="1" ItemsSource="{Binding Projects}" AutoGenerateColumns="False" CanUserSortColumns="True" Margin="5 5 5 5" IsReadOnly="True" AllowDrop="False" SelectedItem="{Binding SelectedProject, Mode=TwoWay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Path=name}"/>
+                <DataGridTextColumn Header="Owner" Binding="{Binding Path=owner}"/>
+                <DataGridTextColumn Header="Shared"/>
+                <DataGridTextColumn Header="Date Created" Binding="{Binding Path=createdAt, StringFormat='yyyy-MM-dd HH:mm:ss' }"/>
+                <DataGridTextColumn Header="Date Modified" Binding="{Binding Path=updatedAt, StringFormat='yyyy-MM-dd HH:mm:ss' }"/>
+                <DataGridTextColumn Header="Id" Binding="{Binding Path=project_id}"/>
+            </DataGrid.Columns>
+        </DataGrid>
         <Grid Grid.Row="1" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>

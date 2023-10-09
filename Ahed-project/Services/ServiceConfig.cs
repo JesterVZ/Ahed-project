@@ -54,5 +54,6 @@ namespace Ahed_project.Services
         public string RestoreDefaultsBaffle { get; set; }
         public string AddOrUpdateFluid { get; set; }
         public string DeleteFluid { get; set; }
+        public string GetOwners { get; set; }
     }
 }

@@ -16,6 +16,7 @@
         public string comments { get; set; }
         public string createdAt { get; set; }
         public string updatedAt { get; set; }
-
+        public string user_id { get; set; }
+        public string owner { get; set; }
     }
 }

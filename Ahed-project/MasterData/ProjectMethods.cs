@@ -32,6 +32,7 @@
         COPY_CALCULATION,
         RESTORE_BAFFLE,
         ADD_OR_UPDATE_PRODUCT,
-        DELETE_FLUID
+        DELETE_FLUID,
+        GET_OWNERS
     }
 }
