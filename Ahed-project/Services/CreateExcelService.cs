@@ -11,7 +11,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Reflection;
 using System.Windows;
 
 namespace Ahed_project.Services
@@ -128,13 +127,13 @@ namespace Ahed_project.Services
             doc.SetCellValue("A2", "Revision Nr");
             doc.SetCellValue("C2", _projectPageViewModel.ProjectInfo.revision.ToString());
             doc.SetCellValue("A3", "Process");
-            doc.SetCellValue("C3", _projectPageViewModel.SelectedCalculation.name); 
+            doc.SetCellValue("C3", _projectPageViewModel.SelectedCalculation.name);
             doc.SetCellValue("A4", "Name");
             doc.SetCellValue("C4", _tubesFluidViewModel.Product.name);
 
             CreateHeaders(doc);
             CreateUnits(doc);
-            AddData(_tubesFluidViewModel.Product.product_properties,doc);
+            AddData(_tubesFluidViewModel.Product.product_properties, doc);
         }
 
 
@@ -418,7 +417,7 @@ namespace Ahed_project.Services
             doc.SetCellValue("A3", "Process");
             doc.SetCellValue("C3", _projectPageViewModel.SelectedCalculation.name);
 
-            AddGeometryTitle("A6", "E6", "Tube & Shell Geometry",doc);
+            AddGeometryTitle("A6", "E6", "Tube & Shell Geometry", doc);
 
             doc.SetCellValue("C7", "Inner Side");
             doc.SetCellValue("D7", "Tube Side");
@@ -427,16 +426,16 @@ namespace Ahed_project.Services
             doc.SetCellStyle("C7", "E7", BorderCellsStyle());
             doc.SetCellStyle("C7", "F7", BoldTextStyle());
             AddGeometryNames(doc);
-            AddGeometryTitle("A25", "E25", "Tubeplate Layout",doc);
+            AddGeometryTitle("A25", "E25", "Tubeplate Layout", doc);
             AddGeometryTubeplateNames(doc);
-            AddGeometryTitle("A37", "E37", "Nozzles",doc);
+            AddGeometryTitle("A37", "E37", "Nozzles", doc);
             AddGeometryNozzlesNames(doc);
-            AddGeometryTitle("A50", "E50", "Baffles",doc);
+            AddGeometryTitle("A50", "E50", "Baffles", doc);
             AddGeometryBafflesNames(doc);
             AddGeometryValues(doc);
             AddGeometryUnits(doc);
 
-            DownloadImage(_geometryPageViewModel.Geometry.image_geometry,doc);
+            DownloadImage(_geometryPageViewModel.Geometry.image_geometry, doc);
 
         }
 
@@ -973,7 +972,7 @@ namespace Ahed_project.Services
             doc.SetCellValue("E84", _overallCalculationViewModel.Overall.acoustic_vibration_exist_outlet == 1 ? "Yes" : "No");
 
         }
-            
+
         #endregion
 
     }

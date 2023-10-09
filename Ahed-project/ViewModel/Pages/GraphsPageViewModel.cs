@@ -1,17 +1,13 @@
 ﻿using Ahed_project.MasterData.Graphs;
-using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Legends;
 using OxyPlot.Series;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -20,7 +16,7 @@ namespace Ahed_project.ViewModel.Pages
     public class GraphsPageViewModel : BindableBase
     {
 
-        public GraphsPageViewModel() 
+        public GraphsPageViewModel()
         {
             var assembly = Assembly.GetExecutingAssembly();
             var file = Path.GetDirectoryName(assembly.Location) + "\\Visual\\splash_screen4watermark.png";
@@ -31,9 +27,9 @@ namespace Ahed_project.ViewModel.Pages
 
         private string _tubesFluid;
         public string TubesFluid
-        { 
+        {
             get => _tubesFluid;
-            set =>_tubesFluid = value;
+            set => _tubesFluid = value;
         }
         private string _shellFluid;
         public string ShellFluid
@@ -241,7 +237,7 @@ namespace Ahed_project.ViewModel.Pages
             {
                 IsLegendVisible = true
             };
-            if (GraphsData.nusselt_tube_hard?.Any()==true)
+            if (GraphsData.nusselt_tube_hard?.Any() == true)
             {
                 var tempSeries = new LineSeries() { Color = OxyColor.Parse("#FF0000"), Title = "Hard Corrugation", RenderInLegend = true };
                 foreach (var elem in GraphsData.nusselt_tube_hard)

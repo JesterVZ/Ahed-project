@@ -584,7 +584,7 @@ namespace Ahed_project.MasterData.Overall
         public int? use_viscosity_correction { get => _use_viscosity_correction; set { _use_viscosity_correction = value; OnPropertyChanged(nameof(use_viscosity_correction)); } }
         public int? vibration_exist { get => _vibration_exist; set { _vibration_exist = value; OnPropertyChanged(nameof(vibration_exist)); } }
         public string nozzles_number_of_parallel_lines_shell_side { get => _nozzles_number_of_parallel_lines_shell_side; set { _nozzles_number_of_parallel_lines_shell_side = value; OnPropertyChanged(nameof(nozzles_number_of_parallel_lines_shell_side)); } }
-        public Graphs.Graphs array_graph { get => _array_graph;set { _array_graph = value; OnPropertyChanged(nameof(array_graph)); } }
+        public Graphs.Graphs array_graph { get => _array_graph; set { _array_graph = value; OnPropertyChanged(nameof(array_graph)); } }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "", bool uncheck = true)
@@ -594,15 +594,15 @@ namespace Ahed_project.MasterData.Overall
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
                 if (uncheck)
                 {
-                    Task.Run(()=>GlobalFunctionsAndCallersService.Uncheck(new System.Collections.Generic.List<string>() { nameof(OverallCalculationPage) }));
+                    Task.Run(() => GlobalFunctionsAndCallersService.Uncheck(new System.Collections.Generic.List<string>() { nameof(OverallCalculationPage) }));
                 }
             }
             List<string> toBeYellowed = new List<string>();
-            if (_flow_type_shell_inlet=="Transition")
+            if (_flow_type_shell_inlet == "Transition")
             {
                 toBeYellowed.Add(nameof(_flow_type_shell_inlet));
             }
-            if (_flow_type_shell_outlet=="Transition")
+            if (_flow_type_shell_outlet == "Transition")
             {
                 toBeYellowed.Add(nameof(_flow_type_shell_outlet));
             }

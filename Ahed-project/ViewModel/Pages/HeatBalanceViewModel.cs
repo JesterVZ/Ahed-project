@@ -87,7 +87,7 @@ namespace Ahed_project.ViewModel.Pages
                 value = StringToDoubleChecker.RemoveLetters(value, out var check);
                 if (!check)
                 {
-                    _temperature_tube_outlet= value;
+                    _temperature_tube_outlet = value;
                     Calculation.temperature_tube_outlet = value;
                     if (ShellProcessSelector.Value?.ToLower() == "condensation")
                     {
@@ -441,7 +441,7 @@ namespace Ahed_project.ViewModel.Pages
             Config.NumberOfDecimals = 0;
             if (type == typeof(CalculationFull))
             {
-                Calculation.OnPropertyChanged(name,false);
+                Calculation.OnPropertyChanged(name, false);
             }
             else
             {
@@ -489,7 +489,7 @@ namespace Ahed_project.ViewModel.Pages
             {
                 if (field == null)
                 {
-                    Calculation.OnPropertyChanged(tb.Name,false);
+                    Calculation.OnPropertyChanged(tb.Name, false);
                 }
                 else
                 {
@@ -510,7 +510,7 @@ namespace Ahed_project.ViewModel.Pages
 
         private void ChangesMaded()
         {
-            Task.Run(()=>GlobalFunctionsAndCallersService.Uncheck(new List<string>() { nameof(HeatBalancePage), nameof(OverallCalculationPage) }));
+            Task.Run(() => GlobalFunctionsAndCallersService.Uncheck(new List<string>() { nameof(HeatBalancePage), nameof(OverallCalculationPage) }));
         }
     }
 }

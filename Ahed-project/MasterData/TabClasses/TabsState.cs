@@ -17,7 +17,7 @@
         public string quote { get; set; }
         public string left_overall { get; set; }
         public string left_graphs { get; set; }
-        public string left_reports { get; set;}
+        public string left_reports { get; set; }
         public string left_quote { get; set; }
 
     }

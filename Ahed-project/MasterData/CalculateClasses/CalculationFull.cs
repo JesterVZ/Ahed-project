@@ -780,7 +780,7 @@ namespace Ahed_project.MasterData.CalculateClasses
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
                 if (uncheck)
                 {
-                    Task.Run(()=>GlobalFunctionsAndCallersService.Uncheck(new List<string>() { nameof(HeatBalancePage), nameof(OverallCalculationPage) }));
+                    Task.Run(() => GlobalFunctionsAndCallersService.Uncheck(new List<string>() { nameof(HeatBalancePage), nameof(OverallCalculationPage) }));
                 }
             }
         }

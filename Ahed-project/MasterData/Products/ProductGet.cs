@@ -34,12 +34,12 @@ namespace Ahed_project.MasterData.Products
         {
             get
             {
-                var current = product_properties.FirstOrDefault(x => x.molar_mass != null)?.molar_mass??0;
+                var current = product_properties.FirstOrDefault(x => x.molar_mass != null)?.molar_mass ?? 0;
                 return StringToDoubleChecker.ToCorrectFormat(current.ToString());
             }
             set
             {
-                product_properties.ForEach(x =>x.molar_mass = StringToDoubleChecker.ConvertToDouble(value));
+                product_properties.ForEach(x => x.molar_mass = StringToDoubleChecker.ConvertToDouble(value));
             }
         }
 
@@ -66,13 +66,14 @@ namespace Ahed_project.MasterData.Products
             }
             set
             {
-                var val = value==true? 1 : 0;
+                var val = value == true ? 1 : 0;
                 product_properties.ForEach(x => x.saturated = val);
             }
         }
 
         [JsonIgnore]
-        public ICommand DeleteFluidCommand => new DelegateCommand(() => {
+        public ICommand DeleteFluidCommand => new DelegateCommand(() =>
+        {
             var res = GlobalFunctionsAndCallersService.DeleteProduct(this);
             if (!res)
             {

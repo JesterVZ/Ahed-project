@@ -12,8 +12,8 @@ namespace Ahed_project.ViewModel.Pages
     public class OverallCalculationViewModel : BindableBase
     {
         private string _name;
-        public string Name 
-        { 
+        public string Name
+        {
             get => _name;
             set
             {
@@ -228,7 +228,7 @@ namespace Ahed_project.ViewModel.Pages
             Config.NumberOfDecimals = 0;
             if (type == typeof(OverallFull))
             {
-                Overall.OnPropertyChanged(name,false);
+                Overall.OnPropertyChanged(name, false);
             }
             else
             {
@@ -259,7 +259,7 @@ namespace Ahed_project.ViewModel.Pages
                     {
                         field.SetValue(Overall, alternateValue);
                     }
-                    Overall.OnPropertyChanged(name,false);
+                    Overall.OnPropertyChanged(name, false);
                 }
                 else
                 {
@@ -278,7 +278,7 @@ namespace Ahed_project.ViewModel.Pages
             {
                 if (field == null)
                 {
-                    Overall.OnPropertyChanged(name,false);
+                    Overall.OnPropertyChanged(name, false);
                 }
                 else
                 {
@@ -338,12 +338,12 @@ namespace Ahed_project.ViewModel.Pages
         private SolidColorBrush _shellOutB = Brushes.DarkGray;
         public SolidColorBrush ShellOutB
         {
-            get => _shellOutB; set=>_shellOutB = value;
+            get => _shellOutB; set => _shellOutB = value;
         }
         private SolidColorBrush _shellInB = Brushes.DarkGray;
         public SolidColorBrush ShellInB
         {
-            get =>_shellInB; set=>_shellInB = value;
+            get => _shellInB; set => _shellInB = value;
         }
         private SolidColorBrush _tubeOutB = Brushes.DarkGray;
         public SolidColorBrush TubeOutB

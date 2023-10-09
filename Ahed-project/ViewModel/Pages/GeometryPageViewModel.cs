@@ -1,6 +1,5 @@
 ﻿using Ahed_project.MasterData;
 using Ahed_project.MasterData.GeometryClasses;
-using Ahed_project.Services;
 using Ahed_project.Services.Global;
 using Ahed_project.Settings;
 using Ahed_project.Windows;
@@ -121,14 +120,14 @@ namespace Ahed_project.ViewModel.Pages
                 _geometry = value;
                 var tempExchangeSelector = Exchangers.FirstOrDefault(x => x.Key == value?.head_exchange_type);
                 ExchangersSelector = tempExchangeSelector.Key == null ? Exchangers.FirstOrDefault(x => x.Value == value?.head_exchange_type) : tempExchangeSelector;
-                var tempOrientation= Orientations.FirstOrDefault(x => x.Key == value?.orientation);
+                var tempOrientation = Orientations.FirstOrDefault(x => x.Key == value?.orientation);
                 Orientation = tempOrientation.Key == null ? Orientations.FirstOrDefault(x => x.Value == value?.orientation) : tempOrientation;
                 var tempTubesProfile = TubeProfile.FirstOrDefault(x => x.Key == value?.tube_profile_tubes_side);
                 TubeProfileSelector = tempTubesProfile.Key == null ? TubeProfile.FirstOrDefault(x => x.Value == value?.tube_profile_tubes_side) : tempTubesProfile;
                 ShellMaterial = Materials.FirstOrDefault(x => x.Value.name_short == value?.material_shell_side);
                 TubesMaterial = Materials.FirstOrDefault(x => x.Value.name_short == value?.material_tubes_side);
                 var tempLayout = TubePlateLayouts.FirstOrDefault(x => x.Key == value?.tube_plate_layout_tube_layout);
-                TubeLayout = tempLayout.Key==null?TubePlateLayouts.FirstOrDefault(x=>x.Value.Name==value?.tube_plate_layout_tube_layout):tempLayout;
+                TubeLayout = tempLayout.Key == null ? TubePlateLayouts.FirstOrDefault(x => x.Value.Name == value?.tube_plate_layout_tube_layout) : tempLayout;
 
                 try
                 {
@@ -336,14 +335,14 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     Geometry.head_exchange_type = value.Key;
                 }
-                if(value.Key=="r_series"||value.Key=="unicus")
+                if (value.Key == "r_series" || value.Key == "unicus")
                 {
                     HousingSpaceVis = Visibility.Hidden;
                     ShowScrapingFrequencyAndMotorPower = Visibility.Visible;
                 }
                 else
                 {
-                    HousingSpaceVis = HousingSpaceVis==Visibility.Hidden?Visibility.Visible:HousingSpaceVis;
+                    HousingSpaceVis = HousingSpaceVis == Visibility.Hidden ? Visibility.Visible : HousingSpaceVis;
                     ShowScrapingFrequencyAndMotorPower = Visibility.Collapsed;
                 }
             }
@@ -353,7 +352,7 @@ namespace Ahed_project.ViewModel.Pages
         public Visibility ShowScrapingFrequencyAndMotorPower
         {
             get => _showScrapingFrequencyAndMotorPower;
-            set => _showScrapingFrequencyAndMotorPower= value;
+            set => _showScrapingFrequencyAndMotorPower = value;
         }
 
         private KeyValuePair<string, string> _tubeProfileSelector;
@@ -709,7 +708,7 @@ namespace Ahed_project.ViewModel.Pages
                     {
                         field.SetValue(this, tb.Text);
                     }
-                    catch(ArgumentException e)
+                    catch (ArgumentException e)
                     {
 
                     }

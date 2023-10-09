@@ -75,19 +75,20 @@ namespace Ahed_project.Services.Global
         public static bool IsBaffleCalculated { get; set; }
         #endregion
         private static bool _isActiveOverall;
-        public static bool IsActiveOverall {
+        public static bool IsActiveOverall
+        {
             get
             {
                 return _isActiveOverall;
-            } 
-            set 
+            }
+            set
             {
                 _isActiveOverall = value;
                 if (value)
                 {
                     GlobalFunctionsAndCallersService.RaiseOverall();
                 }
-            } 
+            }
         }
 
         public static User User { get; internal set; }

@@ -3,7 +3,6 @@ using Ahed_project.MasterData.BafflesClasses;
 using Ahed_project.Services.Global;
 using Ahed_project.Settings;
 using DevExpress.Mvvm;
-using DocumentFormat.OpenXml.Vml.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -143,8 +142,8 @@ namespace Ahed_project.ViewModel.Pages
             }
         }
 
-        private KeyValuePair<string,EnabledLabel> _selectedBaffleType;
-        public KeyValuePair<string,EnabledLabel> SelectedBaffleType
+        private KeyValuePair<string, EnabledLabel> _selectedBaffleType;
+        public KeyValuePair<string, EnabledLabel> SelectedBaffleType
         {
             get => _selectedBaffleType;
             set
@@ -214,7 +213,7 @@ namespace Ahed_project.ViewModel.Pages
             }
             Baffle.inlet_baffle_spacing_is_edit = StringToDoubleChecker.ConvertToDouble(Baffle.inlet_baffle_spacing) != _notEditedLbi ? 1 : 0;
             Baffle.outlet_baffle_spacing_is_edit = StringToDoubleChecker.ConvertToDouble(Baffle.outlet_baffle_spacing) != _notEditedLbo ? 1 : 0;
-            Baffle.number_of_baffles_is_edit = StringToDoubleChecker.ConvertToDouble(Baffle.number_of_baffles)!=_notEditedNumberOfBaffles? 1 : 0;
+            Baffle.number_of_baffles_is_edit = StringToDoubleChecker.ConvertToDouble(Baffle.number_of_baffles) != _notEditedNumberOfBaffles ? 1 : 0;
             Task.Run(() => GlobalFunctionsAndCallersService.CalculateBaffle(Baffle));
         });
 
@@ -263,7 +262,7 @@ namespace Ahed_project.ViewModel.Pages
             Config.NumberOfDecimals = 0;
             if (type == typeof(BaffleFull))
             {
-                Baffle.OnPropertyChanged(name,false);
+                Baffle.OnPropertyChanged(name, false);
             }
             else
             {
@@ -294,7 +293,7 @@ namespace Ahed_project.ViewModel.Pages
                     {
                         field.SetValue(Baffle, alternateValue);
                     }
-                    Baffle.OnPropertyChanged(name,false);
+                    Baffle.OnPropertyChanged(name, false);
                 }
                 else
                 {
@@ -313,7 +312,7 @@ namespace Ahed_project.ViewModel.Pages
             {
                 if (field == null)
                 {
-                    Baffle.OnPropertyChanged(name,false);
+                    Baffle.OnPropertyChanged(name, false);
                 }
                 else
                 {

@@ -1,8 +1,6 @@
-﻿using Ahed_project.MasterData.GeometryClasses;
-using Ahed_project.Pages;
+﻿using Ahed_project.Pages;
 using Ahed_project.Services.Global;
 using Ahed_project.Settings;
-using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -142,11 +140,11 @@ namespace Ahed_project.MasterData.BafflesClasses
             var outDiam = StringToDoubleChecker.ConvertToDouble(_tubes_outer_diameter);
 
             //var shellNozzleInOuterDiam = StringToDoubleChecker.ConvertToDouble(_shell_);
-            if (baffleCut<10||baffleCut>45||
-                centralBaffleSpacing<=0||
-                inletBaffleSpacing< inletDiam+200 ||
-                outletBaffleSpacing < outDiam+200||
-                baffleThickness <=0
+            if (baffleCut < 10 || baffleCut > 45 ||
+                centralBaffleSpacing <= 0 ||
+                inletBaffleSpacing < inletDiam + 200 ||
+                outletBaffleSpacing < outDiam + 200 ||
+                baffleThickness <= 0
                 )
             {
                 GlobalFunctionsAndCallersService.SetIncorrect(new System.Collections.Generic.List<string>() { nameof(BafflesPage) });

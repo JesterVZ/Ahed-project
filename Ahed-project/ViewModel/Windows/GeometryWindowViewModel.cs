@@ -47,7 +47,7 @@ namespace Ahed_project.ViewModel.Windows
 
         public ICommand SelectGeometryCommand => new DelegateCommand(() =>
         {
-            GlobalFunctionsAndCallersService.SelectGeometry(SelectedGeometry,false);
+            GlobalFunctionsAndCallersService.SelectGeometry(SelectedGeometry, false);
             GlobalFunctionsAndCallersService.ChangePage(4);
         });
         #endregion

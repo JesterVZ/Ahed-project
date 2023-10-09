@@ -18,7 +18,7 @@ namespace Ahed_project.Services
         {
             _serviceConfig = serviceConfig;
         }
-        public string SendToServer(ProjectMethods projectMethod, string body = null, string projectId = null, string calculationId = null, int timeout = 60000,int productId = 0)
+        public string SendToServer(ProjectMethods projectMethod, string body = null, string projectId = null, string calculationId = null, int timeout = 60000, int productId = 0)
         {
             Headers.TryAdd("Content-Type", "application/json");
             RestResponse response = null;
@@ -319,7 +319,7 @@ namespace Ahed_project.Services
                         response = restClient.Execute(request);
                         break;
                     case ProjectMethods.DELETE_FLUID:
-                        restClient.Options.BaseUrl = new Uri(_serviceConfig.DeleteFluid.Replace("{productId}",productId.ToString()));
+                        restClient.Options.BaseUrl = new Uri(_serviceConfig.DeleteFluid.Replace("{productId}", productId.ToString()));
                         request.Method = Method.Get;
                         foreach (var header in Headers)
                         {

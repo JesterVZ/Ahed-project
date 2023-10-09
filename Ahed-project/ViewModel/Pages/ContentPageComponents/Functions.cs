@@ -1,12 +1,8 @@
 ﻿using Ahed_project.MasterData.TabClasses;
 using Ahed_project.Pages;
-using Ahed_project.Services.Global;
-using DocumentFormat.OpenXml.Presentation;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 
 namespace Ahed_project.ViewModel.ContentPageComponents
 {
@@ -18,7 +14,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         {
             TabsState tabs = JsonConvert.DeserializeObject<TabsState>(json);
 
-            ReportsState.IsEnabled = tabs.left_reports=="0";
+            ReportsState.IsEnabled = tabs.left_reports == "0";
             QuoteState.IsEnabled = false;// tabs.left_quote=="0";
             TubesFluidState.IsEnabled = true;
             ShellFluidState.IsEnabled = true;
@@ -27,7 +23,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             BafflesState.IsEnabled = true;
             BafflesValidationStatusSource = _checkPaths[Convert.ToInt32(tabs.baffles)];
             BatchValidationStatusSource = _checkPaths[Convert.ToInt32(tabs.batch)];
-            GeometryValidationStatusSource = _checkPaths[Convert.ToInt32(tabs.geometry)];     
+            GeometryValidationStatusSource = _checkPaths[Convert.ToInt32(tabs.geometry)];
             HeatBalanceValidationStatusSource = _checkPaths[Convert.ToInt32(tabs.head_balance)];
             QuoteValidationStatusSource = _checkPaths[Convert.ToInt32(tabs.quote)];
             ReportsValidationStatusSource = _checkPaths[Convert.ToInt32(tabs.reports)];
@@ -50,7 +46,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         {
             if (page == nameof(HeatBalancePage))
             {
-                return HeatBalanceState.LockVisibillity==System.Windows.Visibility.Visible;
+                return HeatBalanceState.LockVisibillity == System.Windows.Visibility.Visible;
             }
             else if (page == nameof(BafflesPage))
             {
@@ -136,9 +132,9 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             else return null;
         }
 
-        public void SetValidationSource(List<(string,string)> pagesAndValues)
+        public void SetValidationSource(List<(string, string)> pagesAndValues)
         {
-            foreach(var page in pagesAndValues)
+            foreach (var page in pagesAndValues)
             {
                 var val = page.Item2;
                 if (Int32.TryParse(page.Item2, out var index))
@@ -247,7 +243,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             {
                 if (page == nameof(HeatBalancePage))
                 {
-                    if (HeatBalanceValidationStatusSource?.Contains("check") == true)
+                    if (HeatBalanceValidationStatusSource?.Contains("check") == true || HeatBalanceValidationStatusSource?.Contains("cancel") == true)
                     {
                         HeatBalanceValidationStatusSource = null;
                     }
@@ -289,28 +285,28 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 }
                 else if (page == nameof(QuotePage))
                 {
-                    if (QuoteValidationStatusSource?.Contains("check")==true)
+                    if (QuoteValidationStatusSource?.Contains("check") == true)
                     {
                         QuoteValidationStatusSource = null;
                     }
                 }
                 else if (page == nameof(ReportsPage))
                 {
-                    if (ReportsValidationStatusSource?.Contains("check")==true)
+                    if (ReportsValidationStatusSource?.Contains("check") == true)
                     {
                         ReportsValidationStatusSource = null;
                     }
                 }
                 else if (page == nameof(ShellFluidPage))
                 {
-                    if (ShellFluidValidationStatusSource?.Contains("check")==true)
+                    if (ShellFluidValidationStatusSource?.Contains("check") == true)
                     {
                         ShellFluidValidationStatusSource = null;
                     }
                 }
                 else if (page == nameof(TubesFluidPage))
                 {
-                    if (TubesFluidValidationStatusSource?.Contains("check")==true)
+                    if (TubesFluidValidationStatusSource?.Contains("check") == true)
                     {
                         TubesFluidValidationStatusSource = null;
                     }
@@ -330,7 +326,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 && HeatBalanceValidationStatusSource?.Contains("check") == true
                 && BafflesValidationStatusSource?.Contains("check") == true)
             {
-                OverallCalculationState.IsEnabled= true;
+                OverallCalculationState.IsEnabled = true;
                 return true;
             }
             OverallCalculationState.IsEnabled = false;
@@ -346,7 +342,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                && BafflesValidationStatusSource?.Contains("check") == true
                && OverallValidationStatusSource?.Contains("check") == true)
             {
-                GraphState.IsEnabled= true;
+                GraphState.IsEnabled = true;
                 return true;
             }
             GraphState.IsEnabled = false;
@@ -370,16 +366,16 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             ThreeDState.IsEnabled = false;
             BafflesValidationStatusSource = _checkPaths[0];
             BatchValidationStatusSource = _checkPaths[0];
-            GeometryValidationStatusSource= _checkPaths[0];
-            GraphsValidationStatusSource= _checkPaths[0];
-            HeatBalanceValidationStatusSource= _checkPaths[0];
-            OverallValidationStatusSource= _checkPaths[0];
-            ProjectValidationStatusSource= _checkPaths[0];
-            QuoteValidationStatusSource= _checkPaths[0];
+            GeometryValidationStatusSource = _checkPaths[0];
+            GraphsValidationStatusSource = _checkPaths[0];
+            HeatBalanceValidationStatusSource = _checkPaths[0];
+            OverallValidationStatusSource = _checkPaths[0];
+            ProjectValidationStatusSource = _checkPaths[0];
+            QuoteValidationStatusSource = _checkPaths[0];
             ReportsValidationStatusSource = _checkPaths[0];
-            ShellFluidValidationStatusSource= _checkPaths[0];
-            ThreeDValidationStatusSource= _checkPaths[0];
-            TubesFluidValidationStatusSource= _checkPaths[0];
+            ShellFluidValidationStatusSource = _checkPaths[0];
+            ThreeDValidationStatusSource = _checkPaths[0];
+            TubesFluidValidationStatusSource = _checkPaths[0];
             RaisePropertiesChanged();
         }
     }

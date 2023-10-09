@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ahed_project.Services
+﻿namespace Ahed_project.Services
 {
     public static class StringMapper
     {
@@ -12,7 +6,7 @@ namespace Ahed_project.Services
         public static string GetOrientationToSend(string orientation)
         {
             var orientationTemp = orientation.ToLower();
-            switch(orientationTemp)
+            switch (orientationTemp)
             {
                 case "horizontal":
                     return "Horizontal";
@@ -25,7 +19,7 @@ namespace Ahed_project.Services
         public static string GetExchangerToSend(string exchanger)
         {
             var exchangerTemp = exchanger.ToLower();
-            switch(exchangerTemp)
+            switch (exchangerTemp)
             {
                 case "tube_shell":
                     return "Tube/Shell";
@@ -42,7 +36,7 @@ namespace Ahed_project.Services
         public static string GetSealingTypeToSend(string sealingType)
         {
             var sealingTypeTemp = sealingType.ToLower();
-            switch(sealingTypeTemp)
+            switch (sealingTypeTemp)
             {
                 case "o_rings_housing":
                     return "O'Rings + Housing";

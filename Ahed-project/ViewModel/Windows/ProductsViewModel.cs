@@ -78,10 +78,12 @@ namespace Ahed_project.ViewModel.Windows
             GlobalFunctionsAndCallersService.SelectProductShell(SelectedProduct);
             //GlobalFunctionsAndCallersService.ChangePage(2);
         });
-        public ICommand NewfluidCommand => new DelegateCommand(() => {
+        public ICommand NewfluidCommand => new DelegateCommand(() =>
+        {
             GlobalFunctionsAndCallersService.OpenNewProductWindow();
         });
-        public ICommand EditfluidCommand => new DelegateCommand(() => {
+        public ICommand EditfluidCommand => new DelegateCommand(() =>
+        {
             var res = GlobalFunctionsAndCallersService.OpenNewProductWindow(SelectedProduct);
             if (!res)
             {

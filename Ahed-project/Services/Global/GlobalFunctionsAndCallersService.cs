@@ -5,7 +5,6 @@ using Ahed_project.MasterData.GeometryClasses;
 using Ahed_project.MasterData.Overall;
 using Ahed_project.MasterData.Products;
 using Ahed_project.MasterData.ProjectClasses;
-using Ahed_project.MasterData.TabClasses;
 using Ahed_project.Pages;
 using Ahed_project.Services.EF;
 using Ahed_project.Settings;
@@ -14,7 +13,6 @@ using Ahed_project.ViewModel.Pages;
 using Ahed_project.ViewModel.Windows;
 using Ahed_project.Windows;
 using AutoMapper;
-using DevExpress.Internal.WinApi.Windows.UI.Notifications;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -68,9 +66,9 @@ namespace Ahed_project.Services.Global
             _mainViewModel = mainViewModel;
             _createExcelService = createExcelService;
             _projectsWindowViewModel = projectsWindowViewModel;
-            _pageService= pageService;
-            _productsViewModel= productsViewModel;
-            _graphsPageViewModel= graphsPageViewModel;
+            _pageService = pageService;
+            _productsViewModel = productsViewModel;
+            _graphsPageViewModel = graphsPageViewModel;
         }
 
         //Первичная загрузка после входа
@@ -140,7 +138,7 @@ namespace Ahed_project.Services.Global
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Загрузка состояний вкладок завершена!")));
             GlobalDataCollectorService.IsAllSave = true;
         }
-        
+
 
         //загрузка геометрий
         public static void DownloadGeometries()
@@ -200,7 +198,7 @@ namespace Ahed_project.Services.Global
                 _overallCalculationViewModel.MaximumViscosityRow = 0;
                 _overallCalculationViewModel.GridHeight = 650;
             }
-            if (head_exchange_type=="annular_space")
+            if (head_exchange_type == "annular_space")
             {
                 _bufflesPageViewModel.NotAnnularVisibility = Visibility.Collapsed;
                 _bufflesPageViewModel.AnnularVisibility = Visibility.Visible;
@@ -367,7 +365,7 @@ namespace Ahed_project.Services.Global
                         Name = new DateTime(1, month.month_number, 1).ToString("MMMM")
                     };
                     node.Nodes.Add(monthNode);
-                    GlobalDataCollectorService.AllProducts.Add(month.Id, month.products.Where(x=>x.delete==0).ToList());
+                    GlobalDataCollectorService.AllProducts.Add(month.Id, month.products.Where(x => x.delete == 0).ToList());
                 }
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Nodes.Add(node));
             }
@@ -438,7 +436,7 @@ namespace Ahed_project.Services.Global
                         Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations = JsonConvert.DeserializeObject<ObservableCollection<CalculationFull>>(result.data.ToString()));
                         if (_projectPageViewModel.Calculations.Count > 0)
                         {
-                            SetCalculation(_projectPageViewModel.Calculations.First(),false);
+                            SetCalculation(_projectPageViewModel.Calculations.First(), false);
 
                         }
 
@@ -702,7 +700,7 @@ namespace Ahed_project.Services.Global
             }
             else
             {
-                SelectGeometry(null,isNewProject);
+                SelectGeometry(null, isNewProject);
                 _bufflesPageViewModel.Baffle = new();
             }
             //_contentPageViewModel.Validation(false);
@@ -737,7 +735,7 @@ namespace Ahed_project.Services.Global
             _bufflesPageViewModel.Baffle.diametral_clearance_tube_baffle = geometry?.diametral_clearance_tube_baffle;
             _bufflesPageViewModel.Baffle.diametral_clearance_shell_baffle = geometry?.diametral_clearance_shell_baffle;
             //GlobalDataCollectorService.GeometryCalculated = false;
-            if (geometry!=null&&!isNewProject)
+            if (geometry != null && !isNewProject)
             {
                 CalculateGeometry(_geometryPageViewModel.Geometry);
             }
@@ -954,9 +952,9 @@ namespace Ahed_project.Services.Global
                         for (int i = 0; i < result.logs?.Count; i++)
                         {
                             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage(result.logs[i].type, result.logs[i].message)));
-                            if (result.logs[i]?.type?.ToLower()=="error")
+                            if (result.logs[i]?.type?.ToLower() == "error")
                             {
-                                wasErrors= true;
+                                wasErrors = true;
                             }
                         }
                         var g = JsonConvert.DeserializeObject<GeometryFull>(result.data.ToString());
@@ -1115,7 +1113,7 @@ namespace Ahed_project.Services.Global
 
                     Application.Current.Dispatcher.Invoke(() => _projectPageViewModel.Calculations.Clear());
                     CreateCalculation("Default");
-                    SetCalculation(_projectPageViewModel.Calculations.FirstOrDefault(),true);
+                    SetCalculation(_projectPageViewModel.Calculations.FirstOrDefault(), true);
                 }
                 catch (Exception e)
                 {
@@ -1276,7 +1274,7 @@ namespace Ahed_project.Services.Global
         private static bool CheckAccess(string userName)
         {
             bool result = false;
-            if (GlobalDataCollectorService.User.name == "APORA Agent"|| GlobalDataCollectorService.User.name == userName)
+            if (GlobalDataCollectorService.User.name == "APORA Agent" || GlobalDataCollectorService.User.name == userName)
             {
                 result = true;
             }
@@ -1313,7 +1311,7 @@ namespace Ahed_project.Services.Global
 
         internal static void OverallCalculationTransition(List<string> toBeYellowed)
         {
-            if (GlobalDataCollectorService.IsActiveOverall&&!_isCalculatingToLogOnce)
+            if (GlobalDataCollectorService.IsActiveOverall && !_isCalculatingToLogOnce)
             {
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Warning", "Flow Parameters calculation finished with warnings")));
                 foreach (var item in toBeYellowed)
@@ -1332,7 +1330,7 @@ namespace Ahed_project.Services.Global
             {
                 product.user_name = GlobalDataCollectorService.User.name;
             }
-            string json =  JsonConvert.SerializeObject(product,new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore});
+            string json = JsonConvert.SerializeObject(product, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore });
             var res = _sendDataService.SendToServer(ProjectMethods.ADD_OR_UPDATE_PRODUCT, json);
             Reopen();
             var curr = Application.Current.Windows.OfType<ProductWindow>().ToList();
@@ -1351,12 +1349,12 @@ namespace Ahed_project.Services.Global
 
         internal static void RaiseOverall()
         {
-            _overallCalculationViewModel.Overall.OnPropertyChanged(String.Empty,false);
+            _overallCalculationViewModel.Overall.OnPropertyChanged(String.Empty, false);
         }
 
         internal static void RefreshGraphsData()
         {
-            _graphsPageViewModel.TubesFluid= _tubesFluidViewModel.Product?.name;
+            _graphsPageViewModel.TubesFluid = _tubesFluidViewModel.Product?.name;
             _graphsPageViewModel.ShellFluid = _shellFluidViewModel.Product?.name;
             _graphsPageViewModel.TubesFlow = _heatBalanceViewModel.Calculation?.flow_tube;
             _graphsPageViewModel.ShellFlow = _heatBalanceViewModel.Calculation?.flow_shell;
@@ -1370,7 +1368,7 @@ namespace Ahed_project.Services.Global
             //_graphsPageViewModel.NumberOfBlocks = _geometryPageViewModel.Geometry?.;
             //_graphsPageViewModel.SurfaceAreaRequired = _geometryPageViewModel.Geometry?.;
             //_graphsPageViewModel.AreaFitted = _geometryPageViewModel.Geometry?.;
-            _graphsPageViewModel.GraphsData =  _overallCalculationViewModel.Overall?.array_graph;
+            _graphsPageViewModel.GraphsData = _overallCalculationViewModel.Overall?.array_graph;
             if (_graphsPageViewModel.GraphsData != null)
             {
                 _graphsPageViewModel.SetGraphsData();

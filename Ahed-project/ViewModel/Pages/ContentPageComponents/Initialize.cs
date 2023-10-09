@@ -60,7 +60,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             _pageService = pageService;
 
             var assembly = Assembly.GetExecutingAssembly();
-            var path = Path.GetDirectoryName(assembly.Location)+"/Visual/";
+            var path = Path.GetDirectoryName(assembly.Location) + "/Visual/";
 
             _checkPaths = new Dictionary<int, string>()
             {

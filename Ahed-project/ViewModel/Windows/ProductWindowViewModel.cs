@@ -1,12 +1,7 @@
 ﻿using Ahed_project.MasterData.Products;
 using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Management;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Ahed_project.ViewModel.Windows
@@ -39,7 +34,7 @@ namespace Ahed_project.ViewModel.Windows
                 _product = value;
             }
         }
-        public ICommand SaveProduct => new DelegateCommand(() => 
+        public ICommand SaveProduct => new DelegateCommand(() =>
         {
             GlobalFunctionsAndCallersService.SaveProduct(Product);
         });
