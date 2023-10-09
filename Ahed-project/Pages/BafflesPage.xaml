@@ -25,7 +25,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Button Content="Calculate" Command="{Binding CalculateCommand}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" >
+                    <DockPanel>
                         <ComboBox IsTextSearchEnabled="False" Width="300" Style="{StaticResource ComboboxDefault}" ItemsSource="{Binding BaffleType, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedBaffleType, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="0">
                             <ComboBox.ItemContainerStyle>
                                 <Style TargetType="ComboBoxItem">
@@ -40,8 +40,8 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <CheckBox VerticalAlignment="Center" Content="Show Dimensions"/>
-                    </StackPanel>
+                        <CheckBox HorizontalAlignment="Right" IsEnabled="False" VerticalAlignment="Center" Content="Show Dimensions"/>
+                    </DockPanel>
                     <StackPanel Orientation="Horizontal">
                         <StackPanel Orientation="Vertical" Visibility="Visible">
                             <Label Grid.Column="1" FontWeight="Bold">Basic Baffle Geometry Relations</Label>
