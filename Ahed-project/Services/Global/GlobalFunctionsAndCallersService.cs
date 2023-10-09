@@ -426,7 +426,7 @@ namespace Ahed_project.Services.Global
             _projectPageViewModel.FieldsState = false;
             //_overallCalculationViewModel.Overall = new OverallFull();
             //App.Current.Dispatcher.Invoke(() => _overallCalculationViewModel.Refresh());
-            if (_bufflesPageViewModel!=null)
+            if (_bufflesPageViewModel != null)
             {
                 _bufflesPageViewModel.inlet_baffle_spacing_is_edit = 0;
                 _bufflesPageViewModel.outlet_baffle_spacing_is_edit = 0;
@@ -1050,6 +1050,18 @@ namespace Ahed_project.Services.Global
                         }
                     }
                     var b = JsonConvert.DeserializeObject<BaffleFull>(result.data.ToString());
+                    if (_bufflesPageViewModel.inlet_baffle_spacing_is_edit == 1)
+                    {
+                        b.inlet_baffle_spacing = _bufflesPageViewModel.Baffle.inlet_baffle_spacing;
+                    }
+                    if (_bufflesPageViewModel.outlet_baffle_spacing_is_edit == 1)
+                    {
+                        b.outlet_baffle_spacing = _bufflesPageViewModel.Baffle.outlet_baffle_spacing;
+                    }
+                    if (_bufflesPageViewModel.number_of_baffles_is_edit == 1)
+                    {
+                        b.number_of_baffles = _bufflesPageViewModel.NumberOfBaffles;
+                    }
                     _bufflesPageViewModel.Baffle = b;
                 }
                 catch (Exception e)
@@ -1391,7 +1403,7 @@ namespace Ahed_project.Services.Global
         {
             if (_geometryPageViewModel?.Geometry != null)
             {
-                _geometryPageViewModel.Geometry.OnPropertyChanged(uncheck: false, fromCheck:true);
+                _geometryPageViewModel.Geometry.OnPropertyChanged(uncheck: false, fromCheck: true);
             }
         }
 
