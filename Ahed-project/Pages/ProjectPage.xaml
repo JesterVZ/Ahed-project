@@ -64,7 +64,7 @@
                             <ContextMenu>
                                 <MenuItem Header="Delete" Command="{Binding DeleteCalculationsCommand}" CommandParameter="{Binding ToOperateCalculation}"/>
                                 <MenuItem Header="Copy" Command="{Binding CopyCalculationsCommand}" CommandParameter="{Binding ToOperateCalculation}"/>
-                                <MenuItem Header="Sort"/>
+                                <MenuItem Header="Sort" Command="{Binding SortCalculationNames}"/>
                             </ContextMenu>
                         </customGrid:NoRightMouseButtonListBox.ContextMenu>
                         <customGrid:NoRightMouseButtonListBox.ItemTemplate>

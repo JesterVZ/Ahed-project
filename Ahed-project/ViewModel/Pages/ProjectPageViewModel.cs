@@ -3,6 +3,7 @@ using Ahed_project.MasterData.ProjectClasses;
 using Ahed_project.Services.Global;
 using DevExpress.Mvvm;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -142,6 +143,11 @@ namespace Ahed_project.ViewModel.Pages
         public ICommand CopyCalculationsCommand => new DelegateCommand<object>((value) =>
         {
             GlobalFunctionsAndCallersService.CopyCalculation(ToOperateCalculation);
+        });
+
+        public ICommand SortCalculationNames => new DelegateCommand<object>((value) =>
+        {
+            Calculations = new ObservableCollection<CalculationFull>(Calculations.OrderBy(x => x.name));
         });
         #endregion
 
