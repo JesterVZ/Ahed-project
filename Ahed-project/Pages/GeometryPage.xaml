@@ -485,7 +485,7 @@
                         <Label Grid.Column="1" Grid.Row="8" HorizontalAlignment="Right">mm</Label>
                         <TextBox x:Name="clearances_spacing_minimum_tube_in_tube_spacing" PreviewMouseLeftButtonDown="ShowOnClick" LostFocus="LostFocus" Grid.Column="2" Grid.Row="8" Style="{StaticResource Default}" Text="{Binding Geometry.clearances_spacing_minimum_tube_in_tube_spacing, Converter={StaticResource Converter}, UpdateSourceTrigger=PropertyChanged}"/>
 
-                        <Button Grid.Column="2" Margin="3" Grid.Row="9" Content="Restore Defaults" VerticalAlignment="Center" Background="#fc6"/>
+                        <Button IsEnabled="False" Grid.Column="2" Margin="3" Grid.Row="9" Content="Restore Defaults" VerticalAlignment="Center" Background="#fc6"/>
                         <Button Command="{Binding ShowTemplate}" Grid.Column="2" Margin="3" Grid.Row="10" Content="Show Template" VerticalAlignment="Center" Background="#fc6"/>
                     </Grid>
                 </customGrid:CustomGrid>
