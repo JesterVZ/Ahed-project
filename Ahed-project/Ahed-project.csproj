@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Visual\baffles-2.png" />
+    <None Remove="Visual\baffles-3.png" />
     <None Remove="Visual\banner_hrs.jpg" />
     <None Remove="Visual\logo_header.svg" />
     <None Remove="Visual\splash_screen.png" />
@@ -68,10 +69,13 @@
   <ItemGroup>
     <Resource Include="Visual\arrow.png" />
     <Resource Include="Visual\baffles-1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Visual\baffles-2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Visual\baffles-3.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Visual\banner_hrs.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

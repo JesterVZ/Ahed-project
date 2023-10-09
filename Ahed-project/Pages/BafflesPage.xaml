@@ -43,13 +43,17 @@
                         <CheckBox VerticalAlignment="Center" Content="Show Dimensions"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <StackPanel Orientation="Vertical" Visibility="{Binding NotAnnularVisibility}">
+                        <StackPanel Orientation="Vertical" Visibility="Visible">
                             <Label Grid.Column="1" FontWeight="Bold">Basic Baffle Geometry Relations</Label>
-                            <Image Width="400" Height="400" Source="../Visual/baffles-1.png"/>
+                            <Image Width="400" Height="400" Source="pack://application:,,,/Visual/baffles-1.png"/>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Visibility="{Binding AnnularVisibility}">
-                            <Label Grid.Column="1" FontWeight="Bold">Basic Baffle Geometry Relations</Label>
-                            <Image Width="600" Height="400" Source="../Visual/baffles-2.png"/>
+                            <Label Grid.Column="1" FontWeight="Bold">Baffle Distribution</Label>
+                            <Image Width="600" Height="400" Source="pack://application:,,,/Visual/baffles-2.png"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Visibility="{Binding NotAnnularVisibility}">
+                            <Label Grid.Column="1" FontWeight="Bold">Baffle Distribution</Label>
+                            <Image Width="600" Height="400" Source="pack://application:,,,/Visual/baffles-3.png"/>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
