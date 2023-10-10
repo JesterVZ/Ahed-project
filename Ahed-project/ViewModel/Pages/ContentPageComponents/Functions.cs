@@ -323,8 +323,8 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         {
             if (withCheck)
             {
-                GlobalFunctionsAndCallersService.CheckGeometry();
-                GlobalFunctionsAndCallersService.CheckBaffle();
+                //GlobalFunctionsAndCallersService.CheckGeometry();
+                //GlobalFunctionsAndCallersService.CheckBaffle();
             }
             if (TubesFluidValidationStatusSource?.Contains("check") == true
                 && ShellFluidValidationStatusSource?.Contains("check") == true
@@ -343,15 +343,15 @@ namespace Ahed_project.ViewModel.ContentPageComponents
         {
             if (withCheck)
             {
-                GlobalFunctionsAndCallersService.CheckGeometry();
-                GlobalFunctionsAndCallersService.CheckBaffle();
+                //GlobalFunctionsAndCallersService.CheckGeometry();
+                //GlobalFunctionsAndCallersService.CheckBaffle();
             }
             if (TubesFluidValidationStatusSource?.Contains("check") == true
                && ShellFluidValidationStatusSource?.Contains("check") == true
                && GeometryValidationStatusSource?.Contains("check") == true
                && HeatBalanceValidationStatusSource?.Contains("check") == true
                && BafflesValidationStatusSource?.Contains("check") == true
-               && OverallValidationStatusSource?.Contains("check") == true)
+               && !OverallValidationStatusSource?.Contains("cancel") == true)
             {
                 GraphState.IsEnabled = true;
                 return true;

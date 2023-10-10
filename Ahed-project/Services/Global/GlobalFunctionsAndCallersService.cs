@@ -1356,9 +1356,19 @@ namespace Ahed_project.Services.Global
             }
             string json = JsonConvert.SerializeObject(product, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore });
             var res = _sendDataService.SendToServer(ProjectMethods.ADD_OR_UPDATE_PRODUCT, json);
+            var newProdId = JsonConvert.DeserializeObject<ProductGet>(res);
             Reopen();
             var curr = Application.Current.Windows.OfType<ProductWindow>().ToList();
-            curr.ForEach(x => x.Topmost = true);
+            curr.ForEach(x =>
+            {
+                var prodId = ((ProductWindowViewModel)x.DataContext).Product?.product_id;
+                if (prodId == 0)
+                {
+                    prodId = null;
+                }
+                ((ProductWindowViewModel)x.DataContext).Product = GlobalDataCollectorService.AllProducts.SelectMany(x => x.Value).FirstOrDefault(y => (prodId ?? newProdId.product_id) == y.product_id);
+                x.Topmost = true;
+            });
         }
 
 
@@ -1369,6 +1379,8 @@ namespace Ahed_project.Services.Global
             var productWindows = Application.Current.Windows.OfType<ProductsWindow>().ToList();
             productWindows.ForEach(x => x.Close());
             _pageService.OpenWindow<ProductsWindow>(OpenWindowType.WINDOW);
+            var products = Application.Current.Windows.OfType<ProductsWindow>().ToList();
+            products.ForEach(x => x.Topmost = false);
         }
 
         internal static void RaiseOverall()
