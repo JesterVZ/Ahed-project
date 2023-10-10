@@ -278,7 +278,8 @@ namespace Ahed_project.Services.Global
                     if (o.nozzles_number_of_parallel_lines_shell_side == "2" && _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side == "1")
                     {
                         _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side = "2";
-                        CalculateGeometry(_geometryPageViewModel.Geometry);
+                        _geometryPageViewModel.Calculate.Execute(null);
+                        //CalculateGeometry(_geometryPageViewModel.Geometry);
                     }
                 }
 
@@ -302,7 +303,8 @@ namespace Ahed_project.Services.Global
                     if (o.nozzles_number_of_parallel_lines_shell_side == "2" && _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side == "1")
                     {
                         _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side = "2";
-                        CalculateGeometry(_geometryPageViewModel.Geometry);
+                        _geometryPageViewModel.Calculate.Execute(null);
+                        //CalculateGeometry(_geometryPageViewModel.Geometry);
                     }
                 }
             }
@@ -749,7 +751,8 @@ namespace Ahed_project.Services.Global
             //GlobalDataCollectorService.GeometryCalculated = false;
             if (geometry != null && !isNewProject)
             {
-                CalculateGeometry(_geometryPageViewModel.Geometry);
+                _geometryPageViewModel.Calculate.Execute(null);
+                //CalculateGeometry(_geometryPageViewModel.Geometry);
             }
         }
 

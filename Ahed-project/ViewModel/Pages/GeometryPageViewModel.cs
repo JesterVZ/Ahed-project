@@ -564,6 +564,7 @@ namespace Ahed_project.ViewModel.Pages
             TubePlateLayouts.Add("optimize", optimize);
             SealingTypeVis = Visibility.Hidden;
             HousingSpaceVis = Visibility.Hidden;
+            OppositeSide = true;
         }
 
         #region commands
