@@ -430,9 +430,9 @@ namespace Ahed_project.Services.Global
             //App.Current.Dispatcher.Invoke(() => _overallCalculationViewModel.Refresh());
             if (_bufflesPageViewModel != null)
             {
-                _bufflesPageViewModel.inlet_baffle_spacing_is_edit = 0;
-                _bufflesPageViewModel.outlet_baffle_spacing_is_edit = 0;
-                _bufflesPageViewModel.number_of_baffles_is_edit = 0;
+                //_bufflesPageViewModel.Inlet_baffle_spacing_is_edit = 0;
+                //_bufflesPageViewModel.Outlet_baffle_spacing_is_edit = 0;
+                //_bufflesPageViewModel.Number_of_baffles_is_edit = 0;
             }
         }
 
@@ -683,6 +683,7 @@ namespace Ahed_project.Services.Global
                         {
                             BaffleFull baffle = JsonConvert.DeserializeObject<BaffleFull>(result.data.ToString());
                             _bufflesPageViewModel.Baffle = baffle;
+                            _bufflesPageViewModel.Refresh();
                         }
                         else
                         {
@@ -1053,15 +1054,15 @@ namespace Ahed_project.Services.Global
                         }
                     }
                     var b = JsonConvert.DeserializeObject<BaffleFull>(result.data.ToString());
-                    if (_bufflesPageViewModel.inlet_baffle_spacing_is_edit == 1)
+                    if (_bufflesPageViewModel.Inlet_baffle_spacing_is_edit == 1)
                     {
                         b.inlet_baffle_spacing = _bufflesPageViewModel.Baffle.inlet_baffle_spacing;
                     }
-                    if (_bufflesPageViewModel.outlet_baffle_spacing_is_edit == 1)
+                    if (_bufflesPageViewModel.Outlet_baffle_spacing_is_edit == 1)
                     {
                         b.outlet_baffle_spacing = _bufflesPageViewModel.Baffle.outlet_baffle_spacing;
                     }
-                    if (_bufflesPageViewModel.number_of_baffles_is_edit == 1)
+                    if (_bufflesPageViewModel.Number_of_baffles_is_edit == 1)
                     {
                         b.number_of_baffles = _bufflesPageViewModel.NumberOfBaffles;
                     }
@@ -1222,6 +1223,10 @@ namespace Ahed_project.Services.Global
 
         public static void DeleteProject(ProjectInfoGet selectedProject)
         {
+            if (selectedProject == null)
+            {
+                return;
+            }
             if (selectedProject.project_id == _projectPageViewModel.ProjectInfo.project_id)
             {
                 SetProject(null);

@@ -20,7 +20,7 @@ namespace Ahed_project.ViewModel.Pages
         public Visibility ColumnVisibility { get; set; }
 
         private int _inlet_baffle_spacing_is_edit;
-        public int inlet_baffle_spacing_is_edit
+        public int Inlet_baffle_spacing_is_edit
         {
             get => _inlet_baffle_spacing_is_edit;
             set
@@ -31,7 +31,7 @@ namespace Ahed_project.ViewModel.Pages
         }
 
         private int _outlet_baffle_spacing_is_edit;
-        public int outlet_baffle_spacing_is_edit
+        public int Outlet_baffle_spacing_is_edit
         {
             get => _outlet_baffle_spacing_is_edit;
             set
@@ -42,7 +42,7 @@ namespace Ahed_project.ViewModel.Pages
         }
 
         private int _number_of_baffles_is_edit;
-        public int number_of_baffles_is_edit
+        public int Number_of_baffles_is_edit
         {
             get => _number_of_baffles_is_edit;
             set
@@ -87,6 +87,9 @@ namespace Ahed_project.ViewModel.Pages
                 _notEditedLbi = StringToDoubleChecker.ConvertToDouble(value.inlet_baffle_spacing);
                 _notEditedLbo = StringToDoubleChecker.ConvertToDouble(value.outlet_baffle_spacing);
                 _notEditedNumberOfBaffles = StringToDoubleChecker.ConvertToDouble(value.number_of_baffles);
+                _outlet_baffle_spacing_is_edit = value.outlet_baffle_spacing_is_edit;
+                _inlet_baffle_spacing_is_edit = value.inlet_baffle_spacing_is_edit;
+                _number_of_baffles_is_edit = value.number_of_baffles_is_edit;
             }
         }
         public BafflesPageViewModel()
@@ -211,9 +214,9 @@ namespace Ahed_project.ViewModel.Pages
                 Baffle.type = "single_segmental";
                 Baffle.buffle_cut_diraction = "horizontal";
             }
-            Baffle.inlet_baffle_spacing_is_edit = StringToDoubleChecker.ConvertToDouble(Baffle.inlet_baffle_spacing) != _notEditedLbi ? 1 : 0;
-            Baffle.outlet_baffle_spacing_is_edit = StringToDoubleChecker.ConvertToDouble(Baffle.outlet_baffle_spacing) != _notEditedLbo ? 1 : 0;
-            Baffle.number_of_baffles_is_edit = StringToDoubleChecker.ConvertToDouble(Baffle.number_of_baffles) != _notEditedNumberOfBaffles ? 1 : 0;
+            //Baffle.inlet_baffle_spacing_is_edit = StringToDoubleChecker.ConvertToDouble(Baffle.inlet_baffle_spacing) != _notEditedLbi ? 1 : 0;
+            //Baffle.outlet_baffle_spacing_is_edit = StringToDoubleChecker.ConvertToDouble(Baffle.outlet_baffle_spacing) != _notEditedLbo ? 1 : 0;
+            //Baffle.number_of_baffles_is_edit = StringToDoubleChecker.ConvertToDouble(Baffle.number_of_baffles) != _notEditedNumberOfBaffles ? 1 : 0;
             Task.Run(() => GlobalFunctionsAndCallersService.CalculateBaffle(Baffle));
         });
 
