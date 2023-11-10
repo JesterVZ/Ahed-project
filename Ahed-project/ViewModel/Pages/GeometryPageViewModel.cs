@@ -212,7 +212,10 @@ namespace Ahed_project.ViewModel.Pages
                 }
                 SealingTypeItem = SealingTypeItems.FirstOrDefault(x => x.Key == value?.tube_plate_layout_sealing_type);
                 RaisePropertiesChanged("GeometryPageViewModel");
-
+                if (value?.geometry_id!=0)
+                {
+                    GlobalDataCollectorService.GeometrySelected = true;
+                }
             }
         }
 
