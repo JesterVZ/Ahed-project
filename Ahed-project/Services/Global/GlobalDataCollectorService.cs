@@ -63,7 +63,6 @@ namespace Ahed_project.Services.Global
         #region Geometry
         public static ObservableCollection<GeometryFull> GeometryCollection { get; set; }
         public static bool GeometryCalculated { get; set; }
-        public static bool GeometrySelected { get; set; } = false;
         #endregion
         #region Products
         public static Dictionary<string, List<ProductGet>> AllProducts { get; set; }

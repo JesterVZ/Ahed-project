@@ -528,7 +528,6 @@ namespace Ahed_project.Services.Global
                 MessageBox.Show("Необходимо выбрать проект", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            GlobalDataCollectorService.GeometrySelected = false;
             CalculationSend calculationSend = new()
             {
                 Name = name
@@ -729,7 +728,6 @@ namespace Ahed_project.Services.Global
         {
             if (geometry != null)
             {
-                GlobalDataCollectorService.GeometrySelected = true;
                 using (var context = new EFContext())
                 {
                     var user = context.Users.FirstOrDefault(x => x.Id == GlobalDataCollectorService.UserId);
@@ -898,10 +896,6 @@ namespace Ahed_project.Services.Global
             if (_heatBalanceViewModel.Calculation == null || _heatBalanceViewModel.Calculation.calculation_id == 0)
             {
                 MessageBox.Show("Выберите рассчет", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
-            if (!GlobalDataCollectorService.GeometrySelected)
-            {
                 return;
             }
             string json = JsonConvert.SerializeObject(new
@@ -1105,7 +1099,6 @@ namespace Ahed_project.Services.Global
         //Создать проект
         public static void CreateNewProject(bool afterSave)
         {
-            GlobalDataCollectorService.GeometrySelected = false;
             ChangePage(0);
             Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Info", "Начало создания проекта...")));
             var response = _sendDataService.SendToServer(ProjectMethods.CREATE, "");
