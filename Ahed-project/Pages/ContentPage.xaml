@@ -32,12 +32,12 @@
                 </MenuItem>
                 <MenuItem Header="Save">
                     <MenuItem Header="Project" InputGestureText="Ctrl + S" Command="{Binding SaveCommand}"></MenuItem>
-                    <MenuItem Header="Fluid" IsEnabled="False"></MenuItem>
+                    <MenuItem Visibility="Collapsed" Header="Fluid" IsEnabled="False"></MenuItem>
                     <MenuItem Header="Geometry" Command="{Binding OpenGeometryWindow}"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Save as" IsEnabled="False">
                     <MenuItem Header="Save project as"></MenuItem>
-                    <MenuItem Header="Save fluid as"></MenuItem>
+                    <MenuItem Visibility="Collapsed" Header="Save fluid as"></MenuItem>
                     <MenuItem Header="Save geometry as"></MenuItem>
                 </MenuItem>
                 <Separator HorizontalAlignment="Left" Height="1" Width="140"/>
