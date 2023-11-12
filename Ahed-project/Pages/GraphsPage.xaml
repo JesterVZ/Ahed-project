@@ -18,87 +18,89 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="0">
-            <TextBlock Text="Summary" FontWeight="Bold"/>
-            <Grid Margin="0,30,0,0" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Content="Tubes Side" FontWeight="Bold"/>
-                <Label Grid.Row="0" Grid.Column="1" Content="Shell Side" FontWeight="Bold"/>
-                <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
-                    <Label Content="Fluid : "/>
-                    <Label Content="{Binding TubesFluid}"/>
+        <ScrollViewer Grid.Row="0" Grid.Column="0">
+            <StackPanel>
+                <TextBlock Text="Summary" FontWeight="Bold"/>
+                <Grid Margin="0,30,0,0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Tubes Side" FontWeight="Bold"/>
+                    <Label Grid.Row="0" Grid.Column="1" Content="Shell Side" FontWeight="Bold"/>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
+                        <Label Content="Fluid : "/>
+                        <Label Content="{Binding TubesFluid}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+                        <Label Content="Fluid : "/>
+                        <Label Content="{Binding ShellFluid}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0">
+                        <Label Content="Flow : "/>
+                        <Label Content="{Binding TubesFlow}"/>
+                        <Label Content="kg/hr"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
+                        <Label Content="Flow : "/>
+                        <Label Content="{Binding ShellFlow}"/>
+                        <Label Content="kg/hr"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0">
+                        <Label Content="T.in : "/>
+                        <Label Content="{Binding TubesTempIn}"/>
+                        <Label Content="°C"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
+                        <Label Content="T.in : "/>
+                        <Label Content="{Binding ShellTempIn}"/>
+                        <Label Content="°C"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0">
+                        <Label Content="T.out : "/>
+                        <Label Content="{Binding TubesTempOut}"/>
+                        <Label Content="°C"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1">
+                        <Label Content="T.out : "/>
+                        <Label Content="{Binding ShellTempOut}"/>
+                        <Label Content="°C"/>
+                    </StackPanel>
+                </Grid>
+                <Label Content="Geometry" FontWeight="Bold"/>
+                <StackPanel  Orientation="Horizontal">
+                    <Label Content="Module name : "/>
+                    <Label Content="{Binding ModuleName}"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
-                    <Label Content="Fluid : "/>
-                    <Label Content="{Binding ShellFluid}"/>
+                <StackPanel  Orientation="Horizontal">
+                    <Label Content="Nr. Modules : "/>
+                    <Label Content="{Binding NrModules}"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0">
-                    <Label Content="Flow : "/>
-                    <Label Content="{Binding TubesFlow}"/>
-                    <Label Content="kg/hr"/>
+                <StackPanel  Orientation="Horizontal">
+                    <Label Content="Number of Modules per Block : "/>
+                    <Label Content="{Binding ModulsPerBlock}"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
-                    <Label Content="Flow : "/>
-                    <Label Content="{Binding ShellFlow}"/>
-                    <Label Content="kg/hr"/>
+                <StackPanel  Orientation="Horizontal">
+                    <Label Content="Number of Blocks(⌂) : "/>
+                    <Label Content="{Binding NumberOfBlocks}"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0">
-                    <Label Content="T.in : "/>
-                    <Label Content="{Binding TubesTempIn}"/>
-                    <Label Content="°C"/>
+                <StackPanel  Orientation="Horizontal">
+                    <Label Content="Surface Area Required : "/>
+                    <Label Content="{Binding SurfaceAreaRequired}"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
-                    <Label Content="T.in : "/>
-                    <Label Content="{Binding ShellTempIn}"/>
-                    <Label Content="°C"/>
+                <StackPanel  Orientation="Horizontal">
+                    <Label Content="Area Fitted : "/>
+                    <Label Content="{Binding AreaFitted}"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0">
-                    <Label Content="T.out : "/>
-                    <Label Content="{Binding TubesTempOut}"/>
-                    <Label Content="°C"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1">
-                    <Label Content="T.out : "/>
-                    <Label Content="{Binding ShellTempOut}"/>
-                    <Label Content="°C"/>
-                </StackPanel>
-            </Grid>
-            <Label Content="Geometry" FontWeight="Bold"/>
-            <StackPanel  Orientation="Horizontal">
-                <Label Content="Module name : "/>
-                <Label Content="{Binding ModuleName}"/>
             </StackPanel>
-            <StackPanel  Orientation="Horizontal">
-                <Label Content="Nr. Modules : "/>
-                <Label Content="{Binding NrModules}"/>
-            </StackPanel>
-            <StackPanel  Orientation="Horizontal">
-                <Label Content="Number of Modules per Block : "/>
-                <Label Content="{Binding ModulsPerBlock}"/>
-            </StackPanel>
-            <StackPanel  Orientation="Horizontal">
-                <Label Content="Number of Blocks(⌂) : "/>
-                <Label Content="{Binding NumberOfBlocks}"/>
-            </StackPanel>
-            <StackPanel  Orientation="Horizontal">
-                <Label Content="Surface Area Required : "/>
-                <Label Content="{Binding SurfaceAreaRequired}"/>
-            </StackPanel>
-            <StackPanel  Orientation="Horizontal">
-                <Label Content="Area Fitted : "/>
-                <Label Content="{Binding AreaFitted}"/>
-            </StackPanel>
-        </StackPanel>
+        </ScrollViewer>
         <StackPanel Grid.Row="0" Grid.Column="1">
             <DockPanel>
                 <Label Content="Temperatures" FontWeight="Bold"/>
