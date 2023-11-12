@@ -405,7 +405,7 @@ namespace Ahed_project.Services.Global
         //Установка проекта
         public static void SetProject(ProjectInfoGet projectInfoGet)
         {
-            ReRender(projectInfoGet.number_of_decimals ?? 2);
+            ReRender(projectInfoGet?.number_of_decimals ?? 2);
             _projectPageViewModel.ProjectInfo = projectInfoGet;
             if (!(_heatBalanceViewModel.Calculation == null || _heatBalanceViewModel.Calculation?.calculation_id == 0))
             {
@@ -1232,6 +1232,11 @@ namespace Ahed_project.Services.Global
         {
             if (selectedProject == null)
             {
+                return;
+            }
+            if (selectedProject.owner != GlobalDataCollectorService.User.name)
+            {
+                MessageBox.Show($"Нет прав на удаление проекта, проект создан другим пользователем");
                 return;
             }
             if (selectedProject.project_id == _projectPageViewModel.ProjectInfo.project_id)

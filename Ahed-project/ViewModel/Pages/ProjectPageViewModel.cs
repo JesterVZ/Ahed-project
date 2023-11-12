@@ -70,12 +70,18 @@ namespace Ahed_project.ViewModel.Pages
                 if (string.IsNullOrEmpty(value))
                 {
                     _system = "SI";
-                    ProjectInfo.units = "SI";
+                    if (ProjectInfo != null)
+                    {
+                        ProjectInfo.units = "SI";
+                    }
                 }
                 else
                 {
                     _system = value;
-                    ProjectInfo.units = value;
+                    if (ProjectInfo != null)
+                    {
+                        ProjectInfo.units = value;
+                    }
                 }
             }
         }
