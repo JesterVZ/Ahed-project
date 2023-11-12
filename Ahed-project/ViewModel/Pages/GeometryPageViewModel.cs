@@ -719,7 +719,7 @@ namespace Ahed_project.ViewModel.Pages
             {
                 if (field == null)
                 {
-                    Geometry.OnPropertyChanged(tb.Name);
+                    Geometry.OnPropertyChanged(tb.Name, false);
                 }
                 else
                 {
