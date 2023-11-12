@@ -1063,15 +1063,15 @@ namespace Ahed_project.Services.Global
                     var b = JsonConvert.DeserializeObject<BaffleFull>(result.data.ToString());
                     if (_bufflesPageViewModel.Inlet_baffle_spacing_is_edit == 1)
                     {
-                        b.inlet_baffle_spacing = _bufflesPageViewModel.Baffle.inlet_baffle_spacing;
+                        b.inlet_baffle_spacing = baffle.inlet_baffle_spacing;
                     }
                     if (_bufflesPageViewModel.Outlet_baffle_spacing_is_edit == 1)
                     {
-                        b.outlet_baffle_spacing = _bufflesPageViewModel.Baffle.outlet_baffle_spacing;
+                        b.outlet_baffle_spacing = baffle.outlet_baffle_spacing;
                     }
                     if (_bufflesPageViewModel.Number_of_baffles_is_edit == 1)
                     {
-                        b.number_of_baffles = _bufflesPageViewModel.NumberOfBaffles;
+                        b.number_of_baffles = baffle.number_of_baffles;
                     }
                     _bufflesPageViewModel.Baffle = b;
                 }
