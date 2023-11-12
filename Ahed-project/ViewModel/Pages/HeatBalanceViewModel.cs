@@ -65,8 +65,9 @@ namespace Ahed_project.ViewModel.Pages
                 if (!check)
                 {
                     _pressure_shell_inlet_value = value;
-                    if (Calculation != null && Calculation.pressure_shell_inlet != value && Calculation.calculation_id != 0 && Calculation.process_shell.ToLower() == "condensation" && double.TryParse(value, out var res))
+                    if (Calculation != null && _lastCalculatedPressureShellInlet != value && Calculation.calculation_id != 0 && Calculation.process_shell.ToLower() == "condensation" && double.TryParse(value, out var res))
                     {
+                        _lastCalculatedPressureShellInlet = value;
                         GetTemperatureCalculation(true, value);
                     }
                 }
@@ -74,9 +75,11 @@ namespace Ahed_project.ViewModel.Pages
                 {
                     Pressure_shell_inlet_value = value;
                 }
+                Calculation.pressure_shell_inlet = value;
                 ChangesMaded();
             }
         }
+        private string _lastCalculatedPressureShellInlet { get; set; }
 
         private string _temperature_tube_outlet;
         public string Temperature_tube_outlet
@@ -112,15 +115,17 @@ namespace Ahed_project.ViewModel.Pages
             set
             {
                 _pressure_tube_inlet_value = value;
-                if (Calculation != null && Calculation.pressure_tube_inlet != value && Calculation.calculation_id != 0 && Calculation.process_tube.ToLower() == "condensation" && double.TryParse(value, out var res))
+                if (Calculation != null && _lastCalculatedPressureTubInlet != value && Calculation.calculation_id != 0 && Calculation.process_tube.ToLower() == "condensation" && double.TryParse(value, out var res))
                 {
+                    _lastCalculatedPressureTubInlet = value;
                     GetTemperatureCalculation(false, value);
                 }
+                Calculation.pressure_tube_inlet = value;
                 ChangesMaded();
             }
         }
 
-
+        private string _lastCalculatedPressureTubInlet { get; set; }
 
         private void GetTemperatureCalculation(bool shell, string value)
         {
@@ -210,6 +215,8 @@ namespace Ahed_project.ViewModel.Pages
                         FlowShell = true;
                     }
                     Temperature_tube_outlet = Calculation.temperature_tube_outlet;
+                    _lastCalculatedPressureTubInlet = value.pressure_tube_inlet;
+                    _lastCalculatedPressureShellInlet = value.pressure_shell_inlet;
                 }
             }
         }
