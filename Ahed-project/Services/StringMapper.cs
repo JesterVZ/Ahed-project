@@ -64,18 +64,18 @@
             var tempTubeLayout = tubeLayout.ToLower();
             switch (tempTubeLayout)
             {
-                case "triangular":
-                    return "Triangular (30º)";
-                case "triangular_centered":
-                    return "Triangular Centered (30º)";
-                case "squared":
-                    return "Squared (90º)";
-                case "squared_centered":
-                    return "Squared Centered (90º)";
-                case "rotated_squared":
-                    return "Rotated Squared";
-                case "rotated_squared_centered":
-                    return "Rotated Squared Centred";
+                case "triangular (30º)":
+                    return "triangular";
+                case "triangular centered (30º)":
+                    return "triangular_centered";
+                case "squared (90º)":
+                    return "squared";
+                case "squared centered (90º)":
+                    return "squared_centered";
+                case "rotated squared":
+                    return "rotated_squared";
+                case "rotated squared centred":
+                    return "rotated_squared_centered";
                 case "optimize":
                     return "<Optimize>";
                 default: return tubeLayout;

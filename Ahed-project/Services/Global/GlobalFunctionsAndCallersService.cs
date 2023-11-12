@@ -945,7 +945,7 @@ namespace Ahed_project.Services.Global
                 nozzles_number_of_parallel_lines_shell_side = geometry.nozzles_number_of_parallel_lines_shell_side,
                 shell_nozzle_orientation = geometry.shell_nozzle_orientation,
                 tube_plate_layout_tube_pitch = geometry.tube_plate_layout_tube_pitch,
-                tube_plate_layout_tube_layout = geometry.tube_plate_layout_tube_layout?.ToLower()?.Replace(' ', '_'),
+                tube_plate_layout_tube_layout = StringMapper.GetTubeLayoutToSend(geometry.tube_plate_layout_tube_layout?.ToLower()),
                 tube_plate_layout_number_of_passes = geometry.tube_plate_layout_number_of_passes,
                 tube_plate_layout_div_plate_layout = geometry.tube_plate_layout_div_plate_layout,
                 tube_plate_layout_sealing_type = geometry.tube_plate_layout_sealing_type?.ToLower()?.Replace(' ', '_'),
