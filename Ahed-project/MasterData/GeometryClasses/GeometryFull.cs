@@ -1,7 +1,9 @@
 ﻿using Ahed_project.Pages;
 using Ahed_project.Services.Global;
 using Ahed_project.Settings;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -215,12 +217,31 @@ namespace Ahed_project.MasterData.GeometryClasses
         public DateTime? createdAt { get => _createdAt; set { _createdAt = value; OnPropertyChanged(nameof(createdAt)); } }
         public DateTime? updatedAt { get => _updatedAt; set { _updatedAt = value; OnPropertyChanged(nameof(updatedAt)); } }
 
+        [JsonIgnore]
+        public bool NewGeometry { get; set; } = true;
+
+        private List<string> _dontMarkingAsOld = new List<string>()
+        {
+            "shell_nozzle_orientation",
+            "head_exchange_type",
+            "material_tubes_side",
+            "material_shell_side",
+            "orientation",
+            "tube_profile_tubes_side",
+            "tube_plate_layout_tube_layout",
+            "tube_plate_layout_sealing_type"
+        };
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "", bool uncheck = true, bool fromCheck = false)
         {
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+                if (!_dontMarkingAsOld.Contains(prop))
+                {
+                    NewGeometry = false;
+                }
                 Task.Run(() =>
                 {
                     if (uncheck)

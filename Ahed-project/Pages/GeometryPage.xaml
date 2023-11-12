@@ -22,7 +22,7 @@
 
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
-                    <Button Content="Calculate" Command="{Binding Calculate}"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
+                    <Button Content="Calculate" Command="{Binding Calculate}" CommandParameter="true"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="121" Background="#fc6"/>
                 </StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>

@@ -212,7 +212,6 @@ namespace Ahed_project.ViewModel.Pages
                 }
                 SealingTypeItem = SealingTypeItems.FirstOrDefault(x => x.Key == value?.tube_plate_layout_sealing_type);
                 RaisePropertiesChanged("GeometryPageViewModel");
-
             }
         }
 
@@ -581,7 +580,7 @@ namespace Ahed_project.ViewModel.Pages
             window.ShowDialog();
         });
 
-        public ICommand Calculate => new DelegateCommand(() =>
+        public ICommand Calculate => new DelegateCommand<bool>((byButton) =>
         {
             if (OppositeSide == true) //небольшой костыль, я потом поправлю
             {
@@ -632,7 +631,7 @@ namespace Ahed_project.ViewModel.Pages
             }
             Geometry.tube_plate_layout_div_plate_layout = DivPlateItem.Key;
             Geometry.tube_plate_layout_sealing_type = SealingTypeItem.Key;
-            Task.Run(() => GlobalFunctionsAndCallersService.CalculateGeometry(Geometry));
+            Task.Run(() => GlobalFunctionsAndCallersService.CalculateGeometry(Geometry, byButton));
         });
 
         #endregion

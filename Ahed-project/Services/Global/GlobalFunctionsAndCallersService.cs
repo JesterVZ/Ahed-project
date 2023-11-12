@@ -278,7 +278,7 @@ namespace Ahed_project.Services.Global
                     if (o.nozzles_number_of_parallel_lines_shell_side == "2" && _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side == "1")
                     {
                         _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side = "2";
-                        _geometryPageViewModel.Calculate.Execute(null);
+                        _geometryPageViewModel.Calculate.Execute(false);
                         //CalculateGeometry(_geometryPageViewModel.Geometry);
                     }
                 }
@@ -303,7 +303,7 @@ namespace Ahed_project.Services.Global
                     if (o.nozzles_number_of_parallel_lines_shell_side == "2" && _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side == "1")
                     {
                         _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side = "2";
-                        _geometryPageViewModel.Calculate.Execute(null);
+                        _geometryPageViewModel.Calculate.Execute(false);
                         //CalculateGeometry(_geometryPageViewModel.Geometry);
                     }
                 }
@@ -752,7 +752,7 @@ namespace Ahed_project.Services.Global
             //GlobalDataCollectorService.GeometryCalculated = false;
             if (geometry != null && !isNewProject)
             {
-                _geometryPageViewModel.Calculate.Execute(null);
+                _geometryPageViewModel.Calculate.Execute(false);
                 //CalculateGeometry(_geometryPageViewModel.Geometry);
             }
         }
@@ -891,12 +891,19 @@ namespace Ahed_project.Services.Global
             }
         }
         //расчет геометрии
-        public static void CalculateGeometry(GeometryFull geometry)
+        public static void CalculateGeometry(GeometryFull geometry, bool byButton)
         {
             if (_heatBalanceViewModel.Calculation == null || _heatBalanceViewModel.Calculation.calculation_id == 0)
             {
                 MessageBox.Show("Выберите рассчет", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
+            }
+            if (!byButton)
+            {
+                if (geometry.NewGeometry && geometry.createdAt?.ToUniversalTime() == geometry.updatedAt?.ToUniversalTime())
+                {
+                    return;
+                }
             }
             string json = JsonConvert.SerializeObject(new
             {
