@@ -26,7 +26,7 @@
             <ComboBoxItem IsSelected="True">Date Created</ComboBoxItem>
             <ComboBoxItem>Date Modified</ComboBoxItem>
         </ComboBox>
-        <Button Visibility="Hidden" IsEnabled="False" Style="{StaticResource MainButton}" Grid.Column="1" Grid.Row="0" Width="100" HorizontalAlignment="Right" Margin="0,4,3,4" Command="{Binding GetCurrentProducts}">GetAll</Button>
+        <Button Style="{StaticResource MainButton}" Grid.Column="1" Grid.Row="0" Width="100" HorizontalAlignment="Right" Margin="0,4,3,4" Command="{Binding GetCurrentProducts}">Get all</Button>
         <TreeView x:Name="ProductTreeView" Grid.Column="0" Grid.Row="1" Margin="4" ItemsSource="{Binding Nodes, UpdateSourceTrigger=PropertyChanged}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectedItemChanged">
