@@ -22,12 +22,12 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ComboBox Grid.Column="0" Grid.Row="0" Margin="4">
+        <ComboBox Visibility="Hidden" Grid.Column="0" Grid.Row="0" Margin="4">
             <ComboBoxItem IsSelected="True">Date Created</ComboBoxItem>
             <ComboBoxItem>Date Modified</ComboBoxItem>
         </ComboBox>
-        <Button Style="{StaticResource MainButton}" Grid.Column="1" Grid.Row="0" Width="100" HorizontalAlignment="Right" Margin="0,4,3,4" Command="{Binding GetCurrentProducts}">Get all</Button>
-        <TreeView x:Name="ProductTreeView" Grid.Column="0" Grid.Row="1" Margin="4" ItemsSource="{Binding Nodes, UpdateSourceTrigger=PropertyChanged}">
+        <Button Visibility="Hidden" Style="{StaticResource MainButton}" Grid.Column="1" Grid.Row="0" Width="100" HorizontalAlignment="Right" Margin="0,4,3,4" Command="{Binding GetCurrentProducts}">Get all</Button>
+        <TreeView Visibility="Collapsed" x:Name="ProductTreeView" Grid.Column="0" Grid.Row="1" Margin="4" ItemsSource="{Binding Nodes, UpdateSourceTrigger=PropertyChanged}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectedItemChanged">
                     <i:InvokeCommandAction Command="{Binding SelectProductCommand}" CommandParameter="{Binding ElementName=ProductTreeView, Path=SelectedItem}"/>
@@ -39,12 +39,16 @@
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
-        <Grid Grid.Column="1" Grid.Row="1">
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="29*"/>
+                <ColumnDefinition Width="171*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
-            <DataGrid ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Margin="4" AutoGenerateColumns="False" IsReadOnly="True" AllowDrop="False">
+            <DataGrid ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Margin="4,4,4,4" AutoGenerateColumns="False" IsReadOnly="True" AllowDrop="False" Grid.ColumnSpan="2">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Path=name}" Header="Name" Width="150"/>
                     <DataGridTextColumn Binding="{Binding Path=user_name}" Header="Owner" Width="100"/>
@@ -66,7 +70,7 @@
                     </Style>
                 </DataGrid.RowStyle>
             </DataGrid>
-            <TextBlock Text="Description" Grid.Row="1" Margin="4"/>
+            <TextBlock Text="Description" Grid.Row="1" Margin="4,4,4,4" Grid.ColumnSpan="2"/>
 
         </Grid>
         <Grid Grid.Row="2" Grid.ColumnSpan="2">

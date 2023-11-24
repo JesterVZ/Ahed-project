@@ -49,10 +49,12 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="searchTextBox" Grid.Column="0" Margin="5 5 5 5" Text="{Binding Path=SearchBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Style="{StaticResource MainButton}" Grid.Column="1" Margin="5 5 5 5" Command="{Binding DeleteProject}">Delete</Button>
-            <Button Style="{StaticResource MainButton}" Grid.Column="2" Margin="5 5 5 5" Click="Button_Click" IsCancel="True" Command="{Binding SelectProject}">Select</Button>
+            <TextBox x:Name="searchTextBox" Grid.Column="0" Margin="5,5,5,5" Text="{Binding Path=SearchBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Style="{StaticResource MainButton}" Grid.Column="2" Margin="5 5 5 5" Command="{Binding DeleteProject}">Delete</Button>
+            <Button Style="{StaticResource MainButton}" Grid.Column="3" Margin="5 5 5 5" Click="Button_Click" IsCancel="True" Command="{Binding SelectProject}">Select</Button>
+            <Button Style="{StaticResource MainButton}" Grid.Column="1" Margin="5 5 5 5" Command="{Binding GetAll}" Content="Get All"/>
         </Grid>
     </Grid>
 </Window>

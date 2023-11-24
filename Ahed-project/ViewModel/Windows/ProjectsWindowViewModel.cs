@@ -74,6 +74,11 @@ namespace Ahed_project.ViewModel.Windows
             }
         }
 
+        public ICommand GetAll => new DelegateCommand(() =>
+        {
+            Projects = new ObservableCollection<ProjectInfoGet>(GlobalDataCollectorService.AllProjects.SelectMany(x=>x.Value));
+        });
+
         public ICommand WindowLoaded => new DelegateCommand(() =>
         {
             SearchCondition();

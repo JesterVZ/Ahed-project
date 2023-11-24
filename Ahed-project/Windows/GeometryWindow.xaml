@@ -28,7 +28,7 @@
                 <ComboBoxItem IsSelected="True">Date Created</ComboBoxItem>
                 <ComboBoxItem>Date Modified</ComboBoxItem>
             </ComboBox>
-            <Grid Grid.Column="1" Grid.Row="1">
+            <Grid Grid.Row="1" Grid.ColumnSpan="2">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition Height="100"/>
