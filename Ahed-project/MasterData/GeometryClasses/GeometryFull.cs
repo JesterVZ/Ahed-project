@@ -248,7 +248,7 @@ namespace Ahed_project.MasterData.GeometryClasses
                     {
                         GlobalFunctionsAndCallersService.Uncheck(new System.Collections.Generic.List<string>() { nameof(GeometryPage), nameof(BafflesPage) });
                     }
-                    Check(fromCheck);
+                    //Check(fromCheck);
                 });
             }
         }

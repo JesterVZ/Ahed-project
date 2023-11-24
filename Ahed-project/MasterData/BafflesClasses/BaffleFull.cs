@@ -120,7 +120,7 @@ namespace Ahed_project.MasterData.BafflesClasses
                     {
                         GlobalFunctionsAndCallersService.Uncheck(new System.Collections.Generic.List<string>() { nameof(BafflesPage), nameof(OverallCalculationPage) });
                     }
-                    Check(fromCheck);
+                    //Check(fromCheck);
                 });
             }
         }
