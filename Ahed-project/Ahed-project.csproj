@@ -59,6 +59,9 @@
     <None Update="Visual\cancel.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Visual\header.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Visual\warning.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

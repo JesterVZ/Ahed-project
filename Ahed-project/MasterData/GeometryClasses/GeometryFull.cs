@@ -52,6 +52,7 @@ namespace Ahed_project.MasterData.GeometryClasses
         private string _tube_plate_layout_tube_pitch;
         private string _tube_plate_layout_tube_layout;
         private string _tube_plate_layout_number_of_passes;
+        private string _shell_plate_layout_number_of_passes;
         private string _tube_plate_layout_div_plate_layout;
         private string _tube_plate_layout_sealing_type;
         private string _tube_plate_layout_housings_space;
@@ -158,6 +159,7 @@ namespace Ahed_project.MasterData.GeometryClasses
         public string tube_plate_layout_tube_pitch { get => _tube_plate_layout_tube_pitch; set { _tube_plate_layout_tube_pitch = value; OnPropertyChanged(nameof(tube_plate_layout_tube_pitch)); } }
         public string tube_plate_layout_tube_layout { get => _tube_plate_layout_tube_layout; set { _tube_plate_layout_tube_layout = value; OnPropertyChanged(nameof(tube_plate_layout_tube_layout)); } }
         public string tube_plate_layout_number_of_passes { get => _tube_plate_layout_number_of_passes; set { _tube_plate_layout_number_of_passes = value; OnPropertyChanged(nameof(tube_plate_layout_number_of_passes)); } }
+        public string shell_plate_layout_number_of_passes { get => _shell_plate_layout_number_of_passes; set { _shell_plate_layout_number_of_passes = value; OnPropertyChanged(nameof(shell_plate_layout_number_of_passes)); } }
         public string tube_plate_layout_div_plate_layout { get => _tube_plate_layout_div_plate_layout; set { _tube_plate_layout_div_plate_layout = value; OnPropertyChanged(nameof(tube_plate_layout_div_plate_layout)); } }
         public string tube_plate_layout_sealing_type { get => _tube_plate_layout_sealing_type; set { _tube_plate_layout_sealing_type = value; OnPropertyChanged(nameof(tube_plate_layout_sealing_type)); } }
         public string tube_plate_layout_housings_space { get => _tube_plate_layout_housings_space; set { _tube_plate_layout_housings_space = value; OnPropertyChanged(nameof(tube_plate_layout_housings_space)); } }
