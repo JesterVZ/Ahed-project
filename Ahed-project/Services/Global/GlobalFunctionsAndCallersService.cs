@@ -768,7 +768,11 @@ namespace Ahed_project.Services.Global
             }
             _tubesFluidViewModel.Product = product;
             RefreshGraphsData();
-            Task.Run(GetTabState);
+            Task.Run(()=>
+            {
+                GetTabState();
+                Uncheck(new List<string>() { nameof(HeatBalancePage) });
+            });
         }
         //ссылка на _tubesFluidViewModel.Product
         public static ProductGet GetTubeProduct()
@@ -792,7 +796,11 @@ namespace Ahed_project.Services.Global
             }
             _shellFluidViewModel.Product = product;
             RefreshGraphsData();
-            Task.Run(GetTabState);
+            Task.Run(() =>
+            {
+                GetTabState();
+                Uncheck(new List<string>() { nameof(HeatBalancePage) });
+            });
         }
 
         //Обновить продукты в рассчете

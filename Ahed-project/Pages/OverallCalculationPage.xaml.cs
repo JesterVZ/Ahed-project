@@ -41,7 +41,7 @@ namespace Ahed_project.Pages
                 var elem = (Control)sender;
                 name = elem.Name;
                 text = elem.GetValue(CustomCheck.dependencyPropertyText) as string;
-                isReadOnly = (int)elem.GetValue(CustomCheck.dependencyPropertyIsChecked) == 1;
+                isReadOnly = (int)(elem.GetValue(CustomCheck.dependencyPropertyIsChecked) ?? 0) == 1;
             }
             _viewModel.RaiseDeep(name, isReadOnly, text, isReadOnly ? 1 : 0);
         }
