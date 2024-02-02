@@ -3,6 +3,7 @@ using Ahed_project.MasterData.Graphs;
 using Ahed_project.MasterData.Products;
 using Ahed_project.Services.Global;
 using Ahed_project.Settings;
+using Ahed_project.Utils;
 using Ahed_project.ViewModel.Pages;
 using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Drawing.Charts;
@@ -75,6 +76,7 @@ namespace Ahed_project.Services
                     AddShellData(doc);
                     AddHeatBalanceData(doc);
                     AddGeometryData(doc);
+                    AddBafflesData(doc);
                     AddOverallData(doc);
                     AddGraphsData(doc);
                     AddTemaSheet(doc);
@@ -94,6 +96,184 @@ namespace Ahed_project.Services
                 Application.Current.Dispatcher.Invoke(() => GlobalDataCollectorService.Logs.Add(new LoggerMessage("Error", $"Message: {e.Message}\r\nExcep: {e}")));
             }
 
+        }
+
+        private void AddBafflesData(SLDocument doc)
+        {
+            doc.AddWorksheet("BafflesReport");
+            doc.MergeWorksheetCells("A1", "B1");
+            doc.MergeWorksheetCells("A2", "B2");
+            doc.MergeWorksheetCells("A3", "B3");
+            doc.MergeWorksheetCells("A4", "B4");
+            doc.MergeWorksheetCells("C1", "F1");
+            doc.MergeWorksheetCells("C3", "F3");
+            doc.MergeWorksheetCells("C4", "F4");
+            doc.SetCellValue("A1", "Project name");
+            doc.SetCellValue("C1", _projectPageViewModel.ProjectName);
+            doc.SetCellStyle("A1", "A6", BoldTextStyle());
+            doc.SetCellStyle("A1", "F1", BorderCellsStyle());
+            doc.SetCellStyle("A2", "C2", BorderCellsStyle());
+            doc.SetCellStyle("A3", "F3", BorderCellsStyle());
+            doc.SetCellStyle("A4", "F4", BorderCellsStyle());
+            doc.SetColumnWidth("A", "M", 15);
+            doc.SetCellValue("A2", "Revision Nr");
+            doc.SetCellValue("C2", _projectPageViewModel.ProjectInfo.revision.ToString());
+            doc.SetCellValue("A3", "Process");
+            doc.SetCellValue("C3", _projectPageViewModel.SelectedCalculation.name);
+            doc.SetCellValue("A4", "Module name");
+            doc.SetCellValue("C4", _overallCalculationViewModel.Name);
+
+            AddBaffleNames(doc);
+            AddBafflesUom(doc);
+            AddBafflesUomData(doc);
+        }
+
+        private void AddBafflesUomData(SLDocument doc)
+        {
+            doc.SetCellValue("C7", _bafflesPageViewModel.Baffle.type.ToNormalCase());
+            doc.SetCellValue("C8", _bafflesPageViewModel.Baffle.shell_inner_diameter.ToDoubleWithoutDot());
+            doc.SetCellValue("C9", _bafflesPageViewModel.Baffle.tubes_outer_diameter.ToDoubleWithoutDot());
+            doc.SetCellValue("C10", _bafflesPageViewModel.Baffle.buffle_cut.ToDoubleWithoutDot());
+            doc.SetCellValue("C11", _bafflesPageViewModel.Baffle.buffle_cut_diraction.ToNormalCase());
+            doc.SetCellValue("C12", _bafflesPageViewModel.Baffle.pairs_of_sealing_strips.ToDoubleWithoutDot());
+            doc.SetCellValue("C13", _bafflesPageViewModel.Baffle.shell_diameter_angle.ToDoubleWithoutDot());
+            doc.SetCellValue("C14", _bafflesPageViewModel.Baffle.center_tube_angle.ToDoubleWithoutDot());
+            doc.SetCellValue("C15", _bafflesPageViewModel.Baffle.diameter_to_tube_center.ToDoubleWithoutDot());
+            doc.SetCellValue("C16", _bafflesPageViewModel.Baffle.diameter_to_tube_outer_side.ToDoubleWithoutDot());
+            doc.SetCellValue("C17", _bafflesPageViewModel.Baffle.bypass_lanes);
+            doc.SetCellValue("C18", _bafflesPageViewModel.Baffle.inner_shell_to_outer_tube_bypass_clearance.ToDoubleWithoutDot());
+            doc.SetCellValue("C19", _bafflesPageViewModel.Baffle.average_tubes_in_baffle_windows.ToDoubleWithoutDot());
+
+            doc.SetCellValue("C22", _bafflesPageViewModel.Baffle.diametral_clearance_shell_baffle.ToDoubleWithoutDot());
+            doc.SetCellValue("C23", _bafflesPageViewModel.Baffle.diametral_clearance_tube_baffle.ToDoubleWithoutDot());
+
+            doc.SetCellValue("C26", _bafflesPageViewModel.Baffle.tubeplate_thickness.ToDoubleWithoutDot());
+            doc.SetCellValue("C27", _bafflesPageViewModel.Baffle.tube_inner_length.ToDoubleWithoutDot());
+            doc.SetCellValue("C28", _bafflesPageViewModel.Baffle.tube_outer_length.ToDoubleWithoutDot());
+            doc.SetCellValue("C29", _bafflesPageViewModel.Baffle.inlet_baffle_spacing.ToDoubleWithoutDot());
+            doc.SetCellValue("C30", _bafflesPageViewModel.Baffle.central_baffle_spacing.ToDoubleWithoutDot());
+            doc.SetCellValue("C31", _bafflesPageViewModel.Baffle.outlet_baffle_spacing.ToDoubleWithoutDot());
+            doc.SetCellValue("C32", _bafflesPageViewModel.Baffle.number_of_baffles);
+            doc.SetCellValue("C33", _bafflesPageViewModel.Baffle.baffle_thickness.ToDoubleWithoutDot());
+
+            doc.SetCellValue("C37", _bafflesPageViewModel.Baffle.cut_effect_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D37", _bafflesPageViewModel.Baffle.cut_effect_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C38", _bafflesPageViewModel.Baffle.leackages_effect_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D38", _bafflesPageViewModel.Baffle.leackages_effect_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C39", _bafflesPageViewModel.Baffle.bundle_bypass_effect_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D39", _bafflesPageViewModel.Baffle.bundle_bypass_effect_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C40", _bafflesPageViewModel.Baffle.adverce_temperature_gradient_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D40", _bafflesPageViewModel.Baffle.adverce_temperature_gradient_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C41", _bafflesPageViewModel.Baffle.uneven_baffle_spacing_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D41", _bafflesPageViewModel.Baffle.uneven_baffle_spacing_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C42", _bafflesPageViewModel.Baffle.combined_effects_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D42", _bafflesPageViewModel.Baffle.combined_effects_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C44", _bafflesPageViewModel.Baffle.colorbun_correction_factor_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D44", _bafflesPageViewModel.Baffle.colorbun_correction_factor_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C45", _bafflesPageViewModel.Baffle.heat_trans_coeff_pure_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D45", _bafflesPageViewModel.Baffle.heat_trans_coeff_pure_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C46", _bafflesPageViewModel.Baffle.shell_side_heat_transfer_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D46", _bafflesPageViewModel.Baffle.shell_side_heat_transfer_outlet.ToDoubleWithoutDot());
+        }
+
+        private void AddBafflesUom(SLDocument doc)
+        {
+            doc.SetCellValue("B8", "mm");
+            doc.SetCellValue("B9", "mm");
+            doc.SetCellValue("B10", "%");
+            doc.SetCellValue("B13", "°");
+            doc.SetCellValue("B14", "°");
+            doc.SetCellValue("B15", "mm");
+            doc.SetCellValue("B16", "mm");
+            doc.SetCellValue("B17", "mm");
+            doc.SetCellValue("B18", "mm");
+
+            doc.SetCellValue("B22", "mm");
+            doc.SetCellValue("B23", "mm");
+
+            doc.SetCellValue("B26", "mm");
+            doc.SetCellValue("B27", "mm");
+            doc.SetCellValue("B28", "mm");
+            doc.SetCellValue("B29", "mm");
+            doc.SetCellValue("B30", "mm");
+            doc.SetCellValue("B31", "mm");
+            doc.SetCellValue("B33", "mm");
+
+            doc.SetCellValue("B45", "W/m²·°C");
+            doc.SetCellValue("B46", "W/m²·°C");
+        }
+
+        private void AddBaffleNames(SLDocument doc)
+        {
+            doc.MergeWorksheetCells("A6", "D6");
+            doc.SetCellStyle("A6", BoldHeaderTextStyle());
+            doc.SetCellValue("A6", "Baffle Geometry Parameters");
+
+            doc.SetCellStyle("A7", "D19", BorderCellsStyle());
+            doc.SetCellStyle("A7", "A19", BoldTextStyle());
+
+            doc.SetCellValue("A7", "Type");
+            doc.SetCellValue("A8", "Shell inner diameter (Ds)");
+            doc.SetCellValue("A9", "Tubes Outer Diameter (Dt)");
+            doc.SetCellValue("A10", "Baffle cut  (Bc)");
+            doc.SetCellValue("A11", "Baffle cut direction");
+            doc.SetCellValue("A12", "Pairs of sealing strips (Nss)");
+            doc.SetCellValue("A13", "Shell diameter angle (θds)");
+            doc.SetCellValue("A14", "Center tube angle (θctℓ)");
+            doc.SetCellValue("A15", "Diameter to tube center (Dctℓ)");
+            doc.SetCellValue("A16", "Diameter to tube outer side (Dotℓ)");
+            doc.SetCellValue("A17", "Bypass lanes (Lp)");
+            doc.SetCellValue("A18", "Inner shell to outer tube bypass clearance (Lbb)");
+            doc.SetCellValue("A19", "Average Tubes in Baffle Windows");
+
+            doc.MergeWorksheetCells("A21", "D21");
+            doc.SetCellStyle("A21", BoldHeaderTextStyle());
+            doc.SetCellValue("A21", "Baffles Clearances & Spacings");
+
+            doc.SetCellStyle("A22", "D23", BorderCellsStyle());
+            doc.SetCellStyle("A22", "A23", BoldTextStyle());
+
+            doc.SetCellValue("A22", "Diametral Clearance Shell-Baffle (δsb)");
+            doc.SetCellValue("A23", "Diametral Clearance Tube-Baffle (δtb)");
+
+            doc.MergeWorksheetCells("A25", "D25");
+            doc.SetCellStyle("A25", BoldHeaderTextStyle());
+            doc.SetCellValue("A25", "Baffle Distribution Parameters");
+
+            doc.SetCellStyle("A26", "D33", BorderCellsStyle());
+            doc.SetCellStyle("A26", "A33", BoldTextStyle());
+
+            doc.SetCellValue("A26", "Tubeplate Thickness (Lts)");
+            doc.SetCellValue("A27", "Tube Inner Length (Lti)");
+            doc.SetCellValue("A28", "Tube Outer Length (Lto)");
+            doc.SetCellValue("A29", "Inlet baffle spacing (Lbi)");
+            doc.SetCellValue("A30", "Central baffle spacing (Lbc)");
+            doc.SetCellValue("A31", "Outlet baffle spacing (Lbo)");
+            doc.SetCellValue("A32", "Number of baffles (Nb)");
+            doc.SetCellValue("A33", "Baffle thickness (Bt)");
+
+            doc.MergeWorksheetCells("A35", "D35");
+            doc.SetCellStyle("A35", BoldHeaderTextStyle());
+            doc.SetCellValue("A35", "Baffle Efects and Factors");
+
+            doc.SetCellStyle("A37", "D46", BorderCellsStyle());
+            doc.SetCellStyle("A37", "A46", BoldTextStyle());
+
+            doc.SetCellValue("A37", "Cut Effect (Jc)");
+            doc.SetCellValue("A38", "Leakages Effect (Jl)");
+            doc.SetCellValue("A39", "Bundle bypass effect (Jb)");
+            doc.SetCellValue("A40", "Adverse Temperature Gradient (Jr)");
+            doc.SetCellValue("A41", "Uneven Baffle Spacing (Js)");
+            doc.SetCellValue("A42", "Combined Effects (JT)");
+            doc.SetCellValue("A44", "Colburn Correction Factor (Ji)");
+            doc.SetCellValue("A45", "Heat Trans. Coeff. Pure Cross-flow Ideal (Hccid)");
+            doc.SetCellValue("A46", "Shell-Side Heat Transfer Coefficient (Hcc)");
+
+            doc.SetCellStyle("C36", "D36", BorderCellsStyle());
+            doc.SetCellStyle("C36", "D36", BoldTextStyle());
+
+            doc.SetCellValue("C36", "Inlet");
+            doc.SetCellValue("D36", "Outlet");
         }
 
         #region TemaSheet
@@ -142,7 +322,7 @@ namespace Ahed_project.Services
             doc.MergeWorksheetCells("C7", "D7");
             doc.SetCellValue("C7", _overallCalculationViewModel.Name);
             doc.SetCellValue("C8", "m²");
-            doc.SetCellValue("D8", _overallCalculationViewModel.Overall.area_module);
+            doc.SetCellValue("D8", _overallCalculationViewModel.Overall.area_module.ToDoubleWithoutDot());
             doc.SetCellValue("E7", "Nr.");
             doc.SetCellValue("E8", "Total area");
             doc.MergeWorksheetCells("F7", "H7");
@@ -152,7 +332,7 @@ namespace Ahed_project.Services
             doc.MergeWorksheetCells("I7", "N7");
             doc.MergeWorksheetCells("I8", "Q8");
             doc.SetCellValue("I7", "Parallel Lines (Tubes/Shell)");
-            doc.SetCellValue("I8", _overallCalculationViewModel.Overall.excess_area);
+            doc.SetCellValue("I8", _overallCalculationViewModel.Overall.excess_area.ToDoubleWithoutDot());
             doc.MergeWorksheetCells("O7", "Q7");
             doc.SetCellValue("O7", $"{_overallCalculationViewModel.Overall.nozzles_number_of_parallel_lines_tube_side ?? _overallCalculationViewModel.Overall.nozzles_number_of_parallel_lines_shell_side}/{_overallCalculationViewModel.Overall.nozzles_number_of_parallel_lines_shell_side}");
             doc.MergeWorksheetCells("A9", "Q9");
@@ -188,19 +368,19 @@ namespace Ahed_project.Services
             doc.SetCellValue("E14", "kg/hr");
             doc.SetCellValue("E15", "°C");
             doc.SetCellValue("E16", "kg/m³");
-            doc.SetCellValue("E17", "kcal/kg·°C");
-            doc.SetCellValue("E18", "kcal/m·hr·°C");
+            doc.SetCellValue("E17", "kJ/kg·°C");
+            doc.SetCellValue("E18", "W/m·°C");
             doc.SetCellValue("E19", "cP");
-            doc.SetCellValue("E20", "kcal/kg");
+            doc.SetCellValue("E20", "J/kg");
             doc.SetCellValue("E21", "bar-a");
             doc.SetCellValue("E22", "m/s");
             doc.SetCellValue("E23", "bar-a");
             doc.SetCellValue("E24", "bar-a");
             doc.SetCellValue("E25", "°C");
-            doc.SetCellValue("E26", "kcal/hr");
-            doc.SetCellValue("E27", "kcal/hr·m²·°C");
-            doc.SetCellValue("E28", "hr·m²·°C/kcal");
-            doc.SetCellValue("E29", "kcal/hr·m²·°C");
+            doc.SetCellValue("E26", "kW");
+            doc.SetCellValue("E27", "W/m²·°C");
+            doc.SetCellValue("E28", "m²·°C/W");
+            doc.SetCellValue("E29", "W/m²·°C");
 
             doc.MergeWorksheetCells("F10", "H10");
             doc.SetCellValue("F10", "Tube In");
@@ -226,10 +406,10 @@ namespace Ahed_project.Services
             doc.SetCellValue("L11", _shellFluidViewModel.Product.name);
 
             doc.MergeWorksheetCells("F12", "K12");
-            doc.SetCellValue("F12", _overallCalculationViewModel.Overall.flow_tube);
+            doc.SetCellValue("F12", _overallCalculationViewModel.Overall.flow_tube.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("L12", "Q12");
-            doc.SetCellValue("L12", _overallCalculationViewModel.Overall.flow_shell);
+            doc.SetCellValue("L12", _overallCalculationViewModel.Overall.flow_shell.ToDoubleWithoutDot());
 
             //Gas phase
             doc.MergeWorksheetCells("F13", "H13");
@@ -239,158 +419,158 @@ namespace Ahed_project.Services
 
             //Liquid phase
             doc.MergeWorksheetCells("F14", "H14");
-            doc.SetCellValue("F14", _heatBalanceViewModel.Calculation.flow_tube);
+            doc.SetCellValue("F14", _heatBalanceViewModel.Calculation.flow_tube.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("I14", "K14");
-            doc.SetCellValue("I14", _heatBalanceViewModel.Calculation.flow_tube);
+            doc.SetCellValue("I14", _heatBalanceViewModel.Calculation.flow_tube.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("L14", "N14");
-            doc.SetCellValue("L14", _heatBalanceViewModel.Calculation.flow_shell);
+            doc.SetCellValue("L14", _heatBalanceViewModel.Calculation.flow_shell.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("O14", "Q14");
-            doc.SetCellValue("O14", _heatBalanceViewModel.Calculation.flow_shell);
+            doc.SetCellValue("O14", _heatBalanceViewModel.Calculation.flow_shell.ToDoubleWithoutDot());
 
             //Temperature
             doc.MergeWorksheetCells("F15", "H15");
-            doc.SetCellValue("F15", _overallCalculationViewModel.Overall.temperature_tube_inlet);
+            doc.SetCellValue("F15", _overallCalculationViewModel.Overall.temperature_tube_inlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("I15", "K15");
-            doc.SetCellValue("I15", _overallCalculationViewModel.Overall.temperature_tube_outlet);
+            doc.SetCellValue("I15", _overallCalculationViewModel.Overall.temperature_tube_outlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("L15", "N15");
-            doc.SetCellValue("L15", _overallCalculationViewModel.Overall.temperature_shell_inlet);
+            doc.SetCellValue("L15", _overallCalculationViewModel.Overall.temperature_shell_inlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("O15", "Q15");
-            doc.SetCellValue("O15", _overallCalculationViewModel.Overall.temperature_shell_outlet);
+            doc.SetCellValue("O15", _overallCalculationViewModel.Overall.temperature_shell_outlet.ToDoubleWithoutDot());
 
             //Density
             doc.MergeWorksheetCells("F16", "H16");
-            doc.SetCellValue("F16", _heatBalanceViewModel.Calculation.liquid_density_tube_inlet);
+            doc.SetCellValue("F16", _heatBalanceViewModel.Calculation.liquid_density_tube_inlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("I16", "K16");
-            doc.SetCellValue("I16", _heatBalanceViewModel.Calculation.liquid_density_tube_outlet);
+            doc.SetCellValue("I16", _heatBalanceViewModel.Calculation.liquid_density_tube_outlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("L16", "N16");
-            doc.SetCellValue("L16", _heatBalanceViewModel.Calculation.liquid_density_shell_inlet);
+            doc.SetCellValue("L16", _heatBalanceViewModel.Calculation.liquid_density_shell_inlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("O16", "Q16");
-            doc.SetCellValue("O16", _heatBalanceViewModel.Calculation.liquid_density_shell_outlet);
+            doc.SetCellValue("O16", _heatBalanceViewModel.Calculation.liquid_density_shell_outlet.ToDoubleWithoutDot());
 
             //Specific Heat
             doc.MergeWorksheetCells("F17", "H17");
-            doc.SetCellValue("F17", _heatBalanceViewModel.Calculation.liquid_specific_heat_tube_inlet);
+            doc.SetCellValue("F17", _heatBalanceViewModel.Calculation.liquid_specific_heat_tube_inlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("I17", "K17");
-            doc.SetCellValue("I17", _heatBalanceViewModel.Calculation.liquid_specific_heat_tube_outlet);
+            doc.SetCellValue("I17", _heatBalanceViewModel.Calculation.liquid_specific_heat_tube_outlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("L17", "N17");
-            doc.SetCellValue("L17", _heatBalanceViewModel.Calculation.liquid_specific_heat_shell_inlet);
+            doc.SetCellValue("L17", _heatBalanceViewModel.Calculation.liquid_specific_heat_shell_inlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("O17", "Q17");
-            doc.SetCellValue("O17", _heatBalanceViewModel.Calculation.liquid_specific_heat_shell_outlet);
+            doc.SetCellValue("O17", _heatBalanceViewModel.Calculation.liquid_specific_heat_shell_outlet.ToDoubleWithoutDot());
 
             //Therm. Cond.
             doc.MergeWorksheetCells("F18", "H18");
-            doc.SetCellValue("F18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_tube_inlet);
+            doc.SetCellValue("F18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_tube_inlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("I18", "K18");
-            doc.SetCellValue("I18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_tube_outlet);
+            doc.SetCellValue("I18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_tube_outlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("L18", "N18");
-            doc.SetCellValue("L18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_shell_inlet);
+            doc.SetCellValue("L18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_shell_inlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("O18", "Q18");
-            doc.SetCellValue("O18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_shell_outlet);
+            doc.SetCellValue("O18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_shell_outlet.ToDoubleWithoutDot());
 
             //Viscosity
             doc.MergeWorksheetCells("F19", "H19");
-            doc.SetCellValue("F19", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_tube_inlet);
+            doc.SetCellValue("F19", _overallCalculationViewModel.Overall.liquid_phase_app_viscosity_tube_inlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("I19", "K19");
-            doc.SetCellValue("I19", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_tube_outlet);
+            doc.SetCellValue("I19", _overallCalculationViewModel.Overall.liquid_phase_app_viscosity_tube_outlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("L19", "N19");
-            doc.SetCellValue("L19", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_shell_inlet);
+            doc.SetCellValue("L19", _overallCalculationViewModel.Overall.liquid_phase_app_viscosity_shell_inlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("O19", "Q19");
-            doc.SetCellValue("O19", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_shell_outlet);
+            doc.SetCellValue("O19", _overallCalculationViewModel.Overall.liquid_phase_app_viscosity_shell_outlet.ToDoubleWithoutDot());
 
             //Latent heat
             doc.MergeWorksheetCells("F20", "H20");
-            doc.SetCellValue("F20", _heatBalanceViewModel.Calculation.liquid_latent_heat_tube_inlet);
+            doc.SetCellValue("F20", _heatBalanceViewModel.Calculation.liquid_latent_heat_tube_inlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("I20", "K20");
-            doc.SetCellValue("I20", _heatBalanceViewModel.Calculation.liquid_latent_heat_tube_outlet);
+            doc.SetCellValue("I20", _heatBalanceViewModel.Calculation.liquid_latent_heat_tube_outlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("L20", "N20");
-            doc.SetCellValue("L20", _heatBalanceViewModel.Calculation.liquid_latent_heat_shell_inlet);
+            doc.SetCellValue("L20", _heatBalanceViewModel.Calculation.liquid_latent_heat_shell_inlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("O20", "Q20");
-            doc.SetCellValue("O20", _heatBalanceViewModel.Calculation.liquid_latent_heat_shell_outlet);
+            doc.SetCellValue("O20", _heatBalanceViewModel.Calculation.liquid_latent_heat_shell_outlet.ToDoubleWithoutDot());
 
             //Vapour pressure
             doc.MergeWorksheetCells("F21", "H21");
-            doc.SetCellValue("F21", _heatBalanceViewModel.Calculation.gas_vapour_pressure_tube_inlet);
+            doc.SetCellValue("F21", _heatBalanceViewModel.Calculation.gas_vapour_pressure_tube_inlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("I21", "K21");
-            doc.SetCellValue("I21", _heatBalanceViewModel.Calculation.gas_vapour_pressure_tube_outlet);
+            doc.SetCellValue("I21", _heatBalanceViewModel.Calculation.gas_vapour_pressure_tube_outlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("L21", "N21");
-            doc.SetCellValue("L21", _heatBalanceViewModel.Calculation.gas_vapour_pressure_shell_inlet);
+            doc.SetCellValue("L21", _heatBalanceViewModel.Calculation.gas_vapour_pressure_shell_inlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("O21", "Q21");
-            doc.SetCellValue("O21", _heatBalanceViewModel.Calculation.gas_vapour_pressure_shell_outlet);
+            doc.SetCellValue("O21", _heatBalanceViewModel.Calculation.gas_vapour_pressure_shell_outlet.ToDoubleWithoutDot());
 
             //Velocity
             doc.MergeWorksheetCells("F22", "H22");
-            doc.SetCellValue("F22", _overallCalculationViewModel.Overall.fluid_velocity_tube_inlet);
+            doc.SetCellValue("F22", _overallCalculationViewModel.Overall.fluid_velocity_tube_inlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("I22", "K22");
-            doc.SetCellValue("I22", _overallCalculationViewModel.Overall.fluid_velocity_tube_outlet);
+            doc.SetCellValue("I22", _overallCalculationViewModel.Overall.fluid_velocity_tube_outlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("L22", "N22");
-            doc.SetCellValue("L22", _overallCalculationViewModel.Overall.fluid_velocity_shell_inlet);
+            doc.SetCellValue("L22", _overallCalculationViewModel.Overall.fluid_velocity_shell_inlet.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("O22", "Q22");
-            doc.SetCellValue("O22", _overallCalculationViewModel.Overall.fluid_velocity_shell_outlet);
+            doc.SetCellValue("O22", _overallCalculationViewModel.Overall.fluid_velocity_shell_outlet.ToDoubleWithoutDot());
 
             //Max pressure drop
-            doc.MergeWorksheetCells("F23", "H23");
-            doc.SetCellValue("F23", _overallCalculationViewModel.Overall.pressure_drop_tube_side_inlet_nozzles_P);
+            //doc.MergeWorksheetCells("F23", "H23");
+            //doc.SetCellValue("F23", _overallCalculationViewModel.Overall.pressure_drop_tube_side_inlet_nozzles_P);
 
-            doc.MergeWorksheetCells("I23", "K23");
-            doc.SetCellValue("I23", _overallCalculationViewModel.Overall.pressure_drop_tube_side_outlet_nozzles_P);
+            //doc.MergeWorksheetCells("I23", "K23");
+            //doc.SetCellValue("I23", _overallCalculationViewModel.Overall.pressure_drop_tube_side_outlet_nozzles_P);
 
-            doc.MergeWorksheetCells("L23", "N23");
-            doc.SetCellValue("L23", _overallCalculationViewModel.Overall.pressure_drop_shell_side_inlet_nozzles_P);
+            //doc.MergeWorksheetCells("L23", "N23");
+            //doc.SetCellValue("L23", _overallCalculationViewModel.Overall.pressure_drop_shell_side_inlet_nozzles_P);
 
-            doc.MergeWorksheetCells("O23", "Q23");
-            doc.SetCellValue("O23", _overallCalculationViewModel.Overall.pressure_drop_shell_side_outlet_nozzles_P);
+            //doc.MergeWorksheetCells("O23", "Q23");
+            //doc.SetCellValue("O23", _overallCalculationViewModel.Overall.pressure_drop_shell_side_outlet_nozzles_P);
 
             //Calculated pressure drop
-            doc.MergeWorksheetCells("F24", "H24");
-            doc.SetCellValue("F24", _overallCalculationViewModel.Overall.pressure_drop_tube_side_inlet_nozzles_pV);
+            //doc.MergeWorksheetCells("F24", "H24");
+            //doc.SetCellValue("F24", _overallCalculationViewModel.Overall.pressure_drop_tube_side_inlet_nozzles_pV);
 
-            doc.MergeWorksheetCells("I24", "K24");
-            doc.SetCellValue("I24", _overallCalculationViewModel.Overall.pressure_drop_tube_side_outlet_nozzles_pV);
+            //doc.MergeWorksheetCells("I24", "K24");
+            //doc.SetCellValue("I24", _overallCalculationViewModel.Overall.pressure_drop_tube_side_outlet_nozzles_pV);
 
-            doc.MergeWorksheetCells("L24", "N24");
-            doc.SetCellValue("L24", _overallCalculationViewModel.Overall.pressure_drop_shell_side_inlet_nozzles_pV);
+            //doc.MergeWorksheetCells("L24", "N24");
+            //doc.SetCellValue("L24", _overallCalculationViewModel.Overall.pressure_drop_shell_side_inlet_nozzles_pV);
 
-            doc.MergeWorksheetCells("O24", "Q24");
-            doc.SetCellValue("O24", _overallCalculationViewModel.Overall.pressure_drop_shell_side_outlet_nozzles_pV);
+            //doc.MergeWorksheetCells("O24", "Q24");
+            //doc.SetCellValue("O24", _overallCalculationViewModel.Overall.pressure_drop_shell_side_outlet_nozzles_pV);
 
             //LMTD corrected
             doc.MergeWorksheetCells("F25", "Q25");
-            doc.SetCellValue("F25", _overallCalculationViewModel.Overall.LMTD);
+            doc.SetCellValue("F25", _overallCalculationViewModel.Overall.LMTD.ToDoubleWithoutDot());
 
             //Duty
             doc.MergeWorksheetCells("F26", "Q26");
-            doc.SetCellValue("F26", StringToDoubleChecker.ConvertToDouble(_overallCalculationViewModel.Overall.duty_tube) + StringToDoubleChecker.ConvertToDouble(_overallCalculationViewModel.Overall.duty_shell));
+            doc.SetCellValue("F26", (StringToDoubleChecker.ConvertToDouble(_overallCalculationViewModel.Overall.duty_tube) + StringToDoubleChecker.ConvertToDouble(_overallCalculationViewModel.Overall.duty_shell)).ToString("F"));
 
             //Global fouled coefficient
             doc.MergeWorksheetCells("F27", "Q27");
-            doc.SetCellValue("F27", _overallCalculationViewModel.Overall.k_global_fouled);
+            doc.SetCellValue("F27", _overallCalculationViewModel.Overall.k_global_fouled.ToDoubleWithoutDot());
 
             //Fouling factor
             doc.MergeWorksheetCells("F28", "K28");
@@ -401,7 +581,7 @@ namespace Ahed_project.Services
 
             //Effective heat transfer coefficient
             doc.MergeWorksheetCells("F29", "Q29");
-            doc.SetCellValue("F29", _overallCalculationViewModel.Overall.k_effective);
+            doc.SetCellValue("F29", _overallCalculationViewModel.Overall.k_effective.ToDoubleWithoutDot());
 
             doc.MergeWorksheetCells("A30", "Q30");
             doc.SetCellStyle("A30", TemaHeaderStyle());
@@ -502,30 +682,30 @@ namespace Ahed_project.Services
             doc.SetCellValue("E36", "");
 
             //OD
-            doc.SetCellValue("D37", _geometryPageViewModel.Geometry.outer_diameter_shell_side);
-            doc.SetCellValue("E37", _geometryPageViewModel.Geometry.outer_diameter_tubes_side);
+            doc.SetCellValue("D37", _geometryPageViewModel.Geometry.outer_diameter_shell_side.ToDoubleWithoutDot());
+            doc.SetCellValue("E37", _geometryPageViewModel.Geometry.outer_diameter_tubes_side.ToDoubleWithoutDot());
 
             //Thickness
-            doc.SetCellValue("D38", _geometryPageViewModel.Geometry.thickness_shell_side);
-            doc.SetCellValue("E38", _geometryPageViewModel.Geometry.thickness_tubes_side);
+            doc.SetCellValue("D38", _geometryPageViewModel.Geometry.thickness_shell_side.ToDoubleWithoutDot());
+            doc.SetCellValue("E38", _geometryPageViewModel.Geometry.thickness_tubes_side.ToDoubleWithoutDot());
 
             //Nr. Tubes
-            doc.SetCellValue("E39", _geometryPageViewModel.Geometry.number_of_tubes);
+            doc.SetCellValue("E39", _geometryPageViewModel.Geometry.number_of_tubes.ToDoubleWithoutDot());
 
             //Tube length
-            doc.SetCellValue("E40", _geometryPageViewModel.Geometry.tube_inner_length);
+            doc.SetCellValue("E40", _geometryPageViewModel.Geometry.tube_inner_length.ToDoubleWithoutDot());
 
             //Volume
-            doc.SetCellValue("D41", _geometryPageViewModel.Geometry.volume_module_shell_side);
-            doc.SetCellValue("E41", _geometryPageViewModel.Geometry.volume_module_tubes_side);
+            doc.SetCellValue("D41", _geometryPageViewModel.Geometry.volume_module_shell_side.ToDoubleWithoutDot());
+            doc.SetCellValue("E41", _geometryPageViewModel.Geometry.volume_module_tubes_side.ToDoubleWithoutDot());
 
             //Inlet connection (OD)
-            doc.SetCellValue("D42", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_shell_side);
-            doc.SetCellValue("E42", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_tubes_side);
+            doc.SetCellValue("D42", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_shell_side.ToDoubleWithoutDot());
+            doc.SetCellValue("E42", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_tubes_side.ToDoubleWithoutDot());
 
             //Outlet connection (OD)
-            doc.SetCellValue("D43", _geometryPageViewModel.Geometry.nozzles_out_outer_diam_shell_side);
-            doc.SetCellValue("E43", _geometryPageViewModel.Geometry.nozzles_out_outer_diam_tubes_side);
+            doc.SetCellValue("D43", _geometryPageViewModel.Geometry.nozzles_out_outer_diam_shell_side.ToDoubleWithoutDot());
+            doc.SetCellValue("E43", _geometryPageViewModel.Geometry.nozzles_out_outer_diam_tubes_side.ToDoubleWithoutDot());
 
             //Shell nozzle orientation
             doc.SetCellValue("D44", _geometryPageViewModel.Geometry.shell_nozzle_orientation);
@@ -539,10 +719,10 @@ namespace Ahed_project.Services
             doc.SetCellValue("E46", "");
 
             //Nr. Baffles
-            doc.SetCellValue("D47", _geometryPageViewModel.Geometry.nr_baffles);
+            doc.SetCellValue("D47", _bafflesPageViewModel.Baffle.number_of_baffles);
 
             //Baffle cut (% ID)
-            doc.SetCellValue("D48", _geometryPageViewModel.Geometry.baffle_cut);
+            doc.SetCellValue("D48", _bafflesPageViewModel.Baffle.buffle_cut.ToDoubleWithoutDot());
 
             //Impingement protection TODO
             doc.SetCellValue("D49", "");
@@ -760,6 +940,16 @@ namespace Ahed_project.Services
             doc.SetCellValue("C3", _projectPageViewModel.SelectedCalculation.name);
             doc.SetCellValue("A4", "Name");
             doc.SetCellValue("C4", _tubesFluidViewModel.Product.name);
+            doc.MergeWorksheetCells("A5", "B5");
+            doc.SetCellStyle("A5", "D5", BorderCellsStyle());
+            doc.SetCellValue("A5", "Molar Mass");
+            doc.MergeWorksheetCells("A6", "B6");
+            doc.SetCellStyle("A6", "C6", BorderCellsStyle());
+            doc.SetCellValue("A6", "Pressure");
+            doc.SetCellValue("D5", "kg/kmol");
+            doc.SetCellValue("C5", _tubesFluidViewModel.Product.MolarMass);
+            doc.SetCellValue("C6", _tubesFluidViewModel.Product.Pressure);
+
 
             CreateHeaders(doc);
             CreateUnits(doc);
@@ -789,14 +979,14 @@ namespace Ahed_project.Services
         {
             doc.SetCellValue("A9", "°C");
             doc.SetCellValue("B9", "kg/m³");
-            doc.SetCellValue("C9", "kcal/kg·°C");
-            doc.SetCellValue("D9", "kcal/m·hr·°C");
+            doc.SetCellValue("C9", "kJ/kg·°C");
+            doc.SetCellValue("D9", "W/m·°C");
             doc.SetCellValue("E9", "cP");
             doc.SetCellValue("F9", "");
-            doc.SetCellValue("G9", "kcal/kg");
+            doc.SetCellValue("G9", "J/kg");
             doc.SetCellValue("H9", "kg/m³");
-            doc.SetCellValue("I9", "kcal/kg·°C");
-            doc.SetCellValue("J9", "kcal/m·hr·°C");
+            doc.SetCellValue("I9", "kJ/kg·°C");
+            doc.SetCellValue("J9", "W/m·°C");
             doc.SetCellValue("K9", "cP");
             doc.SetCellValue("L9", "bar-a");
             doc.SetCellValue("M9", "%");
@@ -806,19 +996,19 @@ namespace Ahed_project.Services
             ProductProperties[] properties = values.ToArray();
             for (int i = 0; i < properties.Length; i++)
             {
-                doc.SetCellValue($"A{i + 10}", properties[i].liquid_phase_temperature.ToString());
-                doc.SetCellValue($"B{i + 10}", properties[i].liquid_phase_density.ToString());
-                doc.SetCellValue($"C{i + 10}", properties[i].liquid_phase_specific_heat.ToString());
-                doc.SetCellValue($"D{i + 10}", properties[i].liquid_phase_thermal_conductivity.ToString());
-                doc.SetCellValue($"E{i + 10}", properties[i].liquid_phase_consistency_index.ToString());
-                doc.SetCellValue($"F{i + 10}", properties[i].liquid_phase_f_ind.ToString());
-                doc.SetCellValue($"G{i + 10}", properties[i].liquid_phase_dh.ToString());
-                doc.SetCellValue($"H{i + 10}", properties[i].gas_phase_density.ToString());
-                doc.SetCellValue($"I{i + 10}", properties[i].gas_phase_specific_heat.ToString());
-                doc.SetCellValue($"J{i + 10}", properties[i].gas_phase_thermal_conductivity.ToString());
-                doc.SetCellValue($"K{i + 10}", properties[i].gas_phase_dyn_visc_gas.ToString());
-                doc.SetCellValue($"L{i + 10}", properties[i].gas_phase_p_vap.ToString());
-                doc.SetCellValue($"M{i + 10}", properties[i].gas_phase_vapour_frac.ToString());
+                doc.SetCellValue($"A{i + 10}", properties[i].liquid_phase_temperature?.ToString("F"));
+                doc.SetCellValue($"B{i + 10}", properties[i].liquid_phase_density?.ToString("F"));
+                doc.SetCellValue($"C{i + 10}", properties[i].liquid_phase_specific_heat?.ToString("F"));
+                doc.SetCellValue($"D{i + 10}", properties[i].liquid_phase_thermal_conductivity?.ToString("F"));
+                doc.SetCellValue($"E{i + 10}", properties[i].liquid_phase_consistency_index?.ToString("F"));
+                doc.SetCellValue($"F{i + 10}", properties[i].liquid_phase_f_ind?.ToString("F"));
+                doc.SetCellValue($"G{i + 10}", properties[i].liquid_phase_dh?.ToString("F"));
+                doc.SetCellValue($"H{i + 10}", properties[i].gas_phase_density?.ToString("F"));
+                doc.SetCellValue($"I{i + 10}", properties[i].gas_phase_specific_heat?.ToString("F"));
+                doc.SetCellValue($"J{i + 10}", properties[i].gas_phase_thermal_conductivity?.ToString("F"));
+                doc.SetCellValue($"K{i + 10}", properties[i].gas_phase_dyn_visc_gas?.ToString("F"));
+                doc.SetCellValue($"L{i + 10}", properties[i].gas_phase_p_vap?.ToString("F"));
+                doc.SetCellValue($"M{i + 10}", properties[i].gas_phase_vapour_frac?.ToString("F"));
 
             }
             doc.SetCellStyle("A8", $"M{properties.Length + 9}", BorderCellsStyle());
@@ -851,6 +1041,15 @@ namespace Ahed_project.Services
             doc.SetCellValue("C3", _projectPageViewModel.SelectedCalculation.name);
             doc.SetCellValue("A4", "Name");
             doc.SetCellValue("C4", _shellFluidViewModel.Product.name);
+            doc.MergeWorksheetCells("A5", "B5");
+            doc.SetCellStyle("A5", "D5", BorderCellsStyle());
+            doc.SetCellValue("A5", "Molar Mass");
+            doc.MergeWorksheetCells("A6", "B6");
+            doc.SetCellStyle("A6", "C6", BorderCellsStyle());
+            doc.SetCellValue("A6", "Pressure");
+            doc.SetCellValue("D5", "kg/kmol");
+            doc.SetCellValue("C5", _shellFluidViewModel.Product.MolarMass);
+            doc.SetCellValue("C6", _shellFluidViewModel.Product.Pressure);
 
             CreateHeaders(doc);
             CreateUnits(doc);
@@ -962,61 +1161,61 @@ namespace Ahed_project.Services
             doc.MergeWorksheetCells("E10", "F10");
             doc.SetCellValue("E10", _heatBalanceViewModel.Calculation.process_shell);
             doc.MergeWorksheetCells("C11", "D11");
-            doc.SetCellValue("C11", _heatBalanceViewModel.Calculation.flow_tube);
+            doc.SetCellValue("C11", _heatBalanceViewModel.Calculation.flow_tube.ToDoubleWithoutDot());
             doc.MergeWorksheetCells("E11", "F11");
-            doc.SetCellValue("E11", _heatBalanceViewModel.Calculation.flow_shell);
-            doc.SetCellValue("C12", _heatBalanceViewModel.Calculation.temperature_tube_inlet);
-            doc.SetCellValue("D12", _heatBalanceViewModel.Calculation.temperature_tube_outlet);
-            doc.SetCellValue("E12", _heatBalanceViewModel.Calculation.temperature_shell_inlet);
-            doc.SetCellValue("F12", _heatBalanceViewModel.Calculation.temperature_shell_outlet);
+            doc.SetCellValue("E11", _heatBalanceViewModel.Calculation.flow_shell.ToDoubleWithoutDot());
+            doc.SetCellValue("C12", _heatBalanceViewModel.Calculation.temperature_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D12", _heatBalanceViewModel.Calculation.temperature_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E12", _heatBalanceViewModel.Calculation.temperature_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F12", _heatBalanceViewModel.Calculation.temperature_shell_outlet.ToDoubleWithoutDot());
             doc.MergeWorksheetCells("C13", "D13");
             doc.MergeWorksheetCells("E13", "F13");
-            doc.SetCellValue("C13", _heatBalanceViewModel.Calculation.duty_tube);
-            doc.SetCellValue("E13", _heatBalanceViewModel.Calculation.duty_shell);
-            doc.SetCellValue("C16", _heatBalanceViewModel.Calculation.liquid_density_tube_inlet);
-            doc.SetCellValue("D16", _heatBalanceViewModel.Calculation.liquid_density_tube_outlet);
-            doc.SetCellValue("E16", _heatBalanceViewModel.Calculation.liquid_density_shell_inlet);
-            doc.SetCellValue("F16", _heatBalanceViewModel.Calculation.liquid_density_shell_outlet);
-            doc.SetCellValue("C17", _heatBalanceViewModel.Calculation.liquid_specific_heat_tube_inlet);
-            doc.SetCellValue("D17", _heatBalanceViewModel.Calculation.liquid_specific_heat_tube_outlet);
-            doc.SetCellValue("E17", _heatBalanceViewModel.Calculation.liquid_specific_heat_shell_inlet);
-            doc.SetCellValue("F17", _heatBalanceViewModel.Calculation.liquid_specific_heat_shell_outlet);
-            doc.SetCellValue("C18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_tube_inlet);
-            doc.SetCellValue("D18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_tube_outlet);
-            doc.SetCellValue("E18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_shell_inlet);
-            doc.SetCellValue("F18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_shell_outlet);
-            doc.SetCellValue("C19", _heatBalanceViewModel.Calculation.liquid_consistency_index_tube_inlet);
-            doc.SetCellValue("D19", _heatBalanceViewModel.Calculation.liquid_consistency_index_tube_outlet);
-            doc.SetCellValue("E19", _heatBalanceViewModel.Calculation.liquid_consistency_index_shell_inlet);
-            doc.SetCellValue("F19", _heatBalanceViewModel.Calculation.liquid_consistency_index_shell_outlet);
-            doc.SetCellValue("C20", _heatBalanceViewModel.Calculation.liquid_flow_index_tube_inlet);
-            doc.SetCellValue("D20", _heatBalanceViewModel.Calculation.liquid_flow_index_tube_outlet);
-            doc.SetCellValue("E20", _heatBalanceViewModel.Calculation.liquid_flow_index_shell_inlet);
-            doc.SetCellValue("F20", _heatBalanceViewModel.Calculation.liquid_flow_index_shell_inlet);
-            doc.SetCellValue("C21", _heatBalanceViewModel.Calculation.liquid_latent_heat_tube_inlet);
-            doc.SetCellValue("D21", _heatBalanceViewModel.Calculation.liquid_latent_heat_tube_outlet);
-            doc.SetCellValue("E21", _heatBalanceViewModel.Calculation.liquid_latent_heat_shell_inlet);
-            doc.SetCellValue("F21", _heatBalanceViewModel.Calculation.liquid_latent_heat_shell_inlet);
-            doc.SetCellValue("C23", _heatBalanceViewModel.Calculation.gas_density_tube_inlet);
-            doc.SetCellValue("D23", _heatBalanceViewModel.Calculation.gas_density_tube_outlet);
-            doc.SetCellValue("E23", _heatBalanceViewModel.Calculation.gas_density_shell_inlet);
-            doc.SetCellValue("F23", _heatBalanceViewModel.Calculation.gas_density_shell_outlet);
-            doc.SetCellValue("C24", _heatBalanceViewModel.Calculation.gas_specific_heat_tube_inlet);
-            doc.SetCellValue("D24", _heatBalanceViewModel.Calculation.gas_specific_heat_tube_outlet);
-            doc.SetCellValue("E24", _heatBalanceViewModel.Calculation.gas_specific_heat_shell_inlet);
-            doc.SetCellValue("F24", _heatBalanceViewModel.Calculation.gas_specific_heat_shell_outlet);
-            doc.SetCellValue("C25", _heatBalanceViewModel.Calculation.gas_thermal_conductivity_tube_inlet);
-            doc.SetCellValue("D25", _heatBalanceViewModel.Calculation.gas_thermal_conductivity_tube_outlet);
-            doc.SetCellValue("E25", _heatBalanceViewModel.Calculation.gas_thermal_conductivity_shell_inlet);
-            doc.SetCellValue("F25", _heatBalanceViewModel.Calculation.gas_thermal_conductivity_shell_outlet);
-            doc.SetCellValue("C26", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_tube_inlet);
-            doc.SetCellValue("D26", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_tube_outlet);
-            doc.SetCellValue("E26", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_shell_inlet);
-            doc.SetCellValue("F26", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_shell_outlet);
-            doc.SetCellValue("C27", _heatBalanceViewModel.Calculation.gas_vapour_pressure_tube_inlet);
-            doc.SetCellValue("D27", _heatBalanceViewModel.Calculation.gas_vapour_pressure_tube_outlet);
-            doc.SetCellValue("E27", _heatBalanceViewModel.Calculation.gas_vapour_pressure_shell_inlet);
-            doc.SetCellValue("F27", _heatBalanceViewModel.Calculation.gas_vapour_pressure_shell_outlet);
+            doc.SetCellValue("C13", _heatBalanceViewModel.Calculation.duty_tube.ToDoubleWithoutDot());
+            doc.SetCellValue("E13", _heatBalanceViewModel.Calculation.duty_shell.ToDoubleWithoutDot());
+            doc.SetCellValue("C16", _heatBalanceViewModel.Calculation.liquid_density_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D16", _heatBalanceViewModel.Calculation.liquid_density_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E16", _heatBalanceViewModel.Calculation.liquid_density_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F16", _heatBalanceViewModel.Calculation.liquid_density_shell_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C17", _heatBalanceViewModel.Calculation.liquid_specific_heat_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D17", _heatBalanceViewModel.Calculation.liquid_specific_heat_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E17", _heatBalanceViewModel.Calculation.liquid_specific_heat_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F17", _heatBalanceViewModel.Calculation.liquid_specific_heat_shell_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F18", _heatBalanceViewModel.Calculation.liquid_thermal_conductivity_shell_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C19", _heatBalanceViewModel.Calculation.liquid_consistency_index_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D19", _heatBalanceViewModel.Calculation.liquid_consistency_index_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E19", _heatBalanceViewModel.Calculation.liquid_consistency_index_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F19", _heatBalanceViewModel.Calculation.liquid_consistency_index_shell_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C20", _heatBalanceViewModel.Calculation.liquid_flow_index_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D20", _heatBalanceViewModel.Calculation.liquid_flow_index_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E20", _heatBalanceViewModel.Calculation.liquid_flow_index_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F20", _heatBalanceViewModel.Calculation.liquid_flow_index_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C21", _heatBalanceViewModel.Calculation.liquid_latent_heat_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D21", _heatBalanceViewModel.Calculation.liquid_latent_heat_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E21", _heatBalanceViewModel.Calculation.liquid_latent_heat_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F21", _heatBalanceViewModel.Calculation.liquid_latent_heat_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C23", _heatBalanceViewModel.Calculation.gas_density_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D23", _heatBalanceViewModel.Calculation.gas_density_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E23", _heatBalanceViewModel.Calculation.gas_density_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F23", _heatBalanceViewModel.Calculation.gas_density_shell_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C24", _heatBalanceViewModel.Calculation.gas_specific_heat_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D24", _heatBalanceViewModel.Calculation.gas_specific_heat_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E24", _heatBalanceViewModel.Calculation.gas_specific_heat_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F24", _heatBalanceViewModel.Calculation.gas_specific_heat_shell_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C25", _heatBalanceViewModel.Calculation.gas_thermal_conductivity_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D25", _heatBalanceViewModel.Calculation.gas_thermal_conductivity_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E25", _heatBalanceViewModel.Calculation.gas_thermal_conductivity_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F25", _heatBalanceViewModel.Calculation.gas_thermal_conductivity_shell_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C26", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D26", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E26", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F26", _heatBalanceViewModel.Calculation.gas_dynamic_viscosity_shell_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C27", _heatBalanceViewModel.Calculation.gas_vapour_pressure_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D27", _heatBalanceViewModel.Calculation.gas_vapour_pressure_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E27", _heatBalanceViewModel.Calculation.gas_vapour_pressure_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F27", _heatBalanceViewModel.Calculation.gas_vapour_pressure_shell_outlet.ToDoubleWithoutDot());
             doc.SetCellValue("C28", _heatBalanceViewModel.Calculation.gas_mass_vapour_fraction_tube_inlet);
             doc.SetCellValue("D28", _heatBalanceViewModel.Calculation.gas_mass_vapour_fraction_tube_outlet);
             doc.SetCellValue("E28", _heatBalanceViewModel.Calculation.gas_mass_vapour_fraction_shell_inlet);
@@ -1157,83 +1356,82 @@ namespace Ahed_project.Services
 
         private static void AddGeometryValues(SLDocument doc)
         {
-            doc.SetCellValue("C8", _geometryPageViewModel.Geometry.outer_diameter_inner_side);
-            doc.SetCellValue("D8", _geometryPageViewModel.Geometry.outer_diameter_tubes_side);
-            doc.SetCellValue("E8", _geometryPageViewModel.Geometry.outer_diameter_shell_side);
-            doc.SetCellValue("C9", _geometryPageViewModel.Geometry.thickness_inner_side);
-            doc.SetCellValue("D9", _geometryPageViewModel.Geometry.thickness_tubes_side);
-            doc.SetCellValue("E9", _geometryPageViewModel.Geometry.thickness_shell_side);
-            doc.SetCellValue("C10", _geometryPageViewModel.Geometry.inner_diameter_inner_side);
-            doc.SetCellValue("D10", _geometryPageViewModel.Geometry.inner_diameter_tubes_side);
-            doc.SetCellValue("E10", _geometryPageViewModel.Geometry.inner_diameter_shell_side);
+            doc.SetCellValue("C8", _geometryPageViewModel.Geometry.outer_diameter_inner_side.ToDoubleWithoutDot());
+            doc.SetCellValue("D8", _geometryPageViewModel.Geometry.outer_diameter_tubes_side.ToDoubleWithoutDot());
+            doc.SetCellValue("E8", _geometryPageViewModel.Geometry.outer_diameter_shell_side.ToDoubleWithoutDot());
+            doc.SetCellValue("C9", _geometryPageViewModel.Geometry.thickness_inner_side.ToDoubleWithoutDot());
+            doc.SetCellValue("D9", _geometryPageViewModel.Geometry.thickness_tubes_side.ToDoubleWithoutDot());
+            doc.SetCellValue("E9", _geometryPageViewModel.Geometry.thickness_shell_side.ToDoubleWithoutDot());
+            doc.SetCellValue("C10", _geometryPageViewModel.Geometry.inner_diameter_inner_side.ToDoubleWithoutDot());
+            doc.SetCellValue("D10", _geometryPageViewModel.Geometry.inner_diameter_tubes_side.ToDoubleWithoutDot());
+            doc.SetCellValue("E10", _geometryPageViewModel.Geometry.inner_diameter_shell_side.ToDoubleWithoutDot());
             doc.MergeWorksheetCells("C11", "D11");
             doc.SetCellValue("C11", _geometryPageViewModel.Geometry.material_tubes_side);
             doc.SetCellValue("E11", _geometryPageViewModel.Geometry.material_shell_side);
             doc.SetCellValue("D12", _geometryPageViewModel.Geometry.number_of_tubes);
-            doc.SetCellValue("D13", _geometryPageViewModel.Geometry.tube_inner_length);
+            doc.SetCellValue("D13", _geometryPageViewModel.Geometry.tube_inner_length.ToDoubleWithoutDot());
             doc.MergeWorksheetCells("C14", "E14");
-            doc.SetCellValue("D14", _geometryPageViewModel.Geometry.tube_inner_length);
-            doc.SetCellValue("D15", _geometryPageViewModel.Geometry.wetted_perimeter_tubes_side);
-            doc.SetCellValue("E15", _geometryPageViewModel.Geometry.wetted_perimeter_shell_side);
-            doc.SetCellValue("D16", _geometryPageViewModel.Geometry.hydraulic_diameter_tubes_side);
-            doc.SetCellValue("E16", _geometryPageViewModel.Geometry.hydraulic_diameter_shell_side);
-            doc.SetCellValue("D17", _geometryPageViewModel.Geometry.area_module);
-            doc.SetCellValue("D18", _geometryPageViewModel.Geometry.volume_module_tubes_side);
-            doc.SetCellValue("E18", _geometryPageViewModel.Geometry.volume_module_shell_side);
+            doc.SetCellValue("D15", _geometryPageViewModel.Geometry.wetted_perimeter_tubes_side.ToDoubleWithoutDot());
+            doc.SetCellValue("E15", _geometryPageViewModel.Geometry.wetted_perimeter_shell_side.ToDoubleWithoutDot());
+            doc.SetCellValue("D16", _geometryPageViewModel.Geometry.hydraulic_diameter_tubes_side.ToDoubleWithoutDot());
+            doc.SetCellValue("E16", _geometryPageViewModel.Geometry.hydraulic_diameter_shell_side.ToDoubleWithoutDot());
+            doc.SetCellValue("D17", _geometryPageViewModel.Geometry.area_module.ToDoubleWithoutDot());
+            doc.SetCellValue("D18", _geometryPageViewModel.Geometry.volume_module_tubes_side.ToDoubleWithoutDot());
+            doc.SetCellValue("E18", _geometryPageViewModel.Geometry.volume_module_shell_side.ToDoubleWithoutDot());
             doc.MergeWorksheetCells("C19", "D19");
-            doc.SetCellValue("C19", _geometryPageViewModel.Geometry.tube_profile_tubes_side);
-            doc.SetCellValue("D20", _geometryPageViewModel.Geometry.roughness_tubes_side);
-            doc.SetCellValue("E20", _geometryPageViewModel.Geometry.roughness_shell_side);
+            doc.SetCellValue("C19", _geometryPageViewModel.Geometry.tube_profile_tubes_side.ToNormalCase());
+            doc.SetCellValue("D20", _geometryPageViewModel.Geometry.roughness_tubes_side.ToDoubleWithoutDot());
+            doc.SetCellValue("E20", _geometryPageViewModel.Geometry.roughness_shell_side.ToDoubleWithoutDot());
             doc.MergeWorksheetCells("C21", "E21");
-            doc.SetCellValue("C21", _geometryPageViewModel.Geometry.bundle_type);
-            doc.SetCellValue("D22", _geometryPageViewModel.Geometry.roller_expanded);
-            doc.SetCellValue("D26", _geometryPageViewModel.Geometry.tube_plate_layout_tube_pitch);
-            doc.SetCellValue("D27", _geometryPageViewModel.Geometry.tube_plate_layout_tube_layout);
+            doc.SetCellValue("C21", _geometryPageViewModel.Geometry.bundle_type.ToNormalCase());
+            doc.SetCellValue("C22", _geometryPageViewModel.Geometry.roller_expanded);
+            doc.SetCellValue("D26", _geometryPageViewModel.Geometry.tube_plate_layout_tube_pitch.ToDoubleWithoutDot());
+            doc.SetCellValue("D27", _geometryPageViewModel.Geometry.tube_plate_layout_tube_layout.ToNormalCase());
             doc.SetCellValue("D28", _geometryPageViewModel.Geometry.tube_plate_layout_number_of_passes);
-            doc.SetCellValue("D29", _geometryPageViewModel.Geometry.tube_plate_layout_div_plate_layout);
+            doc.SetCellValue("D29", _geometryPageViewModel.Geometry.tube_plate_layout_div_plate_layout.ToNormalCase());
             doc.SetCellValue("D30", _geometryPageViewModel.Geometry.tube_plate_layout_div_plate_thickness);
-            doc.SetCellValue("D31", _geometryPageViewModel.Geometry.tube_plate_layout_tubes_cross_section_pre_pass);
-            doc.SetCellValue("E31", _geometryPageViewModel.Geometry.tube_plate_layout_shell_cross_section);
-            doc.SetCellValue("D32", _geometryPageViewModel.Geometry.tube_plate_layout_perimeter);
+            doc.SetCellValue("D31", _geometryPageViewModel.Geometry.tube_plate_layout_tubes_cross_section_pre_pass.ToDoubleWithoutDot());
+            doc.SetCellValue("E31", _geometryPageViewModel.Geometry.tube_plate_layout_shell_cross_section.ToDoubleWithoutDot());
+            doc.SetCellValue("D32", _geometryPageViewModel.Geometry.tube_plate_layout_perimeter.ToDoubleWithoutDot());
             doc.SetCellValue("D33", _geometryPageViewModel.Geometry.tube_plate_layout_max_nr_tubes);
             doc.SetCellValue("D34", _geometryPageViewModel.Geometry.tube_plate_layout_tube_distribution);
-            doc.SetCellValue("D35", _geometryPageViewModel.Geometry.tube_plate_layout_tube_tube_spacing);
-            doc.SetCellValue("C38", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_inner_side);
-            doc.SetCellValue("D38", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_tubes_side);
-            doc.SetCellValue("E38", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_shell_side);
+            doc.SetCellValue("D35", _geometryPageViewModel.Geometry.tube_plate_layout_tube_tube_spacing.ToDoubleWithoutDot());
+            doc.SetCellValue("C38", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_inner_side.ToDoubleWithoutDot());
+            doc.SetCellValue("D38", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_tubes_side.ToDoubleWithoutDot());
+            doc.SetCellValue("E38", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_shell_side.ToDoubleWithoutDot());
             //doc.SetCellValue("C39", _geometryPageViewModel.Geometry.nozzles);
             //doc.SetCellValue("D39", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_tubes_side);
             //doc.SetCellValue("E39", _geometryPageViewModel.Geometry.nozzles_in_outer_diam_shell_side);
-            doc.SetCellValue("C40", _geometryPageViewModel.Geometry.nozzles_in_inner_diam_inner_side);
-            doc.SetCellValue("D40", _geometryPageViewModel.Geometry.nozzles_in_inner_diam_tubes_side);
-            doc.SetCellValue("E40", _geometryPageViewModel.Geometry.nozzles_in_inner_diam_shell_side);
-            doc.SetCellValue("D41", _geometryPageViewModel.Geometry.nozzles_in_length_tubes_side);
-            doc.SetCellValue("E41", _geometryPageViewModel.Geometry.nozzles_in_length_shell_side);
-            doc.SetCellValue("C42", _geometryPageViewModel.Geometry.nozzles_out_outer_diam_inner_side);
-            doc.SetCellValue("D42", _geometryPageViewModel.Geometry.nozzles_out_outer_diam_tubes_side);
-            doc.SetCellValue("E42", _geometryPageViewModel.Geometry.nozzles_out_outer_diam_shell_side);
-            doc.SetCellValue("D44", _geometryPageViewModel.Geometry.nozzles_out_inner_diam_tubes_side);
-            doc.SetCellValue("E44", _geometryPageViewModel.Geometry.nozzles_out_inner_diam_shell_side);
-            doc.SetCellValue("D45", _geometryPageViewModel.Geometry.nozzles_out_length_tubes_side);
-            doc.SetCellValue("E45", _geometryPageViewModel.Geometry.nozzles_out_length_shell_side);
+            doc.SetCellValue("C40", _geometryPageViewModel.Geometry.nozzles_in_inner_diam_inner_side.ToDoubleWithoutDot());
+            doc.SetCellValue("D40", _geometryPageViewModel.Geometry.nozzles_in_inner_diam_tubes_side.ToDoubleWithoutDot());
+            doc.SetCellValue("E40", _geometryPageViewModel.Geometry.nozzles_in_inner_diam_shell_side.ToDoubleWithoutDot());
+            doc.SetCellValue("D41", _geometryPageViewModel.Geometry.nozzles_in_length_tubes_side.ToDoubleWithoutDot());
+            doc.SetCellValue("E41", _geometryPageViewModel.Geometry.nozzles_in_length_shell_side.ToDoubleWithoutDot());
+            doc.SetCellValue("C42", _geometryPageViewModel.Geometry.nozzles_out_outer_diam_inner_side.ToDoubleWithoutDot());
+            doc.SetCellValue("D42", _geometryPageViewModel.Geometry.nozzles_out_outer_diam_tubes_side.ToDoubleWithoutDot());
+            doc.SetCellValue("E42", _geometryPageViewModel.Geometry.nozzles_out_outer_diam_shell_side.ToDoubleWithoutDot());
+            doc.SetCellValue("D44", _geometryPageViewModel.Geometry.nozzles_out_inner_diam_tubes_side.ToDoubleWithoutDot());
+            doc.SetCellValue("E44", _geometryPageViewModel.Geometry.nozzles_out_inner_diam_shell_side.ToDoubleWithoutDot());
+            doc.SetCellValue("D45", _geometryPageViewModel.Geometry.nozzles_out_length_tubes_side.ToDoubleWithoutDot());
+            doc.SetCellValue("E45", _geometryPageViewModel.Geometry.nozzles_out_length_shell_side.ToDoubleWithoutDot());
             doc.SetCellValue("D46", _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_tubes_side);
             doc.SetCellValue("E46", _geometryPageViewModel.Geometry.nozzles_number_of_parallel_lines_shell_side);
             doc.SetCellValue("D47", _geometryPageViewModel.Geometry.nozzles_number_of_modules_pre_block);
-            doc.SetCellValue("D48", _geometryPageViewModel.Geometry.shell_nozzle_orientation);
-            doc.MergeWorksheetCells("C49", "E49");
-            doc.SetCellValue("D49", _bafflesPageViewModel.Baffle.number_of_baffles);
-            doc.MergeWorksheetCells("C50", "E50");
-            doc.SetCellValue("D50", _bafflesPageViewModel.Baffle.buffle_cut);
+            doc.SetCellValue("D48", _geometryPageViewModel.Geometry.shell_nozzle_orientation.ToNormalCase());
             doc.MergeWorksheetCells("C51", "E51");
-            doc.SetCellValue("D51", _bafflesPageViewModel.Baffle.inlet_baffle_spacing);
+            doc.SetCellValue("C51", _bafflesPageViewModel.Baffle.number_of_baffles);
             doc.MergeWorksheetCells("C52", "E52");
-            doc.SetCellValue("D52", _bafflesPageViewModel.Baffle.central_baffle_spacing);
+            doc.SetCellValue("C52", _bafflesPageViewModel.Baffle.buffle_cut);
             doc.MergeWorksheetCells("C53", "E53");
-            doc.SetCellValue("D53", _bafflesPageViewModel.Baffle.outlet_baffle_spacing);
+            doc.SetCellValue("C53", _bafflesPageViewModel.Baffle.inlet_baffle_spacing.ToDoubleWithoutDot());
             doc.MergeWorksheetCells("C54", "E54");
-            doc.SetCellValue("D54", _bafflesPageViewModel.Baffle.baffle_thickness);
+            doc.SetCellValue("C54", _bafflesPageViewModel.Baffle.central_baffle_spacing.ToDoubleWithoutDot());
             doc.MergeWorksheetCells("C55", "E55");
-            doc.SetCellValue("D55", _bafflesPageViewModel.Baffle.pairs_of_sealing_strips);
+            doc.SetCellValue("C55", _bafflesPageViewModel.Baffle.outlet_baffle_spacing.ToDoubleWithoutDot());
+            doc.MergeWorksheetCells("C56", "E56");
+            doc.SetCellValue("C56", _bafflesPageViewModel.Baffle.baffle_thickness);
+            doc.MergeWorksheetCells("C57", "E57");
+            doc.SetCellValue("C57", _bafflesPageViewModel.Baffle.pairs_of_sealing_strips);
         }
 
         private static void AddGeometryUnits(SLDocument doc)
@@ -1311,6 +1509,7 @@ namespace Ahed_project.Services
             doc.SetCellValue("F8", "Outlet");
             doc.SetCellStyle("C7", "F8", BorderCellsStyle());
             doc.SetCellStyle("C7", "F8", BoldTextStyle());
+            AddHeatTransferUnits(doc);
             AddHeatTransferFlowDataNames(doc);
             AddHeatTransferHeatTransferDataNames(doc);
             AddHeatTransferAreaNames(doc);
@@ -1318,6 +1517,41 @@ namespace Ahed_project.Services
             AddHeatTransferPressureDropNames(doc);
             AddHeatTransferVibrationsNames(doc);
             AddHeatTransferData(doc);
+            doc.MergeWorksheetCells("C51", "D51");
+            doc.SetCellValue("C51", "Use Viscosity Correction");
+            doc.SetCellStyle("C51", BoldTextStyle());
+            doc.SetCellValue("E51", _overallCalculationViewModel.use_viscosity_correction ? "yes" : "no");
+        }
+
+        private static void AddHeatTransferUnits(SLDocument doc)
+        {
+            doc.SetCellValue("B10", "kg/hr");
+            doc.SetCellValue("B11", "°C");
+            doc.SetCellValue("B12", "kW");
+            doc.SetCellValue("B13", "m/s");
+            doc.SetCellValue("B14", "1/s");
+            doc.SetCellValue("B17", "cP");
+            doc.SetCellValue("B21", "cP");
+            doc.SetCellValue("B26", "°C");
+            doc.SetCellValue("B27", "°C");
+            doc.SetCellValue("B28", "cP");
+            doc.SetCellValue("B30", "W/m²·°C");
+            doc.SetCellValue("B31", "m²·°C/W");
+            doc.SetCellValue("B33", "W/m²·°C");
+            doc.SetCellValue("B34", "W/m²·°C");
+            doc.SetCellValue("B35", "W/m²·°C");
+            doc.SetCellValue("B36", "W/m²·°C");
+            doc.SetCellValue("B39", "m²");
+            doc.SetCellValue("B40", "m²");
+            doc.SetCellValue("B42", "m²");
+            doc.SetCellValue("B43", "%");
+            doc.SetCellValue("B46", "°C");
+            doc.SetCellValue("B48", "°C");
+            doc.SetCellValue("B72", "mm");
+            doc.SetCellValue("B74", "Hz");
+            doc.SetCellValue("B75", "Hz");
+            doc.SetCellValue("B77", "m/s");
+            doc.SetCellValue("B78", "m/s");
         }
 
         private static void AddHeatTransferFlowDataNames(SLDocument doc)
@@ -1461,146 +1695,158 @@ namespace Ahed_project.Services
             doc.MergeWorksheetCells("A67", "D67");
             doc.SetCellValue("C9", _overallCalculationViewModel.Overall.fluid_name_tube);
             doc.SetCellValue("E9", _overallCalculationViewModel.Overall.fluid_name_shell);
-            doc.SetCellValue("C10", _overallCalculationViewModel.Overall.flow_tube);
-            doc.SetCellValue("E10", _overallCalculationViewModel.Overall.flow_shell);
-            doc.SetCellValue("C11", _overallCalculationViewModel.Overall.temperature_tube_inlet);
-            doc.SetCellValue("D11", _overallCalculationViewModel.Overall.temperature_tube_outlet);
-            doc.SetCellValue("E11", _overallCalculationViewModel.Overall.temperature_shell_inlet);
-            doc.SetCellValue("F11", _overallCalculationViewModel.Overall.temperature_shell_outlet);
-            doc.SetCellValue("C12", _overallCalculationViewModel.Overall.duty_tube);
-            doc.SetCellValue("E12", _overallCalculationViewModel.Overall.duty_shell);
-            doc.SetCellValue("C13", _overallCalculationViewModel.Overall.fluid_velocity_tube_inlet);
-            doc.SetCellValue("D13", _overallCalculationViewModel.Overall.fluid_velocity_tube_outlet);
-            doc.SetCellValue("E13", _overallCalculationViewModel.Overall.fluid_velocity_shell_inlet);
-            doc.SetCellValue("F13", _overallCalculationViewModel.Overall.fluid_velocity_shell_outlet);
-            doc.SetCellValue("C14", _overallCalculationViewModel.Overall.shear_rate_tube_inlet);
-            doc.SetCellValue("D14", _overallCalculationViewModel.Overall.shear_rate_tube_outlet);
-            doc.SetCellValue("E14", _overallCalculationViewModel.Overall.shear_rate_shell_inlet);
-            doc.SetCellValue("F14", _overallCalculationViewModel.Overall.shear_rate_shell_outlet);
+            doc.SetCellValue("C10", _overallCalculationViewModel.Overall.flow_tube.ToDoubleWithoutDot());
+            doc.SetCellValue("E10", _overallCalculationViewModel.Overall.flow_shell.ToDoubleWithoutDot());
+            doc.SetCellValue("C11", _overallCalculationViewModel.Overall.temperature_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D11", _overallCalculationViewModel.Overall.temperature_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E11", _overallCalculationViewModel.Overall.temperature_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F11", _overallCalculationViewModel.Overall.temperature_shell_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C12", _overallCalculationViewModel.Overall.duty_tube.ToDoubleWithoutDot());
+            doc.SetCellValue("E12", _overallCalculationViewModel.Overall.duty_shell.ToDoubleWithoutDot());
+            doc.SetCellValue("C13", _overallCalculationViewModel.Overall.fluid_velocity_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D13", _overallCalculationViewModel.Overall.fluid_velocity_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E13", _overallCalculationViewModel.Overall.fluid_velocity_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F13", _overallCalculationViewModel.Overall.fluid_velocity_shell_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C14", _overallCalculationViewModel.Overall.shear_rate_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D14", _overallCalculationViewModel.Overall.shear_rate_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E14", _overallCalculationViewModel.Overall.shear_rate_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F14", _overallCalculationViewModel.Overall.shear_rate_shell_outlet.ToDoubleWithoutDot());
             doc.SetCellValue("C15", _overallCalculationViewModel.Overall.flow_type_tube_inlet);
             doc.SetCellValue("D15", _overallCalculationViewModel.Overall.flow_type_tube_outlet);
             doc.SetCellValue("E15", _overallCalculationViewModel.Overall.flow_type_shell_inlet);
             doc.SetCellValue("F15", _overallCalculationViewModel.Overall.flow_type_shell_outlet);
 
-            doc.SetCellValue("C17", _overallCalculationViewModel.Overall.liquid_phase_app_viscosity_tube_inlet);
-            doc.SetCellValue("D17", _overallCalculationViewModel.Overall.liquid_phase_app_viscosity_tube_outlet);
-            doc.SetCellValue("E17", _overallCalculationViewModel.Overall.liquid_phase_app_viscosity_shell_inlet);
-            doc.SetCellValue("F17", _overallCalculationViewModel.Overall.liquid_phase_app_viscosity_shell_inlet);
-            doc.SetCellValue("C18", _overallCalculationViewModel.Overall.liquid_phase_reynolds_tube_inlet);
-            doc.SetCellValue("D18", _overallCalculationViewModel.Overall.liquid_phase_reynolds_tube_outlet);
-            doc.SetCellValue("E18", _overallCalculationViewModel.Overall.liquid_phase_reynolds_shell_inlet);
-            doc.SetCellValue("F18", _overallCalculationViewModel.Overall.liquid_phase_reynolds_shell_outlet);
-            doc.SetCellValue("C19", _overallCalculationViewModel.Overall.liquid_phase_prandtl_tube_inlet);
-            doc.SetCellValue("D19", _overallCalculationViewModel.Overall.liquid_phase_prandtl_tube_outlet);
-            doc.SetCellValue("E19", _overallCalculationViewModel.Overall.liquid_phase_prandtl_shell_inlet);
-            doc.SetCellValue("F19", _overallCalculationViewModel.Overall.liquid_phase_prandtl_shell_outlet);
+            doc.SetCellValue("C17", _overallCalculationViewModel.Overall.liquid_phase_app_viscosity_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D17", _overallCalculationViewModel.Overall.liquid_phase_app_viscosity_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E17", _overallCalculationViewModel.Overall.liquid_phase_app_viscosity_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F17", _overallCalculationViewModel.Overall.liquid_phase_app_viscosity_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C18", _overallCalculationViewModel.Overall.liquid_phase_reynolds_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D18", _overallCalculationViewModel.Overall.liquid_phase_reynolds_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E18", _overallCalculationViewModel.Overall.liquid_phase_reynolds_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F18", _overallCalculationViewModel.Overall.liquid_phase_reynolds_shell_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C19", _overallCalculationViewModel.Overall.liquid_phase_prandtl_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D19", _overallCalculationViewModel.Overall.liquid_phase_prandtl_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E19", _overallCalculationViewModel.Overall.liquid_phase_prandtl_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F19", _overallCalculationViewModel.Overall.liquid_phase_prandtl_shell_outlet.ToDoubleWithoutDot());
 
-            doc.SetCellValue("C21", _overallCalculationViewModel.Overall.gas_phase_app_viscosity_tube_inlet);
-            doc.SetCellValue("D21", _overallCalculationViewModel.Overall.gas_phase_app_viscosity_tube_outlet);
-            doc.SetCellValue("E21", _overallCalculationViewModel.Overall.gas_phase_app_viscosity_shell_inlet);
-            doc.SetCellValue("F21", _overallCalculationViewModel.Overall.gas_phase_app_viscosity_shell_outlet);
-            doc.SetCellValue("C22", _overallCalculationViewModel.Overall.gas_phase_reynolds_tube_inlet);
-            doc.SetCellValue("D22", _overallCalculationViewModel.Overall.gas_phase_reynolds_tube_outlet);
-            doc.SetCellValue("E22", _overallCalculationViewModel.Overall.gas_phase_reynolds_shell_inlet);
-            doc.SetCellValue("F22", _overallCalculationViewModel.Overall.gas_phase_reynolds_shell_outlet);
-            doc.SetCellValue("C23", _overallCalculationViewModel.Overall.gas_phase_prandtl_tube_inlet);
-            doc.SetCellValue("D23", _overallCalculationViewModel.Overall.gas_phase_prandtl_tube_outlet);
-            doc.SetCellValue("E23", _overallCalculationViewModel.Overall.gas_phase_prandtl_shell_inlet);
-            doc.SetCellValue("F23", _overallCalculationViewModel.Overall.gas_phase_prandtl_shell_outlet);
+            doc.SetCellValue("C21", _overallCalculationViewModel.Overall.gas_phase_app_viscosity_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D21", _overallCalculationViewModel.Overall.gas_phase_app_viscosity_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E21", _overallCalculationViewModel.Overall.gas_phase_app_viscosity_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F21", _overallCalculationViewModel.Overall.gas_phase_app_viscosity_shell_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C22", _overallCalculationViewModel.Overall.gas_phase_reynolds_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D22", _overallCalculationViewModel.Overall.gas_phase_reynolds_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E22", _overallCalculationViewModel.Overall.gas_phase_reynolds_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F22", _overallCalculationViewModel.Overall.gas_phase_reynolds_shell_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C23", _overallCalculationViewModel.Overall.gas_phase_prandtl_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D23", _overallCalculationViewModel.Overall.gas_phase_prandtl_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E23", _overallCalculationViewModel.Overall.gas_phase_prandtl_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F23", _overallCalculationViewModel.Overall.gas_phase_prandtl_shell_outlet.ToDoubleWithoutDot());
 
-            doc.SetCellValue("C26", _overallCalculationViewModel.Overall.wall_temperature_tube_inlet);
-            doc.SetCellValue("D26", _overallCalculationViewModel.Overall.wall_temperature_tube_outlet);
-            doc.SetCellValue("E26", _overallCalculationViewModel.Overall.wall_temperature_shell_inlet);
-            doc.SetCellValue("F26", _overallCalculationViewModel.Overall.wall_temperature_shell_outlet);
+            doc.SetCellValue("C26", _overallCalculationViewModel.Overall.wall_temperature_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D26", _overallCalculationViewModel.Overall.wall_temperature_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E26", _overallCalculationViewModel.Overall.wall_temperature_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F26", _overallCalculationViewModel.Overall.wall_temperature_shell_outlet.ToDoubleWithoutDot());
 
             //TODO: Добавить свойство average metall temp
 
-            doc.SetCellValue("C28", _overallCalculationViewModel.Overall.wall_consistency_index_tube_inlet);
-            doc.SetCellValue("D28", _overallCalculationViewModel.Overall.wall_consistency_index_tube_outlet);
-            doc.SetCellValue("E28", _overallCalculationViewModel.Overall.wall_consistency_index_shell_inlet);
-            doc.SetCellValue("F28", _overallCalculationViewModel.Overall.wall_consistency_index_shell_inlet);
-            doc.SetCellValue("C29", _overallCalculationViewModel.Overall.nusselt_tube_inlet);
-            doc.SetCellValue("D29", _overallCalculationViewModel.Overall.nusselt_tube_outlet);
-            doc.SetCellValue("E29", _overallCalculationViewModel.Overall.nusselt_shell_inlet);
-            doc.SetCellValue("F29", _overallCalculationViewModel.Overall.nusselt_shell_outlet);
-            doc.SetCellValue("C30", _overallCalculationViewModel.Overall.k_side_tube_inlet);
-            doc.SetCellValue("D30", _overallCalculationViewModel.Overall.k_side_tube_outlet);
-            doc.SetCellValue("E30", _overallCalculationViewModel.Overall.k_side_shell_inlet);
-            doc.SetCellValue("F30", _overallCalculationViewModel.Overall.k_side_shell_outlet);
-            doc.SetCellValue("C31", _overallCalculationViewModel.Overall.fouling_factor_tube);
-            doc.SetCellValue("E31", _overallCalculationViewModel.Overall.fouling_factor_shell);
+            doc.SetCellValue("C28", _overallCalculationViewModel.Overall.wall_consistency_index_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D28", _overallCalculationViewModel.Overall.wall_consistency_index_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E28", _overallCalculationViewModel.Overall.wall_consistency_index_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F28", _overallCalculationViewModel.Overall.wall_consistency_index_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C29", _overallCalculationViewModel.Overall.nusselt_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D29", _overallCalculationViewModel.Overall.nusselt_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E29", _overallCalculationViewModel.Overall.nusselt_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F29", _overallCalculationViewModel.Overall.nusselt_shell_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C30", _overallCalculationViewModel.Overall.k_side_tube_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("D30", _overallCalculationViewModel.Overall.k_side_tube_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E30", _overallCalculationViewModel.Overall.k_side_shell_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("F30", _overallCalculationViewModel.Overall.k_side_shell_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C31", _overallCalculationViewModel.Overall.fouling_factor_tube.ToDoubleWithoutDot());
+            doc.SetCellValue("E31", _overallCalculationViewModel.Overall.fouling_factor_shell.ToDoubleWithoutDot());
             doc.SetCellValue("C32", "Inlet");
             doc.SetCellValue("E32", "Outlet");
-            doc.SetCellValue("C33", _overallCalculationViewModel.Overall.k_unfouled_inlet);
-            doc.SetCellValue("E33", _overallCalculationViewModel.Overall.k_unfouled_outlet);
-            doc.SetCellValue("C34", _overallCalculationViewModel.Overall.k_fouled_inlet);
-            doc.SetCellValue("E34", _overallCalculationViewModel.Overall.k_fouled_outlet);
-            doc.SetCellValue("C35", _overallCalculationViewModel.Overall.k_global_fouled);
-            doc.SetCellValue("C36", _overallCalculationViewModel.Overall.k_effective);
-            doc.SetCellValue("C39", _overallCalculationViewModel.Overall.surface_area_required);
-            doc.SetCellValue("C40", _overallCalculationViewModel.Overall.area_module);
-            doc.SetCellValue("C41", _overallCalculationViewModel.Overall.nr_modules);
-            doc.SetCellValue("C42", _overallCalculationViewModel.Overall.area_fitted);
-            doc.SetCellValue("C43", _overallCalculationViewModel.Overall.excess_area);
-            doc.SetCellValue("C46", _overallCalculationViewModel.Overall.LMTD);
+            doc.SetCellValue("C33", _overallCalculationViewModel.Overall.k_unfouled_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E33", _overallCalculationViewModel.Overall.k_unfouled_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C34", _overallCalculationViewModel.Overall.k_fouled_inlet.ToDoubleWithoutDot());
+            doc.SetCellValue("E34", _overallCalculationViewModel.Overall.k_fouled_outlet.ToDoubleWithoutDot());
+            doc.SetCellValue("C35", _overallCalculationViewModel.Overall.k_global_fouled.ToDoubleWithoutDot());
+            doc.SetCellValue("C36", _overallCalculationViewModel.Overall.k_effective.ToDoubleWithoutDot());
+            doc.SetCellValue("C39", _overallCalculationViewModel.Overall.surface_area_required.ToDoubleWithoutDot());
+            doc.SetCellValue("C40", _overallCalculationViewModel.Overall.area_module.ToDoubleWithoutDot());
+            doc.SetCellValue("C41", _overallCalculationViewModel.Overall.nr_modules.ToDoubleWithoutDot());
+            doc.SetCellValue("C42", _overallCalculationViewModel.Overall.area_fitted.ToDoubleWithoutDot());
+            doc.SetCellValue("C43", _overallCalculationViewModel.Overall.excess_area.ToDoubleWithoutDot());
+            doc.SetCellValue("C46", _overallCalculationViewModel.Overall.LMTD.ToDoubleWithoutDot());
             doc.SetCellValue("C47", _overallCalculationViewModel.Overall.LMTD_correction_factor);
-            doc.SetCellValue("C48", _overallCalculationViewModel.Overall.adjusted_LMTD);
-            doc.SetCellValue("C54", _overallCalculationViewModel.Overall.pressure_drop_tube_side_modules_V);
-            doc.SetCellValue("E54", _overallCalculationViewModel.Overall.pressure_drop_tube_side_modules_P);
-            doc.SetCellValue("C55", _overallCalculationViewModel.Overall.pressure_drop_tube_side_inlet_nozzles_V);
-            doc.SetCellValue("D55", _overallCalculationViewModel.Overall.pressure_drop_tube_side_inlet_nozzles_pV);
-            doc.SetCellValue("E55", _overallCalculationViewModel.Overall.pressure_drop_tube_side_inlet_nozzles_P);
-            doc.SetCellValue("C56", _overallCalculationViewModel.Overall.pressure_drop_tube_side_outlet_nozzles_V);
-            doc.SetCellValue("D56", _overallCalculationViewModel.Overall.pressure_drop_tube_side_outlet_nozzles_pV);
-            doc.SetCellValue("E56", _overallCalculationViewModel.Overall.pressure_drop_tube_side_outlet_nozzles_P);
-            doc.SetCellValue("C57", _overallCalculationViewModel.Overall.pressure_drop_tube_side_bends_V);
-            doc.SetCellValue("E57", _overallCalculationViewModel.Overall.pressure_drop_tube_side_bends_P);
-            doc.SetCellValue("E58", _overallCalculationViewModel.Overall.pressure_drop_tube_side_total_P);
-            doc.SetCellValue("C62", _overallCalculationViewModel.Overall.pressure_drop_shell_side_modules_V);
-            doc.SetCellValue("E62", _overallCalculationViewModel.Overall.pressure_drop_shell_side_modules_P);
-            doc.SetCellValue("C63", _overallCalculationViewModel.Overall.pressure_drop_shell_side_inlet_nozzles_V);
-            doc.SetCellValue("D63", _overallCalculationViewModel.Overall.pressure_drop_shell_side_inlet_nozzles_pV);
-            doc.SetCellValue("E63", _overallCalculationViewModel.Overall.pressure_drop_shell_side_inlet_nozzles_P);
+            doc.SetCellValue("C48", _overallCalculationViewModel.Overall.adjusted_LMTD.ToDoubleWithoutDot());
+            doc.SetCellValue("C54", _overallCalculationViewModel.Overall.pressure_drop_tube_side_modules_V.ToDoubleWithoutDot());
+            doc.SetCellValue("E54", _overallCalculationViewModel.Overall.pressure_drop_tube_side_modules_P.ToDoubleWithoutDot());
+            doc.SetCellValue("C55", _overallCalculationViewModel.Overall.pressure_drop_tube_side_inlet_nozzles_V.ToDoubleWithoutDot());
+            doc.SetCellValue("D55", _overallCalculationViewModel.Overall.pressure_drop_tube_side_inlet_nozzles_pV.ToDoubleWithoutDot());
+            doc.SetCellValue("E55", _overallCalculationViewModel.Overall.pressure_drop_tube_side_inlet_nozzles_P.ToDoubleWithoutDot());
+            doc.SetCellValue("C56", _overallCalculationViewModel.Overall.pressure_drop_tube_side_outlet_nozzles_V.ToDoubleWithoutDot());
+            doc.SetCellValue("D56", _overallCalculationViewModel.Overall.pressure_drop_tube_side_outlet_nozzles_pV.ToDoubleWithoutDot());
+            doc.SetCellValue("E56", _overallCalculationViewModel.Overall.pressure_drop_tube_side_outlet_nozzles_P.ToDoubleWithoutDot());
+            doc.SetCellValue("C57", _overallCalculationViewModel.Overall.pressure_drop_tube_side_bends_V.ToDoubleWithoutDot());
+            doc.SetCellValue("E57", _overallCalculationViewModel.Overall.pressure_drop_tube_side_bends_P.ToDoubleWithoutDot());
+            doc.SetCellValue("E58", _overallCalculationViewModel.Overall.pressure_drop_tube_side_total_P.ToDoubleWithoutDot());
+            doc.SetCellValue("C62", _overallCalculationViewModel.Overall.pressure_drop_shell_side_modules_V.ToDoubleWithoutDot());
+            doc.SetCellValue("E62", _overallCalculationViewModel.Overall.pressure_drop_shell_side_modules_P.ToDoubleWithoutDot());
+            doc.SetCellValue("C63", _overallCalculationViewModel.Overall.pressure_drop_shell_side_inlet_nozzles_V.ToDoubleWithoutDot());
+            doc.SetCellValue("D63", _overallCalculationViewModel.Overall.pressure_drop_shell_side_inlet_nozzles_pV.ToDoubleWithoutDot());
+            doc.SetCellValue("E63", _overallCalculationViewModel.Overall.pressure_drop_shell_side_inlet_nozzles_P.ToDoubleWithoutDot());
 
-            doc.SetCellValue("C64", _overallCalculationViewModel.Overall.pressure_drop_shell_side_outlet_nozzles_V);
-            doc.SetCellValue("D64", _overallCalculationViewModel.Overall.pressure_drop_shell_side_outlet_nozzles_pV);
-            doc.SetCellValue("E64", _overallCalculationViewModel.Overall.pressure_drop_shell_side_outlet_nozzles_P);
+            doc.SetCellValue("C64", _overallCalculationViewModel.Overall.pressure_drop_shell_side_outlet_nozzles_V.ToDoubleWithoutDot());
+            doc.SetCellValue("D64", _overallCalculationViewModel.Overall.pressure_drop_shell_side_outlet_nozzles_pV.ToDoubleWithoutDot());
+            doc.SetCellValue("E64", _overallCalculationViewModel.Overall.pressure_drop_shell_side_outlet_nozzles_P.ToDoubleWithoutDot());
             //doc.SetCellValue("E65", _overallCalculationViewModel.Overall.win);
-            doc.SetCellValue("E68", _overallCalculationViewModel.Overall.pressure_drop_shell_side_total_p);
-            doc.SetCellValue("C72", _overallCalculationViewModel.Overall.vibrations_inlet_span_length);
-            doc.SetCellValue("D72", _overallCalculationViewModel.Overall.vibrations_central_span_length);
-            doc.SetCellValue("E72", _overallCalculationViewModel.Overall.vibrations_outlet_span_length);
-            doc.SetCellValue("C73", _overallCalculationViewModel.Overall.vibrations_inlet_span_length_tema_lb);
-            doc.SetCellValue("D73", _overallCalculationViewModel.Overall.vibrations_central_span_length_tema_lb);
-            doc.SetCellValue("E73", _overallCalculationViewModel.Overall.vibrations_outlet_span_length_tema_lb);
-            doc.SetCellValue("C74", _overallCalculationViewModel.Overall.vibrations_inlet_tubes_natural_frequency);
-            doc.SetCellValue("D74", _overallCalculationViewModel.Overall.vibrations_central_tubes_natural_frequency);
-            doc.SetCellValue("E74", _overallCalculationViewModel.Overall.vibrations_outlet_tubes_natural_frequency);
-            doc.SetCellValue("C75", _overallCalculationViewModel.Overall.vibrations_inlet_shell_acoustic_frequency_gases);
-            doc.SetCellValue("D75", _overallCalculationViewModel.Overall.vibrations_central_shell_acoustic_frequency_gases);
-            doc.SetCellValue("E75", _overallCalculationViewModel.Overall.vibrations_outlet_shell_acoustic_frequency_gases);
+            doc.SetCellValue("E68", _overallCalculationViewModel.Overall.pressure_drop_shell_side_total_p.ToDoubleWithoutDot());
+            doc.SetCellValue("C72", _overallCalculationViewModel.Overall.vibrations_inlet_span_length.ToDoubleWithoutDot());
+            doc.SetCellValue("D72", _overallCalculationViewModel.Overall.vibrations_central_span_length.ToDoubleWithoutDot());
+            doc.SetCellValue("E72", _overallCalculationViewModel.Overall.vibrations_outlet_span_length.ToDoubleWithoutDot());
+            doc.SetCellValue("C73", _overallCalculationViewModel.Overall.vibrations_inlet_span_length_tema_lb.ToDoubleWithoutDot());
+            doc.SetCellValue("D73", _overallCalculationViewModel.Overall.vibrations_central_span_length_tema_lb.ToDoubleWithoutDot());
+            doc.SetCellValue("E73", _overallCalculationViewModel.Overall.vibrations_outlet_span_length_tema_lb.ToDoubleWithoutDot());
+            doc.SetCellValue("C74", _overallCalculationViewModel.Overall.vibrations_inlet_tubes_natural_frequency.ToDoubleWithoutDot());
+            doc.SetCellValue("D74", _overallCalculationViewModel.Overall.vibrations_central_tubes_natural_frequency.ToDoubleWithoutDot());
+            doc.SetCellValue("E74", _overallCalculationViewModel.Overall.vibrations_outlet_tubes_natural_frequency.ToDoubleWithoutDot());
+            doc.SetCellValue("C75", _overallCalculationViewModel.Overall.vibrations_inlet_shell_acoustic_frequency_gases.ToDoubleWithoutDot());
+            doc.SetCellValue("D75", _overallCalculationViewModel.Overall.vibrations_central_shell_acoustic_frequency_gases.ToDoubleWithoutDot());
+            doc.SetCellValue("E75", _overallCalculationViewModel.Overall.vibrations_outlet_shell_acoustic_frequency_gases.ToDoubleWithoutDot());
 
-            doc.SetCellValue("C77", _overallCalculationViewModel.Overall.vibrations_inlet_cross_flow_velocity);
-            doc.SetCellValue("D77", _overallCalculationViewModel.Overall.vibrations_central_cross_flow_velocity);
-            doc.SetCellValue("E77", _overallCalculationViewModel.Overall.vibrations_outlet_cross_flow_velocity);
-            doc.SetCellValue("C78", _overallCalculationViewModel.Overall.vibrations_inlet_cricical_velocity);
-            doc.SetCellValue("D78", _overallCalculationViewModel.Overall.vibrations_central_cricical_velocity);
-            doc.SetCellValue("E78", _overallCalculationViewModel.Overall.vibrations_outlet_cricical_velocity);
-            doc.SetCellValue("C79", _overallCalculationViewModel.Overall.vibrations_inlet_average_cross_flow_velocity_ratio);
-            doc.SetCellValue("D79", _overallCalculationViewModel.Overall.vibrations_central_average_cross_flow_velocity_ratio);
-            doc.SetCellValue("E79", _overallCalculationViewModel.Overall.vibrations_outlet_average_cross_flow_velocity_ratio);
+            doc.SetCellValue("C77", _overallCalculationViewModel.Overall.vibrations_inlet_cross_flow_velocity.ToDoubleWithoutDot());
+            doc.SetCellValue("D77", _overallCalculationViewModel.Overall.vibrations_central_cross_flow_velocity.ToDoubleWithoutDot());
+            doc.SetCellValue("E77", _overallCalculationViewModel.Overall.vibrations_outlet_cross_flow_velocity.ToDoubleWithoutDot());
+            doc.SetCellValue("C78", _overallCalculationViewModel.Overall.vibrations_inlet_cricical_velocity.ToDoubleWithoutDot());
+            doc.SetCellValue("D78", _overallCalculationViewModel.Overall.vibrations_central_cricical_velocity.ToDoubleWithoutDot());
+            doc.SetCellValue("E78", _overallCalculationViewModel.Overall.vibrations_outlet_cricical_velocity.ToDoubleWithoutDot());
+            doc.SetCellValue("C79", _overallCalculationViewModel.Overall.vibrations_inlet_average_cross_flow_velocity_ratio.ToDoubleWithoutDot());
+            doc.SetCellValue("D79", _overallCalculationViewModel.Overall.vibrations_central_average_cross_flow_velocity_ratio.ToDoubleWithoutDot());
+            doc.SetCellValue("E79", _overallCalculationViewModel.Overall.vibrations_outlet_average_cross_flow_velocity_ratio.ToDoubleWithoutDot());
 
-            doc.SetCellValue("C81", _overallCalculationViewModel.Overall.vibrations_inlet_vortex_shedding_ratio);
-            doc.SetCellValue("D81", _overallCalculationViewModel.Overall.vibrations_central_vortex_shedding_ratio);
-            doc.SetCellValue("E81", _overallCalculationViewModel.Overall.vibrations_outlet_vortex_shedding_ratio);
-            doc.SetCellValue("C82", _overallCalculationViewModel.Overall.vibrations_inlet_turbulent_buffeting_ratio);
-            doc.SetCellValue("D82", _overallCalculationViewModel.Overall.vibrations_central_turbulent_buffeting_ratio);
-            doc.SetCellValue("E82", _overallCalculationViewModel.Overall.vibrations_outlet_turbulent_buffeting_ratio);
+            doc.SetCellValue("C81", _overallCalculationViewModel.Overall.vibrations_inlet_vortex_shedding_ratio.ToDoubleWithoutDot());
+            doc.SetCellValue("D81", _overallCalculationViewModel.Overall.vibrations_central_vortex_shedding_ratio.ToDoubleWithoutDot());
+            doc.SetCellValue("E81", _overallCalculationViewModel.Overall.vibrations_outlet_vortex_shedding_ratio.ToDoubleWithoutDot());
+            doc.SetCellValue("C82", _overallCalculationViewModel.Overall.vibrations_inlet_turbulent_buffeting_ratio.ToDoubleWithoutDot());
+            doc.SetCellValue("D82", _overallCalculationViewModel.Overall.vibrations_central_turbulent_buffeting_ratio.ToDoubleWithoutDot());
+            doc.SetCellValue("E82", _overallCalculationViewModel.Overall.vibrations_outlet_turbulent_buffeting_ratio.ToDoubleWithoutDot());
 
             doc.SetCellValue("C84", _overallCalculationViewModel.Overall.acoustic_vibration_exist_inlet == 1 ? "Yes" : "No");
             doc.SetCellValue("D84", _overallCalculationViewModel.Overall.acoustic_vibration_exist_central == 1 ? "Yes" : "No");
             doc.SetCellValue("E84", _overallCalculationViewModel.Overall.acoustic_vibration_exist_outlet == 1 ? "Yes" : "No");
 
+
+            doc.SetCellValue("F73", "<1,0");
+            doc.SetCellValue("F79", "<0,8");
+            doc.SetCellValue("F81", "<1,0");
+            doc.SetCellValue("F82", "<1,0");
+
+            doc.SetCellStyle("C71", "E71", BoldTextStyle());
+            doc.SetCellStyle("C71", "E71", BorderCellsStyle());
+
+            doc.SetCellValue("C71", "Inlet");
+            doc.SetCellValue("D71", "Central");
+            doc.SetCellValue("E71", "Outlet");
         }
 
         #endregion
