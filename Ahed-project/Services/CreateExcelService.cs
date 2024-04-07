@@ -939,7 +939,7 @@ namespace Ahed_project.Services
             doc.SetCellValue("A3", "Process");
             doc.SetCellValue("C3", _projectPageViewModel.SelectedCalculation.name);
             doc.SetCellValue("A4", "Name");
-            doc.SetCellValue("C4", _tubesFluidViewModel.Product.name);
+            doc.SetCellValue("C4", _tubesFluidViewModel.Product?.name);
             doc.MergeWorksheetCells("A5", "B5");
             doc.SetCellStyle("A5", "D5", BorderCellsStyle());
             doc.SetCellValue("A5", "Molar Mass");
@@ -947,13 +947,13 @@ namespace Ahed_project.Services
             doc.SetCellStyle("A6", "C6", BorderCellsStyle());
             doc.SetCellValue("A6", "Pressure");
             doc.SetCellValue("D5", "kg/kmol");
-            doc.SetCellValue("C5", _tubesFluidViewModel.Product.MolarMass);
-            doc.SetCellValue("C6", _tubesFluidViewModel.Product.Pressure);
+            doc.SetCellValue("C5", _tubesFluidViewModel.Product?.MolarMass);
+            doc.SetCellValue("C6", _tubesFluidViewModel.Product?.Pressure);
 
 
             CreateHeaders(doc);
             CreateUnits(doc);
-            AddData(_tubesFluidViewModel.Product.product_properties, doc);
+            AddData(_tubesFluidViewModel.Product?.product_properties, doc);
         }
 
 
@@ -993,6 +993,10 @@ namespace Ahed_project.Services
         }
         private static void AddData(IEnumerable<ProductProperties> values, SLDocument doc)
         {
+            if (values == null)
+            {
+                return;
+            }
             ProductProperties[] properties = values.ToArray();
             for (int i = 0; i < properties.Length; i++)
             {
@@ -1040,7 +1044,7 @@ namespace Ahed_project.Services
             doc.SetCellValue("A3", "Process");
             doc.SetCellValue("C3", _projectPageViewModel.SelectedCalculation.name);
             doc.SetCellValue("A4", "Name");
-            doc.SetCellValue("C4", _shellFluidViewModel.Product.name);
+            doc.SetCellValue("C4", _shellFluidViewModel.Product?.name);
             doc.MergeWorksheetCells("A5", "B5");
             doc.SetCellStyle("A5", "D5", BorderCellsStyle());
             doc.SetCellValue("A5", "Molar Mass");
@@ -1048,12 +1052,12 @@ namespace Ahed_project.Services
             doc.SetCellStyle("A6", "C6", BorderCellsStyle());
             doc.SetCellValue("A6", "Pressure");
             doc.SetCellValue("D5", "kg/kmol");
-            doc.SetCellValue("C5", _shellFluidViewModel.Product.MolarMass);
-            doc.SetCellValue("C6", _shellFluidViewModel.Product.Pressure);
+            doc.SetCellValue("C5", _shellFluidViewModel.Product?.MolarMass);
+            doc.SetCellValue("C6", _shellFluidViewModel.Product?.Pressure);
 
             CreateHeaders(doc);
             CreateUnits(doc);
-            AddData(_shellFluidViewModel.Product.product_properties, doc);
+            AddData(_shellFluidViewModel.Product?.product_properties, doc);
         }
         #endregion
 
