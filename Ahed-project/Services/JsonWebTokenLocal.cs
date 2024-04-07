@@ -28,32 +28,33 @@ namespace Ahed_project.Services
         {
             try
             {
-                UserEF user = null;
-                using (var context = new EFContext())
-                {
-                    user = context.Users.FirstOrDefault(x => x.Password == password && x.Email == email);
-                }
                 string json = JsonConvert.SerializeObject(new
                 {
                     email,
                     pass = password
                 });
-                Token token = null;
                 var login = _sendDataService.SendToServer(ProjectMethods.LOGIN, json);
                 if (!login.Contains("token"))
                     return null;
-                token = JsonConvert.DeserializeObject<Token>(login);
-                _sendDataService.AddHeader(token.token);
+                var loginToken = JsonConvert.DeserializeObject<Token>(login);
+                _sendDataService.AddHeader(loginToken.token);
                 var auth = _sendDataService.SendToServer(ProjectMethods.AUTH);
-                token = JsonConvert.DeserializeObject<Token>(auth);
-                _sendDataService.AddHeader(token.token);
+                var authToken = JsonConvert.DeserializeObject<Token>(auth);
+                _sendDataService.AddHeader(authToken.token);
+                var userData = GetUserData(authToken.token);
+                using var context = new EFContext();
+                var user = context.Users.FirstOrDefault(u => u.UserId == userData.user_id);
+                var activeUsers = context.Users.Where(u => u.IsActive).ToList();
+                foreach (var u in activeUsers)
+                {
+                    u.IsActive = false;
+                    context.Users.Update(u);
+                }
                 if (user == null)
                 {
-                    using var context = new EFContext();
                     user = new UserEF()
                     {
-                        Email = email,
-                        Password = password,
+                        Token = loginToken.token,
                         IsActive = true
                     };
                     context.Users.Add(user);
@@ -62,16 +63,13 @@ namespace Ahed_project.Services
                 }
                 else
                 {
-                    using (var context = new EFContext())
-                    {
-                        user.IsActive = true;
-                        context.Users.Update(user);
-                        context.SaveChanges();
-                        context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
-                    }
+                    user.IsActive = true;
+                    user.Token = loginToken.token;
+                    context.Users.Update(user);
+                    context.SaveChanges();
                     GlobalDataCollectorService.UserId = user.Id;
                 }
-                return GetUserData(token.token);
+                return userData;
             }
             catch
             {
@@ -79,13 +77,26 @@ namespace Ahed_project.Services
             }
         }
 
+        public User TryAuthenticateByToken(string token)
+        {
+            _sendDataService.AddHeader(token);
+            var auth = _sendDataService.SendToServer(ProjectMethods.AUTH);
+            var authToken = JsonConvert.DeserializeObject<Token>(auth);
+            _sendDataService.AddHeader(authToken.token);
+            return GetUserData(authToken.token);
+        }
+
         /// <summary>
         /// Получение данных пользователя по токену
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
-        public static User GetUserData(string token)
+        private User GetUserData(string token)
         {
+            if (String.IsNullOrEmpty(token))
+            {
+                return null;
+            }
             var wt = new JsonWebToken(token);
             var user = new User();
             foreach (var element in wt.Claims)

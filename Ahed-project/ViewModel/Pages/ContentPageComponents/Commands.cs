@@ -14,6 +14,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
     {
         public ICommand Logout => new DelegateCommand(() =>
         {
+            GlobalFunctionsAndCallersService.AskAndSave();
             using (var context = new EFContext())
             {
                 var active = context.Users.FirstOrDefault(x => x.IsActive);

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Net.Sockets;
 
 namespace Ahed_project.Services.EF.Model
 {
@@ -14,14 +15,14 @@ namespace Ahed_project.Services.EF.Model
         public int Id { get; set; }
 
         /// <summary>
-        /// Email/логин
+        /// Токен
         /// </summary>
-        public string Email { get; set; }
+        public string Token { get; set; }
 
         /// <summary>
-        /// Пароль
+        /// Идентификатор пользователя Ahead
         /// </summary>
-        public string Password { get; set; }
+        public long UserId { get; set; }
 
         /// <summary>
         /// Зайдено или нет

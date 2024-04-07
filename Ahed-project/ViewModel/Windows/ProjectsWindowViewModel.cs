@@ -76,7 +76,7 @@ namespace Ahed_project.ViewModel.Windows
 
         public ICommand GetAll => new DelegateCommand(() =>
         {
-            Projects = new ObservableCollection<ProjectInfoGet>(GlobalDataCollectorService.AllProjects.SelectMany(x=>x.Value));
+            Projects = new ObservableCollection<ProjectInfoGet>(GlobalDataCollectorService.AllProjects.SelectMany(x => x.Value));
         });
 
         public ICommand WindowLoaded => new DelegateCommand(() =>
@@ -89,7 +89,7 @@ namespace Ahed_project.ViewModel.Windows
             if (string.IsNullOrEmpty(SearchBox))
             {
 
-                Projects = new ObservableCollection<ProjectInfoGet>(BeforeSearch);
+                Projects = new ObservableCollection<ProjectInfoGet>(BeforeSearch.OrderByDescending(p => p.updatedAt ?? p.createdAt));
             }
             else
             {
@@ -97,7 +97,7 @@ namespace Ahed_project.ViewModel.Windows
                 Projects = new ObservableCollection<ProjectInfoGet>(BeforeSearch.Where
                     (x => (x.name?.ToLower().Contains(lowSB) ?? false) || (x.customer?.ToLower().Contains(lowSB) ?? false)
                     || (x.description?.ToLower().Contains(lowSB) ?? false) || (x.category?.ToLower().Contains(lowSB) ?? false)
-                    || (x.keywords?.ToLower().Contains(lowSB) ?? false) || (x.comments?.ToLower().Contains(lowSB) ?? false)));
+                    || (x.keywords?.ToLower().Contains(lowSB) ?? false) || (x.comments?.ToLower().Contains(lowSB) ?? false)).OrderByDescending(p => p.updatedAt ?? p.createdAt));
             }
         }
     }

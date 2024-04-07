@@ -1,7 +1,9 @@
-﻿using Ahed_project.Pages;
+﻿using Ahed_project.MasterData;
+using Ahed_project.Pages;
 using Ahed_project.Services;
 using Ahed_project.Services.EF;
 using Ahed_project.Services.EF.Model;
+using Ahed_project.Services.Global;
 using Ahed_project.ViewModel.Windows;
 using Autofac;
 using System.Linq;
@@ -26,23 +28,21 @@ namespace Ahed_project
             var main = _containers.Resolve<MainWindow>();
             var vm = _containers.Resolve<MainViewModel>();
             var jwt = _containers.Resolve<JsonWebTokenLocal>();
-
+            Application.Current.Exit += new ExitEventHandler((_, _) => GlobalFunctionsAndCallersService.AskAndSave());
             UserEF active = null;
             using (var context = new EFContext())
             {
                 active = context.Users.FirstOrDefault(x => x.IsActive);
             }
+            vm.FramePage = login;
             if (active != null)
             {
-                string email = active.Email;
-                string password = active.Password;
-                var result = jwt.AuthenticateUser(email, password);
-
-                vm.FramePage = content;
-            }
-            else
-            {
-                vm.FramePage = login;
+                var result = jwt.TryAuthenticateByToken(active.Token);
+                if (result != null)
+                {
+                    GlobalDataCollectorService.UserId = active.Id;
+                    vm.FramePage = content;
+                }
             }
             main.Show();
         }

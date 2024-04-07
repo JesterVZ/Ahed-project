@@ -13,6 +13,7 @@ using Ahed_project.ViewModel.Pages;
 using Ahed_project.ViewModel.Windows;
 using Ahed_project.Windows;
 using AutoMapper;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml.Linq;
 
 namespace Ahed_project.Services.Global
 {
@@ -122,12 +124,95 @@ namespace Ahed_project.Services.Global
                         Node monthNode = new Node();
                         monthNode.Id = Guid.NewGuid().ToString();
                         monthNode.Name = new DateTime(1, month.Key, 1).ToString("MMMM");
-                        GlobalDataCollectorService.AllProjects.Add(monthNode.Id, month.Value.OrderBy(x => DateTime.Parse(x.updatedAt ?? x.createdAt)).ToList());
+                        GlobalDataCollectorService.AllProjects.TryAdd(monthNode.Id, month.Value.OrderBy(x => DateTime.Parse(x.updatedAt ?? x.createdAt)).ToList());
                         node.Nodes.Add(monthNode);
                     }
                     GlobalDataCollectorService.ProjectNodes.Add(node);
                 });
             }
+        }
+
+        private static void AddProjectNode(ProjectInfoGet project)
+        {
+            var ownersResponse = _sendDataService.SendToServer(ProjectMethods.GET_OWNERS, "");
+            var owners = JsonConvert.DeserializeObject<List<Owner>>(ownersResponse);
+            project.owner = owners.FirstOrDefault(y => y.user_id == project.user_id)?.name;
+            var date = DateTime.Parse(project.updatedAt ?? project.createdAt);
+            var year = date.Year;
+            var month = date.Month;
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                string nodeId;
+                var node = GlobalDataCollectorService.ProjectNodes.FirstOrDefault(n => n.Name == year.ToString());
+                if (node != null)
+                {
+                    var nodeName = new DateTime(1, month, 1).ToString("MMMM");
+                    var m = node.Nodes.FirstOrDefault(n => n.Name == nodeName);
+                    if (m != null)
+                    {
+                        nodeId = m.Id;
+                    }
+                    else
+                    {
+                        Node monthNode = new Node();
+                        monthNode.Id = Guid.NewGuid().ToString();
+                        monthNode.Name = nodeName;
+                        nodeId = monthNode.Id;
+                        node.Nodes.Add(monthNode);
+                    }
+                }
+                else
+                {
+                    Node yearNode = new Node();
+                    yearNode.Id = Guid.NewGuid().ToString();
+                    yearNode.Name = year.ToString();
+                    yearNode.Nodes = new ObservableCollection<Node>();
+                    Node monthNode = new Node();
+                    monthNode.Id = Guid.NewGuid().ToString();
+                    monthNode.Name = new DateTime(1, month, 1).ToString("MMMM");
+                    nodeId = monthNode.Id;
+                    yearNode.Nodes.Add(monthNode);
+                    GlobalDataCollectorService.ProjectNodes.Add(yearNode);
+                }
+                if (GlobalDataCollectorService.AllProjects.TryGetValue(nodeId, out var currProjects))
+                {
+                    currProjects.Add(project);
+                    GlobalDataCollectorService.AllProjects[nodeId] = currProjects.OrderBy(x => DateTime.Parse(x.updatedAt ?? x.createdAt)).ToList();
+                }
+                else
+                {
+                    GlobalDataCollectorService.AllProjects.TryAdd(nodeId, new List<ProjectInfoGet> { project });
+                }
+                GlobalDataCollectorService.ProjectsCollection.Add(project);
+                GlobalDataCollectorService.ProjectsCollection = GlobalDataCollectorService.ProjectsCollection.OrderByDescending(p => p.updatedAt ?? p.createdAt).ToList();
+            });
+        }
+
+        private static void RemoveProjectNode(ProjectInfoGet project)
+        {
+            var date = DateTime.Parse(project.updatedAt ?? project.createdAt);
+            var year = date.Year;
+            var month = date.Month;
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                var node = GlobalDataCollectorService.ProjectNodes.FirstOrDefault(n => n.Name == year.ToString());
+                var m = node.Nodes.FirstOrDefault(n => n.Name == new DateTime(1, month, 1).ToString("MMMM"));
+                var nodeId = m.Id;
+                if (GlobalDataCollectorService.AllProjects.TryGetValue(nodeId, out var currProjects))
+                {
+                    if (currProjects.Count == 1)
+                    {
+                        node.Nodes.Remove(m);
+                        GlobalDataCollectorService.AllProjects.TryRemove(nodeId, out _);
+                    }
+                    else
+                    {
+                        var inCurr = currProjects.FirstOrDefault(p => p.project_id == project.project_id);
+                        currProjects.Remove(inCurr);
+                    }
+                }
+                GlobalDataCollectorService.ProjectsCollection.Remove(project);
+            });
         }
 
         //получение состояний вкладок
@@ -405,6 +490,7 @@ namespace Ahed_project.Services.Global
         //Установка проекта
         public static void SetProject(ProjectInfoGet projectInfoGet)
         {
+            AskAndSave();
             ReRender(projectInfoGet?.number_of_decimals ?? 2);
             _projectPageViewModel.ProjectInfo = projectInfoGet;
             if (!(_heatBalanceViewModel.Calculation == null || _heatBalanceViewModel.Calculation?.calculation_id == 0))
@@ -416,12 +502,14 @@ namespace Ahed_project.Services.Global
             if (projectInfoGet != null)
             {
                 GetCalculations(_projectPageViewModel.ProjectInfo?.project_id.ToString());
-                _mainViewModel.Title = $"{projectInfoGet?.name} ({_heatBalanceViewModel.Calculation?.name})";
+                var newName = $"{GlobalDataCollectorService.User.name}. {projectInfoGet?.name} ({_heatBalanceViewModel.Calculation?.name})";
+                _mainViewModel.Title = newName;
 
             }
             else
             {
-                _mainViewModel.Title = "";
+                var newName = $"{GlobalDataCollectorService.User.name}.";
+                _mainViewModel.Title = newName;
                 _projectPageViewModel.Calculations.Clear();
                 SetCalculation(null, false);
             }
@@ -644,7 +732,8 @@ namespace Ahed_project.Services.Global
                     context.SaveChanges();
                 }
                 GlobalDataCollectorService.Calculation = calc;
-                _mainViewModel.Title = $"{GlobalDataCollectorService.Project.name} ({calc.name})";
+                var newName = $"{GlobalDataCollectorService.User.name}. {GlobalDataCollectorService.Project.name} ({calc.name})";
+                _mainViewModel.Title = newName;
             }
             _heatBalanceViewModel.Calculation = calc;
             var products = GlobalDataCollectorService.AllProducts.SelectMany(x => x.Value).ToList();
@@ -768,7 +857,7 @@ namespace Ahed_project.Services.Global
             }
             _tubesFluidViewModel.Product = product;
             RefreshGraphsData();
-            Task.Run(()=>
+            Task.Run(() =>
             {
                 GetTabState();
                 Uncheck(new List<string>() { nameof(HeatBalancePage) });
@@ -1147,7 +1236,7 @@ namespace Ahed_project.Services.Global
 
 
                     GlobalDataCollectorService.Project = newProj;
-                    GlobalDataCollectorService.ProjectsCollection.Add(newProj);
+                    AddProjectNode(newProj);
                     GlobalDataCollectorService.GeometryCalculated = false;
                     GlobalDataCollectorService.HeatBalanceCalculated = false;
                     GlobalDataCollectorService.IsBaffleCalculated = false;
@@ -1194,7 +1283,8 @@ namespace Ahed_project.Services.Global
 
         public static void SetWindowName(string name)
         {
-            _mainViewModel.Title = $"{name} ({_heatBalanceViewModel.Calculation?.name})";
+            var newName = $"{GlobalDataCollectorService.User.name}. {name} ({_heatBalanceViewModel.Calculation?.name})";
+            _mainViewModel.Title = newName;
         }
 
 
@@ -1247,14 +1337,14 @@ namespace Ahed_project.Services.Global
                 MessageBox.Show($"Нет прав на удаление проекта, проект создан другим пользователем");
                 return;
             }
-            if (selectedProject.project_id == _projectPageViewModel.ProjectInfo.project_id)
+            if (_projectPageViewModel.ProjectInfo != null && selectedProject.project_id == _projectPageViewModel.ProjectInfo.project_id)
             {
                 SetProject(null);
             }
             if (MessageBox.Show("Удалить проект?", "Удаление", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 var response = _sendDataService.SendToServer(ProjectMethods.DELETE_PROJECT, null, selectedProject.project_id.ToString());
-                GlobalDataCollectorService.ProjectsCollection.Remove(selectedProject);
+                RemoveProjectNode(selectedProject);
                 _projectsWindowViewModel.Projects.Remove(selectedProject);
                 _projectsWindowViewModel.SelectedProject = null;
             }
@@ -1452,6 +1542,18 @@ namespace Ahed_project.Services.Global
             if (_bufflesPageViewModel.Baffle != null)
             {
                 _bufflesPageViewModel.Baffle.OnPropertyChanged(uncheck: false, fromCheck: true);
+            }
+        }
+
+
+        public static void AskAndSave()
+        {
+            if (GlobalDataCollectorService.Project != null)
+            {
+                if (MessageBox.Show("Сохранить проект?", "Сохранение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    SaveProject();
+                }
             }
         }
     }

@@ -40,6 +40,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                 GraphState.IsEnabled = tabs.left_graphs == "0";
                 GraphsValidationStatusSource = _checkPaths[Convert.ToInt32(tabs.graphs)];
             }
+            CheckForReports();
             RaisePropertiesChanged();
         }
 
@@ -185,6 +186,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             }
             AllowToChangeOverall();
             AllowToChangeGraphs();
+            CheckForReports();
             RaisePropertiesChanged();
         }
 
@@ -235,6 +237,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             }
             AllowToChangeOverall(!fromCheck);
             AllowToChangeGraphs(!fromCheck);
+            CheckForReports();
             RaisePropertiesChanged();
         }
 
@@ -315,6 +318,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             }
             AllowToChangeOverall();
             AllowToChangeGraphs();
+            CheckForReports();
             RaisePropertiesChanged();
         }
 
@@ -351,7 +355,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
                && GeometryValidationStatusSource?.Contains("check") == true
                && HeatBalanceValidationStatusSource?.Contains("check") == true
                && BafflesValidationStatusSource?.Contains("check") == true
-               && !OverallValidationStatusSource?.Contains("cancel") == true)
+               && OverallValidationStatusSource?.Contains("cancel") != true)
             {
                 GraphState.IsEnabled = true;
                 return true;
@@ -360,6 +364,28 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             return false;
         }
 
+        private void CheckForReports()
+        {
+            if (!String.IsNullOrEmpty(TubesFluidValidationStatusSource)
+                && TubesFluidValidationStatusSource?.Contains("cancel") != true
+                && !String.IsNullOrEmpty(ShellFluidValidationStatusSource)
+                && ShellFluidValidationStatusSource?.Contains("cancel") != true
+                && !String.IsNullOrEmpty(GeometryValidationStatusSource)
+                && GeometryValidationStatusSource?.Contains("cancel") != true
+                && !String.IsNullOrEmpty(HeatBalanceValidationStatusSource)
+                && HeatBalanceValidationStatusSource?.Contains("cancel") != true
+                && !String.IsNullOrEmpty(BafflesValidationStatusSource)
+                && BafflesValidationStatusSource?.Contains("cancel") != true
+                && !String.IsNullOrEmpty(OverallValidationStatusSource)
+                && OverallValidationStatusSource?.Contains("cancel") != true)
+            {
+                ReportsState.IsEnabled = true;
+            }
+            else
+            {
+                ReportsState.IsEnabled = false;
+            }
+        }
 
         public void ChangeTabStateToNewProject()
         {

@@ -3,6 +3,7 @@ using Ahed_project.MasterData.CalculateClasses;
 using Ahed_project.MasterData.GeometryClasses;
 using Ahed_project.MasterData.Products;
 using Ahed_project.MasterData.ProjectClasses;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -25,7 +26,7 @@ namespace Ahed_project.Services.Global
             IsHeatBalancetSave = true;
             IsGeometrytSave = true;
             ProjectNodes = new ObservableCollection<Node>();
-            AllProjects = new Dictionary<string, List<ProjectInfoGet>>();
+            AllProjects = new ConcurrentDictionary<string, List<ProjectInfoGet>>();
         }
         #region Global
         public static ObservableCollection<LoggerMessage> Logs { get; set; }
@@ -57,7 +58,7 @@ namespace Ahed_project.Services.Global
         public static List<ProjectInfoGet> ProjectsCollection { get; set; }
         public static ProjectInfoGet Project { get; set; }
         public static CalculationFull Calculation { get; set; }
-        public static Dictionary<string, List<ProjectInfoGet>> AllProjects { get; set; }
+        public static ConcurrentDictionary<string, List<ProjectInfoGet>> AllProjects { get; set; }
         public static ObservableCollection<Node> ProjectNodes { get; set; }
         #endregion
         #region Geometry
@@ -91,6 +92,19 @@ namespace Ahed_project.Services.Global
             }
         }
 
-        public static User User { get; internal set; }
+        private static User _user;
+
+        public static User User
+        {
+            get
+            {
+                return _user;
+            }
+            internal set
+            {
+                _user = value;
+                GlobalFunctionsAndCallersService.SetWindowName(string.Empty);
+            }
+        }
     }
 }
