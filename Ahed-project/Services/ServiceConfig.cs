@@ -18,9 +18,9 @@ namespace Ahed_project.Services
                 _serviceConfig = JsonConvert.DeserializeObject<ServiceConfig>(configData);
                 return _serviceConfig;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw e;
+                throw;
             }
         }
         public string LoginLink { get; set; }

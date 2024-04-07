@@ -39,7 +39,7 @@ namespace Ahed_project.ViewModel.Pages
                 var page = _pageService.GetPage<ContentPage>();
                 (Application.Current.MainWindow.DataContext as MainViewModel).FramePage = page;
             }
-            else if (result is null || result is string)
+            else if (result is null)
             {
                 MessageBox.Show("Не правильные имя пользователя и/или пароль", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }

@@ -695,7 +695,7 @@ namespace Ahed_project.ViewModel.Pages
                         {
                             field.SetValue(Geometry, tb.Text);
                         }
-                        catch (ArgumentException e)
+                        catch (ArgumentException)
                         {
 
                         }
@@ -708,7 +708,7 @@ namespace Ahed_project.ViewModel.Pages
                     {
                         field.SetValue(this, tb.Text);
                     }
-                    catch (ArgumentException e)
+                    catch (ArgumentException)
                     {
 
                     }

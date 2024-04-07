@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Ahed_project</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -97,8 +97,8 @@
     <PackageReference Include="MaterialDesignThemes" Version="5.0.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.3" />
     <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.421302" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.17" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.17">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -116,7 +116,7 @@
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
-    <PackageReference Include="System.ServiceModel.Federation" Version="6.2.0" />
+    <PackageReference Include="System.ServiceModel.Federation" Version="8.0.0" />
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="8.0.3" />
   </ItemGroup>
   <ItemGroup>

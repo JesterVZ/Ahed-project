@@ -62,7 +62,7 @@ namespace Ahed_project.ViewModel.ContentPageComponents
             {
                 if (_batchPage == null)
                 {
-                    _pageService.GetPage<BatchPage>();
+                    _batchPage = _pageService.GetPage<BatchPage>();
                 }
                 return _batchPage;
             }

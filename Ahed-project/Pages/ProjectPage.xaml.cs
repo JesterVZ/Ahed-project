@@ -28,7 +28,7 @@ namespace Ahed_project.Pages
 
         private void MenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            var a = 1;
+
         }
     }
 }

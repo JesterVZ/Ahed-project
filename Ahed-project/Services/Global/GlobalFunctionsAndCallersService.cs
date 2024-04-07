@@ -1172,7 +1172,7 @@ namespace Ahed_project.Services.Global
                     }
                     _bufflesPageViewModel.Baffle = b;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
 
                 }

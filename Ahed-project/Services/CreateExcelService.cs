@@ -21,6 +21,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Windows;
 
@@ -755,11 +756,9 @@ namespace Ahed_project.Services
 
         private void InsertTEMAImage(SLDocument doc)
         {
-            WebClient client = new();
             var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             Directory.CreateDirectory($"{path}\\Apora");
-
-            client.DownloadFile(new Uri(_geometryPageViewModel.Geometry.image_geometry), @$"{path}\\Apora\\geometry_image.png");
+            DownloadFile(_geometryPageViewModel.Geometry.image_geometry, @$"{path}\Apora\geometry_image.png");
             SLPicture pic = new SLPicture(@$"{path}\\Apora\\geometry_image.png");
             pic.ResizeInPixels(470, 419);
             pic.SetPosition(30, 7);
@@ -939,7 +938,7 @@ namespace Ahed_project.Services
             doc.SetCellValue("A3", "Process");
             doc.SetCellValue("C3", _projectPageViewModel.SelectedCalculation.name);
             doc.SetCellValue("A4", "Name");
-            doc.SetCellValue("C4", _tubesFluidViewModel.Product.name);
+            doc.SetCellValue("C4", _tubesFluidViewModel.Product?.name);
             doc.MergeWorksheetCells("A5", "B5");
             doc.SetCellStyle("A5", "D5", BorderCellsStyle());
             doc.SetCellValue("A5", "Molar Mass");
@@ -947,13 +946,13 @@ namespace Ahed_project.Services
             doc.SetCellStyle("A6", "C6", BorderCellsStyle());
             doc.SetCellValue("A6", "Pressure");
             doc.SetCellValue("D5", "kg/kmol");
-            doc.SetCellValue("C5", _tubesFluidViewModel.Product.MolarMass);
-            doc.SetCellValue("C6", _tubesFluidViewModel.Product.Pressure);
+            doc.SetCellValue("C5", _tubesFluidViewModel.Product?.MolarMass);
+            doc.SetCellValue("C6", _tubesFluidViewModel.Product?.Pressure);
 
 
             CreateHeaders(doc);
             CreateUnits(doc);
-            AddData(_tubesFluidViewModel.Product.product_properties, doc);
+            AddData(_tubesFluidViewModel.Product?.product_properties, doc);
         }
 
 
@@ -993,6 +992,10 @@ namespace Ahed_project.Services
         }
         private static void AddData(IEnumerable<ProductProperties> values, SLDocument doc)
         {
+            if (values == null)
+            {
+                return;
+            }
             ProductProperties[] properties = values.ToArray();
             for (int i = 0; i < properties.Length; i++)
             {
@@ -1040,7 +1043,7 @@ namespace Ahed_project.Services
             doc.SetCellValue("A3", "Process");
             doc.SetCellValue("C3", _projectPageViewModel.SelectedCalculation.name);
             doc.SetCellValue("A4", "Name");
-            doc.SetCellValue("C4", _shellFluidViewModel.Product.name);
+            doc.SetCellValue("C4", _shellFluidViewModel.Product?.name);
             doc.MergeWorksheetCells("A5", "B5");
             doc.SetCellStyle("A5", "D5", BorderCellsStyle());
             doc.SetCellValue("A5", "Molar Mass");
@@ -1048,12 +1051,12 @@ namespace Ahed_project.Services
             doc.SetCellStyle("A6", "C6", BorderCellsStyle());
             doc.SetCellValue("A6", "Pressure");
             doc.SetCellValue("D5", "kg/kmol");
-            doc.SetCellValue("C5", _shellFluidViewModel.Product.MolarMass);
-            doc.SetCellValue("C6", _shellFluidViewModel.Product.Pressure);
+            doc.SetCellValue("C5", _shellFluidViewModel.Product?.MolarMass);
+            doc.SetCellValue("C6", _shellFluidViewModel.Product?.Pressure);
 
             CreateHeaders(doc);
             CreateUnits(doc);
-            AddData(_shellFluidViewModel.Product.product_properties, doc);
+            AddData(_shellFluidViewModel.Product?.product_properties, doc);
         }
         #endregion
 
@@ -1270,11 +1273,9 @@ namespace Ahed_project.Services
 
         private static void DownloadImage(string url, SLDocument doc)
         {
-            WebClient client = new();
             var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             Directory.CreateDirectory($"{path}\\Apora");
-
-            client.DownloadFile(new Uri(_geometryPageViewModel.Geometry.image_geometry), @$"{path}\\Apora\\geometry_image.png");
+            DownloadFile(_geometryPageViewModel.Geometry.image_geometry, @$"{path}\Apora\geometry_image.png");
             SLPicture pic = new SLPicture(@$"{path}\\Apora\\geometry_image.png");
             pic.ResizeInPixels(300, 300);
             pic.SetPosition(6, 5);
@@ -1851,5 +1852,18 @@ namespace Ahed_project.Services
 
         #endregion
 
+        private static void DownloadFile(string reference, string fileName)
+        {
+            using (var client = new HttpClient())
+            {
+                using (var s = client.GetStreamAsync(reference))
+                {
+                    using (var fs = new FileStream(fileName, FileMode.OpenOrCreate))
+                    {
+                        s.Result.CopyTo(fs);
+                    }
+                }
+            }
+        }
     }
 }
